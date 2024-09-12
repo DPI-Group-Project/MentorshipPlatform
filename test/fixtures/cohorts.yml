@@ -1,0 +1,33 @@
+# == Schema Information
+#
+# Table name: cohorts
+#
+#  id          :bigint           not null, primary key
+#  program_id  :integer
+#  cohort_name :string
+#  description :text
+#  start_date  :datetime
+#  end_date    :datetime
+#  creator_id  :integer
+#  contact_id  :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+one:
+  program_id: 1
+  cohort_name: MyString
+  description: MyText
+  start_date: 2024-09-12 12:07:56
+  end_date: 2024-09-12 12:07:56
+  creator_id: 1
+  contact_id: 1
+
+two:
+  program_id: 1
+  cohort_name: MyString
+  description: MyText
+  start_date: 2024-09-12 12:07:56
+  end_date: 2024-09-12 12:07:56
+  creator_id: 1
+  contact_id: 1
