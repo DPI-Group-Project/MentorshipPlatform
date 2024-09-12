@@ -26,4 +26,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_many :cohorts, class_name: 'Cohort', foreign_key: 'creator_id', dependent: :destroy
+  has_many :programs, class_name: 'Program', foreign_key: 'creator_id', dependent: :destroy
 end
