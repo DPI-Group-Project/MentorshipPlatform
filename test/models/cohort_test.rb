@@ -2,16 +2,16 @@
 #
 # Table name: cohorts
 #
-#  id          :bigint           not null, primary key
-#  program_id  :integer
-#  cohort_name :string
-#  description :text
-#  start_date  :datetime
-#  end_date    :datetime
-#  creator_id  :integer
-#  contact_id  :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id            :bigint           not null, primary key
+#  program_id_id :bigint           not null
+#  cohort_name   :string
+#  description   :text
+#  start_date    :datetime
+#  end_date      :datetime
+#  creator_id_id :bigint           not null
+#  contact_id_id :bigint           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 require "test_helper"
 

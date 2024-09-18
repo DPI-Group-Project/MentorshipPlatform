@@ -10,29 +10,66 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_12_170756) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_18_182049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cohorts", force: :cascade do |t|
-    t.integer "program_id"
+    t.bigint "program_id_id", null: false
     t.string "cohort_name"
     t.text "description"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "creator_id"
-    t.integer "contact_id"
+    t.bigint "creator_id_id", null: false
+    t.bigint "contact_id_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["contact_id_id"], name: "index_cohorts_on_contact_id_id"
+    t.index ["creator_id_id"], name: "index_cohorts_on_creator_id_id"
+    t.index ["program_id_id"], name: "index_cohorts_on_program_id_id"
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.bigint "mentor_id"
+    t.bigint "mentee_id"
+    t.bigint "cohort_id", null: false
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_matches_on_cohort_id"
+    t.index ["mentee_id"], name: "index_matches_on_mentee_id"
+    t.index ["mentor_id"], name: "index_matches_on_mentor_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "program_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["program_id"], name: "index_organizations_on_program_id"
+    t.index ["user_id"], name: "index_organizations_on_user_id"
   end
 
   create_table "programs", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.integer "creator_id"
-    t.integer "contact_id"
+    t.bigint "creator", null: false
+    t.bigint "contact", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "required_meetings"
+    t.index ["contact"], name: "index_programs_on_contact"
+    t.index ["creator"], name: "index_programs_on_creator"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "match_id", null: false
+    t.string "responsive"
+    t.text "body"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_reviews_on_match_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -57,4 +94,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_12_170756) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cohorts", "programs", column: "program_id_id"
+  add_foreign_key "cohorts", "users", column: "contact_id_id"
+  add_foreign_key "cohorts", "users", column: "creator_id_id"
+  add_foreign_key "matches", "cohorts"
+  add_foreign_key "matches", "users", column: "mentee_id"
+  add_foreign_key "matches", "users", column: "mentor_id"
+  add_foreign_key "organizations", "programs"
+  add_foreign_key "organizations", "users"
+  add_foreign_key "programs", "users", column: "contact"
+  add_foreign_key "programs", "users", column: "creator"
+  add_foreign_key "reviews", "matches"
 end

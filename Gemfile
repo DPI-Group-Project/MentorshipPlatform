@@ -11,7 +11,7 @@ gem 'rubocop', require: false
 
 gem 'simple_form'
 
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+# The original asset pipelline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
 # Use postgresql as the database for Active Record

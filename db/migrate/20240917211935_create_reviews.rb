@@ -1,7 +1,7 @@
 class CreateReviews < ActiveRecord::Migration[7.1]
   def change
     create_table :reviews do |t|
-      t.references :match_id, null: false, foreign_key: true
+      t.references :match, null: false, foreign_key: { to_table: :matches }
       t.string :responsive
       t.text :body
       t.integer :rating
