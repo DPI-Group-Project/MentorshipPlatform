@@ -5,6 +5,7 @@ class CreatePrograms < ActiveRecord::Migration[7.1]
       t.text :description
       t.references :creator_id, null: false, foreign_key: { to_table: :users }
       t.references :contact_id, null: false, foreign_key: { to_table: :users }
+      t.string :passcode
 
       t.timestamps
     end

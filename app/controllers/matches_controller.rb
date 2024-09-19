@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: %i[show edit update destroy]
+  before_action :set_match, only: %i[ show edit update destroy ]
 
   # GET /matches or /matches.json
   def index
@@ -25,7 +25,7 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       if @match.save
-        format.html { redirect_to match_url(@match), notice: 'Match was successfully created.' }
+        format.html { redirect_to match_url(@match), notice: "Match was successfully created." }
         format.json { render :show, status: :created, location: @match }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class MatchesController < ApplicationController
   def update
     respond_to do |format|
       if @match.update(match_params)
-        format.html { redirect_to match_url(@match), notice: 'Match was successfully updated.' }
+        format.html { redirect_to match_url(@match), notice: "Match was successfully updated." }
         format.json { render :show, status: :ok, location: @match }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,20 +52,19 @@ class MatchesController < ApplicationController
     @match.destroy!
 
     respond_to do |format|
-      format.html { redirect_to matches_url, notice: 'match was successfully destroyed.' }
+      format.html { redirect_to matches_url, notice: "Match was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_match
+      @match = Match.find(params[:id])
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_match
-    @match = match.find(params[:id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def match_params
-    params.require(:match).permit(:mentor_id, :mentee_id, :cohort_id, :active)
-  end
+    # Only allow a list of trusted parameters through.
+    def match_params
+      params.require(:match).permit(:matches, :mentor_id_id, :mentee_id_id, :cohort_id_id, :active)
+    end
 end

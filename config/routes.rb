@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cohort_members
   resources :organizations
   resources :reviews
   resources :matches

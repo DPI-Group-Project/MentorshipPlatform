@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ProgramTest < ActiveSupport::TestCase
+class CohortMemberTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,15 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  matches: MyString
   mentor_id: one
   mentee_id: one
-  cohort_id: one
-  active: false
+  ranking: 1
 
 two:
-  matches: MyString
   mentor_id: two
   mentee_id: two
-  cohort_id: two
-  active: false
+  ranking: 1
