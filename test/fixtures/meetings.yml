@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: meetings
+#
+#  id         :bigint           not null, primary key
+#  match_id   :bigint           not null
+#  time       :datetime
+#  complete   :boolean
+#  review_id  :bigint           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  match: one
+  time: 2024-09-19 18:17:10
+  complete: false
+  review: one
+
+two:
+  match: two
+  time: 2024-09-19 18:17:10
+  complete: false
+  review: two

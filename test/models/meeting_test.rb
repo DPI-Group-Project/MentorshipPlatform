@@ -1,16 +1,18 @@
 # == Schema Information
 #
-# Table name: program_admins
+# Table name: meetings
 #
 #  id         :bigint           not null, primary key
-#  user_id    :bigint           not null
-#  program_id :bigint           not null
+#  match_id   :bigint           not null
+#  time       :datetime
+#  complete   :boolean
+#  review_id  :bigint           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 require "test_helper"
 
-class ProgramAdminTest < ActiveSupport::TestCase
+class MeetingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
