@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_19_231710) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_19_233715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_19_231710) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.string "matches"
     t.bigint "mentor_id", null: false
     t.bigint "mentee_id", null: false
     t.bigint "cohort_id", null: false
