@@ -3,6 +3,7 @@ task({ sample_data: :environment }) do
   starting = Time.now
   p "Creating sample data..."
 
+  Cohort.delete_all
   Program.delete_all
   User.delete_all
 
@@ -68,31 +69,36 @@ task({ sample_data: :environment }) do
         passcode: program_passcode,
         # required_meetings: [6, 10].sample
       )
-      p program.name
-      p program.description
-      p program.creator_id
-      p program.contact_id
-      p program.passcode
+      # p program.name
+      # p program.description
+      # p program.creator_id
+      # p program.contact_id
+      # p program.passcode
     end
     program_index += 1
   end
 
-  # Program.each do |program|
-  #   cohort_random_number = rand(1..3)
-  #   count = 0
+  Program.each do |program|
+    cohort_random_number = rand(1..3)
+    count = 0
 
-  #   cohort_random_number.times do
-  #     cohort = Cohort.create(
-  #       name: "Cohort #{count}",
-  #       description: "This cohort is part of the #{program.name} program",
-  #       # program_id: program.id,
-  #       # creator_id: program.creator_id,
-  #       contact: program.creator.phone_number,
-  #       required_meetings: [6, 10].sample
-  #     )
-  #     count += 1
-  #   end
-  # end
+    cohort_random_number.times do
+      cohort = Cohort.create(
+        cohort_name: "Cohort #{count}",
+        description: "This cohort is part of the #{program.name} program",
+        program_id: program.id,
+        creator_id: program.creator_id,
+        contact_id: program.creator_id,
+        # required_meetings: [6, 10].sample
+      )
+      p cohort.name
+      p cohort.description
+      p cohort.program_id
+      p cohort.creator_id
+      p cohort.contact_id
+      count += 1
+    end
+  end
 
   ending = Time.now
   p "There are now #{User.count} users."
