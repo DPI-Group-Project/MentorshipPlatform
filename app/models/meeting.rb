@@ -11,6 +11,6 @@
 #  updated_at :datetime         not null
 #
 class Meeting < ApplicationRecord
-  belongs_to :match
-  belongs_to :review
+  belongs_to :match, class_name: 'Match'
+  belongs_to :review, class_name: 'Review'
 end

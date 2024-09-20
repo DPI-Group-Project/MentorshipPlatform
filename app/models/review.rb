@@ -12,5 +12,5 @@
 #  updated_at      :datetime         not null
 #
 class Review < ApplicationRecord
-  belongs_to :match
+  belongs_to :match, class_name: 'Match'
 end

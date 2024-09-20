@@ -9,6 +9,6 @@
 #  updated_at :datetime         not null
 #
 class ProgramAdmin < ApplicationRecord
-  belongs_to :user_id
-  belongs_to :program_id
+  belongs_to :user, class_name: 'User'
+  belongs_to :program, class_name: 'Program'
 end

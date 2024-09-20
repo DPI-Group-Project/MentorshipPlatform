@@ -12,6 +12,6 @@
 #  updated_at  :datetime         not null
 #
 class Program < ApplicationRecord
-  belongs_to :creator_id
-  belongs_to :contact_id
+  belongs_to :creator, class_name: 'User'
+  belongs_to :contact, class_name: 'User'
 end
