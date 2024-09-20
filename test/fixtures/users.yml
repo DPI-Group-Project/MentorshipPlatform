@@ -3,13 +3,15 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
-#  name                   :string
-#  role                   :string
+#  first_name             :string
+#  last_name              :string
 #  status                 :string
 #  inactive_reason        :text
 #  phone_number           :string
@@ -17,9 +19,8 @@
 #  timezone               :string
 #  title                  :string
 #  linkedin_link          :string
-#  profile_pic            :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  profile_picture        :string
+#  skills_array           :text             default([]), is an Array
 #
 
 # This model initially had no columns defined. If you add columns to the

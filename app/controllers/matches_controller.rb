@@ -52,7 +52,7 @@ class MatchesController < ApplicationController
     @match.destroy!
 
     respond_to do |format|
-      format.html { redirect_to matches_url, notice: 'match was successfully destroyed.' }
+      format.html { redirect_to matches_url, notice: 'Match was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -61,7 +61,7 @@ class MatchesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_match
-    @match = match.find(params[:id])
+    @match = Match.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

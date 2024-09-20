@@ -3,13 +3,13 @@
 # Table name: cohorts
 #
 #  id          :bigint           not null, primary key
-#  program     :bigint           not null
+#  program_id  :bigint           not null
 #  cohort_name :string
 #  description :text
 #  start_date  :datetime
 #  end_date    :datetime
-#  creator     :bigint           not null
-#  contact     :bigint           not null
+#  creator_id  :bigint           not null
+#  contact_id  :bigint           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

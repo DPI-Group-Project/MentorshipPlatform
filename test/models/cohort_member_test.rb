@@ -1,18 +1,17 @@
 # == Schema Information
 #
-# Table name: matches
+# Table name: cohort_members
 #
 #  id         :bigint           not null, primary key
-#  mentor_id  :bigint           not null
-#  mentee_id  :bigint           not null
+#  user_id    :bigint           not null
 #  cohort_id  :bigint           not null
-#  active     :boolean
+#  role       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 require "test_helper"
 
-class MatchTest < ActiveSupport::TestCase
+class CohortMemberTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
