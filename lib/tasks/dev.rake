@@ -59,7 +59,7 @@ task({ sample_data: :environment }) do
       p admin
       program = Program.create(
         name: program_names[program_index],
-        description: "This program is for the #{program_names[program_index]} program",
+        description: "This program is for the #{program_names[program_index]} DPI program",
         # creator_id: admin.id,
         contact: admin.phone_number,
         required_meetings: [6, 10].sample
@@ -68,6 +68,22 @@ task({ sample_data: :environment }) do
     program_index += 1
   end
 
+  Program.each do |program|
+    cohort_random_number = rand(1..3)
+    count = 0
+
+    cohort_random_number.times do
+      cohort = Cohort.create(
+        name: "Cohort #{count}",
+        description: "This cohort is part of the #{program.name} program",
+        # program_id: program.id,
+        # creator_id: program.creator_id,
+        contact: program.creator.phone_number,
+        required_meetings: [6, 10].sample
+      )
+      count += 1
+    end
+  end
 
   ending = Time.now
   p "There are now #{User.count} users."
