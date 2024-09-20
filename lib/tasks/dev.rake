@@ -7,14 +7,15 @@ task({ sample_data: :environment }) do
   User.delete_all
 
   admins = []
-  people = Array.new(28) do
+  people = Array.new(10) do
     {
-      name: Faker::Name.unique.first_name + ' ' + Faker::Name.unique.last_name
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name
     }
   end
 
-  people << { name: 'Alice Smith' }
-  people << { name: 'Bob James' }
+  people << { first_name: 'Alice', last_name: 'Smith' }
+  people << { first_name: 'Bob', last_name: 'James' }
 
   image_name = %w[Buddy Mimi Abby Jack Lily Lucy Jasmine Bear Loki Dusty Maggie Milo Lucky
                   Pepper Baby Boo Sammy Coco Mittens Socks]
@@ -31,16 +32,17 @@ task({ sample_data: :environment }) do
                       variant14,variant15,variant16,variant17,variant18,variant19,variant20,variant21,variant22,variant23,variant24,variant25,
                       variant26,variant27,variant29,variant30"
     user = User.create(
-      email: "#{(person[:name]).split.first.downcase}@example.com",
+      email: "#{(person[:first_name]).downcase}@example.com",
       password: 'password',
-      name: (person[:name]).to_s.titlecase,
-      role: role,
+      first_name: (person[:first_name]).upcase,
+      last_name: (person[:last_name]).upcase,
+      # role: role,
       phone_number: Faker::PhoneNumber.phone_number,
       bio: Faker::Quotes::Shakespeare.hamlet_quote + ' ' + Faker::Quotes::Shakespeare.hamlet_quote,
       timezone: timezone,
       title: role == 'Admin' ? 'Program Organizer' : role == 'Observer' ? 'Observer' : role == 'Mentee' ? 'Trainee' : role == 'Mentor' ? mentor_title : nil,
-      linkedin_link: "https://www.linkedin.com/in/#{(person[:name]).split.first.downcase}-#{(person[:name]).split.last.downcase}-#{Faker::Number.number(digits: 5)}/",
-      profile_pic: image_link,
+      linkedin_link: "https://www.linkedin.com/in/#{(person[:first_name]).downcase}-#{(person[:last_name]).downcase}-#{Faker::Number.number(digits: 5)}/",
+      profile_picture: image_link,
       status: status,
       inactive_reason: status == 'Inactive' ? inactive_reason : nil
     )
@@ -51,39 +53,39 @@ task({ sample_data: :environment }) do
   end
   p 'Users made'
 
-  program_names = ['Software Development', 'Teacher Training', 'Apprenticeship']
-  program_index = 0
+  # program_names = ['Software Development', 'Teacher Training', 'Apprenticeship']
+  # program_index = 0
 
-  admins.each do |admin|
-    if program_index < program_names.length
-      p admin
-      program = Program.create(
-        name: program_names[program_index],
-        description: "This program is for the #{program_names[program_index]} DPI program",
-        # creator_id: admin.id,
-        contact: admin.phone_number,
-        required_meetings: [6, 10].sample
-      )
-    end
-    program_index += 1
-  end
+  # admins.each do |admin|
+  #   if program_index < program_names.length
+  #     p admin
+  #     program = Program.create(
+  #       name: program_names[program_index],
+  #       description: "This program is for the #{program_names[program_index]} DPI program",
+  #       # creator_id: admin.id,
+  #       contact: admin.phone_number,
+  #       required_meetings: [6, 10].sample
+  #     )
+  #   end
+  #   program_index += 1
+  # end
 
-  Program.each do |program|
-    cohort_random_number = rand(1..3)
-    count = 0
+  # Program.each do |program|
+  #   cohort_random_number = rand(1..3)
+  #   count = 0
 
-    cohort_random_number.times do
-      cohort = Cohort.create(
-        name: "Cohort #{count}",
-        description: "This cohort is part of the #{program.name} program",
-        # program_id: program.id,
-        # creator_id: program.creator_id,
-        contact: program.creator.phone_number,
-        required_meetings: [6, 10].sample
-      )
-      count += 1
-    end
-  end
+  #   cohort_random_number.times do
+  #     cohort = Cohort.create(
+  #       name: "Cohort #{count}",
+  #       description: "This cohort is part of the #{program.name} program",
+  #       # program_id: program.id,
+  #       # creator_id: program.creator_id,
+  #       contact: program.creator.phone_number,
+  #       required_meetings: [6, 10].sample
+  #     )
+  #     count += 1
+  #   end
+  # end
 
   ending = Time.now
   p "There are now #{User.count} users."
