@@ -64,10 +64,6 @@ task({ sample_data: :environment }) do
         contact: admin.phone_number,
         required_meetings: [6, 10].sample
       )
-      p program.name
-      p program.description
-      p program.contact
-      p program.required_meetings
     end
     program_index += 1
   end
