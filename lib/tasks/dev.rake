@@ -5,6 +5,7 @@ task({ sample_data: :environment }) do
 
   User.delete_all
 
+  admins = []
   people = Array.new(28) do
     {
       name: Faker::Name.unique.first_name + ' ' + Faker::Name.unique.last_name
@@ -18,7 +19,7 @@ task({ sample_data: :environment }) do
                   Pepper Baby Boo Sammy Coco Mittens Socks]
 
   people.each do |person|
-    role = { 'Admin' => 10, 'Mentor' => 40, 'Mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    role = { 'Admin' => 10, 'Observer' => 15, 'Mentor' => 40, 'Mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
     status = { 'Archived' => 10, 'Inactive' => 40, 'Active' => 100 }.find { |_key, value| rand * 100 <= value }.first
     timezone = ['Eastern Standard Time (EST) - UTC-5', 'Central Standard Time (CST) - UTC-6', 'Pacific Standard Time (PST) - UTC-8', 'Mountain Standard Time (MST) - UTC-7'].sample
     mentor_title = ['Software Engineer', 'Consultant', 'Technical Support', 'IT Technician', 'Project Manager', 'Product Manager', 'UI/UX Designer', 'Sales Coordinator'].sample
@@ -28,7 +29,7 @@ task({ sample_data: :environment }) do
                       lips=variant01,variant02,variant03,variant04,variant05,variant06,variant07,variant08,variant10,variant11,variant13,
                       variant14,variant15,variant16,variant17,variant18,variant19,variant20,variant21,variant22,variant23,variant24,variant25,
                       variant26,variant27,variant29,variant30"
-    User.create(
+    user = User.create(
       email: "#{(person[:name]).split.first.downcase}@example.com",
       password: 'password',
       name: (person[:name]).to_s.titlecase,
@@ -36,15 +37,41 @@ task({ sample_data: :environment }) do
       phone_number: Faker::PhoneNumber.phone_number,
       bio: Faker::Quotes::Shakespeare.hamlet_quote + ' ' + Faker::Quotes::Shakespeare.hamlet_quote,
       timezone: timezone,
-      title: role == 'Admin' ? 'Program Organizer' : role == 'Mentee' ? 'Trainee' : role == 'Mentor' ? mentor_title : nil,
+      title: role == 'Admin' ? 'Program Organizer' : role == 'Observer' ? 'Observer' : role == 'Mentee' ? 'Trainee' : role == 'Mentor' ? mentor_title : nil,
       linkedin_link: "https://www.linkedin.com/in/#{(person[:name]).split.first.downcase}-#{(person[:name]).split.last.downcase}-#{Faker::Number.number(digits: 5)}/",
       profile_pic: image_link,
       status: status,
       inactive_reason: status == 'Inactive' ? inactive_reason : nil
     )
+
+    if role == 'Admin'
+      admins << user
+    end
   end
+  p 'Users made'
+
+  program_names = ['Software Development', 'Teacher Training', 'Apprenticeship']
+  admins.each do |admin|
+    program_index = 0
+    p 'starting while loop'
+    while program_index + 1 < program_names.length
+      p admin
+      Program.create(
+        name: program_names[program_index],
+        description: "This program is for the #{program_names[program_index]} program",
+        creator_id: admin.id,
+        contact: admin.phone_number,
+        required_meetings: 6
+      )
+      p program_index
+      program_index += 1  
+    end
+    p 'exit while loop'
+  end
+
 
   ending = Time.now
   p "There are now #{User.count} users."
+  p "There are now #{Program.count} programs."
   p "Done! It took #{(ending - starting).to_i} seconds to create sample data."
 end
