@@ -7,7 +7,7 @@ task({ sample_data: :environment }) do
   User.delete_all
 
   admins = []
-  people = Array.new(10) do
+  people = Array.new(28) do
     {
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name
@@ -53,22 +53,22 @@ task({ sample_data: :environment }) do
   end
   p 'Users made'
 
-  # program_names = ['Software Development', 'Teacher Training', 'Apprenticeship']
-  # program_index = 0
+  program_names = ['Software Development', 'Teacher Training', 'Apprenticeship']
+  program_index = 0
 
-  # admins.each do |admin|
-  #   if program_index < program_names.length
-  #     p admin
-  #     program = Program.create(
-  #       name: program_names[program_index],
-  #       description: "This program is for the #{program_names[program_index]} DPI program",
-  #       # creator_id: admin.id,
-  #       contact: admin.phone_number,
-  #       required_meetings: [6, 10].sample
-  #     )
-  #   end
-  #   program_index += 1
-  # end
+  admins.each do |admin|
+    if program_index < program_names.length
+      p admin
+      program = Program.create(
+        name: program_names[program_index],
+        description: "This program is for the #{program_names[program_index]} DPI program",
+        # creator_id: admin.id,
+        contact: admin.phone_number,
+        required_meetings: [6, 10].sample
+      )
+    end
+    program_index += 1
+  end
 
   # Program.each do |program|
   #   cohort_random_number = rand(1..3)
