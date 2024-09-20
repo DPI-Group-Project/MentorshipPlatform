@@ -32,6 +32,7 @@ task({ sample_data: :environment }) do
                       lips=variant01,variant02,variant03,variant04,variant05,variant06,variant07,variant08,variant10,variant11,variant13,
                       variant14,variant15,variant16,variant17,variant18,variant19,variant20,variant21,variant22,variant23,variant24,variant25,
                       variant26,variant27,variant29,variant30"
+    skills = ['Java', 'Ruby', 'Python','Communication', 'Networking', 'Organization', 'Leadership', 'Writing']              
     user = User.create(
       email: "#{(person[:first_name]).downcase}@example.com",
       password: 'password',
@@ -45,7 +46,8 @@ task({ sample_data: :environment }) do
       linkedin_link: "https://www.linkedin.com/in/#{(person[:first_name]).downcase}-#{(person[:last_name]).downcase}-#{Faker::Number.number(digits: 5)}/",
       profile_picture: image_link,
       status: status,
-      inactive_reason: status == 'Inactive' ? inactive_reason : nil
+      inactive_reason: status == 'Inactive' ? inactive_reason : nil,
+      skills_array: [skills.sample, skills.sample]
     )
 
     if role == 'Admin'
@@ -60,7 +62,6 @@ task({ sample_data: :environment }) do
   admins.each do |admin|
     program_passcode = Faker::Number.number(digits: 8).to_s
     if program_index < program_names.length
-      p admin
       program = Program.create(
         name: program_names[program_index],
         description: "This program is for the #{program_names[program_index]} DPI program",
@@ -69,33 +70,25 @@ task({ sample_data: :environment }) do
         passcode: program_passcode,
         # required_meetings: [6, 10].sample
       )
-      # p program.name
-      # p program.description
-      # p program.creator_id
-      # p program.contact_id
-      # p program.passcode
     end
     program_index += 1
   end
 
-  Program.each do |program|
+  Program.all.each do |program|
     cohort_random_number = rand(1..3)
-    count = 0
-
+    count = 1
     cohort_random_number.times do
+      start_date = Faker::Date.between(from: '2022-01-1', to: '2023-12-30')
       cohort = Cohort.create(
         cohort_name: "Cohort #{count}",
         description: "This cohort is part of the #{program.name} program",
         program_id: program.id,
         creator_id: program.creator_id,
         contact_id: program.creator_id,
+        start_date: start_date,
+        end_date: Faker::Date.between(from: start_date, to: '2024-12-30'),
         # required_meetings: [6, 10].sample
       )
-      p cohort.name
-      p cohort.description
-      p cohort.program_id
-      p cohort.creator_id
-      p cohort.contact_id
       count += 1
     end
   end
@@ -103,5 +96,6 @@ task({ sample_data: :environment }) do
   ending = Time.now
   p "There are now #{User.count} users."
   p "There are now #{Program.count} programs."
+  p "There are now #{Cohort.count} cohorts."
   p "Done! It took #{(ending - starting).to_i} seconds to create sample data."
 end
