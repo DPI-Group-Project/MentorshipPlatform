@@ -21,7 +21,7 @@ task({ sample_data: :environment }) do
                   Pepper Baby Boo Sammy Coco Mittens Socks]
 
   people.each do |person|
-    role = { 'Admin' => 10, 'Observer' => 15, 'Mentor' => 40, 'Mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    role = { 'Admin' => 10, 'Observer' => 10, 'Mentor' => 40, 'Mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
     status = { 'Archived' => 10, 'Inactive' => 40, 'Active' => 100 }.find { |_key, value| rand * 100 <= value }.first
     timezone = ['Eastern Standard Time (EST) - UTC-5', 'Central Standard Time (CST) - UTC-6', 'Pacific Standard Time (PST) - UTC-8', 'Mountain Standard Time (MST) - UTC-7'].sample
     mentor_title = ['Software Engineer', 'Consultant', 'Technical Support', 'IT Technician', 'Project Manager', 'Product Manager', 'UI/UX Designer', 'Sales Coordinator'].sample
