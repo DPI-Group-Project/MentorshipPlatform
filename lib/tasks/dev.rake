@@ -3,6 +3,7 @@ task({ sample_data: :environment }) do
   starting = Time.now
   p "Creating sample data..."
 
+  Program.delete_all
   User.delete_all
 
   admins = []
@@ -51,22 +52,24 @@ task({ sample_data: :environment }) do
   p 'Users made'
 
   program_names = ['Software Development', 'Teacher Training', 'Apprenticeship']
+  program_index = 0
+
   admins.each do |admin|
-    program_index = 0
-    p 'starting while loop'
-    while program_index + 1 < program_names.length
+    if program_index < program_names.length
       p admin
-      Program.create(
+      program = Program.create(
         name: program_names[program_index],
         description: "This program is for the #{program_names[program_index]} program",
-        creator_id: admin.id,
+        # creator_id: admin.id,
         contact: admin.phone_number,
-        required_meetings: 6
+        required_meetings: [6, 10].sample
       )
-      p program_index
-      program_index += 1  
+      p program.name
+      p program.description
+      p program.contact
+      p program.required_meetings
     end
-    p 'exit while loop'
+    program_index += 1
   end
 
 
