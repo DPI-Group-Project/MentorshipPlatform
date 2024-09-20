@@ -3,8 +3,8 @@
 # Table name: matches
 #
 #  id         :bigint           not null, primary key
-#  mentor_id  :bigint
-#  mentee_id  :bigint
+#  mentor_id  :bigint           not null
+#  mentee_id  :bigint           not null
 #  cohort_id  :bigint           not null
 #  active     :boolean
 #  created_at :datetime         not null
@@ -12,13 +12,15 @@
 #
 
 one:
-  mentor_id: 1
-  mentee_id: 1
-  cohort_id: 1
+  matches: MyString
+  mentor_id: one
+  mentee_id: one
+  cohort_id: one
   active: false
 
 two:
-  mentor_id: 1
-  mentee_id: 1
-  cohort_id: 1
+  matches: MyString
+  mentor_id: two
+  mentee_id: two
+  cohort_id: two
   active: false

@@ -1,12 +1,21 @@
 # == Schema Information
 #
-# Table name: organizations
+# Table name: cohort_members
 #
 #  id         :bigint           not null, primary key
 #  user_id    :bigint           not null
-#  program_id :bigint           not null
+#  cohort_id  :bigint           not null
+#  role       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Organization < ApplicationRecord
-end
+
+one:
+  user_id: one
+  cohort_id: one
+  role: MyString
+
+two:
+  user_id: two
+  cohort_id: two
+  role: MyString
