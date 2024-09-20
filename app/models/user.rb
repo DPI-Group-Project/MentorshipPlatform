@@ -28,12 +28,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :cohort_members, class_name: "CohortMember", foreign_key: "user_id", dependent: :destroy
-  has_many :mentors, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
+  has_many :cohorts, class_name: "CohortMember", foreign_key: "user_id", dependent: :destroy
+  has_one :mentors, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
   has_many :mentees, class_name: "Match", foreign_key: "mentee_id", dependent: :destroy
-  has_many :mentors_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
-  has_many :mentees_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
-  has_many :cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
-  has_many :programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
+  has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
+  has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
+  has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
+  has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
   
 end
