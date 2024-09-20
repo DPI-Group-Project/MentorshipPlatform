@@ -34,8 +34,8 @@ task({ sample_data: :environment }) do
     user = User.create(
       email: "#{(person[:first_name]).downcase}@example.com",
       password: 'password',
-      first_name: (person[:first_name]).upcase,
-      last_name: (person[:last_name]).upcase,
+      first_name: (person[:first_name]).capitalize,
+      last_name: (person[:last_name]).capitalize,
       # role: role,
       phone_number: Faker::PhoneNumber.phone_number,
       bio: Faker::Quotes::Shakespeare.hamlet_quote + ' ' + Faker::Quotes::Shakespeare.hamlet_quote,
@@ -57,15 +57,22 @@ task({ sample_data: :environment }) do
   program_index = 0
 
   admins.each do |admin|
+    program_passcode = Faker::Number.number(digits: 8).to_s
     if program_index < program_names.length
       p admin
       program = Program.create(
         name: program_names[program_index],
         description: "This program is for the #{program_names[program_index]} DPI program",
-        # creator_id: admin.id,
-        contact: admin.phone_number,
-        required_meetings: [6, 10].sample
+        creator_id: admin.id,
+        contact_id: admin.id,
+        passcode: program_passcode,
+        # required_meetings: [6, 10].sample
       )
+      p program.name
+      p program.description
+      p program.creator_id
+      p program.contact_id
+      p program.passcode
     end
     program_index += 1
   end
