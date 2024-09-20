@@ -54,7 +54,6 @@ task({ sample_data: :environment }) do
       admins << user
     end
   end
-  p 'Users made'
 
   program_names = ['Software Development', 'Teacher Training', 'Apprenticeship']
   program_index = 0
