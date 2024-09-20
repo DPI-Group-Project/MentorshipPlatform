@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #
 class CohortMember < ApplicationRecord
-  belongs_to :user_id
-  belongs_to :cohort_id
+  belongs_to :user, required: true, class_name: "User", foreign_key: "user_id"
+  belongs_to :cohort, required: true, class_name: "Cohort", foreign_key: "cohort_id"
+  
 end
