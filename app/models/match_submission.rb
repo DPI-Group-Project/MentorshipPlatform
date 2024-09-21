@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #
 class MatchSubmission < ApplicationRecord
-  belongs_to :mentor_id
-  belongs_to :mentee_id
+  belongs_to :mentor, required: true, class_name: "User", foreign_key: "mentor_id"
+  belongs_to :mentee, required: true, class_name: "User", foreign_key: "mentee_id"
+  
 end
