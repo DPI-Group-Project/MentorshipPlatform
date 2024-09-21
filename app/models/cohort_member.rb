@@ -8,6 +8,7 @@
 #  role       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  capacity   :integer
 #
 class CohortMember < ApplicationRecord
   belongs_to :user, required: true, class_name: "User", foreign_key: "user_id"
