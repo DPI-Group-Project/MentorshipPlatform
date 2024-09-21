@@ -12,6 +12,8 @@
 #  updated_at  :datetime         not null
 #
 class Program < ApplicationRecord
-  belongs_to :creator, class_name: 'User'
-  belongs_to :contact, class_name: 'User'
+  belongs_to :creator, required: true, class_name: "User", foreign_key: "creator_id"
+  belongs_to :contact, required: true, class_name: "User", foreign_key: "contact_id"
+  has_many :cohorts, class_name: "Cohort", foreign_key: "program_id", dependent: :destroy
+  has_many :admins, class_name: "ProgramAdmin", foreign_key: "program_id", dependent: :destroy
 end

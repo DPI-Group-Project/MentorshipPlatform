@@ -14,6 +14,9 @@
 #  updated_at  :datetime         not null
 #
 class Cohort < ApplicationRecord
-  belongs_to :creator, required: true, class_name: 'User', foreign_key: 'creator_id'
-  belongs_to :program, required: true, class_name: 'Program', foreign_key: 'program_id'
+  belongs_to :creator, required: true, class_name: "User", foreign_key: "creator_id"
+  belongs_to :program, required: true, class_name: "Program", foreign_key: "program_id"
+  has_many :members, class_name: "CohortMember", foreign_key: "cohort_id", dependent: :destroy
+  has_many :matches, class_name: "Match", foreign_key: "cohort_id", dependent: :destroy
+  
 end
