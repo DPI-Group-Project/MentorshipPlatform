@@ -75,7 +75,7 @@ task({ sample_data: :environment }) do
   end
 
 # Creating Programs
-  program_names = ['Full-Stack Software Development', 'High School Coding Training', 'Apprenticeship']
+  program_names = ['Full-Stack Software Development', 'High School Coding Training', 'Apprenticeship', 'Career Readiness', 'TBD']
   program_index = 0
 
   admins.each do |admin|
@@ -100,6 +100,7 @@ task({ sample_data: :environment }) do
     cohort_random_number.times do
       start_date = Faker::Date.between(from: '2023-01-1', to: '2023-12-30')
       end_date = Faker::Date.between(from: '2024-1-30', to: '2025-12-30')
+
       Cohort.create(
         cohort_name: "Cohort #{count}",
         description: "This cohort is part of the #{program.name} program",
@@ -120,7 +121,7 @@ task({ sample_data: :environment }) do
 
     ProgramAdmin.create(
       user_id: admin.id,
-      program_id: program.id,
+      program_id: program.id
     )
   end
 
@@ -147,14 +148,18 @@ task({ sample_data: :environment }) do
 # Creating Matches
   mentees.each do |mentee|
     cohort_member_id_of_mentee = mentee.cohorts.first
-    mentor_in_same_cohort = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'Mentor').sample
-    active = { 'Inactive' => 10, 'Active' => 100 }.find { |_key, value| rand * 100 <= value }.first
-    Match.create(
-      mentor_id: mentor_in_same_cohort.id,
+    mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'Mentor').sample
+    active_status = { 'Inactive' => 10, 'Active' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    match = Match.create(
+      mentor_id: mentors_cohort_member_object.mentor_id,
       mentee_id: mentee.id,
-      cohort_id: mentee.cohorts,
-      active: active
+      cohort_id: cohort_member_id_of_mentee.cohort_id,
+      active: active_status
     )
+    p match.mentor_id
+    p match.mentee_id
+    p match.cohort_id
+    p match.active
   end
 
   ending = Time.now
