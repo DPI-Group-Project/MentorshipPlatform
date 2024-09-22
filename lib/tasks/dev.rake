@@ -26,7 +26,8 @@ task({ sample_data: :environment }) do
   mentees = []
   mentors_and_mentees = []
   role_hash = {}
-  
+
+# Creating Users
   people.each do |person|
     status = { 'Archived' => 10, 'Inactive' => 40, 'Active' => 100 }.find { |_key, value| rand * 100 <= value }.first
     timezone = ['Eastern Standard Time (EST) - UTC-5', 'Central Standard Time (CST) - UTC-6', 'Pacific Standard Time (PST) - UTC-8', 'Mountain Standard Time (MST) - UTC-7'].sample
@@ -72,6 +73,7 @@ task({ sample_data: :environment }) do
     role_hash.store(user, role)
   end
 
+# Creating Programs
   program_names = ['Full-Stack Software Development', 'High School Coding Training', 'Apprenticeship']
   program_index = 0
 
@@ -90,6 +92,7 @@ task({ sample_data: :environment }) do
     program_index += 1
   end
 
+# Creating Cohorts
   Program.all.each do |program|
     cohort_random_number = rand(1..3)
     count = 1
@@ -110,6 +113,7 @@ task({ sample_data: :environment }) do
     end
   end
 
+# Creating Program Admins
   admins.each do |admin|
     program = Program.find_by(creator_id: admin.id)
 
@@ -119,6 +123,7 @@ task({ sample_data: :environment }) do
     )
   end
 
+# Creating Cohort Members
   mentors_and_mentees.each do |user|
     cohort = Cohort.all.sample
     role = ""
@@ -129,6 +134,7 @@ task({ sample_data: :environment }) do
     elsif role_hash[user] == 'Mentee'
       role = 'Mentee'
     end
+
     CohortMember.create(
       user_id: user.id,
       cohort_id: cohort.id,
