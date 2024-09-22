@@ -20,4 +20,11 @@ class Cohort < ApplicationRecord
   has_many :members, class_name: "CohortMember", foreign_key: "cohort_id", dependent: :destroy
   has_many :matches, class_name: "Match", foreign_key: "cohort_id", dependent: :destroy
   
+  def running?
+    if end_date > Date.today
+      true 
+    else 
+      false
+    end
+  end
 end

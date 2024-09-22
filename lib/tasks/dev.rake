@@ -10,7 +10,7 @@ task({ sample_data: :environment }) do
   Program.delete_all
   User.delete_all
 
-  people = Array.new(28) do
+  people = Array.new(38) do
     {
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name
@@ -34,7 +34,7 @@ task({ sample_data: :environment }) do
     timezone = ['Eastern Standard Time (EST) - UTC-5', 'Central Standard Time (CST) - UTC-6', 'Pacific Standard Time (PST) - UTC-8', 'Mountain Standard Time (MST) - UTC-7'].sample
     mentor_title = ['Software Engineer', 'Consultant', 'Technical Support', 'IT Technician', 'Project Manager', 'Product Manager', 'UI/UX Designer', 'Sales Coordinator'].sample
     inactive_reason = ['Did not like the platform.', 'Did not have a good experience.', 'I will be back!', 'Other'].sample
-    role = { 'Admin' => 10, 'Observer' => 15, 'Mentor' => 30, 'Mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    role = { 'Admin' => 5, 'Observer' => 7, 'Mentor' => 25, 'Mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
     image_link = "https://api.dicebear.com/9.x/notionists/svg?seed=#{image_name.sample}&radius=50&backgroundColor=D2042D&bodyIcon=galaxy,
                   saturn,electric&bodyIconProbability=10&gesture=hand,handPhone,ok,okLongArm,point,pointLongArm,waveLongArm&gestureProbability=20&
                   lips=variant01,variant02,variant03,variant04,variant05,variant06,variant07,variant08,variant10,variant11,variant13,
@@ -95,7 +95,7 @@ task({ sample_data: :environment }) do
 
 # Creating Cohorts
   Program.all.each do |program|
-    cohort_random_number = rand(1..3)
+    cohort_random_number = rand(1..2)
     count = 1
     cohort_random_number.times do
       start_date = Faker::Date.between(from: '2023-01-1', to: '2023-12-30')
@@ -149,12 +149,13 @@ task({ sample_data: :environment }) do
   mentees.each do |mentee|
     cohort_member_id_of_mentee = mentee.cohorts.first
     mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'Mentor').sample
-    active_status = { false => 10, true => 100 }.find { |_key, value| rand * 100 <= value }.first
+    shared_cohort = Cohort.find_by(id: cohort_member_id_of_mentee.cohort_id)
+    # { false => 10, true => 100 }.find { |_key, value| rand * 100 <= value }.first
     match = Match.create(
       mentor_id: mentor_cohort_member_object.user_id,
       mentee_id: mentee.id,
       cohort_id: cohort_member_id_of_mentee.cohort_id,
-      active: active_status
+      active: shared_cohort.running?
     )
     p match.mentor_id
     p match.mentee_id
