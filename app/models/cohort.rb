@@ -22,8 +22,8 @@ class Cohort < ApplicationRecord
   
   def running?
     if end_date > Date.today
-      true 
-    else 
+      true
+    else
       false
     end
   end
