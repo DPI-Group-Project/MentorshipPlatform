@@ -149,9 +149,9 @@ task({ sample_data: :environment }) do
   mentees.each do |mentee|
     cohort_member_id_of_mentee = mentee.cohorts.first
     mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'Mentor').sample
-    active_status = { 'Inactive' => 10, 'Active' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    active_status = { false => 10, true => 100 }.find { |_key, value| rand * 100 <= value }.first
     match = Match.create(
-      mentor_id: mentors_cohort_member_object.mentor_id,
+      mentor_id: mentor_cohort_member_object.user_id,
       mentee_id: mentee.id,
       cohort_id: cohort_member_id_of_mentee.cohort_id,
       active: active_status
