@@ -3,6 +3,7 @@ task({ sample_data: :environment }) do
   starting = Time.now
   p "Creating sample data..."
 
+  Match.delete_all
   CohortMember.delete_all
   ProgramAdmin.delete_all
   Cohort.delete_all
@@ -143,11 +144,25 @@ task({ sample_data: :environment }) do
     )
   end
 
+# Creating Matches
+  mentees.each do |mentee|
+    cohort_member_id_of_mentee = mentee.cohorts.first
+    mentor_in_same_cohort = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'Mentor').sample
+    active = { 'Inactive' => 10, 'Active' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    Match.create(
+      mentor_id: mentor_in_same_cohort.id,
+      mentee_id: mentee.id,
+      cohort_id: mentee.cohorts,
+      active: active
+    )
+  end
+
   ending = Time.now
   p "There are now #{User.count} users."
   p "There are now #{Program.count} programs."
   p "There are now #{Cohort.count} cohorts."
   p "There are now #{ProgramAdmin.count} program admins."
   p "There are now #{CohortMember.count} cohort members."
+  p "There are now #{Match.count} matches."
   p "Done! It took #{(ending - starting).to_i} seconds to create sample data."
 end
