@@ -150,7 +150,7 @@ task({ sample_data: :environment }) do
     cohort_member_id_of_mentee = mentee.cohorts.first
     mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'Mentor').sample
     shared_cohort = Cohort.find_by(id: cohort_member_id_of_mentee.cohort_id)
-    match = Match.create(
+    Match.create(
       mentor_id: mentor_cohort_member_object.user_id,
       mentee_id: mentee.id,
       cohort_id: cohort_member_id_of_mentee.cohort_id,
