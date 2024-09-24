@@ -16,5 +16,4 @@ class Program < ApplicationRecord
   belongs_to :contact, required: true, class_name: "User", foreign_key: "contact_id"
   has_many :cohorts, class_name: "Cohort", foreign_key: "program_id", dependent: :destroy
   has_many :admins, class_name: "ProgramAdmin", foreign_key: "program_id", dependent: :destroy
-  
 end
