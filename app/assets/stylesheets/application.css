@@ -13,3 +13,38 @@
  *= require_tree .
  *= require_self
  */
+
+
+@import "https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap";
+
+:root {
+    --mente-bg--1: #F7F7F7;
+    --mente-dark--0: #202020;
+    --mente-dark--1: #676666;
+    --mente-dark--2: #898989;
+    --mente-light--0: #FFFFFF;
+    --mente-light--1: #F9F9F9;
+    --mente-light--2: #D9D9D9;
+    --mente-light-blue: #EEF6F8;
+    --mente-yellow: #FFA500;
+    --mente-light-red: #F9837C;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Archivo", sans-serif;
+    color: var(--mente-dark--0);
+    font-weight: 300;
+    line-height: 1.6;
+    background-color: var(--mente-bg--1);
+}
