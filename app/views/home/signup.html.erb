@@ -1,0 +1,18 @@
+<h1>Sign Up NOW!</h1>
+<%= display = "" %>
+<%=  %>
+<div>
+  <h2>Mentor or Mentee?</h2>
+  <button onclick=<%= display = "mentor", return %>>Mentor</button>
+  <button onclick=<%= display = "mentee" %>>Mentee</button>
+</div>
+
+
+
+<% if display == "mentor" %>
+    <% pp display %>
+    <%= render "mentor_form" %>
+<% elsif display == "mentee"%>
+    <% pp display %>
+    <%= render "mentee_form" %>
+<% end %>
