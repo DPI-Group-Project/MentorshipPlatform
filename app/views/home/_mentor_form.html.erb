@@ -1,1 +1,58 @@
-<h3> Mentor </h3>
+<div>
+  <div>
+    <h3>Mentor</h3>
+    <%= form_with model: @user do |form| %>
+      <div class="subForm">
+        <div><%= form.label :email %></div>
+        <div><%= form.email_field :email %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :password %></div>
+        <div><%= form.password_field :password %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :confirm_password %></div>
+        <div><%= form.password_field :password %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :first_name %></div>
+        <div><%= form.text_field :first_name %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :last_name %></div>
+        <div><%= form.text_field :last_name %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :phone_number %></div>
+        <div><%= form.telephone_field :phone_number %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :bio %></div>
+        <div><%= form.text_field :bio %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :timezone %></div>
+        <div><%= form.text_field :timezone %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :title, "Job Title:" %></div>
+        <div><%= form.text_field :title %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :linkedin_link, "LinkedIn Profile Link:" %></div>
+        <div><%= form.text_field :linkedin_link %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :profile_picture %></div>
+        <div><%= form.text_field :profile_picture %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.label :skills_array, "Please enter the skills you'd like to learn or improve, separated by commas." %></div>
+        <div><%= form.text_field :skills_array %></div>
+      </div>
+      <div class="subForm">
+        <div><%= form.submit %></div>
+      </div>
+    <% end %>
+  </div>
+</div>
