@@ -9,19 +9,24 @@ class ProfileController < ApplicationController
     @current_mentee_count = @user.mentee_capacity_count(user2.cohort.first.id)
     @capacity_cap = @user.capacity
 
-    if @current_mentee_count < @capacity_cap
-      user2 = User.all.sample  #temporary test current_user
-      Match.create(mentor_id: @user.id, mentee_id: user2.id,
-                cohort_id: user2.cohort, active: true)
-    end
-
     respond_to do |format|
-      if @message.save
-        format.html { redirect_to "/profile/#{@user.id}", notice: 'Message was successfully created.' }
-        format.json { render :show, status: :created, location: @message }
+      if @current_mentee_count < @capacity_cap
+        user2 = User.all.sample  #temporary test current_user
+        match = Match.create(mentor_id: @user.id, mentee_id: user2.id, cohort_id: user2.cohort, active: true)
+
+        #TODO: Update mentee dashboard
+        #if capacity is reached remove mentor form list of mentors on dashboard
+        #
+        if match.save
+          format.html { redirect_to "/profile/#{@user.id}", notice: 'You are now matched!' }
+          format.json { render :show, status: :created, location: @message }
+        else
+          format.html { redirect_to "/profile/#{@user.id}", alert: 'Error has occurred. Not matched' }
+          format.json { head :no_content }
+        end
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+        format.html { redirect_to "/profile/#{@user.id}", alert: 'Sorry, this mentor has reached their intake capacity. Try a different mentor.' }
+        format.json { head :no_content }
       end
     end
   end
