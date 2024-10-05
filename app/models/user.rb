@@ -39,4 +39,10 @@ class User < ApplicationRecord
   def capacity
     CohortMember.where(user_id: self.id).pluck(:capacity).first
   end
+
+  # Return how many mentees a mentor currently has
+  def mentee_capacity_count(cohort_id)
+    matches = Match.where('mentor_id = ? AND active = ? AND cohort_id = ?', self.id, 'true', cohort_id)
+    matches.size
+  end
 end
