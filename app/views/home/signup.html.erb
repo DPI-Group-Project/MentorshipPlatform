@@ -2,17 +2,10 @@
 <%= display = "" %>
 <div data-controller="signup">
   <h2>Mentor or Mentee?</h2>
-  <button onclick=<%= display = "mentor" %>>Mentor</button>
-  <button onclick=<%= display = "mentee" %>>Mentee</button>
+  <button data-action="signup#showForm" data-signup-content-param="mentor">Mentor</button>
+  <button data-action="signup#showForm" data-signup-content-param="mentee">Mentee</button>
 </div>
-
-
-<div style="margin-top: 5px" data-controller="signup">
-  <% if display == "mentor" %>
-      <% pp display %>
-      <%= render "mentor_form" %>
-  <% elsif display == "mentee"%>
-      <% pp display %>
-      <%= render "mentee_form" %>
-  <% end %>
+<div style="margin-top: 5px" data-controller="signup" data-signup-target="display">
+  <div><%= render "mentor_form" %></div>
+  <div><%= render "mentee_form" %></div>
 </div>
