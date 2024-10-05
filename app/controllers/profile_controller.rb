@@ -6,14 +6,14 @@ class ProfileController < ApplicationController
   end
 
   def create 
-    user2 = User.all.sample  #temporary test current_user
-    Match.create(mentor_id: @user.id, mentee_id: user2.id,
-                cohort_id: user2.cohorts.first.id, active: true)
+    @current_mentee_count = @user.mentee_capacity_count(user2.cohort.first.id)
+    @capacity_cap = @user.capacity
 
-    # TODO: Create capacity increment
-    
-    # TODO: Check to see if @users capacity has been reached
-    # Avalible column in users for mentors???
+    if @current_mentee_count < @capacity_cap
+      user2 = User.all.sample  #temporary test current_user
+      Match.create(mentor_id: @user.id, mentee_id: user2.id,
+                cohort_id: user2.cohort, active: true)
+    end
 
     respond_to do |format|
       if @message.save
