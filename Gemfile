@@ -11,6 +11,8 @@ gem 'rubocop', require: false
 
 gem 'simple_form'
 
+gem "tailwindcss-rails"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
