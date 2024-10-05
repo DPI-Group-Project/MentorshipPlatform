@@ -1,25 +1,25 @@
 class ProfileController < ApplicationController
   before_action :profile_params, only: [:show]
   before_action :set_profile_user, only: [:show, :create]  
+  before_action :set_capacity_info, only: [:show, :create]  
   
   def show
   end
 
   def create 
-    @current_mentee_count = @user.mentee_capacity_count(user2.cohort.first.id)
-    @capacity_cap = @user.capacity
+    p 'IN CREATE ACTION'
 
     respond_to do |format|
       if @current_mentee_count < @capacity_cap
-        user2 = User.where.not(id: @user.id).sample  #temporary test current_user
-        match = Match.create(mentor_id: @user.id, mentee_id: user2.id, cohort_id: user2.cohort, active: true)
+        match = Match.create(mentor_id: @user.first.id, mentee_id: @current_user.id, cohort_id: @current_user.cohort, active: true)
 
         #TODO: Update mentee dashboard
         #if capacity is reached remove mentor form list of mentors on dashboard
         #
         if match.save
-          format.html { redirect_to "/profile/#{@user.id}", notice: 'You are now matched!' }
+          format.html { redirect_to "/profile/#{@user.first.id}", notice: 'You are now matched!' }
           format.json { render :show, status: :created, location: @message }
+          format.js
         else
           format.html { redirect_to "/profile/#{@user.id}", alert: 'Error has occurred. Not matched' }
           format.json { head :no_content }
@@ -32,8 +32,13 @@ class ProfileController < ApplicationController
   end
 
   private
+  def set_capacity_info
+    @current_mentee_count = @user.first.mentee_capacity_count(@current_user.cohort)
+    @capacity_cap = @user.first.capacity
+  end
   def set_profile_user
-    @user = User.find(id: params[:id])
+    @user = User.where(id: params[:id])
+    @current_user = User.where.not(id: @user.first.id).sample  #temporary test current_user
   end
   # Only allow a list of trusted parameters through.
   def profile_params
