@@ -11,7 +11,7 @@ class ProfileController < ApplicationController
 
     respond_to do |format|
       if @current_mentee_count < @capacity_cap
-        user2 = User.all.sample  #temporary test current_user
+        user2 = User.where.not(id: @user.id).sample  #temporary test current_user
         match = Match.create(mentor_id: @user.id, mentee_id: user2.id, cohort_id: user2.cohort, active: true)
 
         #TODO: Update mentee dashboard
@@ -33,7 +33,7 @@ class ProfileController < ApplicationController
 
   private
   def set_profile_user
-    @user = User.where(id: params[:id])
+    @user = User.find(id: params[:id])
   end
   # Only allow a list of trusted parameters through.
   def profile_params

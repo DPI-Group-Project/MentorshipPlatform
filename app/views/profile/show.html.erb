@@ -1,4 +1,8 @@
 <h1>Profile</h1>
 <%@user.each do |user|%>
     <h3><%=user.first_name%> <%=user.id%></h3>
+    <button class="text-xs bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md 
+                    py-2 px-5 mr-auto hover:bg-transparent hover:text-[#202020] hover:border-[#202020]">
+        Mentorship Request
+    </button>
 <%end%>    
