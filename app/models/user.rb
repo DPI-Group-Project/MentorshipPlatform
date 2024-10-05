@@ -36,6 +36,10 @@ class User < ApplicationRecord
   has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
   has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
 
+  def cohort
+    CohortMember.where(user_id: self.id).pluck(:cohort_id).first
+  end
+
   def capacity
     CohortMember.where(user_id: self.id).pluck(:capacity).first
   end
