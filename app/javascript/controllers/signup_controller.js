@@ -2,14 +2,19 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="signup"
 export default class extends Controller {
-  static targets = ["display"];
+  static targets = ["mentorForm", "menteeForm"];
+
   connect() {
-    console.log("Hello!", this.element);
+    this.mentorFormTarget.hidden = true;
   }
 
   showForm({ params: { content } }) {
-    console.log(content);
-
-    const display = this.displayTarget
+    if (content == "mentorForm") {
+      this.mentorFormTarget.hidden = false;
+      this.menteeFormTarget.hidden = true;
+    } else if (content == "menteeForm") {
+      this.mentorFormTarget.hidden = true;
+      this.menteeFormTarget.hidden = false;
+    }
   }
 }

@@ -2,10 +2,10 @@
 <%= display = "" %>
 <div data-controller="signup">
   <h2>Mentor or Mentee?</h2>
-  <button data-action="signup#showForm" data-signup-content-param="mentor">Mentor</button>
-  <button data-action="signup#showForm" data-signup-content-param="mentee">Mentee</button>
-</div>
-<div style="margin-top: 5px" data-controller="signup" data-signup-target="display">
-  <div><%= render "mentor_form" %></div>
-  <div><%= render "mentee_form" %></div>
+  <button data-action="signup#showForm" data-signup-content-param="mentorForm">Mentor</button>
+  <button data-action="signup#showForm" data-signup-content-param="menteeForm">Mentee</button>
+  <div style="margin-top: 5px">
+    <div data-signup-target="mentorForm"><%= render "mentor_form" %></div>
+    <div data-signup-target="menteeForm"><%= render "mentee_form" %></div>
+  </div>
 </div>
