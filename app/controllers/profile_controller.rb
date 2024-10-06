@@ -21,11 +21,11 @@ class ProfileController < ApplicationController
           format.json { render :show, status: :created, location: @message }
           format.js
         else
-          format.html { redirect_to "/profile/#{@user.id}", alert: 'Error has occurred. Not matched' }
+          format.html { redirect_to "/profile/#{@user.first.id}", alert: 'Error has occurred. Not matched' }
           format.json { head :no_content }
         end
       else
-        format.html { redirect_to "/profile/#{@user.id}", alert: 'Sorry, this mentor has reached their intake capacity. Try a different mentor.' }
+        format.html { redirect_to "/profile/#{@user.first.id}", alert: 'Sorry, this mentor has reached their intake capacity. Try a different mentor.' }
         format.json { head :no_content }
       end
     end
@@ -33,12 +33,12 @@ class ProfileController < ApplicationController
 
   private
   def set_capacity_info
-    @current_mentee_count = @user.first.mentee_capacity_count(@current_user.cohort)
+    @current_mentee_count = @user.first.mentee_capacity_count(@user.first.cohort)
     @capacity_cap = @user.first.capacity
   end
   def set_profile_user
     @user = User.where(id: params[:id])
-    @current_user = User.where.not(id: @user.first.id).sample  #temporary test current_user
+    @current_user = User.unpaired_mentees_in_cohort(@user.first.cohort).sample #temporary test current_user
   end
   # Only allow a list of trusted parameters through.
   def profile_params
