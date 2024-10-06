@@ -1,6 +1,7 @@
 <h1>Profile</h1>
 <%@user.each do |user|%>
-    <h3><%=user.first_name%> <%=user.id%></h3>
+    <h3>Current User: <%=@current_user.first_name%> <%=@current_user.id%></h3>   
+    <h3>Mentor: <%=user.first_name%> <%=user.id%></h3>
     <h3><%=@current_mentee_count%>/<%=@capacity_cap%></h3>
     <%= button_to 'Mentorship Request', create_request_profile_path(user.id),
         class: "text-xs bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md 
