@@ -1,4 +1,9 @@
 <section class="p-5">
+  <h1 class="text-2xl font-semibold text-[#202020] mb-1">Current User:</h1>
+  <h2>Name: <%= @current_user.first_name %></h2>
+  <h2>ID: <%= @current_user.id %></h2>
+  <h2>Cohort: <%= @current_user.cohort %></h2>
+  <h2>Match?: <%= @current_user.matched? %></h2>
   <h1 class="text-2xl font-semibold text-[#202020] mb-1">
     <% if @role == "Mentor" %>
       Mentor Profile
@@ -49,7 +54,7 @@
         <%end%>
       </b>
       <p class="text-xs text-[#202020] flex-grow"><%= user.bio %></p>
-      <% if @role == "Mentor" && @current_mentee_count < @capacity_cap %>
+      <% if @role == "Mentor" && @current_mentee_count < @capacity_cap && @current_user.matched? == false %>
         <%= button_to 'Mentorship Request', create_request_profile_path(user.id),
           class: "text-xs bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md 
                   py-2 px-5 mr-auto hover:bg-transparent hover:text-[#202020] hover:border-[#202020]",
@@ -57,7 +62,7 @@
       <%end%>    
     </div>
     <div class="flex flex-col gap-3">
-      <div class="bg-[#FFFFFF] flex-col space-y-3 py-5 border-slate-300 rounded-lg px-5">
+      <div class="bg-[#FFFFFF] flex-col flex-grow space-y-3 py-5 border-slate-300 rounded-lg px-5">
         <b class="text-lg text-[#202020] font-bold">Skills</b>
         <div class="flex gap-1.5">
           <% user.skills_array.each do |skill| %>
