@@ -11,7 +11,7 @@ gem 'rubocop', require: false
 
 gem 'simple_form'
 
-gem "tailwindcss-rails"
+gem "tailwindcss-rails", "~> 2.7"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
@@ -77,4 +77,4 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-gem "tailwindcss-rails", "~> 2.7"
+
