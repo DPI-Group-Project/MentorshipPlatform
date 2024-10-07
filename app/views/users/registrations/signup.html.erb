@@ -1,11 +1,10 @@
 <h1>Sign Up NOW!</h1>
-<%= display = "" %>
 <div data-controller="signup">
   <h2>Mentor or Mentee?</h2>
   <button data-action="signup#showForm" data-signup-content-param="mentorForm">Mentor</button>
   <button data-action="signup#showForm" data-signup-content-param="menteeForm">Mentee</button>
   <div style="margin-top: 5px">
-    <div data-signup-target="mentorForm"><%= render "mentor_form" %></div>
-    <div data-signup-target="menteeForm"><%= render "mentee_form" %></div>
+    <div data-signup-target="mentorForm"><%= render partial: "users/registrations/mentor_form" %></div>
+    <div data-signup-target="menteeForm"><%= render partial: "users/registrations/mentee_form", resource: @user %></div>
   </div>
 </div>
