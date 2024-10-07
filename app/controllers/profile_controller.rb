@@ -15,7 +15,7 @@ class ProfileController < ApplicationController
         match = Match.create(mentor_id: @user.first.id, mentee_id: @current_user.id, cohort_id: @current_user.cohort, active: true)
 
         #TODO: Update mentee dashboard
-        #if capacity is reached remove mentor form list of mentors on dashboard
+        #if capacity is reached remove mentor from list of mentors on dashboard
         #if mentee is already matched dont show match button
 
         
