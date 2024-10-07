@@ -43,6 +43,13 @@ class User < ApplicationRecord
                                   .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')
                                   .where('matches.id IS NULL')}
+  def matched?
+    matches = Match.where('mentee_id = ?', self.id)
+    if matches.size == 0
+      return false
+    end
+    return true
+  end
   def cohort
     CohortMember.where(user_id: self.id).pluck(:cohort_id).first
   end
