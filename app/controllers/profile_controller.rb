@@ -4,6 +4,7 @@ class ProfileController < ApplicationController
   before_action :set_capacity_info, only: [:show, :create]  
   
   def show
+    @role = @user.first.role
   end
 
   def create 
