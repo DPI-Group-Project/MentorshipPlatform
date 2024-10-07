@@ -44,7 +44,7 @@ class User < ApplicationRecord
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')
                                   .where('matches.id IS NULL')}
   def matched?
-    Match.where('mentee_id = :id', id: self.id).exists?
+    Match.where('mentee_id = :id OR mentor_id = :id', id: self.id).exists?
   end
   def cohort
     CohortMember.where(user_id: self.id).pluck(:cohort_id).first

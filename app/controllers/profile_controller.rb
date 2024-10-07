@@ -11,14 +11,13 @@ class ProfileController < ApplicationController
     p 'IN CREATE ACTION'
 
     respond_to do |format|
-      if @current_mentee_count < @capacity_cap
+      if @current_mentee_count < @capacity_cap && @current_user.matched? == false
         match = Match.create(mentor_id: @user.first.id, mentee_id: @current_user.id, cohort_id: @current_user.cohort, active: true)
-
+        
         #TODO: Update mentee dashboard
         #if capacity is reached remove mentor from list of mentors on dashboard
         #if mentee is already matched dont show match button
 
-        
         if match.save
           format.html { redirect_to "/profile/#{@user.first.id}", notice: 'You are now matched!' }
           format.json { render :show, status: :created, location: @message }
@@ -41,7 +40,8 @@ class ProfileController < ApplicationController
   end
   def set_profile_user
     @user = User.where(id: params[:id])
-    @current_user = User.mentees_in_cohort(@user.first.cohort).sample #temporary test current_user
+    # @current_user = User.mentees_in_cohort(@user.first.cohort).sample   #temporary test current_user
+    @current_user = User.where(id: 3918).first   #temporary test current_user
   end
   # Only allow a list of trusted parameters through.
   def profile_params
