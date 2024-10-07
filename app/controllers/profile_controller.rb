@@ -15,7 +15,7 @@ class ProfileController < ApplicationController
 
         #TODO: Update mentee dashboard
         #if capacity is reached remove mentor form list of mentors on dashboard
-        #
+        
         if match.save
           format.html { redirect_to "/profile/#{@user.first.id}", notice: 'You are now matched!' }
           format.json { render :show, status: :created, location: @message }
@@ -38,7 +38,7 @@ class ProfileController < ApplicationController
   end
   def set_profile_user
     @user = User.where(id: params[:id])
-    @current_user = User.unpaired_mentees_in_cohort(@user.first.cohort).sample #temporary test current_user
+    @current_user = User.mentees_in_cohort(@user.first.cohort).sample #temporary test current_user
   end
   # Only allow a list of trusted parameters through.
   def profile_params

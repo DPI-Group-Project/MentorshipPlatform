@@ -1,15 +1,15 @@
-<% if @role == 'mentor' %>
+<% if @role == 'Mentor' %>
   <h1>Welcome, Mentor!</h1>
   <%@mentors_data.each do |mentor|%>
     <h3><%=mentor.user_id%></h3>
   <%end%>
-<% elsif @role == 'mentee' %>
+<% elsif @role == 'Mentee' %>
   <h1>Welcome, Mentee!</h1>
   <%@mentees_data.each do |mentee|%>
     <h3><%=mentee.user_id%></h3>
   <%end%>
   <!-- Mentee Partial Views Here-->
-<% elsif @role == 'admin' %>
+<% elsif @role == 'Admin' %>
   <h1>Welcome, Admin!</h1>
   <%@admins_data.each do |admin|%>
     <h3><%=admin.user_id%></h3>

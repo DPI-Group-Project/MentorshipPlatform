@@ -4,11 +4,11 @@ class DashboardController < ApplicationController
     @role = params[:role]
 
     case @role
-    when 'mentor'
+    when 'Mentor'
       @mentors_data = CohortMember.where(role: 'Mentor')
-    when 'mentee'
+    when 'Mentee'
       @mentees_data = CohortMember.where(role: 'Mentee')
-    when 'admin'
+    when 'Admin'
       @admins_data = ProgramAdmin.all
     else
       redirect_to root_path, alert: 'Invalid role specified.'
