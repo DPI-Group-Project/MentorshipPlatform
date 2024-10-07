@@ -16,6 +16,8 @@ class ProfileController < ApplicationController
 
         #TODO: Update mentee dashboard
         #if capacity is reached remove mentor form list of mentors on dashboard
+        #if mentee is already matched dont show match button
+
         
         if match.save
           format.html { redirect_to "/profile/#{@user.first.id}", notice: 'You are now matched!' }
