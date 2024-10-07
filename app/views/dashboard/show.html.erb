@@ -5,9 +5,6 @@
   <%end%>
 <% elsif @role == 'mentee' %>
   <h1>Welcome, Mentee!</h1>
-  <%@mentees_data.each do |mentee|%>
-    <h3><%=mentee.user_id%></h3>
-  <%end%>
   <%= render partial: "shared/mentor_list", locals: {mentors_data: @mentors_data}%>
   <!-- Mentee Partial Views Here-->
 <% elsif @role == 'admin' %>
