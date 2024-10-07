@@ -39,7 +39,7 @@ class User < ApplicationRecord
   # Returns list of mentees that are in the same cohort as the provided mentor
   scope :mentees_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')}
-   scope :unpaired_mentees_in_cohort, ->(cohort) {
+  scope :unpaired_mentees_in_cohort, ->(cohort) {
                                     joins(:cohort_members)
                                       .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
                                       .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')
@@ -49,11 +49,12 @@ class User < ApplicationRecord
   def cohort
     CohortMember.where(user_id: self.id).pluck(:cohort_id).first
   end
-
+  def role
+    CohortMember.where(user_id: self.id).pluck(:role).first
+  end
   def capacity
     CohortMember.where(user_id: self.id).pluck(:capacity).first
   end
-
   # Return how many mentees a mentor currently has
   def mentee_capacity_count(cohort_id)
     matches = Match.where('mentor_id = ? AND active = ? AND cohort_id = ?', self.id, 'true', cohort_id)
