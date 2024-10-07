@@ -1,0 +1,81 @@
+<section class="py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col justify-center items-center gap-x-16 gap-y-5 xl:gap-28 lg:flex-row lg:justify-between max-lg:max-w-2xl mx-auto max-w-full">
+      <div class="w-full lg:w-1/2 flex justify-center items-center">
+        <h1 class="text-5xl font-bold text-gray-900 text-center lg:text-left">
+          Frequently Asked Questions
+        </h1>
+      </div>
+      <div class="w-full lg:w-1/2">
+        <div class="lg:max-w-xl">
+         
+          <div class="accordion-group">
+            <div class="accordion pb-8 border-b border-solid border-gray-200" id="accordion-1">
+              <button class="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600" aria-controls="content-1">
+                <h5>How can i contact the DPI team?</h5>
+                <span class="icon text-gray-900 transition duration-500">+</span>
+              </button>
+              <div id="content-1" class="accordion-content w-full px-0 overflow-hidden pr-4" style="max-height: 0; transition: max-height 0.5s ease;">
+                <p class="text-base font-normal text-gray-600">
+                  To create an account, find the 'Sign up' or 'Create account' button, fill out the registration form with your personal information, and click 'Create account' or 'Sign up.' Verify your email address if needed, and then log in to start using the platform.
+                </p>
+              </div>
+            </div>
+            <div class="accordion py-8 border-b border-solid border-gray-200" id="accordion-2">
+              <button class="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600" aria-controls="content-2">
+                <h5>What services do you offer?</h5>
+                <span class="icon text-gray-900 transition duration-500">+</span>
+              </button>
+              <div id="content-2" class="accordion-content w-full px-0 overflow-hidden pr-4" style="max-height: 0; transition: max-height 0.5s ease;">
+                <p class="text-base font-normal text-gray-600">
+                  Our focus on providing robust and user-friendly content management capabilities ensures that you can manage your content with confidence and achieve your content marketing goals with ease.
+                </p>
+              </div>
+            </div>
+            <div class="accordion py-8 border-b border-solid border-gray-200" id="accordion-3">
+              <button class="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600" aria-controls="content-3">
+                <h5>Do you provide website maintenance services?</h5>
+                <span class="icon text-gray-900 transition duration-500">+</span>
+              </button>
+              <div id="content-3" class="accordion-content w-full px-0 overflow-hidden pr-4" style="max-height: 0; transition: max-height 0.5s ease;">
+                <p class="text-base font-normal text-gray-600">
+                  To reset your password, click on the 'Forgot password' link on the login page. Enter your registered email address, and we'll send you instructions to reset your password.
+                </p>
+              </div>
+            </div>
+            <div class="accordion py-8" id="accordion-4">
+              <button class="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600" aria-controls="content-4">
+                <h5>What is the payment process?</h5>
+                <span class="icon text-gray-900 transition duration-500">+</span>
+              </button>
+              <div id="content-4" class="accordion-content w-full px-0 overflow-hidden pr-4" style="max-height: 0; transition: max-height 0.5s ease;">
+                <p class="text-base font-normal text-gray-600">
+                  Our payment process is secure and straightforward. Simply choose your plan, enter your payment details, and complete the purchase. You'll receive a confirmation email once your payment is successful.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+    document.querySelectorAll('.accordion-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.icon');
+
+            button.classList.toggle('accordion-active');
+
+            if (button.classList.contains('accordion-active')) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.textContent = '-'; 
+            } else {
+                content.style.maxHeight = '0';
+                icon.textContent = '+'; 
+            }
+        });
+    });
+</script>
+
