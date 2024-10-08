@@ -4,8 +4,7 @@
     <h3><%=mentor.user_id%></h3>
   <%end%>
 <% elsif @role == 'mentee' %>
-  <h1>Welcome, Mentee!</h1>
-  <%= render partial: "shared/mentor_list", locals: {mentors_data: @mentors_data}%>
+  <%= render partial: "mentee_dashboard", locals: {mentors_data: @mentors_data}%>
 <% elsif @role == 'admin' %>
   <h1>Welcome, Admin!</h1>
   <%@admins_data.each do |admin|%>
