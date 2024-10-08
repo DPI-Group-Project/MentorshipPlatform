@@ -1,6 +1,6 @@
 <section class="p-5">
   <h1 class="text-2xl font-semibold text-[#202020] mb-1">Current User:</h1>
-  <h2>Name: <%= current_user.first_name %></h2>
+  <h2>Name: <%= current_user.name %></h2>
   <h2>ID: <%= current_user.id %></h2>
   <h2>Cohort: <%= current_user.cohort %></h2>
   <h2>Match?: <%= current_user.matched? %></h2>
@@ -21,7 +21,7 @@
       <img src=<%= asset_path('sample_img/mentor_sample.png') %> alt="user_profile_picture" class="w-24 h-24 object-cover rounded-lg border">
     </div>
     <div>
-      <b class="text-lg text-[#202020] font-bold"><%= user.first_name %> <%= user.last_name %></b>
+      <b class="text-lg text-[#202020] font-bold"><%= user.name %></b>
       <p class="text-sm	text-[#202020] mb-2.5"><%= user.title %></p>
       <div>
         <div class="flex gap-1 mb-2">
