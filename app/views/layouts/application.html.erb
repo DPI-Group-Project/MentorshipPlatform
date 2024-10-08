@@ -10,7 +10,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body> 
+  <body>
     <%= render partial: "shared/navbar" %>
     <div>
       <% if notice.present? %>
@@ -19,9 +19,11 @@
       <% if alert.present? %>
         <%= render partial: "shared/flash", locals: { message: alert, css_class: "danger" } %>
       <% end %>
-    </div>  
+    </div>
     <main class="container mx-auto mt-28 px-5 flex justify-center">
       <%= yield %>
     </main>
+    <%= render partial: "shared/footer" %>
   </body>
+
 </html>
