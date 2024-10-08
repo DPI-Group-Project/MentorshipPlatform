@@ -147,7 +147,7 @@ task({ sample_data: :environment }) do
 
 # Creating Matches
   mentees.each do |mentee|
-    cohort_member_id_of_mentee = mentee.cohorts.first
+    cohort_member_id_of_mentee = mentee.cohort_members.first
     mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'Mentor').sample
     shared_cohort = Cohort.find_by(id: cohort_member_id_of_mentee.cohort_id)
     Match.create(
