@@ -11,8 +11,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    pp params
-    super
+    super do |resource|
+      if resource.persisted? # Ensure the user is saved successfully
+        cohort_params = params[:user][:cohorts]
+        cohort_member = CohortMember.new(
+          user_id: resource.id,
+          role: cohort_params[:role], 
+          capacity: cohort_params[:capacity]
+        )
+        if cohort_member.save
+          Rails.logger.info "CohortMember created: #{cohort_member.inspect}"
+        else
+          Rails.logger.error "CohortMember creation failed: #{cohort_member.errors.full_messages.join(', ')}"
+        end
+      end
+    end
   end
 
   def signup
@@ -50,7 +63,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up,
                                       keys: %i[first_name last_name status inactive_reason phone_number bio timezone title linkedin_link profile_picture
-                                               skills_array])
+                                               skills_array], cohort_member_attributes: %i[role capacity])
   end
 
   # If you have extra params to permit, append them to the sanitizer.

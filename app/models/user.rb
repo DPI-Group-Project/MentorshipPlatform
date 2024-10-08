@@ -27,8 +27,6 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  accepts_nested_attributes_for :cohorts
-  after_save :create_cohort_member
 
   has_many :cohorts, class_name: "CohortMember", foreign_key: "user_id", dependent: :destroy
   has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
@@ -37,8 +35,4 @@ class User < ApplicationRecord
   has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
   has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
   has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
-
-  def create_cohort_member
-    CohortMember.create(user_id: id, cohort_id: 1, role: role)
-  end
 end
