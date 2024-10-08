@@ -1,11 +1,13 @@
 <nav class="flex flex-wrap items-center justify-between px-24 bg-[#FFFFFF] h-[72px] text-[1.5rem] text-[#000000] font-medium shadow-sm fixed top-0 w-full z-20">
     <div>
-      <img src=<%= asset_path("icon/Logo.svg") %> alt="dpi_logo">
+        <a href="/">
+            <img src=<%= asset_path("icon/Logo.svg") %> alt="dpi_logo">
+        </a>    
     </div>
     <div>
         <ul class="flex space-x-14">
-            <li>Home</li>
-            <li>Mentor</li>
+            <a href="/">Home</a>
+            <a href="/dashboard/mentee">Mentor</a>
             <li>Meeting</li>
             <li>Survey</li>
         </ul>
