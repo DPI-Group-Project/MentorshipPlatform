@@ -34,7 +34,7 @@
         <%= f.input :skills_array,
                 required: true %>
       </div>
-      <%= f.simple_fields_for :cohorts do |cm| %>
+      <%= f.simple_fields_for :cohorts, CohortMember.new do |cm| %>
         <%= cm.input :capacity, required: true %>
         <%= cm.hidden_field :role, value: 'Mentor' %>
       <% end %>

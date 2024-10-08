@@ -13,7 +13,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do |resource|
       if resource.persisted? # Ensure the user is saved successfully
-        cohort_params = params[:user][:cohorts]
+        cohort_params = params[:user][:cohorts_attributes][0]
+        pp "itchyland"
+        pp cohort_params
         cohort_member = CohortMember.new(
           user_id: resource.id,
           role: cohort_params[:role], 
@@ -62,8 +64,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up,
-                                      keys: %i[first_name last_name status inactive_reason phone_number bio timezone title linkedin_link profile_picture
-                                               skills_array], cohort_member_attributes: %i[role capacity])
+                                      keys: [:first_name, :last_name, :status, :inactive_reason, :phone_number, :bio, :timezone, :title, :linkedin_link, :profile_picture,
+                                               :skills_array, cohorts_attributes: [:role, :capacity]
+                                            ])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
