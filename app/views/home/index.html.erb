@@ -1,1 +1,81 @@
-<h1>Landing Page</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= render partial: "shared/cdn_assets" %>
+    <title>Landing Page</title>
+  </head>
+  <body>
+    <div class="relative w-[1000px] h-[400px]">
+      <div class="flex flex-col items-center justify-center w-full">
+        <div class="gradient gradient-left"></div>
+        <div class="gradient gradient-right"></div>
+        <h1 class="hero-title text-center w-1/2 text-6xl">
+          Transform potential into progress through <span style="font-weight: 700">MentE</span>
+        </h1>
+        <div class="mt-8 flex space-x-4">
+          <button class="bg-gray-900 text-white px-8 py-4 text-3xl rounded-md hover:bg-gray-700 transition">
+            Signup as Mentor
+          </button>
+          <button class="bg-gray-900 text-white px-8 py-4 text-3xl rounded-md hover:bg-gray-700 transition">
+            Signup as Mentee
+          </button>
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-center mt-40 mb-9">
+          <h1 class="font-bold text-6xl">Why it works</h1>
+        </div>
+      </div>
+      <section>
+        <div class="py-4 px-2 mx-auto max-w-screen-lg sm:py-4 lg:px-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 h-full">
+            <div class="col-span-2 sm:col-span-1 md:col-span-2">
+              <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 mb-4">
+                <div class="group relative flex flex-col overflow-hidden rounded-lg p-6 bg-stone-50 h-64">
+                  <div class="flex flex-col items-center">
+                    <img width="50" height="50" src="https://img.icons8.com/ios/50/conference-call--v1.png" alt="conference-call--v1" />
+                    <h3 class="mt-4 z-10 text-2xl font-medium text-black xs:text-xl md:text-3xl text-center">Tailored Mentors</h3>
+                    <p class="mt-2 text-gray-700 text-center">Mentors are reviewed by their Mentees based on metrics like responsiveness, skill match, and personality fit to ensure a high-quality experience for all parties.</p>
+                  </div>
+                </div>
+                <div class="group relative flex flex-col overflow-hidden rounded-lg p-6 bg-stone-50 h-64">
+                  <div class="flex flex-col items-center">
+                    <img width="50" height="50" src="https://img.icons8.com/ios/50/heart-plus.png" alt="heart-plus" />
+                    <h3 class="mt-4 z-10 text-2xl font-medium text-black xs:text-xl md:text-3xl text-center">Precise Matching</h3>
+                    <p class="mt-2 text-gray-700 text-center">MentE accounts for both Mentee areas of interest and individual needs to determine the best match. Mentees can shortlist their favorite mentors then let our system take care of the rest.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="group relative flex flex-col overflow-hidden rounded-lg p-6 bg-stone-50 h-64">
+                <div class="flex items-start">
+                  <img width="50" height="50" src="https://img.icons8.com/ios/50/bullish--v1.png" alt="bullish--v1" class="w-8 h-8" />
+                  <div class="ml-4 flex-grow">
+                    <h3 class="z-10 text-2xl font-medium text-black xs:text-xl md:text-3xl text-left">Insightful Management</h3>
+                    <p class="mt-2 text-gray-700 text-left">MentE accounts for both Mentee areas of interest and individual needs to determine the best match. Mentees can shortlist their favorite mentors then let our system take care of the rest.</p>
+                  </div>
+                  <img class="ml-4 w-64 h-48 object-cover" src=<%= asset_path("sample_img/management.png") %> alt="Description of the image" />
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2 sm:col-span-1 md:col-span-1 h-auto md:h-full flex flex-col">
+              <div class="group relative flex flex-col overflow-hidden rounded-lg p-6 flex-grow bg-stone-50 h-64">
+                <div class="flex flex-col items-center">
+                  <img width="50" height="50" src="https://img.icons8.com/ios/50/graph--v1.png" alt="graph--v1" />
+                  <h3 class="mt-4 text-2xl font-medium text-black xs:text-xl md:text-3xl text-center">Growth Focused</h3>
+                  <p class="mt-2 text-gray-700 text-center">Mentor support provides insights for personal and professional growth and facilitates the refinement of skills allowing Mentees to go from good to great.</p>
+                  <img class="mt-4 w-64 h-48 object-cover rounded-lg" src=<%= asset_path("sample_img/growth_focused.png") %> alt="Growth focused image" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Reviews Section -->
+      <%= render "reviews" %>
+      <!-- FAQ Section -->
+      <%= render "faq" %>
+    </div>
+  </body>
+</html>

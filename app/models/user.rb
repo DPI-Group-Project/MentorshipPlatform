@@ -37,6 +37,8 @@ class User < ApplicationRecord
   has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
   
   # Returns list of mentees that are in the same cohort as the provided mentor
+  scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentor')}
   scope :mentees_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')}
   scope :unpaired_mentees_in_cohort, ->(cohort) { joins(:cohort_members)

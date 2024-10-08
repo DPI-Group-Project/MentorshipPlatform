@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get '/dashboard/:role', to: 'dashboard#show'
-  get '/profile/:id', to: 'profile#show'
+  get '/profile/:id', to: 'profile#show', as: :profile
 
   post '/profile/:id/create_request', to: 'profile#create', as: 'create_request_profile'
 
