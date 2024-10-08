@@ -45,7 +45,10 @@ class User < ApplicationRecord
                                   .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')
                                   .where('matches.id IS NULL')}
-  def matched?
+def name
+  "#{first_name.capitalize} #{last_name.capitalize}"
+end
+def matched?
     Match.where('mentee_id = :id OR mentor_id = :id', id: self.id).exists?
   end
   def cohort
