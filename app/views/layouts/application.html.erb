@@ -19,10 +19,7 @@
         <%= render partial: "shared/flash", locals: { message: alert, css_class: "danger" } %>
       <% end %>
     </div>
-    <main class="container mx-auto mt-28 px-5 flex justify-center">
       <%= yield %>
-    </main>
     <%= render partial: "shared/footer" %>
   </body>
-
 </html>
