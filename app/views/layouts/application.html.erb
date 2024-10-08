@@ -6,7 +6,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://cdn.tailwindcss.com"></script>
-    <%#= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <% #= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -20,9 +20,7 @@
         <%= render partial: "shared/flash", locals: { message: alert, css_class: "danger" } %>
       <% end %>
     </div>
-    <main class="container mx-auto mt-28 px-5 flex justify-center">
       <%= yield %>
-    </main>
     <%= render partial: "shared/footer" %>
   </body>
 
