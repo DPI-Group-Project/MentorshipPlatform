@@ -57,6 +57,6 @@ class User < ApplicationRecord
   end
 
   def set_default_active_status
-    self.status ||= 'active'
+    self.status ||= 'Active'
   end
 end
