@@ -37,7 +37,7 @@
       <%= f.simple_fields_for :cohorts, CohortMember.new do |cm| %>
         <%= cm.hidden_field :capacity, value: nil %>
         <%= cm.hidden_field :role, value: 'Mentee' %>
-        <%= cm.hidden_field :cohort_id, value: 1 %>
+        <%= cm.hidden_field :cohort_id, value: Cohort.first %>
       <% end %>
       <div class="form-actions">
         <%= f.button :submit, "Sign up" %>
