@@ -40,6 +40,10 @@ class User < ApplicationRecord
   after_create :create_first_cohort
   attr_accessor :cohorts_attributes
 
+  before_create :set_default_active_status
+
+  private
+
   def create_first_cohort
     return unless cohorts_attributes.present?
 
@@ -50,5 +54,9 @@ class User < ApplicationRecord
         cohort_id: attributes[:cohort_id] || Cohort.first&.id
       )
     end
+  end
+
+  def set_default_active_status
+    self.active ||= true
   end
 end
