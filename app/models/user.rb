@@ -27,14 +27,28 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  
-  has_many :cohorts, class_name: "CohortMember", foreign_key: "user_id", dependent: :destroy
-  has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
-  has_many :mentees, class_name: "Match", foreign_key: "mentee_id", dependent: :destroy
-  has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
-  has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
-  has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
-  has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
+
+  has_many :cohorts, class_name: 'CohortMember', foreign_key: 'user_id', dependent: :destroy
+  has_one :mentor, class_name: 'Match', foreign_key: 'mentor_id', dependent: :destroy
+  has_many :mentees, class_name: 'Match', foreign_key: 'mentee_id', dependent: :destroy
+  has_many :mentor_submissions, class_name: 'MatchSubmission', foreign_key: 'mentor_id', dependent: :destroy
+  has_many :mentee_submissions, class_name: 'MatchSubmission', foreign_key: 'mentee_id', dependent: :destroy
+  has_many :owned_cohorts, class_name: 'Cohort', foreign_key: 'creator_id', dependent: :destroy
+  has_many :owned_programs, class_name: 'Program', foreign_key: 'creator_id', dependent: :destroy
 
   accepts_nested_attributes_for :cohorts
+  after_create :create_first_cohort
+  attr_accessor :cohorts_attributes
+
+  def create_first_cohort
+    return unless cohorts_attributes.present?
+
+    cohorts_attributes.each do |_, attributes|
+      cohorts.create!(
+        role: attributes[:role],
+        capacity: attributes[:capacity],
+        cohort_id: attributes[:cohort_id] || Cohort.first&.id
+      )
+    end
+  end
 end

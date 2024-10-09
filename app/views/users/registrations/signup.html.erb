@@ -4,7 +4,7 @@
   <button data-action="signup#showForm" data-signup-content-param="mentorForm">Mentor</button>
   <button data-action="signup#showForm" data-signup-content-param="menteeForm">Mentee</button>
   <div style="margin-top: 5px">
-    <div data-signup-target="mentorForm"><%= render partial: "users/registrations/mentor_form" %></div>
+    <div data-signup-target="mentorForm" style="display: hidden;"><%= render partial: "users/registrations/mentor_form" %></div>
     <div data-signup-target="menteeForm"><%= render partial: "users/registrations/mentee_form"%></div>
   </div>
 </div>
