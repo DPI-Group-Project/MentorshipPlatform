@@ -6,8 +6,13 @@
     Discover insights and stories from our mentors to inspire your own journey.
   </p>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-    <% mentors_data.each do |mentor|%>
-      <%= render 'profile_card', mentor: mentor %>
+    <% mentors_data.each do |mentor| %>
+    <%# TODO: Please refactor (might need to modify user model method) %>
+      <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort) %>
+      <% capacity_cap = mentor.capacity %>
+      <% if  current_mentee_count < capacity_cap %>
+        <%= render 'profile_card', mentor: mentor %>
+      <% end %>
     <%end%>
   </div>
 </div>
