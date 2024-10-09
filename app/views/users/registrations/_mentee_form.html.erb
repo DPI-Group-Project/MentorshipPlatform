@@ -1,6 +1,6 @@
 <div>
   <div>
-    <h3>Mentee</h3>
+    <h3>Mentor</h3>
     <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), defaults: {input_html: {class: "subForm"}}) do |f| %>
       <%= f.error_notification %>
       <div class="form-inputs">
@@ -34,6 +34,11 @@
         <%= f.input :skills_array,
                 required: true %>
       </div>
+      <%= f.simple_fields_for :cohorts, CohortMember.new do |cm| %>
+        <%= cm.hidden_field :capacity, value: nil %>
+        <%= cm.hidden_field :role, value: 'Mentee' %>
+        <%= cm.hidden_field :cohort_id, value: 1 %>
+      <% end %>
       <div class="form-actions">
         <%= f.button :submit, "Sign up" %>
       </div>

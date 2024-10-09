@@ -13,27 +13,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super do |resource|
-      if resource.persisted? # Ensure the user is saved successfully
-        pp resource.persisted?
-        cohort_params = params.require(:user).permit(cohorts_attributes: %i[role cohort_id capacity])
-
-        # Use the association to create the cohort_member
-        cohort_member = resource.cohorts.build(
-          role: cohort_params[:cohorts_attributes]['0'][:role],
-          capacity: cohort_params[:cohorts_attributes]['0'][:capacity],
-          cohort_id: cohort_params[:cohorts_attributes]['0'][:cohort_id]
-        )
-
-        if cohort_member.save
-          Rails.logger.info "CohortMember created: #{cohort_member.inspect}"
+      if resource.persisted?
+        Rails.logger.info "User created: #{resource.inspect}"
+        if resource.cohorts.any?
+          Rails.logger.info "CohortMember created: #{resource.cohorts.last.inspect}"
         else
-          Rails.logger.error "CohortMember creation failed: #{cohort_member.errors.full_messages.join(', ')}"
+          Rails.logger.error 'CohortMember creation failed'
         end
       end
     end
-    return unless resource.errors.any?
-    pp resource.persisted?
-    Rails.logger.error "User validation errors: #{resource.errors.full_messages.join(', ')}"
   end
 
   def signup
