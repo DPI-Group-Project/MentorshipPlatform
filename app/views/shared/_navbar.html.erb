@@ -1,17 +1,24 @@
-<nav class="flex flex-wrap items-center justify-between px-24 bg-[#FFFFFF] h-[72px] text-[1.5rem] text-[#000000] font-medium shadow-sm fixed top-0 w-full z-20">
+<nav class="fixed top-0 left-0 w-full mb-10 z-50 bg-white shadow-sm h-20 px-20">
+  <div class="flex items-center justify-between px-30 h-full">
     <div>
-      <img src=<%= asset_path("icon/Logo.svg") %> alt="dpi_logo">
+      <img src="<%= asset_path("icon/Logo.svg") %>" alt="DPI Logo" class="h-12">
     </div>
     <div>
-        <ul class="flex space-x-14">
-            <li>Home</li>
-            <li>Mentor</li>
-            <li>Meeting</li>
-            <li>Survey</li>
-        </ul>
+      <ul class="flex space-x-10 text-lg font-medium text-black">
+        <li><a href="/" class="hover:text-gray-600">Home</a></li>
+        <li><a href="#" class="hover:text-gray-600">Mentor</a></li>
+        <li><a href="#" class="hover:text-gray-600">Meeting</a></li>
+        <li><a href="#" class="hover:text-gray-600">Survey</a></li>
+      </ul>
     </div>
-    <div class="flex gap-6">
-        <img src="<%= asset_path("icon/Notification.svg") %>" alt="notification">
-        <img src="<%= asset_path("sample_img/user_mini_image.png") %>" alt="user_image">
+    <div class="flex items-center space-x-4">
+      <% if user_signed_in? %>
+        <img src="<%= asset_path("icon/Notification.svg") %>" alt="Notifications" class="h-6 w-6">
+        <img src="<%= asset_path("sample_img/user_mini_image.png") %>" alt="User Image" class="h-10 w-10 rounded-full">
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path, class: "hover:text-gray-600" %>
+      <% end %>
     </div>
+  </div>
 </nav>

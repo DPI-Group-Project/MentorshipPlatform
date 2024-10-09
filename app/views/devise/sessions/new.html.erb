@@ -1,0 +1,21 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-12">
+  <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form-inputs">
+        <%= f.input :email,
+                    required: false,
+                    autofocus: true,
+                    input_html: { autocomplete: "email" } %>
+        <%= f.input :password,
+                    required: false,
+                    input_html: { autocomplete: "current-password" } %>
+        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+      </div>
+      <div class="form-actions mt-4">
+        <%= f.button :submit, "Log in", class: "w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600" %>
+      </div>
+    <% end %>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
