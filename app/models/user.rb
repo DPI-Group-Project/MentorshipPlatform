@@ -28,14 +28,20 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :cohorts, class_name: 'CohortMember', foreign_key: 'user_id', dependent: :destroy
-  has_one :mentor, class_name: 'Match', foreign_key: 'mentor_id', dependent: :destroy
-  has_many :mentees, class_name: 'Match', foreign_key: 'mentee_id', dependent: :destroy
-  has_many :mentor_submissions, class_name: 'MatchSubmission', foreign_key: 'mentor_id', dependent: :destroy
-  has_many :mentee_submissions, class_name: 'MatchSubmission', foreign_key: 'mentee_id', dependent: :destroy
-  has_many :owned_cohorts, class_name: 'Cohort', foreign_key: 'creator_id', dependent: :destroy
-  has_many :owned_programs, class_name: 'Program', foreign_key: 'creator_id', dependent: :destroy
-
+  has_many :cohort_members, class_name: "CohortMember", foreign_key: "user_id", dependent: :destroy
+  has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
+  has_many :mentees, class_name: "Match", foreign_key: "mentee_id", dependent: :destroy
+  has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
+  has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
+  has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
+  has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
+  
+  scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentor')}
+  def cohort
+    CohortMember.where(user_id: self.id).pluck(:cohort_id).first
+  end
+  
   accepts_nested_attributes_for :cohorts
   after_create :create_first_cohort
   attr_accessor :cohorts_attributes
