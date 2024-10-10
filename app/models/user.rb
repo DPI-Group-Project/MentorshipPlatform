@@ -57,7 +57,7 @@ class User < ApplicationRecord
     Match.where('mentee_id = :id OR mentor_id = :id', id: self.id).exists?
   end
   def cohort
-    cohort_members = CohortMember.where(user_id: self.id).pluck(:cohort_id).first
+    cohort_id = CohortMember.where(user_id: self.id).pluck(:cohort_id).first
     cohort = Cohort.find_by(id: cohort_members)
   end
   def role
