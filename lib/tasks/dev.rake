@@ -34,7 +34,7 @@ task({ sample_data: :environment }) do
     timezone = ['Eastern Standard Time (EST) - UTC-5', 'Central Standard Time (CST) - UTC-6', 'Pacific Standard Time (PST) - UTC-8', 'Mountain Standard Time (MST) - UTC-7'].sample
     mentor_title = ['Software Engineer', 'Consultant', 'Technical Support', 'IT Technician', 'Project Manager', 'Product Manager', 'UI/UX Designer', 'Sales Coordinator'].sample
     inactive_reason = ['Did not like the platform.', 'Did not have a good experience.', 'I will be back!', 'Other'].sample
-    role = { 'Admin' => 5, 'Observer' => 7, 'Mentor' => 25, 'Mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    role = { 'admin' => 5, 'observer' => 7, 'mentor' => 25, 'mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
     image_link = "https://api.dicebear.com/9.x/notionists/svg?seed=#{image_name.sample}&radius=50&backgroundColor=D2042D&bodyIcon=galaxy,
                   saturn,electric&bodyIconProbability=10&gesture=hand,handPhone,ok,okLongArm,point,pointLongArm,waveLongArm&gestureProbability=20&
                   lips=variant01,variant02,variant03,variant04,variant05,variant06,variant07,variant08,variant10,variant11,variant13,
@@ -50,7 +50,7 @@ task({ sample_data: :environment }) do
       phone_number: Faker::PhoneNumber.phone_number,
       bio: "#{Faker::Quotes::Shakespeare.hamlet_quote} #{Faker::Quotes::Shakespeare.hamlet_quote}",
       timezone: timezone,
-      title: role == 'Admin' ? 'Program Organizer' : role == 'Observer' ? 'Observer' : role == 'Mentee' ? 'Trainee' : role == 'Mentor' ? mentor_title : nil,
+      title: role == 'admin' ? 'Program Organizer' : role == 'observer' ? 'Observer' : role == 'mentee' ? 'Trainee' : role == 'mentor' ? mentor_title : nil,
       linkedin_link: "https://www.linkedin.com/in/#{(person[:first_name]).downcase}-#{(person[:last_name]).downcase}-#{Faker::Number.number(digits: 5)}/",
       profile_picture: image_link,
       status: status,
@@ -59,15 +59,15 @@ task({ sample_data: :environment }) do
     )
 
     case role
-    when 'Admin'
+    when 'admin'
       admins << user
-    when 'Mentor'
+    when 'mentor'
       mentors << user
       mentors_and_mentees << user
-    when 'Mentee'
+    when 'mentee'
       mentees << user
       mentors_and_mentees << user
-    when 'Observer'
+    when 'observer'
       observers << user
     end
 
@@ -130,11 +130,11 @@ task({ sample_data: :environment }) do
     cohort = Cohort.all.sample
     role = ""
     capacity = ""
-    if role_hash[user] == 'Mentor'
-      role = 'Mentor'
+    if role_hash[user] == 'mentor'
+      role = 'mentor'
       capacity = rand(2..4)
-    elsif role_hash[user] == 'Mentee'
-      role = 'Mentee'
+    elsif role_hash[user] == 'mentee'
+      role = 'mentee'
     end
 
     CohortMember.create(
@@ -148,7 +148,7 @@ task({ sample_data: :environment }) do
 # Creating Matches
   mentees.each do |mentee|
     cohort_member_id_of_mentee = mentee.cohort_members.first
-    mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'Mentor').sample
+    mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_id_of_mentee.cohort_id, role: 'mentor').sample
     shared_cohort = Cohort.find_by(id: cohort_member_id_of_mentee.cohort_id)
     Match.create(
       mentor_id: mentor_cohort_member_object.user_id,
