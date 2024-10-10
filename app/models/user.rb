@@ -42,7 +42,7 @@ class User < ApplicationRecord
     CohortMember.where(user_id: self.id).pluck(:cohort_id).first
   end
   
-  accepts_nested_attributes_for :cohorts
+  accepts_nested_attributes_for :cohort_members
   after_create :create_first_cohort
   attr_accessor :cohorts_attributes
 
