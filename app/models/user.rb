@@ -38,7 +38,7 @@ class User < ApplicationRecord
   
   accepts_nested_attributes_for :cohort_members
   after_create :create_first_cohort
-  attr_accessor :cohorts_attributes
+  attr_accessor :cohort_members_attributes
   before_create :set_default_active_status
 
   # Returns list of mentees that are in the same cohort as the provided mentor
@@ -74,10 +74,10 @@ class User < ApplicationRecord
 
   private
   def create_first_cohort
-    return unless cohorts_attributes.present?
+    return unless cohort_members_attributes.present?
 
-    cohorts_attributes.each do |_, attributes|
-      cohorts.create!(
+    cohort_members_attributes.each do |_, attributes|
+      cohort_members.create!(
         role: attributes[:role],
         capacity: attributes[:capacity],
         cohort_id: attributes[:cohort_id] || Cohort.first&.id
