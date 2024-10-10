@@ -36,6 +36,13 @@ class User < ApplicationRecord
   has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
   has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
   
+  accepts_nested_attributes_for :cohort_members
+  after_create :create_first_cohort
+  attr_accessor :cohorts_attributes
+
+  before_create :set_default_active_status
+
+  private
   # Returns list of mentees that are in the same cohort as the provided mentor
   scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentor')}
@@ -64,5 +71,19 @@ class User < ApplicationRecord
   def mentee_capacity_count(cohort_id)
     matches = Match.where('mentor_id = ? AND active = ? AND cohort_id = ?', self.id, 'true', cohort_id)
     matches.size
+  end
+  def create_first_cohort
+    return unless cohorts_attributes.present?
+
+    cohorts_attributes.each do |_, attributes|
+      cohorts.create!(
+        role: attributes[:role],
+        capacity: attributes[:capacity],
+        cohort_id: attributes[:cohort_id] || Cohort.first&.id
+      )
+    end
+  end
+  def set_default_active_status
+    self.status ||= 'Active'
   end
 end
