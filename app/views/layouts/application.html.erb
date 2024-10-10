@@ -7,20 +7,21 @@
     <%= csp_meta_tag %>
     <script src="https://cdn.tailwindcss.com"></script>
     <%= render partial: "shared/cdn_assets" %>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
   <body class="min-h-screen flex flex-col">
       <%= render partial: "shared/navbar" %>
-      <div>
-        <% if notice.present? %>
-          <%= render partial: "shared/flash", locals: { message: notice, css_class: "success" } %>
-        <% end %>
-        <% if alert.present? %>
-          <%= render partial: "shared/flash", locals: { message: alert, css_class: "danger" } %>
-        <% end %>
-      </div>
       <div class="mt-[75px]">
+        <div>
+          <% if notice.present? %>
+            <%= render partial: "shared/flash", locals: { message: notice, css_class: "success" } %>
+          <% end %>
+          <% if alert.present? %>
+            <%= render partial: "shared/flash", locals: { message: alert, css_class: "danger" } %>
+          <% end %>
+        </div>
         <%= yield %>
       </div>
     <%= render partial: "shared/footer" %>
