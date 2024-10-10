@@ -4,7 +4,7 @@ class DashboardController < ApplicationController
     @role = params[:role].downcase    
     #Loads up data when role is valid
     if ['mentor', 'mentee', 'admin'].include? (@role) then
-      @mentors_data = User.mentors_in_cohort(current_user.cohort)
+      @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
       @mentees_data = CohortMember.where(role: 'mentee')
       @admins_data = ProgramAdmin.all
     else

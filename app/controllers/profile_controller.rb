@@ -12,7 +12,7 @@ class ProfileController < ApplicationController
 
     respond_to do |format|
       if @current_mentee_count < @capacity_cap && current_user.matched? == false
-        match = Match.create(mentor_id: @user.id, mentee_id: current_user.id, cohort_id: current_user.cohort, active: true)
+        match = Match.create(mentor_id: @user.id, mentee_id: current_user.id, cohort_id: current_user.cohort.id, active: true)
         
         #TODO: Update mentee dashboard
         #if capacity is reached remove mentor from list of mentors on dashboard
@@ -35,7 +35,7 @@ class ProfileController < ApplicationController
 
   private
   def set_capacity_info
-    @current_mentee_count = @user.mentee_capacity_count(@user.cohort)
+    @current_mentee_count = @user.mentee_capacity_count(@user.cohort.id)
     @capacity_cap = @user.capacity
   end
   def set_profile_user

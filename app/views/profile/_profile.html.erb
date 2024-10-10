@@ -2,7 +2,7 @@
   <h1 class="text-2xl font-semibold text-[#202020] mb-1">Current User:</h1>
   <h2>Name: <%= current_user.name %></h2>
   <h2>ID: <%= current_user.id %></h2>
-  <h2>Cohort: <%= current_user.cohort %></h2>
+  <h2>Cohort: <%= current_user.cohort.id %></h2>
   <h2>Match?: <%= current_user.matched? %></h2>
   <h1 class="text-2xl font-semibold text-[#202020] mb-1">
     <% if @role == "mentor" %>
