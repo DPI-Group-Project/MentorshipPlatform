@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   resources :matches
   resources :cohorts
   resources :programs
-  devise_for :users
   devise_for :users, controllers: { registrations: 'users/registrations' }
 
 
