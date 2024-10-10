@@ -58,7 +58,7 @@ class User < ApplicationRecord
   end
   def cohort
     cohort_id = CohortMember.where(user_id: self.id).pluck(:cohort_id).first
-    cohort = Cohort.find_by(id: cohort_members)
+    cohort = Cohort.find_by(id: cohort_id)
   end
   def role
     CohortMember.where(user_id: self.id).pluck(:role).first
