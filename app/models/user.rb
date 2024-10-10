@@ -41,5 +41,28 @@ class User < ApplicationRecord
   def cohort
     CohortMember.where(user_id: self.id).pluck(:cohort_id).first
   end
+  
+  accepts_nested_attributes_for :cohort_members
+  after_create :create_first_cohort
+  attr_accessor :cohorts_attributes
 
+  before_create :set_default_active_status
+
+  private
+
+  def create_first_cohort
+    return unless cohorts_attributes.present?
+
+    cohorts_attributes.each do |_, attributes|
+      cohorts.create!(
+        role: attributes[:role],
+        capacity: attributes[:capacity],
+        cohort_id: attributes[:cohort_id] || Cohort.first&.id
+      )
+    end
+  end
+
+  def set_default_active_status
+    self.status ||= 'Active'
+  end
 end
