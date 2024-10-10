@@ -1,0 +1,37 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-12">
+  <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl font-semibold text-center text-gray-800 mb-8">Sign up</h2>
+
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs space-y-4">
+        <div>
+          <%= f.input :email,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email", class: "w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" } %>
+        </div>
+        <div>
+          <%= f.input :password,
+                      required: true,
+                      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                      input_html: { autocomplete: "new-password", class: "w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" } %>
+        </div>
+        <div>
+          <%= f.input :password_confirmation,
+                      required: true,
+                      input_html: { autocomplete: "new-password", class: "w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" } %>
+        </div>
+      </div>
+
+      <div class="form-actions mt-6">
+        <%= f.button :submit, "Sign up", class: "w-full bg-blue-600 text-white py-2.5 rounded-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none" %>
+      </div>
+    <% end %>
+
+    <div class="mt-6 text-center">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
