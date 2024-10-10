@@ -5,9 +5,9 @@
   <h2>Cohort: <%= current_user.cohort %></h2>
   <h2>Match?: <%= current_user.matched? %></h2>
   <h1 class="text-2xl font-semibold text-[#202020] mb-1">
-    <% if @role == "Mentor" %>
+    <% if @role == "mentor" %>
       Mentor Profile
-    <% elsif @role == "Mentee" %>
+    <% elsif @role == "mentee" %>
       Mentee Profile
     <%end%>
   </h1>
@@ -47,19 +47,19 @@
     <!--  about-->
     <div class="bg-[#FFFFFF] flex flex-col justify-start space-y-4 py-5 border-slate-300 rounded-lg px-5 mb-2 h-full">
       <b class="text-lg text-[#202020] font-bold">
-        <% if @role == "Mentor" %>
+        <% if @role == "mentor" %>
           About Mentor
-        <% elsif @role == "Mentee" %>
+        <% elsif @role == "mentee" %>
           About Mentee
         <%end%>
       </b>
       <p class="text-xs text-[#202020] flex-grow"><%= user.bio %></p>
-      <% if @role == "Mentor" && @current_mentee_count < @capacity_cap && current_user.matched? == false %>
+      <% if @role == "mentor" && @current_mentee_count < @capacity_cap && current_user.matched? == false %>
         <%= button_to 'Mentorship Request', create_request_profile_path(user.id),
           class: "text-xs bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md 
                   py-2 px-5 mr-auto hover:bg-transparent hover:text-[#202020] hover:border-[#202020]",
           method: :post %>
-      <%end%>    
+      <% end %>    
     </div>
     <div class="flex flex-col gap-3">
       <div class="bg-[#FFFFFF] flex-col flex-grow space-y-3 py-5 border-slate-300 rounded-lg px-5">
@@ -70,18 +70,17 @@
           <% end %>
         </div>
       </div>
-      <% if @role == "Mentor" %>
+      <% if @role == "mentor" %>
         <div class="bg-[#FFFFFF] flex-col space-y-3 py-5 border-slate-300 rounded-lg px-5">
           <b class="text-lg text-[#202020] font-bold">Mentee Capacity</b>
           <div>
             <div class="flex gap-1 mb-2">
               <img src="<%= asset_path('icon/users.svg') %>" alt="office" class="max-w-15 max-h-15">
-              <!-- TODO: cohort_members.capacity-->
               <p class="text-xs text-[#202020]"><b><%=@current_mentee_count%>/<%=@capacity_cap%></b> mentees</p>
             </div>
           </div>
         </div>
-      <%end%>
+      <% end %>
     </div>
   </div>
 

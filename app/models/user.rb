@@ -39,18 +39,16 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :cohort_members
   after_create :create_first_cohort
   attr_accessor :cohorts_attributes
-
   before_create :set_default_active_status
 
-  private
   # Returns list of mentees that are in the same cohort as the provided mentor
   scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
-                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentor')}
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentor')}
   scope :mentees_in_cohort, ->(cohort) { joins(:cohort_members)
-                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')}
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')}
   scope :unpaired_mentees_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
-                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
                                   .where('matches.id IS NULL')}
   def name
     "#{first_name.capitalize} #{last_name.capitalize}"
@@ -72,6 +70,8 @@ class User < ApplicationRecord
     matches = Match.where('mentor_id = ? AND active = ? AND cohort_id = ?', self.id, 'true', cohort_id)
     matches.size
   end
+
+  private
   def create_first_cohort
     return unless cohorts_attributes.present?
 
