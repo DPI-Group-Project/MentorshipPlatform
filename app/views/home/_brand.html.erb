@@ -1,52 +1,46 @@
- <section class="relative w-full max-w-5xl">
-  <div class="py-4 px-4 mx-auto max-w-screen-lg">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <div class="col-span-2 sm:col-span-1 md:col-span-2">
-        <div class="grid gap-6 grid-cols-1 sm:grid-cols-2">
-          <div class="group relative flex flex-col overflow-hidden rounded-lg p-6 bg-stone-50 h-auto">
-            <div class="flex flex-col items-center">
-              <img src="<%= asset_path("icon/users.svg") %>" alt="users" class="w-9 h-9">
-              <h3 class="mt-4 text-2xl font-medium text-black text-center">Tailored Mentors</h3>
-              <p class="mt-2 text-gray-700 text-center">
-                Mentors are reviewed by their Mentees based on metrics like responsiveness, skill match, and personality fit to ensure a high-quality experience for all parties.
-              </p>
-            </div>
-          </div>
-          <div class="group relative flex flex-col overflow-hidden rounded-lg p-6 bg-stone-50 h-auto">
-            <div class="flex flex-col items-center">
-              <img src="<%= asset_path("icon/heart.svg") %>" alt="users" class="w-9 h-9">
-              <h3 class="mt-4 text-2xl font-medium text-black text-center">Precise Matching</h3>
-              <p class="mt-2 text-gray-700 text-center">
-                MentE accounts for both Mentee areas of interest and individual needs to determine the best match. Mentees can shortlist their favorite mentors and let our system take care of the rest.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="group relative flex flex-col overflow-hidden rounded-lg p-6 bg-stone-50 h-auto">
-          <div class="flex items-start">
-            <img src="<%= asset_path("icon/chart.svg") %>" alt="users" class="w-9 h-9">
-            <div class="ml-4 flex-grow">
-              <h3 class="text-2xl font-medium text-black text-left">Insightful Management</h3>
-              <p class="mt-2 text-gray-700 text-left">
-                MentE accounts for both Mentee areas of interest and individual needs to determine the best match.
-              </p>
-            </div>
-            <img class="ml-4 w-32 h-32 object-cover rounded-lg" src="<%= asset_path("sample_img/management.png") %>" alt="Management image" />
-          </div>
-        </div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-8">
+  <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col">
+      <div class="mb-4">
+        <img src="<%= asset_path("icon/users.svg") %>" alt="users" class="w-9 h-9">
       </div>
-      <div class="col-span-2 sm:col-span-1 md:col-span-1">
-        <div class="group relative flex flex-col overflow-hidden rounded-lg p-6 bg-stone-50 h-auto">
-          <div class="flex flex-col items-center">
-            <img src="<%= asset_path("icon/growth.svg") %>" alt="users" class="w-9 h-9">
-            <h3 class="mt-4 text-2xl font-medium text-black text-center">Growth Focused</h3>
-            <p class="mt-2 text-gray-700 text-center">
-              Mentor support provides insights for personal and professional growth.
-            </p>
-            <img class="mt-4 w-64 h-48 object-cover rounded-lg" src="<%= asset_path("sample_img/growth_focused.png") %>" alt="Growth focused image" />
-          </div>
+      <h3 class="text-xl font-semibold mb-2">Tailored Mentors</h3>
+      <p class="text-gray-600 mb-4">
+        Mentors are reviewed by their Mentees based on metrics like responsiveness, skill match, and personality fit to ensure a high-quality experience for all parties.
+      </p>
+    </div>
+    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col">
+      <div class="mb-4">
+        <img src="<%= asset_path("icon/heart.svg") %>" alt="users" class="w-9 h-9">
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Precise Matching</h3>
+      <p class="text-gray-600 mb-4">
+        <strong>MentE</strong> accounts for both Mentee areas of interest and individual needs to determine the best match. Mentees can shortlist their favorite mentors then let our system take care of the rest.
+      </p>
+    </div>
+    <div class="md:col-span-2 bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row justify-between">
+      <div class="flex-1">
+        <div class="mb-4">
+          <img src="<%= asset_path("icon/chart.svg") %>" alt="chart" class="w-9 h-9">
         </div>
+        <h3 class="text-xl font-semibold mb-2">Insightful Management</h3>
+        <p class="text-gray-600 mb-4">
+          Keep track of all your programs data through your dashboard. Manage your team, view charts based on areas of interest, and see progress updates all in one spot.
+        </p>
+      </div>
+      <div class="md:ml-6 mt-4 md:mt-0 flex-shrink-0">
+        <img src="<%= asset_path("sample_img/management.png") %>" alt="Insightful Management Image" class="w-[339px] h-[220px] flex-shrink-0 rounded-lg">
       </div>
     </div>
   </div>
-</section>
+  <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col">
+    <div class="mb-4">
+      <img src="<%= asset_path("icon/growth.svg") %>" alt="users" class="w-9 h-9">
+    </div>
+    <h3 class="text-xl font-semibold mb-2">Growth Focused</h3>
+    <p class="text-gray-600 mb-4">
+      Mentor support provides insights for personal and professional growth and facilitates the refinement of skills allowing Mentees to go from good to great.
+    </p>
+    <img src=<%= asset_path("sample_img/growth_focused.png") %> alt="Growth Focused Image" class="w-[332px] h-[300px] flex-shrink-0 rounded-lg">
+  </div>
+</div>

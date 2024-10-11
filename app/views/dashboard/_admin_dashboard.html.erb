@@ -1,0 +1,120 @@
+<div class="flex justify-center p-8">
+  <!-- Sidebar -->
+    <%= render partial: "admin_sidebar" %>
+  <!-- Main Content -->
+  <main class="w-[calc(100%-22rem)] p-6">
+    <h1 class="text-2xl font-bold">Hi Katie Pena</h1>
+    <p class="text-gray-500">Welcome back to the Mentorship dashboard</p>
+    <!-- Program Stats -->
+    <div class="grid grid-cols-3 gap-4 mt-6">
+      <div class="p-6 bg-white shadow rounded-lg">
+        <p class="text-sm text-gray-500">Program Name</p>
+        <h3 class="text-lg font-semibold">DPI Cohort 5</h3>
+      </div>
+      <div class="p-6 bg-white shadow rounded-lg">
+        <p class="text-sm text-gray-500">Number of Pairing</p>
+        <h3 class="text-lg font-semibold">10 Pairs</h3>
+      </div>
+      <div class="p-6 bg-white shadow rounded-lg">
+        <p class="text-sm text-gray-500">Scheduled Meetings</p>
+        <h3 class="text-lg font-semibold">16 Meetings</h3>
+      </div>
+    </div>
+    <!-- Survey Ratings & Latest Surveys -->
+    <div class="grid grid-cols-[288px,1fr] gap-x-4 gap-y-6 mt-6">
+      <!-- Survey Ratings -->
+      <div class="flex flex-col p-6 bg-white shadow rounded-lg text-center items-center">
+        <h4 class="text-lg font-semibold mb-4">Survey Ratings</h4>
+        <img src="<%= asset_path("sample_img/sample_chart.png") %>" alt="sample admin chart" class="w-[220px] h-[250px]">
+      </div>
+      <!-- Latest Surveys -->
+      <div class="p-6 bg-white shadow rounded-lg">
+        <h4 class="text-lg font-semibold mb-1">Latest Surveys</h4>
+        <p class="text-sm text-gray-500 mb-4">Last 2 Weeks</p>
+        <div class="grid grid-cols-5 text-gray-500 font-medium text-sm mb-2">
+          <div class="col-span-2">Mentee</div>
+          <div class="col-span-1 text-center">Mentor</div>
+          <div class="col-span-1 text-center">Date</div>
+          <div class="col-span-1 text-center">Rate</div>
+        </div>
+        <ul class="space-y-4">
+          <li class="grid grid-cols-5 items-center">
+            <div class="flex items-center col-span-2">
+              <span class="text-lg font-semibold">1.</span>
+              <img src="<%= asset_path("sample_img/survey_image_1.png") %>" alt="Mentee Avatar" class="w-10 h-10 rounded-full ml-4">
+              <div class="ml-3">
+                <h5 class="font-semibold">Mathilda Bell</h5>
+                <p class="text-sm text-gray-500">DPI Cohort 5</p>
+              </div>
+            </div>
+            <div class="text-center col-span-1">
+              <p class="text-sm font-semibold">David Roberts</p>
+            </div>
+            <div class="text-center col-span-1">
+              <p class="text-sm">09/12/24</p>
+            </div>
+            <div class="text-right col-span-1">
+              <img src="<%= asset_path("icon/five_stars.svg") %>" alt="Five Star Rating" class="w-24">
+            </div>
+          </li>
+          <li class="grid grid-cols-5 items-center">
+            <div class="flex items-center col-span-2">
+              <span class="text-lg font-semibold">2.</span>
+              <img src="<%= asset_path("sample_img/survey_image_2.png") %>" alt="Mentee Avatar" class="w-10 h-10 rounded-full ml-4">
+              <div class="ml-3">
+                <h5 class="font-semibold">Marion Figueroa</h5>
+                <p class="text-sm text-gray-500">DPI Cohort 5</p>
+              </div>
+            </div>
+            <div class="text-center col-span-1">
+              <p class="text-sm font-semibold">David Roberts</p>
+            </div>
+            <div class="text-center col-span-1">
+              <p class="text-sm">09/12/24</p>
+            </div>
+            <div class="text-right col-span-1">
+              <img src="<%= asset_path("icon/five_stars.svg") %>" alt="Five Star Rating" class="w-24">
+            </div>
+          </li>
+          <li class="grid grid-cols-5 items-center">
+            <div class="flex items-center col-span-2">
+              <span class="text-lg font-semibold">3.</span>
+              <img src="<%= asset_path("sample_img/survey_image_3.png") %>" alt="Mentee Avatar" class="w-10 h-10 rounded-full ml-4">
+              <div class="ml-3">
+                <h5 class="font-semibold">Lee Barrett</h5>
+                <p class="text-sm text-gray-500">DPI Cohort 5</p>
+              </div>
+            </div>
+            <div class="text-center col-span-1">
+              <p class="text-sm font-semibold">David Roberts</p>
+            </div>
+            <div class="text-center col-span-1">
+              <p class="text-sm">09/12/24</p>
+            </div>
+            <div class="text-right col-span-1">
+              <img src="<%= asset_path("icon/five_stars.svg") %>" alt="Five Star Rating" class="w-24">
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      const menu = dropdown.querySelector('.dropdown-menu');
+      const chevron = dropdown.querySelector('.chevron');
+
+      toggle.addEventListener('click', function () {
+        // Toggle hidden class to show/hide the dropdown menu
+        menu.classList.toggle('hidden');
+        // Toggle the rotation of the chevron icon
+        chevron.classList.toggle('rotate-180');
+      });
+    });
+  });
+</script>
