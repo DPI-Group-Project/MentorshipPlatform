@@ -103,15 +103,7 @@ body {
 
 .swiper-slide.swiper-slide-active {
     --tw-border-opacity: 1 !important;
-    border-color: rgb(79 70 229 / var(--tw-border-opacity)) !important;
+    border-color: black !important;
 }
 
-.swiper-slide.swiper-slide-active>.swiper-slide-active\:text-indigo-600 {
-    --tw-text-opacity: 1;
-    color: rgb(79 70 229 / var(--tw-text-opacity));
-}
 
-.swiper-slide.swiper-slide-active>.flex .grid .swiper-slide-active\:text-indigo-600 {
-    --tw-text-opacity: 1;
-    color: rgb(79 70 229 / var(--tw-text-opacity));
-}
