@@ -54,7 +54,7 @@
         <%end%>
       </b>
       <p class="text-xs text-[#202020] flex-grow"><%= user.bio %></p>
-      <% if @role == "mentor" && @current_mentee_count < @capacity_cap && current_user.matched? == false %>
+      <% if @role == "mentor" && @current_mentee_count < @capacity_cap && current_user.matched? == false && user.cohort.id == current_user.cohort.id %>
         <%= button_to 'Mentorship Request', create_request_profile_path(user.id),
           class: "text-xs bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md 
                   py-2 px-5 mr-auto hover:bg-transparent hover:text-[#202020] hover:border-[#202020]",
