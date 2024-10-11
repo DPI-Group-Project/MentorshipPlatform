@@ -1,0 +1,62 @@
+<div class="w-[17.5rem] h-auto p-6 bg-white rounded-[12px] shadow-md mr-8">
+    <div class="flex items-center mb-8">
+      <img src="<%= asset_path("sample_img/admin_user.png") %>" alt="Admin Avatar" class="w-12 h-12 rounded-full">
+      <div class="ml-4">
+        <h3 class="text-lg font-semibold">Katie Pena</h3>
+        <p class="text-sm text-gray-500">Admin<br>
+           Discovery Partners Institute</p>
+      </div>
+    </div>
+    <div class="text-sm">
+      <div class="mb-4">
+        <h4 class="font-semibold text-gray-700">ORGANIZATION</h4>
+        <ul class="mt-2 space-y-2">
+          <li class="flex items-center">
+            <i class="fas fa-th-large mr-2"></i> Overview
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-folder-open mr-2"></i> Programs
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-envelope mr-2"></i> Message <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">8</span>
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-bell mr-2"></i> Notification <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">1</span>
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-users mr-2"></i> Members
+          </li>
+        </ul>
+      </div>
+      <!-- Active Programs Dropdown -->
+      <div>
+        <h4 class="font-semibold text-gray-700">ACTIVE PROGRAMS</h4>
+        <div class="mt-2">
+          <div class="dropdown">
+            <button class="dropdown-toggle flex justify-between w-full text-left">
+              <span><i class="fas fa-folder mr-2"></i> DPI Cohort 5</span>
+              <i class="chevron fas fa-chevron-down transition-transform duration-300"></i>
+            </button>
+            <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
+              <li>Surveys</li>
+              <li>Email Templates</li>
+              <li>Pairings</li>
+              <li>Calendar</li>
+            </ul>
+          </div>
+          <div class="dropdown mt-4">
+            <button class="dropdown-toggle flex justify-between w-full text-left">
+              <span><i class="fas fa-folder mr-2"></i> DPI Cohort 6</span>
+              <i class="chevron fas fa-chevron-down transition-transform duration-300"></i>
+            </button>
+            <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
+              <li>Surveys</li>
+              <li>Email Templates</li>
+              <li>Pairings</li>
+              <li>Calendar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
