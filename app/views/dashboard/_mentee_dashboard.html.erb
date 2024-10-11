@@ -1,4 +1,9 @@
 <div class="p-5">
+  <h1 class="text-2xl font-semibold text-[#202020] mb-1">Current User:</h1>
+  <h2>Name: <%= current_user.name %></h2>
+  <h2>ID: <%= current_user.id %></h2>
+  <h2>Cohort: <%= current_user.cohort.id %></h2>
+  <h2>Match?: <%= current_user.matched? %></h2>
   <h1 class="text-2xl font-semibold text-[#202020] mb-1">
     Available Mentors
   </h1>
@@ -6,8 +11,20 @@
     Discover insights and stories from our mentors to inspire your own journey.
   </p>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-    <% mentors_data.each do |mentor|%>
-      <%= render 'profile_card', mentor: mentor %>
+    <% available_mentors_count = 0 %>
+    <% mentors_data.each do |mentor| %>
+    <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
+      <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
+      <% capacity_cap = mentor.capacity %>
+      <% if current_user.cohort.running? == true && current_mentee_count < capacity_cap %>
+        <%= render 'profile_card', mentor: mentor %>
+        <% available_mentors_count += 1 %>
+      <% end %>
     <%end%>
+    <% if current_user.cohort.running? == false %>
+     <h2> Mentor matching is closed for cohort <%= current_user.cohort.id %> </h2>
+    <% elsif available_mentors_count == 0 %>
+      <h2> No more avaible mentors in cohort <%= current_user.cohort.id %> </h2>
+    <% end %>
   </div>
 </div>

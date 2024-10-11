@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   get '/dashboard/:role', to: 'dashboard#show'
   get '/profile/:id', to: 'profile#show', as: :profile
 
+  post '/profile/:id/create_request', to: 'profile#create', as: 'create_request_profile'
+
+
   # Defines the root path route ("/")
   root 'home#index'
 end

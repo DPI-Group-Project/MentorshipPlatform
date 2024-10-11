@@ -15,7 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do |resource|
       if resource.persisted?
         Rails.logger.info "User created: #{resource.inspect}"
-        if resource.cohorts.any?
+        if resource.cohort_members.any?
           Rails.logger.info "CohortMember created: #{resource.cohort_members.last.inspect}"
         else
           Rails.logger.error 'CohortMember creation failed'
@@ -59,7 +59,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up,
                                       keys: [:first_name, :last_name, :status, :inactive_reason, :phone_number, :bio, :timezone, :title, :linkedin_link, :profile_picture,
-                                             :skills_array, { cohorts_attributes: %i[role capacity cohort_id] }])
+                                             :skills_array, { cohort_members_attributes: %i[role capacity cohort_id] }])
   end
 
   def set_csrf_headers
