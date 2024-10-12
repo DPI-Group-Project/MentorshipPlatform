@@ -1,37 +1,45 @@
 <div class="bg-white flex justify-center w-full">
-  <div class="relative bg-white w-full min-h-screen flex flex-col lg:flex-row-reverse">
-    <div class="w-full lg:w-[653px] min-h-full bg-gradient-to-b from-[#517879] to-[#1e3e57]">
-      <div class="flex justify-center items-center h-full">
-        <%= image_tag 'sample_img/dpi_logo_2.png', class: "mx-auto", alt: "DPI Logo" %>
-      </div>
-    </div>
-
+  <div class="relative bg-white w-full min-h-screen flex flex-col lg:flex-row">
+    
+    <!-- left section with Form -->
     <div class="flex flex-col items-center w-full lg:w-[671px] px-4 lg:px-12 py-12">
-      
+    
       <div data-controller="signup">
-        <button class="w-full lg:w-[150px] h-10 bg-[#517879] text-white font-bold rounded shadow-sm hover:bg-[#3e6176]" data-action="signup#showForm" data-signup-content-param="menteeForm">
+        <!-- mentee Sign-up Button -->
+        <button data-signup-target="menteeButton" class="w-full lg:w-[150px] h-10 bg-[#517879] text-white font-bold rounded shadow-sm hover:bg-[#3e6176] active:bg-[#3e6176]" data-action="signup#showForm" data-signup-content-param="menteeForm">
           Mentee Sign-up
         </button>
-      
-        <button class="w-full lg:w-[150px] h-10 bg-[#517879] text-white font-bold rounded shadow-sm hover:bg-[#3e6176]" data-action="signup#showForm" data-signup-content-param="mentorForm">
+        
+        <!-- mentor Sign-up Button -->
+        <button data-signup-target="mentorButton" class="w-full lg:w-[150px] h-10 bg-[#517879] text-white font-bold rounded shadow-sm hover:bg-[#3e6176] active:bg-[#3e6176]" data-action="signup#showForm" data-signup-content-param="mentorForm">
           Mentor Sign-up
         </button>
-
+        
+        <!-- form content -->
         <div>
-          <div data-signup-target="mentorForm" style="display: hidden;">
+          <!-- mentor form -->
+          <div data-signup-target="mentorForm" hidden>
             <%= render partial: "users/registrations/mentor_form" %>
           </div>
+          <!-- mentee form -->
           <div data-signup-target="menteeForm">
             <%= render partial: "users/registrations/mentee_form" %>
           </div>
         </div>
       </div>
 
+      <!-- login link -->
       <div class="mt-8 flex items-center justify-center space-x-2">
         <span class="text-gray-400 font-bold">Already a user?</span>
         <a href="#" class="text-[#476d73] font-bold underline">Login</a>
       </div>
     </div>
 
+    <!--right section with background gradient and logo -->
+    <div class="w-full lg:w-[653px] min-h-full bg-gradient-to-b from-[#517879] to-[#1e3e57]">
+      <div class="flex justify-center items-center h-full">
+        <%= image_tag 'sample_img/dpi_logo_2.png', class: "mx-auto", alt: "DPI Logo" %>
+      </div>
+    </div>
   </div>
 </div>
