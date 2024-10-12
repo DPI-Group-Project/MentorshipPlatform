@@ -1,4 +1,4 @@
-<div class="text-2xl font-bold mb-8 text-center lg:text-left">Create Mentee Account</div>
+<div class="text-2xl font-bold mb-8 text-center lg:text-left mt-10">Create Mentee Account</div>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), defaults: { input_html: { class: "subForm" } }) do |f| %>
   <%= f.error_notification %>
@@ -75,7 +75,7 @@
   <% end %>
 
   <div class="form-actions mt-8">
-    <%= f.button :submit, "Sign up", class: "w-full lg:w-[400px] h-10 bg-[#27485d] text-white font-bold rounded shadow-sm" %>
+    <%= f.button :submit, "Sign up", class: "w-full lg:w-[400px] h-10 bg-[#27485d] text-white font-bold rounded shadow-sm hover:bg-[#1b3c4a]" %>
   </div>
 
 <% end %>
