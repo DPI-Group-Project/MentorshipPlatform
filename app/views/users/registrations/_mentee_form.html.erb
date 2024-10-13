@@ -1,47 +1,81 @@
-<div>
-  <div>
-    <h3>Mentee</h3>
-    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), defaults: {input_html: {class: "subForm"}}) do |f| %>
-      <%= f.error_notification %>
-      <div class="form-inputs">
-        <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email"}%>
-        <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password"} %>
-        <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password"} %>
-        <%= f.input :first_name,
-                required: true %>
-        <%= f.input :last_name,
-                required: true %>
-        <%= f.input :phone_number,
-                required: true %>
-        <%= f.input :bio,
-                required: true %>
-        <%= f.input :timezone, collection: ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] },
-             required: true, label: 'Select Timezone' %>
-        <%= f.input :title, label: 'Job Title',
-                required: true %>
-        <%= f.input :linkedin_link,
-                required: true %>
-        <%= f.input :profile_picture,
-                required: true %>
-        <%= f.input :skills_array,
-                required: true, multiple: true %>
-      </div>
-      <%= f.simple_fields_for :cohort_members, CohortMember.new do |cm| %>
-        <%= cm.hidden_field :capacity, value: nil %>
-        <%= cm.hidden_field :role, value: 'mentee' %>
-        <%= cm.hidden_field :cohort_id, value: Cohort.first.id %>
-      <% end %>
-      <div class="form-actions">
-        <%= f.button :submit, "Sign up" %>
-      </div>
-    <% end %>
+<div class="text-2xl font-bold mb-8 text-center lg:text-left mt-10">Create Mentee Account</div>
+
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), defaults: { input_html: { class: "subForm" } }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs space-y-6 w-full lg:max-w-lg">
+    
+    <div>
+      <label for="user_email" class="block text-black">Email address</label>
+      <%= f.input :email, required: true, autofocus: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm", autocomplete: "email" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_password" class="block text-black">Create password</label>
+      <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm", autocomplete: "new-password" }, label: false %>
+      <p class="mt-2 text-xs text-gray-500">Password must contain a minimum of 8 characters</p>
+      <p class="text-xs text-gray-500">Password must contain at least one symbol e.g. @, !</p>
+    </div>
+
+    <div>
+      <label for="user_password_confirmation" class="block text-black">Confirm password</label>
+      <%= f.input :password_confirmation, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm", autocomplete: "new-password" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_first_name" class="block text-black">First name</label>
+      <%= f.input :first_name, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_last_name" class="block text-black">Last name</label>
+      <%= f.input :last_name, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_phone_number" class="block text-black">Phone number</label>
+      <%= f.input :phone_number, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_bio" class="block text-black">Bio</label>
+      <%= f.input :bio, required: true, input_html: { class: "mt-1 w-full h-20 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_timezone" class="block text-black">Select Timezone</label>
+      <%= f.input :timezone, collection: ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_title" class="block text-black">Job Title</label>
+      <%= f.input :title, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_linkedin_link" class="block text-black">LinkedIn Profile</label>
+      <%= f.input :linkedin_link, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_profile_picture" class="block text-black">Profile Picture URL</label>
+      <%= f.input :profile_picture, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
+
+    <div>
+      <label for="user_skills_array" class="block text-black">Skills</label>
+      <%= f.input :skills_array, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+    </div>
   </div>
-</div>
+
+  <%= f.simple_fields_for :cohorts, CohortMember.new do |cm| %>
+    <%= cm.input :capacity, required: true, label: false, input_html: { class: "hidden" } %>
+    <%= cm.hidden_field :role, value: 'Mentor' %>
+    <%= cm.hidden_field :cohort_id, value: Cohort.first.id %>
+  <% end %>
+
+  <div class="form-actions mt-8">
+    <%= f.button :submit, "Sign up", class: "w-full lg:w-[400px] h-10 bg-[#27485d] text-white font-bold rounded shadow-sm hover:bg-[#1b3c4a]" %>
+  </div>
+
+<% end %>
