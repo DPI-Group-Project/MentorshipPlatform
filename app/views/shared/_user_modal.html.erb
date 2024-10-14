@@ -2,52 +2,80 @@
   id="userModal" 
   class="fixed inset-0 bg-gray-900 bg-opacity-50 items-center justify-center z-30 hidden"
 >
-  <div class="bg-white p-8 rounded-lg shadow-lg w-[350px] space-y-6">
-    <div class="flex items-center space-x-4">
+  <div class="relative bg-white p-6 rounded-2xl shadow-xl w-[450px]">
+    <button 
+      class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition"
+      onclick="toggleModal()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Header: Profile Image, Name, and Status -->
+    <div class="flex items-center space-x-4 mb-6">
       <img 
         src="<%= asset_path("sample_img/user_mini_image.png") %>" 
-        alt="default_user_picture" 
-        class="w-20 h-20 object-cover rounded-full border"
+        alt="User profile picture" 
+        class="w-20 h-20 object-cover rounded-full border-2 border-gray-200 shadow-sm"
       />
-      <div>
-        <h2 class="text-2xl font-semibold"><%= current_user.name %></h2>
+      <div class="flex flex-col">
+        <h2 class="text-lg font-semibold text-gray-900"><%= current_user.name %></h2>
         <p class="text-sm text-gray-500"><%= current_user.title %></p>
+
+        <div class="flex items-center space-x-2 mt-1">
+          <div 
+            class="w-3 h-3 rounded-full <%= current_user.status == "active" ? "bg-green-500" : "bg-red-500" %>"
+          ></div>
+          <span class="text-sm <%= current_user.status == "active" ? "text-green-500" : "text-red-500" %>">
+            <%= current_user.status.capitalize %>
+          </span>
+        </div>
       </div>
     </div>
 
-    <div class="space-y-2">
-      <div class="flex justify-between text-gray-700">
-        <span class="font-medium">LinkedIn:</span>
+    <!-- Bento Grid Layout -->
+    <div class="grid grid-cols-2 gap-4">
+      <!-- LinkedIn -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
+        <span class="font-medium text-gray-700">LinkedIn</span>
         <a 
           href="<%= current_user.linkedin_link %>" 
           target="_blank" 
-          class="text-blue-600 hover:underline"
+          class="mt-1 text-blue-600 hover:underline text-sm"
         >
           View Profile
         </a>
       </div>
-      <div class="flex justify-between text-gray-700">
-        <span class="font-medium">Email:</span>
-        <span><%= current_user.email %></span>
+
+      <!-- Email -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
+        <span class="font-medium text-gray-700">Email</span>
+        <span class="mt-1 text-sm text-gray-800"><%= current_user.email %></span>
       </div>
-      <div class="flex justify-between text-gray-700">
-        <span class="font-medium">Role:</span>
-        <span>Mentor</span>
+
+      <!-- Phone -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
+        <span class="font-medium text-gray-700">Phone</span>
+        <span class="mt-1 text-sm text-gray-800"><%= current_user.phone_number %></span>
       </div>
-      <div class="text-gray-700">
-        <span class="font-medium">Bio:</span>
+
+      <!-- Skills -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
+        <span class="font-medium text-gray-700">Skills</span>
         <p class="mt-1 text-sm text-gray-600">
+          <%= current_user.skills_array.join(", ") %>
+        </p>
+      </div>
+
+      <!-- Bio -->
+      <div class="col-span-2 bg-gray-50 p-4 rounded-lg shadow-sm">
+        <span class="font-medium text-gray-700">Bio</span>
+        <p class="mt-2 text-sm text-gray-600 leading-relaxed">
           <%= current_user.bio %>
         </p>
       </div>
     </div>
-
-    <button 
-      class="w-full bg-gray-800 hover:bg-black transition duration-300 text-white px-4 py-2 rounded"
-      onclick="toggleModal()"
-    >
-      Close
-    </button>
   </div>
 </div>
 
