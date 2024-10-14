@@ -47,21 +47,25 @@
       </div>
 
       <div class="mt-2">
-        <% %>
+        <% @cohorts.each do |cohort| %>
           <div class="dropdown">
             <button class="dropdown-toggle flex justify-between w-full text-left">
-              <span><i class="fas fa-folder mr-2"></i> DPI Cohort 5</span>
+              <span><i class="fas fa-folder mr-2"></i><%= cohort.cohort_name %></span>
               <i class="chevron fas fa-chevron-down transition-transform duration-300 mr-1"></i>
             </button>
             <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
-              <li>View dashboard</li>
+              <li>
+                <button>
+                  View dashboard
+                </button>
+              </li>
               <li>Surveys</li>
               <li>Email Templates</li>
               <li>Pairings</li>
               <li>Calendar</li>
             </ul>
           </div>
-        <% %>
+        <% end %>
       </div>
     </div>
   </div>
@@ -85,7 +89,7 @@
     <ul class="mt-2 space-y-2"> 
       <% @programs_by_admin.each do |program| %>
       <li>
-        <a href="" class="text-sm text-black-500 ml-5"><%= program.name %></a>
+        <a href="/dashboard/admin/<%= program.id %>" class="text-sm text-black-500 ml-5"><%= program.name %></a>
       <li>
       <% end %>
     </ul>     
