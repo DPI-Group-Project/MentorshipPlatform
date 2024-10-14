@@ -1,0 +1,25 @@
+<div 
+  id="userModal" 
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 items-center justify-center z-30 hidden"
+>
+  <div class="bg-white p-6 rounded-lg shadow-lg w-[300px]">
+    <h2 class="text-xl font-semibold mb-4">Account Information</h2>
+    <p class="text-gray-700">Name: John Doe</p>
+    <p class="text-gray-700">Email: john.doe@example.com</p>
+    <p class="text-gray-700">Role: Mentor</p>
+    <button 
+      class="mt-6 bg-gray-800 hover:bg-black duration-500 text-white px-4 py-2 rounded"
+      onclick="toggleModal()"
+    >
+      Close
+    </button>
+  </div>
+</div>
+
+<script>
+  function toggleModal() {
+    const modal = document.getElementById('userModal');
+    modal.classList.toggle('hidden');
+    modal.classList.toggle('flex');
+  }
+</script>
