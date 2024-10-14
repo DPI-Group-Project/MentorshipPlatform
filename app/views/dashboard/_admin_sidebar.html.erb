@@ -18,7 +18,7 @@
           <button 
             id="openModalBtn" 
             class="text-black flex items-center"
-            onclick="openModal('programListModal')"
+            onclick="openModal('program-list-modal')"
           >
             <i class="fas fa-folder-open mr-2"></i> Programs
           </button>
@@ -40,41 +40,28 @@
         <button 
           id="openModalBtn" 
           class="text-black ml-2 flex items-center"
-          onclick="openModal('createCohortModal')"
+          onclick="openModal('create_cohort_modal')"
         >
           <i class="fas fa-plus-circle text-xl"></i>
         </button>
       </div>
 
-
       <div class="mt-2">
-        <div class="dropdown">
-          <button class="dropdown-toggle flex justify-between w-full text-left">
-            <span><i class="fas fa-folder mr-2"></i> DPI Cohort 5</span>
-            <i class="chevron fas fa-chevron-down transition-transform duration-300 mr-1"></i>
-          </button>
-          <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
-            <li>View dashboard</li>
-            <li>Surveys</li>
-            <li>Email Templates</li>
-            <li>Pairings</li>
-            <li>Calendar</li>
-          </ul>
-        </div>
-
-        <div class="dropdown mt-4">
-          <button class="dropdown-toggle flex justify-between w-full text-left">
-            <span><i class="fas fa-folder mr-2"></i> DPI Cohort 6</span>
-            <i class="chevron fas fa-chevron-down transition-transform duration-300 mr-1"></i>
-          </button>
-          <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
-            <li>View Dashboard</li>
-            <li>Surveys</li>
-            <li>Email Templates</li>
-            <li>Pairings</li>
-            <li>Calendar</li>
-          </ul>
-        </div>
+        <% %>
+          <div class="dropdown">
+            <button class="dropdown-toggle flex justify-between w-full text-left">
+              <span><i class="fas fa-folder mr-2"></i> DPI Cohort 5</span>
+              <i class="chevron fas fa-chevron-down transition-transform duration-300 mr-1"></i>
+            </button>
+            <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
+              <li>View dashboard</li>
+              <li>Surveys</li>
+              <li>Email Templates</li>
+              <li>Pairings</li>
+              <li>Calendar</li>
+            </ul>
+          </div>
+        <% %>
       </div>
     </div>
   </div>
@@ -83,13 +70,13 @@
 <!-- Modal Popups -->
 
 <div 
-  id="programListModal" 
+  id="program-list-modal" 
   class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
 >
   <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
     <button 
       class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-      onclick="closeModal('programListModal')"
+      onclick="closeModal('program-list-modal')"
     >
       <i class="fas fa-times"></i>
     </button>
@@ -97,20 +84,22 @@
     <h1 class="font-medium mb-1">Programs:</h1>
     <ul class="mt-2 space-y-2"> 
       <% @programs_by_admin.each do |program| %>
-      <li class="text-sm text-black-500 ml-5"><%= program.name %></li>
+      <li>
+        <button  class="text-sm text-black-500 ml-5"><%= program.name %></button>
+      <li>
       <% end %>
-    </ul>   
+    </ul>     
   </div>
 </div>
 
 <div 
-  id="createCohortModal" 
+  id="create_cohort_modal" 
   class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
 >
   <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
     <button 
       class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-      onclick="closeModal('createCohortModal')"
+      onclick="closeModal('create_cohort_modal')"
     >
       <i class="fas fa-times"></i>
     </button>

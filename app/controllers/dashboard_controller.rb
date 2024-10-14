@@ -9,6 +9,7 @@ class DashboardController < ApplicationController
     elsif ['admin'].include? (@role) then
       @admin_data = ProgramAdmin.find_by(id: current_user.id)
       @programs_by_admin = Program.where(creator_id: current_user.id)
+      # @cohorts = Cohorts.where(program_id: )
     else
       redirect_to root_path, alert: 'Invalid role specified.'
     end
