@@ -34,7 +34,7 @@
         <button 
           id="openModalBtn" 
           class="text-black ml-2 flex items-center"
-          onclick="openModal()"
+          onclick="openModal('createCohortModal')"
         >
           <i class="fas fa-plus-circle text-xl"></i>
         </button>
@@ -76,13 +76,13 @@
 
 <!-- Modal Popup -->
 <div 
-  id="modal" 
+  id="createCohortModal" 
   class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
 >
   <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
     <button 
       class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-      onclick="closeModal()"
+      onclick="closeModal('createCohortModal')"
     >
       <i class="fas fa-times"></i>
     </button>
@@ -93,14 +93,13 @@
 </div>
 
 <script>
- function openModal() {
-    const modal = document.getElementById('modal');
+ function openModal(modalId) {
+    const modal = document.getElementById(modalId);
     modal.classList.remove('hidden');
     modal.classList.add('flex'); 
   }
-
-  function closeModal() {
-    const modal = document.getElementById('modal');
+  function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
     modal.classList.add('hidden');
     modal.classList.remove('flex'); 
   }
