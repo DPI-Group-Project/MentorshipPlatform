@@ -1,8 +1,8 @@
-<div class="w-[17.688rem] rounded-[0.75rem] overflow-hidden shadow-md mt-4">
+<div class="overflow-hidden rounded-[0.75rem] shadow-md mt-4">
   <img class="w-full h-[5.538]" src="<%= asset_path("sample_img/dpi_building.png") %>" alt="Dpi building">
   <div class="px-6 py-4">
     <p class="text-xs text-gray-400">Program name</p>
-    <div class="text-base font-semibold mb-2 mt-2">Dpi Cohort 5</div> 
+    <div class="text-base font-semibold mb-2 mt-2"> <%= current_user.cohort.cohort_name %> </div> 
     <p class="text-[0.875rem] text-wrap text-[#898989] font-400 mb-2">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
     </p>
