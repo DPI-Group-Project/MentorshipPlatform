@@ -1,62 +1,111 @@
 <div class="w-[17.5rem] h-auto p-6 bg-white rounded-[12px] shadow-md mr-8">
-    <div class="flex items-center mb-8">
-      <img src="<%= asset_path("sample_img/admin_user.png") %>" alt="Admin Avatar" class="w-12 h-12 rounded-full">
-      <div class="ml-4">
-        <h3 class="text-lg font-semibold">Katie Pena</h3>
-        <p class="text-sm text-gray-500">Admin<br>
-           Discovery Partners Institute</p>
-      </div>
+  <div class="flex items-center mb-8">
+    <img src="<%= asset_path("sample_img/admin_user.png") %>" alt="Admin Avatar" class="w-12 h-12 rounded-full">
+    <div class="ml-4">
+      <h3 class="text-lg font-semibold">Katie Pena</h3>
+      <p class="text-sm text-gray-500">Admin<br>
+        Discovery Partners Institute</p>
     </div>
-    <div class="text-sm">
-      <div class="mb-4">
-        <h4 class="font-semibold text-gray-700">ORGANIZATION</h4>
-        <ul class="mt-2 space-y-2">
-          <li class="flex items-center">
-            <i class="fas fa-th-large mr-2"></i> Overview
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-folder-open mr-2"></i> Programs
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-envelope mr-2"></i> Message <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">8</span>
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-bell mr-2"></i> Notification <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">1</span>
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-users mr-2"></i> Members
-          </li>
-        </ul>
+  </div>
+  <div class="text-sm">
+    <div class="mb-4">
+      <h4 class="font-semibold text-gray-700">ORGANIZATION</h4>
+      <ul class="mt-2 space-y-2">
+        <li class="flex items-center">
+          <i class="fas fa-th-large mr-2"></i> Overview
+        </li>
+        <li class="flex items-center">
+          <i class="fas fa-folder-open mr-2"></i> Programs
+        </li>
+        <li class="flex items-center">
+          <i class="fas fa-envelope mr-2"></i> Message <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">8</span>
+        </li>
+        <li class="flex items-center">
+          <i class="fas fa-bell mr-2"></i> Notification <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">1</span>
+        </li>
+        <li class="flex items-center">
+          <i class="fas fa-users mr-2"></i> Members
+        </li>
+      </ul>
+    </div>
+   <div>
+      <div class="flex items-center justify-between">
+        <h4 class="font-semibold text-black">ACTIVE COHORTS</h4>
+        <button 
+          id="openModalBtn" 
+          class="text-black ml-2 flex items-center"
+          onclick="openModal()"
+        >
+          <i class="fas fa-plus-circle text-xl"></i>
+        </button>
       </div>
-      <!-- Active Programs Dropdown -->
-      <div>
-        <h4 class="font-semibold text-gray-700">ACTIVE PROGRAMS</h4>
-        <div class="mt-2">
-          <div class="dropdown">
-            <button class="dropdown-toggle flex justify-between w-full text-left">
-              <span><i class="fas fa-folder mr-2"></i> DPI Cohort 5</span>
-              <i class="chevron fas fa-chevron-down transition-transform duration-300"></i>
-            </button>
-            <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
-              <li>Surveys</li>
-              <li>Email Templates</li>
-              <li>Pairings</li>
-              <li>Calendar</li>
-            </ul>
-          </div>
-          <div class="dropdown mt-4">
-            <button class="dropdown-toggle flex justify-between w-full text-left">
-              <span><i class="fas fa-folder mr-2"></i> DPI Cohort 6</span>
-              <i class="chevron fas fa-chevron-down transition-transform duration-300"></i>
-            </button>
-            <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
-              <li>Surveys</li>
-              <li>Email Templates</li>
-              <li>Pairings</li>
-              <li>Calendar</li>
-            </ul>
-          </div>
+
+
+      <div class="mt-2">
+        <div class="dropdown">
+          <button class="dropdown-toggle flex justify-between w-full text-left">
+            <span><i class="fas fa-folder mr-2"></i> DPI Cohort 5</span>
+            <i class="chevron fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
+            <li>View dashboard</li>
+            <li>Surveys</li>
+            <li>Email Templates</li>
+            <li>Pairings</li>
+            <li>Calendar</li>
+          </ul>
+        </div>
+
+        <div class="dropdown mt-4">
+          <button class="dropdown-toggle flex justify-between w-full text-left">
+            <span><i class="fas fa-folder mr-2"></i> DPI Cohort 6</span>
+            <i class="chevron fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
+            <li>View Dashboard</li>
+            <li>Surveys</li>
+            <li>Email Templates</li>
+            <li>Pairings</li>
+            <li>Calendar</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal Popup -->
+<div 
+  id="modal" 
+  class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+>
+  <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
+    <button 
+      class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+      onclick="closeModal()"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+
+    <!-- Cohort Form Partial -->
+    <%= render partial: "cohorts/form", locals: { cohort: Cohort.new } %>
+  </div>
+</div>
+
+<script>
+ function openModal() {
+    const modal = document.getElementById('modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex'); 
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex'); 
+  }
+  function toggleForm() {
+    const form = document.getElementById('cohortForm');
+    form.classList.toggle('hidden');
+  }
+</script>
