@@ -1,8 +1,5 @@
 <% if @role == "mentor" %>
-  <h1>Welcome, Mentor!</h1>
-  <% @mentors_data.each do |mentor| %>
-    <h3><%= mentor.user_id %></h3>
-  <% end %>
+  <%= render partial: "mentor_dashboard", locals: { mentees_data: @mentees_data } %>
 <% elsif @role == "mentee" %>
   <%= render partial: "mentee_dashboard", locals: { mentors_data: @mentors_data } %>
 <% elsif @role == "admin" %>

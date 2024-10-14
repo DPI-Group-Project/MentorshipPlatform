@@ -1,11 +1,11 @@
 class DashboardController < ApplicationController
   before_action :dashboard_params, only: [:show]
   def show
-    @role = params[:role].downcase    
-    #Loads up data when role is valid
-    if ['mentor', 'mentee', 'admin'].include? (@role) then
+    @role = params[:role].downcase
+    # Loads up data when role is valid
+    if ['mentor', 'mentee', 'admin'].include?(@role)
       @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
-      @mentees_data = CohortMember.where(role: 'mentee')
+      @mentees_data = User.mentees_in_cohort(current_user.cohort.id)
       @admins_data = ProgramAdmin.all
     else
       redirect_to root_path, alert: 'Invalid role specified.'

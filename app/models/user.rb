@@ -45,7 +45,7 @@ class User < ApplicationRecord
   scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentor')}
   scope :mentees_in_cohort, ->(cohort) { joins(:cohort_members)
-                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')}
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')}
   scope :unpaired_mentees_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
