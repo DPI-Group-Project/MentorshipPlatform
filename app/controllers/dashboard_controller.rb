@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
     # Loads up data when role is valid
     if ['mentor', 'mentee', 'admin'].include?(@role)
       @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
-      @mentees_data = User.mentees_in_cohort(current_user.cohort.id)
+      @mentees_data = User.paired_mentees_with_a_mentor(current_user.cohort.id, current_user)
       @admins_data = ProgramAdmin.all
     else
       redirect_to root_path, alert: 'Invalid role specified.'

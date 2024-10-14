@@ -46,10 +46,20 @@ class User < ApplicationRecord
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentor')}
   scope :mentees_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')}
+  scope :paired_mentees_in_cohort, ->(cohort) { joins(:cohort_members)
+                                  .joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')}
   scope :unpaired_mentees_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
-                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'Mentee')
                                   .where('matches.id IS NULL')}
+  scope :paired_mentees_with_a_mentor, ->(cohort, current_mentor) {
+                                  joins(:cohort_members)
+                                  .joins('LEFT JOIN matches ON matches.mentee_id = cohort_members.user_id AND matches.active = true')
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ? AND matches.mentor_id = ?', cohort, 'Mentee', current_mentor)
+}
+                                  
+                                  
   def name
     "#{first_name.capitalize} #{last_name.capitalize}"
   end

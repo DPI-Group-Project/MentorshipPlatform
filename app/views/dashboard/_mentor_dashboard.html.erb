@@ -1,3 +1,8 @@
 <% mentees_data.each do |mentee| %>
-    <%= mentee.name %>
+    <div>
+        <img src="<%= mentee.profile_picture %>">
+        <%= mentee.name %>
+        <%= mentee.title %>
+        <strong><%= link_to "Profile", profile_path(mentee.id)%></strong>
+    </div>
 <% end %>
