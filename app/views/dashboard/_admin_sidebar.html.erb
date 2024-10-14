@@ -89,7 +89,7 @@
     <ul class="mt-2 space-y-2"> 
       <% @programs_by_admin.each do |program| %>
       <li>
-        <a href="/dashboard/admin/<%= program.id %>" class="text-sm text-black-500 ml-5"><%= program.name %></a>
+        <button onclick="window.location.href='/dashboard/admin/<%= program.id %>'" class="text-sm text-black-500 ml-5"><%= program.name %></button>
       <li>
       <% end %>
     </ul>     
