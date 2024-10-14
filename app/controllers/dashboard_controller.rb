@@ -9,7 +9,10 @@ class DashboardController < ApplicationController
     elsif ['admin'].include? (@role) then
       @admin_data = ProgramAdmin.find_by(id: current_user.id)
       @programs_by_admin = Program.where(creator_id: current_user.id)
-      # @cohorts = Cohorts.where(program_id: )
+      if params[:program_id].present?
+        @current_program = Program.find(params[:program_id])
+        @cohorts = Cohort.where(program_id: @current_program.id)
+      end
     else
       redirect_to root_path, alert: 'Invalid role specified.'
     end
@@ -18,6 +21,6 @@ class DashboardController < ApplicationController
   private
   # Only allow a list of trusted parameters through.
   def dashboard_params
-    params.permit(:role)
+    params.permit(:role, :program_id)
   end
 end
