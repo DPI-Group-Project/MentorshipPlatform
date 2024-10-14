@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="signup"
 export default class extends Controller {
-  static targets = ["programButton", "cohortDropdaown"];
+  static targets = ["programButton", "cohortDropdown"];
 
   connect() {
     this.mentorFormTarget.hidden = true;
