@@ -13,10 +13,19 @@
   <div class="flex items-center space-x-4">
     <% if user_signed_in? %>
       <img src="<%= asset_path("icon/Notification.svg") %>" alt="Notifications" class="h-6 w-6">
-      <img src="<%= asset_path("sample_img/user_mini_image.png") %>" alt="User Image" class="h-10 w-10 rounded-full">
+      <img 
+        src="<%= asset_path("sample_img/user_mini_image.png") %>" 
+        alt="User Image" 
+        class="h-10 w-10 rounded-full cursor-pointer"
+        id="user-image"
+        onclick="toggleModal()"
+      >
       <%= button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
     <% else %>
       <%= link_to "Sign In", new_user_session_path, class: "hover:text-gray-600" %>
     <% end %>
   </div>
 </nav>
+<% if user_signed_in? %>
+  <%= render partial: "shared/user_modal" %>
+<% end %>
