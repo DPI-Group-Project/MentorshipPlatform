@@ -15,7 +15,13 @@
           <i class="fas fa-th-large mr-2"></i> Overview
         </li>
         <li class="flex items-center">
-          <i class="fas fa-folder-open mr-2"></i> Programs
+          <button 
+            id="openModalBtn" 
+            class="text-black flex items-center"
+            onclick="openModal('programListModal')"
+          >
+            <i class="fas fa-folder-open mr-2"></i> Programs
+          </button>
         </li>
         <li class="flex items-center">
           <i class="fas fa-envelope mr-2"></i> Message <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">8</span>
@@ -45,7 +51,7 @@
         <div class="dropdown">
           <button class="dropdown-toggle flex justify-between w-full text-left">
             <span><i class="fas fa-folder mr-2"></i> DPI Cohort 5</span>
-            <i class="chevron fas fa-chevron-down transition-transform duration-300"></i>
+            <i class="chevron fas fa-chevron-down transition-transform duration-300 mr-1"></i>
           </button>
           <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
             <li>View dashboard</li>
@@ -59,7 +65,7 @@
         <div class="dropdown mt-4">
           <button class="dropdown-toggle flex justify-between w-full text-left">
             <span><i class="fas fa-folder mr-2"></i> DPI Cohort 6</span>
-            <i class="chevron fas fa-chevron-down transition-transform duration-300"></i>
+            <i class="chevron fas fa-chevron-down transition-transform duration-300 mr-1"></i>
           </button>
           <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
             <li>View Dashboard</li>
@@ -75,6 +81,7 @@
 </div>
 
 <!-- Modal Popups -->
+
 <div 
   id="programListModal" 
   class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
@@ -86,8 +93,13 @@
     >
       <i class="fas fa-times"></i>
     </button>
-  
-    
+
+    <h1 class="font-medium mb-1">Programs:</h1>
+    <ul class="mt-2 space-y-2"> 
+      <% @programs_by_admin.each do |program| %>
+      <li class="text-sm text-black-500 ml-5"><%= program.name %></li>
+      <% end %>
+    </ul>   
   </div>
 </div>
 
