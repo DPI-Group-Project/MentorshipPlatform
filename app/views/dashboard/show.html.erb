@@ -6,9 +6,6 @@
 <% elsif @role == "mentee" %>
   <%= render partial: "mentee_dashboard", locals: { mentors_data: @mentors_data } %>
 <% elsif @role == "admin" %>
-  <% @admins_data.each do |admin| %>
-  <% end %>
-  <!-- Admin Partial Views Here-->
   <%= render partial: "admin_dashboard" %>
 <% else %>
   <h1>Role not recognized.</h1>
