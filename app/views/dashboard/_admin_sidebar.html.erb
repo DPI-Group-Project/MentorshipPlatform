@@ -2,8 +2,8 @@
   <div class="flex items-center mb-8">
     <img src="<%= asset_path("sample_img/admin_user.png") %>" alt="Admin Avatar" class="w-12 h-12 rounded-full">
     <div class="ml-4">
-      <h3 class="text-lg font-semibold">Katie Pena</h3>
-      <p class="text-sm text-gray-500">Admin<br>
+      <h3 class="text-lg font-semibold"><%= current_user.name %></h3>
+      <p class="text-sm text-gray-500"><%= current_user.title %><br>
         Discovery Partners Institute</p>
     </div>
   </div>
