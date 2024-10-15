@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>MentE::DPI Mentorship Platform</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <%= render partial: "shared/cdn_assets" %>
+<head>
+  <title>MentE::DPI Mentorship Platform</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <%= render partial: "shared/cdn_assets" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-  <body class="min-h-screen flex flex-col">
-      <%= render partial: "shared/navbar" %>
-      <div class="mt-[75px]">
-        <div>
-          <% if notice.present? %>
-            <%= render partial: "shared/flash_notice", locals: { message: notice } %>
-          <% end %>
-          <% if alert.present? %>
-            <%= render partial: "shared/flash_alert", locals: { message: alert } %>
-          <% end %>
-        </div>
-        <%= yield %>
-      </div>
-    <%= render partial: "shared/footer" %>
-  </body>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="min-h-screen flex flex-col">
+<% if current_page?(home_path) %>
+  <%= render 'shared/landing_nav_mb' %>
+  <%= render 'shared/landing_nav' %>
+<% else %>
+  <%= render 'shared/navbar' %>
+<% end %>
+<div>
+  <% if notice.present? %>
+    <%= render partial: "shared/flash_notice", locals: { message: notice } %>
+  <% end %>
+  <% if alert.present? %>
+    <%= render partial: "shared/flash_alert", locals: { message: alert } %>
+  <% end %>
+</div>
+<%= yield %>
+<%= render partial: "shared/footer" %>
+</body>
 </html>
