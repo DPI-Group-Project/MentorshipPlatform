@@ -13,15 +13,15 @@
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Cohort Name</p>
-        <h3 id="cohort_name" class="text-lg font-semibold"></h3>
+        <h3 id="cohort_name" class="text-lg font-semibold"><%= @cohorts.first.cohort_name %></h3>
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Number of Pairing</p>
-        <h3 id="nunber_of_parings" class="text-lg font-semibold"></h3>
+        <h3 id="nunber_of_parings" class="text-lg font-semibold"><%= @cohorts.first.paring_number %> Pairs</h3>
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Scheduled Meetings</p>
-        <h3 id="scheduled_meetings" class="text-lg font-semibold"></h3>
+        <h3 id="scheduled_meetings" class="text-lg font-semibold">N/A</h3>
       </div>
     </div>
     <!-- Survey Ratings & Latest Surveys -->

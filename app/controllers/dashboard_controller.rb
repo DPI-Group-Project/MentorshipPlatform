@@ -13,7 +13,7 @@ class DashboardController < ApplicationController
         @current_program = Program.find_by(id: params[:program_id])
         @cohorts = Cohort.where(program_id: params[:program_id])
       else
-        @current_program = Program.where(creator_id: current_user.id).sample
+        @current_program = Program.find_by(creator_id: current_user.id)
         @cohorts = Cohort.where(program_id: @current_program.id)
       end
     else
