@@ -55,7 +55,7 @@
             </button>
             <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
               <li>
-                <button onclick="cohortInfo('<%= cohort.cohort_name %>', '<%= cohort.paring_number %>')">
+                <button onclick="cohortInfo('<%= cohort.cohort_name %>', '<%= cohort.pairing_number %>')">
                   View dashboard
                 </button>
               </li>
@@ -128,9 +128,9 @@
     const form = document.getElementById('cohortForm');
     form.classList.toggle('hidden');
   }
-  function cohortInfo(name, paring_number){
+  function cohortInfo(name, pairing_number){
     const cohortName = document.getElementById('cohort_name');
-    const nunberOfParings = document.getElementById('nunber_of_parings');
+    const nunberOfParings = document.getElementById('nunber_of_pairings');
     const scheduledMeetings = document.getElementById('scheduled_meetings');
 
     cohortName.textContent = name

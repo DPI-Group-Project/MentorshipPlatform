@@ -27,7 +27,7 @@ class Cohort < ApplicationRecord
       false
     end
   end
-  def paring_number
+  def pairing_number
     matches = Match.where(cohort_id: self.id)
     matches.size
   end
