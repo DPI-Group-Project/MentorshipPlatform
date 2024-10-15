@@ -25,9 +25,9 @@
 
         <div class="flex items-center space-x-2 mt-1">
           <div 
-            class="w-3 h-3 rounded-full <%= current_user.status == "active" ? "bg-green-500" : "bg-red-500" %>"
+            class="w-3 h-3 rounded-full <%= current_user.status == "Active" ? "bg-green-500" : "bg-red-500" %>"
           ></div>
-          <span class="text-sm <%= current_user.status == "active" ? "text-green-500" : "text-red-500" %>">
+          <span class="text-sm <%= current_user.status == "Active" ? "text-green-500" : "text-red-500" %>">
             <%= current_user.status.capitalize %>
           </span>
         </div>
