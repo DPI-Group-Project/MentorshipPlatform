@@ -5,12 +5,19 @@ export default class extends Controller {
   static targets = ["mentorForm", "menteeForm", "mentorButton", "menteeButton"];
 
   connect() {
-    this.mentorFormTarget.hidden = true;
-    // set Mentee button as active by default when the page loads
-    this.setActiveButton("menteeForm");
+    const urlParams = new URLSearchParams(window.location.search);
+    const signupType = urlParams.get("signup_type");
+
+    // Default behavior - hide mentor form and show mentee form
+    if (signupType === "mentor") {
+      this.showForm({ params: { content: "mentorForm" } });
+    } else {
+      this.showForm({ params: { content: "menteeForm" } });
+    }
   }
 
   showForm({ params: { content } }) {
+    // Show the correct form based on the button clicked or query parameter
     if (content === "mentorForm") {
       this.mentorFormTarget.hidden = false;
       this.menteeFormTarget.hidden = true;
@@ -19,16 +26,16 @@ export default class extends Controller {
       this.menteeFormTarget.hidden = false;
     }
     
-    // update active button styles based on the form being shown
+    // Update button styles to reflect active form
     this.setActiveButton(content);
   }
 
   setActiveButton(formType) {
-    // remove active and ring classes from both buttons and reset background colors
+    // Remove active and ring classes from both buttons
     this.mentorButtonTarget.classList.remove("ring-2", "ring-[#27485d]", "ring-opacity-50", "active", "bg-[#3e6176]");
     this.menteeButtonTarget.classList.remove("ring-2", "ring-[#27485d]", "ring-opacity-50", "active", "bg-[#3e6176]");
 
-    // add active, ring, and hover background color to the correct button
+    // Add active, ring, and hover background color to the correct button
     if (formType === "mentorForm") {
       this.mentorButtonTarget.classList.add("ring-2", "ring-[#27485d]", "ring-opacity-50", "active", "bg-[#3e6176]");
     } else {
