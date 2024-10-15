@@ -3,21 +3,25 @@
     <%= render partial: "admin_sidebar" %>
   <!-- Main Content -->
   <main class="w-[calc(100%-22rem)] p-6">
-    <h1 class="text-2xl font-bold">Hi Katie Pena</h1>
+    <h1 class="text-2xl font-bold">Hi <%= current_user.name %></h1>
     <p class="text-gray-500">Welcome back to the Mentorship dashboard</p>
     <!-- Program Stats -->
-    <div class="grid grid-cols-3 gap-4 mt-6">
+    <div class="grid grid-cols-4 gap-4 mt-6">
+      <div class="p-6 bg-white shadow rounded-lg">
+        <p class="text-sm text-gray-500">Program Name</p>
+        <h3 id="program_name" class="text-lg font-semibold"><%= @current_program.name %></h3>
+      </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Cohort Name</p>
-        <h3 class="text-lg font-semibold">DPI Cohort 5</h3>
+        <h3 id="cohort_name" class="text-lg font-semibold"><%= @cohorts.first.cohort_name %></h3>
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Number of Pairing</p>
-        <h3 class="text-lg font-semibold">10 Pairs</h3>
+        <h3 id="nunber_of_pairings" class="text-lg font-semibold"><%= @cohorts.first.pairing_number %> Pairs</h3>
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Scheduled Meetings</p>
-        <h3 class="text-lg font-semibold">16 Meetings</h3>
+        <h3 id="scheduled_meetings" class="text-lg font-semibold">N/A</h3>
       </div>
     </div>
     <!-- Survey Ratings & Latest Surveys -->
@@ -100,6 +104,7 @@
     </div>
   </main>
 </div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const dropdowns = document.querySelectorAll('.dropdown');

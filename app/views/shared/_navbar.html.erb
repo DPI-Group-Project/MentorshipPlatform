@@ -20,7 +20,6 @@
         id="user-image"
         onclick="toggleModal()"
       >
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
     <% else %>
       <%= link_to "Sign In", new_user_session_path, class: "hover:text-gray-600" %>
     <% end %>
