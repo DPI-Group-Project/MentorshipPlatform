@@ -1,2 +1,8 @@
-<%= render 'profile', user: @user %>
+<div class="grid grid-cols-1 sm:grid-cols-4 gap-5 py-9 px-24 max-w-[100%]">
+  <div class="flex flex-col space-y-5 col-span-1">
+    <%= render partial: 'dashboard/user_card' %>
+    <%= render partial: 'dashboard/program_card' %>
+  </div>
 
+  <%= render 'profile', user: @user %>
+</div>
