@@ -25,7 +25,7 @@ class CohortsController < ApplicationController
 
     respond_to do |format|
       if @cohort.save
-        format.html { redirect_to '/dashboard/admin/#{@cohort.program_id}', notice: 'Cohort was successfully created.' }
+        format.html { redirect_to "/dashboard/admin/#{@cohort.program_id}", notice: 'Cohort was successfully created.' }
         format.json { render :show, status: :created, location: @cohort }
       else
         format.html { render :new, status: :unprocessable_entity }
