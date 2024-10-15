@@ -1,87 +1,89 @@
-<section class="p-5">
-  <h1 class="text-2xl font-semibold text-[#202020] mb-1">Current User:</h1>
-  <h2>Name: <%= current_user.name %></h2>
-  <h2>ID: <%= current_user.id %></h2>
-  <h2>Cohort: <%= current_user.cohort.id %></h2>
-  <h2>Match?: <%= current_user.matched? %></h2>
-  <h1 class="text-2xl font-semibold text-[#202020] mb-1">
-    <% if @role == "mentor" %>
-      Mentor Profile
-    <% elsif @role == "mentee" %>
-      Mentee Profile
-    <%end%>
-  </h1>
-  <p class="text-sm text-[#898989] mb-5">Discover insights and stories from our mentors and mentees to inspire your own
-    journey.</p>
-
-  <!--top profile card-->
-  <div class="bg-[#FFFFFF] flex gap-5 py-5 border-slate-300 rounded-lg px-5 w-895px h-171px mb-3">
-    <div>
-      <!--    <img src=<%#= user.profile_picture %> alt="user_profile_picture" class="w-24 h-24 object-cover rounded-lg border">-->
-      <img src=<%= asset_path('sample_img/mentor_sample.png') %> alt="user_profile_picture" class="w-24 h-24 object-cover rounded-lg border">
-    </div>
-    <div>
-      <b class="text-lg text-[#202020] font-bold"><%= user.name %></b>
-      <p class="text-sm	text-[#202020] mb-2.5"><%= user.title %></p>
-      <div>
-        <div class="flex gap-1 mb-2">
-          <img src="<%= asset_path('icon/office.svg') %>" alt="office" class="max-w-15 max-h-15">
-          <p class="text-xs text-[#202020]">Discovery Partners Institute</p>
-        </div>
-        <!-- TODO <p><%#= user.company %></p> -->
-        <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-          <div class="flex gap-1">
-            <img src="<%= asset_path('icon/LinkedIn.svg') %>" alt="LinkedIn" class="max-w-15 max-h-15 mr-1">
-            <p class="text-xs text-[#202020] text-pretty hover:font-normal"><a href="<%= user.linkedin_link %>"><%= user.linkedin_link %></a></p>
-          </div>
-          <div class="flex gap-1">
-            <img src="<%= asset_path('icon/mail.svg') %>" alt="mail" class="max-w-13 max-h-14">
-            <p class="text-xs text-[#202020] hover:font-normal"><a href="mailto:<%= user.email %>"><%= user.email %></a></p>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="grid grid-cols-4 gap-5 py-9 px-24 max-w-[100%]">
+  <!-- Left Section: Stack the two cards -->
+  <div class="flex flex-col space-y-5 col-span-1">
+    <%= render partial: 'dashboard/user_card' %>
+    <%= render partial: 'dashboard/program_card' %>
   </div>
-  <!--bottom profile card-->
-  <div class="grid grid-cols-1 gap-1.5 sm:grid-cols-[2fr_1fr] sm:gap-3 w-895px">
-    <!--  about-->
-    <div class="bg-[#FFFFFF] flex flex-col justify-start space-y-4 py-5 border-slate-300 rounded-lg px-5 mb-2 h-full">
-      <b class="text-lg text-[#202020] font-bold">
-        <% if @role == "mentor" %>
-          About Mentor
-        <% elsif @role == "mentee" %>
-          About Mentee
-        <%end%>
-      </b>
-      <p class="text-xs text-[#202020] flex-grow"><%= user.bio %></p>
-      <% if @role == "mentor" && @current_mentee_count < @capacity_cap && current_user.matched? == false && user.cohort.id == current_user.cohort.id %>
-        <%= button_to 'Mentorship Request', create_request_profile_path(user.id),
-          class: "text-xs bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md 
-                  py-2 px-5 mr-auto hover:bg-transparent hover:text-[#202020] hover:border-[#202020]",
-          method: :post %>
-      <% end %>    
-    </div>
-    <div class="flex flex-col gap-3">
-      <div class="bg-[#FFFFFF] flex-col flex-grow space-y-3 py-5 border-slate-300 rounded-lg px-5">
-        <b class="text-lg text-[#202020] font-bold">Skills</b>
-        <div class="flex gap-1.5">
-          <% user.skills_array.each do |skill| %>
-            <p class="text-xs text-[#202020] bg-[#EEF6F8] rounded-md py-0.5 px-1"><%= skill %></p>
-          <% end %>
-        </div>
-      </div>
+  <!-- Right Section: Main Content -->
+  <section class="col-span-3">
+    <h1 class="text-2xl font-semibold text-[#202020] mb-1">
       <% if @role == "mentor" %>
-        <div class="bg-[#FFFFFF] flex-col space-y-3 py-5 border-slate-300 rounded-lg px-5">
-          <b class="text-lg text-[#202020] font-bold">Mentee Capacity</b>
-          <div>
-            <div class="flex gap-1 mb-2">
-              <img src="<%= asset_path('icon/users.svg') %>" alt="office" class="max-w-15 max-h-15">
-              <p class="text-xs text-[#202020]"><b><%=@current_mentee_count%>/<%=@capacity_cap%></b> mentees</p>
+        Mentor Profile
+      <% elsif @role == "mentee" %>
+        Mentee Profile
+      <%end%>
+    </h1>
+    <p class="text-sm text-[#898989] mb-5">Discover insights and stories from our mentors and mentees to inspire your own
+      journey.</p>
+
+    <!--top profile card-->
+    <div class="bg-[#FFFFFF] flex gap-5 py-5 border-slate-300 rounded-lg px-5 w-895px h-171px mb-3">
+      <div>
+        <!--    <img src=<%#= user.profile_picture %> alt="user_profile_picture" class="w-24 h-24 object-cover rounded-lg border">-->
+        <img src=<%= asset_path('sample_img/mentor_sample.png') %> alt="user_profile_picture" class="w-24 h-24 object-cover rounded-lg border">
+      </div>
+      <div>
+        <b class="text-lg text-[#202020] font-bold"><%= user.name %></b>
+        <p class="text-sm	text-[#202020] mb-2.5"><%= user.title %></p>
+        <div>
+          <div class="flex gap-1 mb-2">
+            <img src="<%= asset_path('icon/office.svg') %>" alt="office" class="max-w-15 max-h-15">
+            <p class="text-xs text-[#202020]">Discovery Partners Institute</p>
+          </div>
+          <!-- TODO <p><%#= user.company %></p> -->
+          <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+            <div class="flex gap-1">
+              <img src="<%= asset_path('icon/LinkedIn.svg') %>" alt="LinkedIn" class="max-w-15 max-h-15 mr-1">
+              <p class="text-xs text-[#202020] text-pretty hover:font-normal"><a href="<%= user.linkedin_link %>"><%= user.linkedin_link %></a></p>
+            </div>
+            <div class="flex gap-1">
+              <img src="<%= asset_path('icon/mail.svg') %>" alt="mail" class="max-w-13 max-h-14">
+              <p class="text-xs text-[#202020] hover:font-normal"><a href="mailto:<%= user.email %>"><%= user.email %></a></p>
             </div>
           </div>
         </div>
-      <% end %>
+      </div>
     </div>
-  </div>
-
-</section>
+    <!--bottom profile card-->
+    <div class="grid grid-cols-1 gap-1.5 sm:grid-cols-[2fr_1fr] sm:gap-3 w-895px">
+      <!--  about-->
+      <div class="bg-[#FFFFFF] flex flex-col justify-start space-y-4 py-5 border-slate-300 rounded-lg px-5 mb-2 h-full">
+        <b class="text-lg text-[#202020] font-bold">
+          <% if @role == "mentor" %>
+            About Mentor
+          <% elsif @role == "mentee" %>
+            About Mentee
+          <%end%>
+        </b>
+        <p class="text-xs text-[#202020] flex-grow"><%= user.bio %></p>
+        <% if @role == "mentor" && @current_mentee_count < @capacity_cap && current_user.matched? == false && user.cohort.id == current_user.cohort.id %>
+          <%= button_to 'Mentorship Request', create_request_profile_path(user.id),
+            class: "text-xs bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md 
+                    py-2 px-5 mr-auto hover:bg-transparent hover:text-[#202020] hover:border-[#202020]",
+            method: :post %>
+        <% end %>    
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="bg-[#FFFFFF] flex-col flex-grow space-y-3 py-5 border-slate-300 rounded-lg px-5">
+          <b class="text-lg text-[#202020] font-bold">Skills</b>
+          <div class="flex gap-1.5">
+            <% user.skills_array.each do |skill| %>
+              <p class="text-xs text-[#202020] bg-[#EEF6F8] rounded-md py-0.5 px-1"><%= skill %></p>
+            <% end %>
+          </div>
+        </div>
+        <% if @role == "mentor" %>
+          <div class="bg-[#FFFFFF] flex-col space-y-3 py-5 border-slate-300 rounded-lg px-5">
+            <b class="text-lg text-[#202020] font-bold">Mentee Capacity</b>
+            <div>
+              <div class="flex gap-1 mb-2">
+                <img src="<%= asset_path('icon/users.svg') %>" alt="office" class="max-w-15 max-h-15">
+                <p class="text-xs text-[#202020]"><b><%=@current_mentee_count%>/<%=@capacity_cap%></b> mentees</p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</div>
