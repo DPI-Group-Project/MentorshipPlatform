@@ -1,0 +1,27 @@
+<div id="notice" class="transition-opacity duration-500 ease-in-out opacity-100 flex justify-center px-8 sm:px-24">
+  <div class="bg-[#FFFFFF] flex justify-between border-slate-300 rounded-lg min-w-[100%] mt-3 p-4 items-center">
+    <div class="flex gap-3 items-center">
+      <img src=<%= asset_path('icon/info.svg') %> alt="notice" class="size-5">
+      <div class="flex flex-col">
+        <div class="text-sm font-bold">
+          Notification
+        </div>
+        <div class="text-sm text-[#898989]">
+          <%= message %>
+        </div>
+      </div>
+    </div>
+    <img src="<%= asset_path('icon/close.svg') %>" alt="Close notice" class="w-4 h-4 cursor-pointer"
+         onclick="fadeOut(this.closest('#notice'));">
+  </div>
+</div>
+
+
+<script>
+    function fadeOut(element) {
+        element.style.opacity = 0;
+        setTimeout(function() {
+            element.style.display = 'none';
+        }, 1000);
+    }
+</script>
