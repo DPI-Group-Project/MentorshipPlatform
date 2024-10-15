@@ -76,17 +76,22 @@
         </p>
       </div>
 
-      <!-- Admin Dashboard shortcut -->
-      <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
-        <p onclick="window.location.href='/dashboard/admin'" class="font-medium text-center hover:text-gray-400 ">Go to Admin Dashboard</p>
-      </div>
+      <% if current_user.role == "mentee" || current_user.role == "mentor"%>
+        <!-- Sign out -->
+        <div class="col-span-2 bg-gray-50 p-4 rounded-lg shadow-sm">
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false } , class:"font-medium text-center pt-2 pl-36 hover:text-gray-400 "%>
+        </div>  
+      <% else %>
+        <!-- Admin Dashboard shortcut -->
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
+          <p onclick="window.location.href='/dashboard/admin'" class="font-medium text-center hover:text-gray-400 ">Go to Admin Dashboard</p>
+        </div>
+        <!-- Sign out -->
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false } , class:"font-medium text-center pt-4 pl-12 hover:text-gray-400 "%>
+        </div>  
+      <% end %>  
 
-      <!-- Sign out -->
-      <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
-        <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false } , class:"font-medium text-center pt-4 pl-12 hover:text-gray-400 "%>
-      </div>
-
-      
     </div>
   </div>
 </div>
