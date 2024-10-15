@@ -16,10 +16,10 @@
       <div class="mt-[75px]">
         <div>
           <% if notice.present? %>
-            <%= render partial: "shared/flash", locals: { message: notice, css_class: "success" } %>
+            <%= render partial: "shared/flash_notice", locals: { message: notice } %>
           <% end %>
           <% if alert.present? %>
-            <%= render partial: "shared/flash", locals: { message: alert, css_class: "danger" } %>
+            <%= render partial: "shared/flash_alert", locals: { message: alert } %>
           <% end %>
         </div>
         <%= yield %>
