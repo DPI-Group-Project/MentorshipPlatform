@@ -77,13 +77,19 @@
       </div>
 
       <!-- Admin Dashboard shortcut -->
-      <div class="col-span-2 bg-gray-50 p-4 rounded-lg shadow-sm">
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
         <p onclick="window.location.href='/dashboard/admin'" class="font-medium text-center hover:text-gray-400 ">Go to Admin Dashboard</p>
       </div>
+
+      <!-- Sign out -->
+      <div class="bg-gray-50 p-4 rounded-lg shadow-sm flex flex-col items-start">
+        <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false } , class:"font-medium text-center pt-4 pl-12 hover:text-gray-400 "%>
+      </div>
+
+      
     </div>
   </div>
 </div>
-
 <script>
   function toggleModal() {
     const modal = document.getElementById('userModal');
