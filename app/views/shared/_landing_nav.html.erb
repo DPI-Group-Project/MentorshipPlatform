@@ -7,7 +7,11 @@
       <ul class="flex gap-10 text-s font-normal text-black max-w-[26]">
         <li><a href="/" class="hover:text-gray-600 font-semibold">Home</a></li>
         <li><a href="/" class="hover:text-gray-600">Demo</a></li>
-        <li><a href="/" class="hover:text-gray-600">Dashboard</a></li>
+        <% if user_signed_in? %>
+          <%= link_to "Dashboard", dashboard_path(role: current_user.role ), class: "hover:text-gray-600" %>
+        <% else %>
+          <%= link_to "Dashboard", new_user_session_path %>
+        <% end %>
       </ul>
     </div>
     <% if user_signed_in? %>
@@ -16,8 +20,8 @@
           <%= link_to "Edit", edit_user_registration_path %>
         </div>
         <div class="text-s font-medium bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md
-             py-2 px-5 mr-auto hover:bg-transparent hover:text-[#202020] hover:border-[#202020]">
-          <%= button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
+             py-2 px-5 mr-auto hover:scale-105">
+          <%= link_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
         </div>
       </div>
     <% else %>
@@ -25,8 +29,10 @@
         <div class="text-s text-[#676666]">
           <%= link_to "Sign Up", new_user_registration_path %>
         </div>
-        <%= link_to "Sign In", new_user_session_path, class: "text-s font-medium bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md
-                    py-2 px-5 mr-auto hover:bg-transparent hover:text-[#202020] hover:border-[#202020]" %>
+        <div class="text-sm font-medium bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md
+             py-2 px-5 mr-auto hover:scale-105">
+          <%= link_to "Sign In", new_user_session_path, method: :delete, data: { turbo: false } %>
+        </div>
       </div>
     <% end %>
 
