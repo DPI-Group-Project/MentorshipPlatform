@@ -1,0 +1,17 @@
+#landing_nav_mb {
+    display: none;
+}
+
+#landing_nav {
+    display: block;
+}
+
+@media screen and (max-width: 800px) {
+    #landing_nav_mb {
+        display: block;
+    }
+
+    #landing_nav {
+        display: none;
+    }
+}
