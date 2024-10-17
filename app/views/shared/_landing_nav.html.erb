@@ -20,8 +20,8 @@
           <%= link_to "Edit", edit_user_registration_path %>
         </div>
         <div class="text-s font-medium bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md
-             py-2 px-5 mr-auto hover:scale-105">
-          <%= link_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
+             py-2 px-5 mr-auto hover:scale-105">         
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
         </div>
       </div>
     <% else %>
