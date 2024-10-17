@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   devise_scope :user do
-    get 'signup', to: 'users/registrations#signup'
+    get 'signup', to: 'users/registrations#signup', as: :mentor_mentee_registration
   end
 
 
@@ -21,12 +21,12 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   get '/dashboard/:role/:program_id', to: 'dashboard#show'
-  get '/dashboard/:role', to: 'dashboard#show'
+  get '/dashboard/:role', to: 'dashboard#show', as: :dashboard
   get '/profile/:id', to: 'profile#show', as: :profile
 
   post '/profile/:id/create_request', to: 'profile#create', as: 'create_request_profile'
 
 
   # Defines the root path route ("/")
-  root 'home#index'
+  root 'home#index', as: :home
 end
