@@ -9,7 +9,7 @@
       <% if user_signed_in? %>
         <%= link_to "Start Mentorship", dashboard_path(role: current_user.role )%>
       <% else %>
-        <%= link_to "Start Mentorship", new_user_session_path %>
+        <%= link_to "Start Mentorship", mentor_mentee_registration_path %>
       <% end %>
     </button>
   </div>
