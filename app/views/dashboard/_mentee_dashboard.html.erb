@@ -17,7 +17,7 @@
       Discover insights and stories from our mentors to inspire your own journey.
     </p>
     <!-- Grid of mentors -->
-    <div id="mentor-list-section"  class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] place-content-center">
+    <div id="mentor-list-section"  class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] place-content-center bg-[#202020]">
       <% available_mentors_count = 0 %>
       <% mentors_data.each do |mentor| %>
       <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
@@ -48,3 +48,22 @@
   
 </div>
 
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const containers = [
+                document.getElementById("mentor-list-section"),
+                document.getElementById("short-list-card"),
+            ];
+
+            const drake = dragula(containers, {
+                moves: function (el, container, handle) {
+                    return handle.classList.contains("handle");
+                },
+            });
+
+            drake.on("drop", function (el, target, source, sibling) {
+                console.log("Dropped:", el);
+                console.log("New Parent:", target);
+            });
+        });
+    </script>

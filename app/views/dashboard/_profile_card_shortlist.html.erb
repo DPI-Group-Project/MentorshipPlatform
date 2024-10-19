@@ -7,11 +7,15 @@
         <p class="text-xs text-[#202020] mb-2.5"><%= mentor.title %></p>
       </div>
     </div>
-    <button class="text-xs w-[70.073px] h-[32px] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:bg-transparent hover:text-[#202020] hover:border-[#202020]"
-            onclick="location.href='<%= profile_path(mentor.id) %>'">
-      View
-    </button>
-    <span class="handle">+</span>
+    <div class="flex flex-col justify-center">
+      <button class="text-xs w-[70.073px] h-[32px] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:bg-transparent hover:text-[#202020] hover:border-[#202020]"
+              onclick="location.href='<%= profile_path(mentor.id) %>'">
+        View
+      </button>
+      <button class="handle text-xs w-[70.073px] h-[32px] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md ">
+        Drag Here
+      </button>
+    </div>  
   </div>
   <div class="w-full border-t border-[#DCDCDC] my-4"></div>
   <div class="flex flex-col px-5 gap-2">
