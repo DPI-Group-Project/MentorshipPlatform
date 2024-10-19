@@ -1,0 +1,27 @@
+<div id="mentor-card-<%=mentor.id%>" class="bg-[#FFFFFF] flex-col border-slate-300 rounded-lg max-w-[438px]">
+  <div class="flex justify-between pt-6 px-6 items-center">
+    <div class="flex gap-5">
+      <img src=<%= asset_path('sample_img/mentor_sample.png') %> alt="mentor_profile_picture" class="size-14 object-cover rounded-lg border">
+      <div class="flex flex-col justify-center">
+        <b class="text-lg text-[#202020] font-bold"><%= mentor.name %></b>
+        <p class="text-xs text-[#202020] mb-2.5"><%= mentor.title %></p>
+      </div>
+    </div>
+    <button class="text-xs w-[70.073px] h-[32px] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:bg-transparent hover:text-[#202020] hover:border-[#202020]"
+            onclick="location.href='<%= profile_path(mentor.id) %>'">
+      View
+    </button>
+    <span class="handle">+</span>
+  </div>
+  <div class="w-full border-t border-[#DCDCDC] my-4"></div>
+  <div class="flex flex-col px-5 gap-2">
+    <div class="flex gap-1.5">
+      <% mentor.skills_array.each do |skill| %>
+        <p class="text-xs text-[#202020] bg-[#EEF6F8] rounded-md py-0.5 px-1"><%= skill %></p>
+      <% end %>
+    </div>
+    <p class="text-xs text-[#898989] mb-5">
+      <%= mentor.bio.length > 150 ? mentor.bio[0...150] + '...' : mentor.bio %>
+    </p>
+  </div>
+</div>
