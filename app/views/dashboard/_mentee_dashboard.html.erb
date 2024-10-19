@@ -5,7 +5,7 @@
     <%= render partial: 'program_card' %>
   </div>
   <!-- Right Section: Main Content -->
-  <% if @shortlist_time == false %>
+  <% if @shortlist_time == 'closed' %>
     <div class="col-span-3">
   <% else %>
     <div class="col-span-2">
@@ -17,7 +17,7 @@
       Discover insights and stories from our mentors to inspire your own journey.
     </p>
     <!-- Grid of mentors -->
-    <% if @shortlist_time == false %>
+    <% if @shortlist_time == 'closed' %>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
     <% else %>
       <div id="mentor-list-section"  class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
@@ -29,7 +29,7 @@
         <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
         <% capacity_cap = mentor.capacity %>
         <% if current_user.cohort.running? && current_mentee_count < capacity_cap %>
-          <% if @shortlist_time == false %>
+          <% if @shortlist_time == 'closed' %>
             <%= render 'profile_card', mentor: mentor %>
           <% else %>
             <%= render 'profile_card_shortlist', mentor: mentor %>
@@ -45,7 +45,7 @@
       <% end %>
     </div>
   </div>
-  <% if @shortlist_time == true %>
+  <% if @shortlist_time == 'open' %>
     <div class="col-span-1">
       <%= render partial: 'shortlist_card' %>
     </div>

@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
   def show
     @role = params[:role].downcase
     # TODO: Make @shortlist_time true or false based on if making shortlist time is open (admin sets start and end times)
-    @shortlist_time = true   
+    @shortlist_time = 'open'   
     #Loads up data when role is valid
     if ['mentor', 'mentee'].include? (@role) then
       @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
