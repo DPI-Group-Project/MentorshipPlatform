@@ -29,11 +29,7 @@
         <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
         <% capacity_cap = mentor.capacity %>
         <% if current_user.cohort.running? && current_mentee_count < capacity_cap %>
-          <% if @shortlist_time == 'closed' %>
-            <%= render 'profile_card', mentor: mentor %>
-          <% else %>
-            <%= render 'profile_card_shortlist', mentor: mentor %>
-          <% end %>
+          <%= render 'profile_card', mentor: mentor %>
           <% available_mentors_count += 1 %>
         <% end %>
       <% end %>
@@ -61,7 +57,7 @@
 
     const drake = dragula(containers, {
         moves: function (el, container, handle) {
-            return handle.classList.contains("handle");
+            return true;
         },
     });
 

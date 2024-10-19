@@ -13,18 +13,18 @@ document.addEventListener("turbo:load", function () {
     console.log("Dragula initialized"); // Check if this runs
 
     const containers = [
-        document.getElementById("mentor-list-section"),
-        document.getElementById("short-list-card"),
+      document.getElementById("mentor-list-section"),
+      document.getElementById("short-list-card"),
     ];
-
+  
     const drake = dragula(containers, {
-        moves: function (el, container, handle) {
-        return handle.classList.contains("handle");
-        },
+      moves: function (el, container, handle) {
+         return true;
+      },
     });
-
+  
     drake.on("drop", function (el, target, source, sibling) {
-        console.log("Dropped:", el);
-        console.log("New Parent:", target);
+      console.log("Dropped:", el);
+      console.log("New Parent:", target);
     });
 });
