@@ -5,18 +5,18 @@
     </a>
     <div class="bg-white opacity-70 flex items-center	justify-around border-slate-300 rounded-2xl w-[26rem] h-[3.2rem]">
       <ul class="flex gap-10 text-s font-normal text-black max-w-[26]">
-        <li><a href="/" class="hover:text-gray-600 font-semibold">Home</a></li>
-        <li><a href="/" class="hover:text-gray-600">Demo</a></li>
+        <li><a href="/" class="font-semibold">Home</a></li>
+        <li><a href="/" class="hover:font-semibold">Demo</a></li>
         <% if user_signed_in? %>
-          <%= link_to "Dashboard", dashboard_path(role: current_user.role ), class: "hover:text-gray-600" %>
+          <%= link_to "Dashboard", dashboard_path(role: current_user.role ), class: "hover:font-semibold" %>
         <% else %>
-          <%= link_to "Dashboard", new_user_session_path %>
+          <%= link_to "Dashboard", new_user_session_path, class: "hover:font-semibold" %>
         <% end %>
       </ul>
     </div>
     <% if user_signed_in? %>
       <div class="flex gap-4 items-center">
-        <div class="text-s text-[#676666] font-normal">
+        <div class="text-sm text-[#202020] font-normal hover:text-[#202020]">
           <%= link_to "Edit", edit_user_registration_path %>
         </div>
         <div class="text-s font-medium bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md
@@ -26,8 +26,8 @@
       </div>
     <% else %>
       <div class="flex gap-4 items-center">
-        <div class="text-s text-[#676666]">
-          <%= link_to "Sign Up", new_user_registration_path %>
+        <div class="text-sm text-[#676666] font-normal hover:text-[#202020]">
+          <%= link_to "Sign Up", mentor_mentee_registration_path %>
         </div>
         <div class="text-sm font-medium bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md
              py-2 px-5 mr-auto hover:scale-105">
