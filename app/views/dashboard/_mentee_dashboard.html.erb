@@ -5,7 +5,11 @@
     <%= render partial: 'program_card' %>
   </div>
   <!-- Right Section: Main Content -->
-  <div class="col-span-3">
+  <% if @shortlist_time == 'closed' %>
+    <div class="col-span-3">
+  <% else %>
+    <div class="col-span-2">
+  <% end %>
     <h1 class="text-2xl font-semibold text-[#202020] mb-1">
       Available Mentors
     </h1>
@@ -13,7 +17,12 @@
       Discover insights and stories from our mentors to inspire your own journey.
     </p>
     <!-- Grid of mentors -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] place-content-center">
+    <% if @shortlist_time == 'closed' %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
+    <% else %>
+      <div id="mentor-list-section"  class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
+      
+    <% end %>
       <% available_mentors_count = 0 %>
       <% mentors_data.each do |mentor| %>
       <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
@@ -32,5 +41,29 @@
       <% end %>
     </div>
   </div>
+  <% if @shortlist_time == 'open' %>
+    <div class="col-span-1">
+      <%= render partial: 'shortlist_card' %>
+    </div>
+  <% end %>
 </div>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const containers = [
+        document.getElementById("mentor-list-section"),
+        document.getElementById("short-list-card"),
+    ];
+
+    const drake = dragula(containers, {
+        moves: function (el, container, handle) {
+            return true;
+        },
+    });
+
+    drake.on("drop", function (el, target, source, sibling) {
+        console.log("Dropped:", el);
+        console.log("New Parent:", target);
+    });
+  });
+</script>
