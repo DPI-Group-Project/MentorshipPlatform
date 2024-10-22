@@ -3,7 +3,7 @@
 # Table name: cohort_members
 #
 #  id         :bigint           not null, primary key
-#  user_id    :bigint           not null
+#  email      :string           not null
 #  cohort_id  :bigint           not null
 #  role       :string
 #  created_at :datetime         not null
