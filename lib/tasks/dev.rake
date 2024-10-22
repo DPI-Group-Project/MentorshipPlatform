@@ -138,7 +138,7 @@ task({ sample_data: :environment }) do
     end
 
     CohortMember.create(
-      user_id: user.id,
+      email: user.email,
       cohort_id: cohort.id,
       role: role,
       capacity: capacity,
