@@ -65,6 +65,6 @@ class CohortMembersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cohort_member_params
-      params.require(:cohort_member).permit(:user_id, :cohort_id, :role)
+      params.require(:cohort_member).permit(:email, :cohort_id, :role)
     end
 end
