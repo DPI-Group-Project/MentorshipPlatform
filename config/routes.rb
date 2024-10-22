@@ -26,8 +26,6 @@ Rails.application.routes.draw do
 
   post '/profile/:id/create_request', to: 'profile#create', as: 'create_request_profile'
 
-  get 'create_cohort' to: 'cohort_members#create' as: :create_cohort_members
-
 
   # Defines the root path route ("/")
   root 'home#index', as: :home
