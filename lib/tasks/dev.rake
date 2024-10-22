@@ -155,17 +155,13 @@ task({ sample_data: :environment }) do
     elsif role_hash[user] == 'mentee'
       role = 'mentee'
     end
-    begin
-      CohortMember.create!(
-        email: user.email,
-        cohort_id: cohort.id,
-        role: role,
-        capacity: capacity
-      )
-      puts "CohortMember created successfully for #{user.email}"
-    rescue ActiveRecord::RecordInvalid => e
-      puts "Failed to create CohortMember for #{user.email}: #{e.message}"
-    end
+
+    CohortMember.create(
+      email: user.email,
+      cohort_id: cohort.id,
+      role:,
+      capacity:
+    )
   end
 
   # Creating Matches
@@ -177,8 +173,9 @@ task({ sample_data: :environment }) do
     end
     mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: 'mentor').sample
     shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
+    this_mentor = User.find_by(email: mentor_cohort_member_object.email)
     Match.create(
-      mentor_id: mentor_cohort_member_object.user_id,
+      mentor_id: this_mentor.id,
       mentee_id: mentee.id,
       cohort_id: cohort_member_mentee.cohort_id,
       active: shared_cohort.running?
