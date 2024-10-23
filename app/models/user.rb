@@ -43,19 +43,14 @@ class User < ApplicationRecord
   before_create :set_default_active_status
 
   # Returns list of mentees that are in the same cohort as the provided mentor
-  scope :mentors_in_cohort, lambda { |cohort|
-                              joins(:cohort_members)
-                                .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentor')
-                            }
-  scope :mentees_in_cohort, lambda { |cohort|
-                              joins(:cohort_members)
-                                .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
-                            }
-  scope :unpaired_mentees_in_cohort, lambda { |cohort|
-                                       joins(:cohort_members)
-                                         .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
-                                         .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
-                                         .where('matches.id IS NULL')
+ scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentor')}
+  scope :mentees_in_cohort, ->(cohort) { joins(:cohort_members)
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')}
+  scope :unpaired_mentees_in_cohort, ->(cohort) { joins(:cohort_members)
+                                  .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
+                                  .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
+                                  .where('matches.id IS NULL')}
                                      }
   def name
     "#{first_name.capitalize} #{last_name.capitalize}"
