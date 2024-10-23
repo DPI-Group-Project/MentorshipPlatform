@@ -74,7 +74,7 @@
         const shortlist = children.map((item, index) => {
           var childId = item.id; 
           var idNumber = Number(childId.split('-').pop()); 
-          var itemIndex = Number(index + 1);
+          var itemIndex = index + 1;
           return {
             [itemIndex] : [idNumber, 'nil'], // Use index + 1 as the key
           };
