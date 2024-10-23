@@ -37,8 +37,7 @@ task({ sample_data: :environment }) do
                     'Product Manager', 'UI/UX Designer', 'Sales Coordinator'].sample
     inactive_reason = ['Did not like the platform.', 'Did not have a good experience.', 'I will be back!',
                        'Other'].sample
-    role = { 'admin' => 5, 'observer' => 7, 'mentor' => 25, 'mentee' => 100 }.find do |_key, value|
-      rand * 100 <= value
+    role = { 'admin' => 5, 'observer' => 7, 'mentor' => 25, 'mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
     end.first
     image_link = "https://api.dicebear.com/9.x/notionists/svg?seed=#{image_name.sample}&radius=50&backgroundColor=D2042D&bodyIcon=galaxy,
                   saturn,electric&bodyIconProbability=10&gesture=hand,handPhone,ok,okLongArm,point,pointLongArm,waveLongArm&gestureProbability=20&
