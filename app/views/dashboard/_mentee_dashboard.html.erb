@@ -76,7 +76,7 @@
           var idNumber = Number(childId.split('-').pop()); 
           var itemIndex = index + 1;
           return {
-            [itemIndex] : [idNumber, 'nil'], // Use index + 1 as the key
+            [itemIndex] : [idNumber, 'nil']
           };
         });
         console.log('shortlist:', JSON.stringify(shortlist));
