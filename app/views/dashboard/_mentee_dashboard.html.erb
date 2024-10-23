@@ -49,21 +49,64 @@
 </div>
 
 <script>
+  const currentUser = <%= current_user.id %>
+
   document.addEventListener("DOMContentLoaded", function () {
     const containers = [
-        document.getElementById("mentor-list-section"),
-        document.getElementById("short-list-card"),
+      document.getElementById("mentor-list-section"),
+      document.getElementById("short-list-card"),
     ];
 
     const drake = dragula(containers, {
-        moves: function (el, container, handle) {
-            return true;
-        },
+      moves: function (el, container, handle) {
+          return true;
+      },
     });
 
     drake.on("drop", function (el, target, source, sibling) {
-        console.log("Dropped:", el);
-        console.log("New Parent:", target);
+      var container = el.parentNode;
+      var children = Array.from(container.children);
+
+      console.log("Dropped:", el);
+      console.log("New Parent:", target);
+
+      if (container.id === 'short-list-card') {
+        const shortlist = children.map((item, index) => {
+          var childId = item.id; 
+          var idNumber = Number(childId.split('-').pop()); 
+          var itemIndex = Number(index + 1);
+          return {
+            [itemIndex] : [idNumber, 'nil'], // Use index + 1 as the key
+          };
+        });
+        console.log('shortlist:', JSON.stringify(shortlist));
+        console.log('user:', currentUser);
+        //updateUserShortlist(currentUser, shortlist);
+      } else {
+        console.log('Moved to Mentor list Conatiner');
+      }
     });
+
+    // function updateUserShortlist(userId, shortlist) {
+    // fetch(`/api/users/${userId}`, {  // Adjust the URL to your server endpoint
+    //     method: 'PUT',  // Use PATCH if you want to only update specific fields
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ shortlist }),  // Send the shortlist array
+    // })
+    // .then(response => {
+    //     if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    // })
+    // .then(data => {
+    //     console.log('Success:', data);
+    // })
+    // .catch((error) => {
+    //     console.error('Error:', error);
+    // });
+// }
   });
 </script>
