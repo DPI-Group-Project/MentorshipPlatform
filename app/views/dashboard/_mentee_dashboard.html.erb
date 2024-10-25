@@ -72,16 +72,16 @@
 
       if (container.id === 'short-list-card') {
         const shortlist = children.map((item, index) => {
-          var itemIndex = index + 1;
           var childId = item.id; 
           var idNumber = Number(childId.split('-').pop()); 
+          var itemIndex = index + 1;
           return {
-            [itemIndex] : [idNumber, "nil"]
+            [itemIndex] : [idNumber, 'nil']
           };
         });
         console.log('shortlist:', JSON.stringify(shortlist));
         console.log('user:', currentUser);
-        updateUserShortlist(currentUser, JSON.stringify(shortlist));
+        updateUserShortlist(currentUser, shortlist);
       } else {
         console.log('Moved to Mentor list Conatiner');
       }
@@ -108,6 +108,6 @@
       .catch(error => {
           console.error('Error submitting shortlist:', error);
       });
-    }
+      }
   });
 </script>

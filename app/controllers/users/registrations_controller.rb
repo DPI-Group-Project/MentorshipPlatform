@@ -31,7 +31,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def update_shortlist
     user = current_user
-    shortlist = JSON.parse(params[:shortlist].to_json)
+    shortlist = params[:shortlist]
     if user.update!(shortlist: shortlist)
       render json: { message: 'Shortlist updated successfully' }, status: :ok
     else
