@@ -29,6 +29,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     render 'users/registrations/signup'
   end
 
+  def update_shortlist
+    user = current_user
+    shortlist = JSON.parse(params[:shortlist].to_json)
+    if user.update!(shortlist: shortlist)
+      render json: { message: 'Shortlist updated successfully' }, status: :ok
+    else
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   # GET /resource/edit
   # def edit
   #   super

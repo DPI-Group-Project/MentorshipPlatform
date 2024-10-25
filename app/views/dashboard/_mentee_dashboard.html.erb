@@ -72,41 +72,42 @@
 
       if (container.id === 'short-list-card') {
         const shortlist = children.map((item, index) => {
+          var itemIndex = index + 1;
           var childId = item.id; 
           var idNumber = Number(childId.split('-').pop()); 
-          var itemIndex = index + 1;
           return {
-            [itemIndex] : [idNumber, 'nil']
+            [itemIndex] : [idNumber, "nil"]
           };
         });
         console.log('shortlist:', JSON.stringify(shortlist));
         console.log('user:', currentUser);
-        //updateUserShortlist(currentUser, shortlist);
+        updateUserShortlist(currentUser, JSON.stringify(shortlist));
       } else {
         console.log('Moved to Mentor list Conatiner');
       }
     });
 
-    // function updateUserShortlist(userId, shortlist) {
-    //   fetch(`/api/users/${userId}`, {  // Adjust the URL to your server endpoint
-    //       method: 'PUT',  // Use PATCH if you want to only update specific fields
-    //       headers: {
-    //           'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({ shortlist }),  // Send the shortlist array
-    //   })
-    //   .then(response => {
-    //       if (!response.ok) {
-    //           throw new Error('Network response was not ok');
-    //       }
-    //       return response.json();
-    //   })
-    //   .then(data => {
-    //       console.log('Success:', data);
-    //   })
-    //   .catch((error) => {
-    //       console.error('Error:', error);
-    //   });
-    // }
+    function updateUserShortlist(userId, shortlist) {
+      fetch(`<%= update_shortlist_path(current_user.id) %>`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: JSON.stringify({ shortlist: shortlist })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Shortlist submitted successfully:', data);
+      })
+      .catch(error => {
+          console.error('Error submitting shortlist:', error);
+      });
+    }
   });
 </script>
