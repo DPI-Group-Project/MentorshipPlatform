@@ -7,3 +7,20 @@
     border: 1px solid #DCDCDC; 
     background-color: #f9f9f9; 
 }
+
+#submit-shortlist-button {
+    background: #202020;
+    color: #FFFFFF;
+    border: solid, .5px, #202020;
+}
+#submit-shortlist-button:hover {
+    background: transparent;
+    color: #202020;
+    border: solid, .5px, #202020;
+}
+#submit-shortlist-button:disabled {
+    background: transparent; 
+    cursor: not-allowed; 
+    color: #202020;
+    border: solid, .5px, #DCDCDC;
+}
