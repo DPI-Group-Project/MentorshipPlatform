@@ -125,7 +125,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_201231) do
     t.string "linkedin_link"
     t.string "profile_picture"
     t.text "skills_array", default: [], array: true
-    t.string "shortlist", default: [], array: true
+    t.jsonb "shortlist", default: [], array: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
