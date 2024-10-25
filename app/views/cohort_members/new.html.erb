@@ -1,42 +1,55 @@
-<div class="flex justify-center p-8">
+<div class="flex items-center justify-center h-screen p-8 bg-gray-100">
   <!-- Main Form Content -->
-  <div class="ml-8 w-[calc(100%-22rem)]">
-    <h1 class="text-2xl font-bold text-center mb-8">New Cohort Member</h1>
-
+  <div class="w-full max-w-3xl lg:max-w-5xl p-1 ">
+    <h1 class="text-2xl font-bold text-left mb-1"><%= @cohort.cohort_name %></h1>
+    <h1 class="text-2xl font-bold text-left mb-8"><%= @current_program.name %></h1>
+    
     <!-- Form Container -->
-    <div class="grid grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
       <!-- Mentors Section -->
-      <div>
-        <h2 class="text-xl font-bold">Mentors</h2>
-        <label class="block mt-4 font-semibold">Enter Email Address(es):</label>
-        <input type="text" id="mentors_emails" placeholder="email1@example.com, email2@example.com" class="w-full border rounded p-2 mt-2">
+      <div class="bg-gray-50 p-6 rounded-2xl shadow-md">
+        <div class="bg-gray-200 p-3 rounded-lg shadow-sm mb-4">
+          <h2 class="text-xl font-bold text-center">Mentors</h2>
+        </div>
         
-        <!-- List of Emails -->
-        <div class="mt-4 h-40 border rounded overflow-y-auto" id="mentor-list"></div>
-      </div>
+        <div class="bg-gray-100 p-3 rounded-lg shadow-sm mb-4">
+          <label class="block font-semibold text-gray-700">Enter Email Address(es):</label>
+          <input type="text" id="mentors_emails" placeholder="email1@example.com, email2@example.com" class="w-full border rounded-lg p-2 mt-2 focus:ring-2 focus:ring-blue-400">
+        </div>
 
-      <!-- Mentees Section -->
-      <div>
-        <h2 class="text-xl font-bold">Mentees</h2>
-        <label class="block mt-4 font-semibold">Enter Email Address(es):</label>
-        <input type="text" id="mentees_emails" placeholder="email1@example.com, email2@example.com" class="w-full border rounded p-2 mt-2">
-        
         <!-- List of Emails -->
-        <div class="mt-4 h-40 border rounded overflow-y-auto" id="mentee-list"></div>
+        <div class="bg-gray-100 h-32 border rounded-lg overflow-y-auto p-2 shadow-inner" id="mentor-list"></div>
+      </div>
+      
+      <!-- Mentees Section -->
+      <div class="bg-gray-50 p-6 rounded-2xl shadow-md">
+        <div class="bg-gray-200 p-3 rounded-lg shadow-sm mb-4">
+          <h2 class="text-xl font-bold text-center">Mentees</h2>
+        </div>
+
+        <div class="bg-gray-100 p-3 rounded-lg shadow-sm mb-4">
+          <label class="block font-semibold text-gray-700">Enter Email Address(es):</label>
+          <input type="text" id="mentees_emails" placeholder="email1@example.com, email2@example.com" class="w-full border rounded-lg p-2 mt-2 focus:ring-2 focus:ring-blue-400">
+        </div>
+
+        <!-- List of Emails -->
+        <div class="bg-gray-100 h-32 border rounded-lg overflow-y-auto p-2 shadow-inner" id="mentee-list"></div>
       </div>
     </div>
-
+    
     <!-- Save Button -->
     <div class="mt-8 flex justify-center">
-      <%= button_tag "Save", class: "bg-black text-white font-semibold py-2 px-8 rounded" %>
+      <%= button_tag "Save", class: "bg-black text-white font-semibold py-2 px-8 rounded-lg hover:bg-blue-600 transition duration-200 ease-in-out" %>
     </div>
-
-    <br>
-    <div class="flex justify-center">
-      <%= link_to "Back to Cohorts", cohorts_path, class: "text-blue-500 hover:underline" %>
+    
+    <!-- Back Link -->
+    <div class="flex justify-center mt-4">
+<%= link_to "Back to dashboard", dashboard_path(role: "admin"), class: "text-black hover:underline" %>
     </div>
   </div>
 </div>
+
 
 <!-- JavaScript -->
 <script>
@@ -49,40 +62,62 @@
     // Function to create an email element
     function createEmailElement(email) {
       return `
-        <div class="flex items-center justify-between p-2 border-b">
-          <span class="text-gray-700">${email}</span>
+        <div class="flex items-center justify-between p-2 border-b email-item">
+          <input type="text" value="${email}" class="email-text text-gray-700 w-full border-none outline-none bg-transparent" readonly />
           <div class="flex space-x-2">
             <!-- Edit Button -->
-            <button class="bg-green-200 p-1 rounded">
+            <button type="button" class="bg-green-200 p-1 rounded edit-email">
               <svg class="w-4 h-4 text-green-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.414 2.586a2 2 0 0 1 2.828 2.828l-14.828 14.828h-4.828v-4.828l14.828-14.828z"/></svg>
             </button>
             <!-- Delete Button -->
-            <button class="bg-red-200 p-1 rounded delete-email">
+            <button type="button" class="bg-red-200 p-1 rounded delete-email">
               <svg class="w-4 h-4 text-red-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm10 14h-2v-10h2v10zm4 0h-2v-10h2v10zm-8 0h-2v-10h2v10zm11-18v2h-14v-2h-5v2h3v18c0 1.104.896 2 2 2h16c1.104 0 2-.896 2-2v-18h3v-2h-5z"/></svg>
             </button>
           </div>
         </div>`;
     }
 
-    // Add email to list on Enter keypress
+    // Add emails to list
+    function addEmails(input, list) {
+      const emails = input.value.split(',').map(email => email.trim()).filter(email => email);
+      emails.forEach(email => {
+        list.innerHTML += createEmailElement(email);
+      });
+      input.value = '';  // Clear input
+    }
+
+    // Add emails on Enter keypress
     function addEmailOnEnter(input, list) {
       input.addEventListener('keydown', function (event) {
         if (event.key === 'Enter' && input.value.trim()) {
-          list.innerHTML += createEmailElement(input.value.trim());
-          input.value = '';  // Clear input
-          event.preventDefault();  // Prevent form submission
+          event.preventDefault();
+          addEmails(input, list);
         }
       });
     }
 
-    // Handle adding emails
+    // Initialize adding emails
     addEmailOnEnter(mentorInput, mentorList);
     addEmailOnEnter(menteeInput, menteeList);
 
-    // Delete email on click
+    // Toggle edit mode and delete email
     document.addEventListener('click', function (e) {
-      if (e.target.closest('.delete-email')) {
-        e.target.closest('.flex').remove();
+      const target = e.target;
+
+      // Edit email on edit button click
+      if (target.closest('.edit-email')) {
+        const emailItem = target.closest('.email-item');
+        const emailInput = emailItem.querySelector('.email-text');
+        emailInput.readOnly = !emailInput.readOnly;  // Toggle readonly state
+        if (!emailInput.readOnly) {
+          emailInput.focus();  // Focus on input when editable
+        }
+      }
+
+      // Delete email on delete button click
+      if (target.closest('.delete-email')) {
+        const emailItem = target.closest('.email-item');
+        emailItem.remove();  // Remove the entire email item
       }
     });
   });

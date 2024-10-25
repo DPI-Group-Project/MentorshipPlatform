@@ -14,6 +14,9 @@ class CohortMembersController < ApplicationController
   # GET /cohort_members/new
   def new
     @cohort_member = CohortMember.new
+    @cohort = Cohort.find(params[:cohort_id])
+    @current_program = Program.find_by(creator_id: current_user.id)
+   
   end
 
   # GET /cohort_members/1/edit
