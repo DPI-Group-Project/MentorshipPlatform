@@ -50,6 +50,7 @@
 
 <script>
   const currentUser = <%= current_user.id %>
+  const submitButton = document.getElementById("submit-shortlist-button");
 
   document.addEventListener("DOMContentLoaded", function () {
     const containers = [
@@ -66,11 +67,15 @@
     drake.on("drop", function (el, target, source, sibling) {
       var container = el.parentNode;
       var children = Array.from(container.children);
+      const shortlistContainer = document.getElementById("short-list-card");
 
       console.log("Dropped:", el);
       console.log("New Parent:", target);
 
-      if (container.id === 'short-list-card') {
+
+      submitButton.addEventListener("click", function () {
+        const shortlistContainer = document.getElementById("short-list-card");
+        const children = Array.from(shortlistContainer.children);
         const shortlist = children.map((item, index) => {
           var childId = item.id; 
           var idNumber = Number(childId.split('-').pop()); 
@@ -82,9 +87,7 @@
         console.log('shortlist:', JSON.stringify(shortlist));
         console.log('user:', currentUser);
         updateUserShortlist(currentUser, shortlist);
-      } else {
-        console.log('Moved to Mentor list Conatiner');
-      }
+      });
     });
 
     function updateUserShortlist(userId, shortlist) {
@@ -104,6 +107,8 @@
       })
       .then(data => {
           console.log('Shortlist submitted successfully:', data);
+          submitButton.disabled = true;
+          drake.destroy();
       })
       .catch(error => {
           console.error('Error submitting shortlist:', error);
