@@ -50,46 +50,54 @@
 
 <script>
   const currentUser = <%= current_user.id %>
+  const currentUserShortlist = <%= current_user.shortlist %>
   const submitButton = document.getElementById("submit-shortlist-button");
 
+  console.log("Shortlist", currentUserShortlist.length );
   document.addEventListener("DOMContentLoaded", function () {
     const containers = [
       document.getElementById("mentor-list-section"),
       document.getElementById("short-list-card"),
     ];
 
-    const drake = dragula(containers, {
-      moves: function (el, container, handle) {
-          return true;
-      },
-    });
-
-    drake.on("drop", function (el, target, source, sibling) {
-      var container = el.parentNode;
-      var children = Array.from(container.children);
-      const shortlistContainer = document.getElementById("short-list-card");
-
-      console.log("Dropped:", el);
-      console.log("New Parent:", target);
-
-
-      submitButton.addEventListener("click", function () {
-        const shortlistContainer = document.getElementById("short-list-card");
-        const children = Array.from(shortlistContainer.children);
-        const shortlist = children.map((item, index) => {
-          var childId = item.id; 
-          var idNumber = Number(childId.split('-').pop()); 
-          var itemIndex = index + 1;
-          return {
-            [itemIndex] : [idNumber, 'nil']
-          };
-        });
-        console.log('shortlist:', JSON.stringify(shortlist));
-        console.log('user:', currentUser);
-        updateUserShortlist(currentUser, shortlist);
+    if (currentUserShortlist.length === 0) {
+      const drake = dragula(containers, {
+        moves: function (el, container, handle) {
+            return true;
+        },
       });
-    });
 
+      drake.on("drop", function (el, target, source, sibling) {
+        var container = el.parentNode;
+        var children = Array.from(container.children);
+        const shortlistContainer = document.getElementById("short-list-card");
+
+        console.log("Dropped:", el);
+        console.log("New Parent:", target);
+
+
+        submitButton.addEventListener("click", function () {
+          const shortlistContainer = document.getElementById("short-list-card");
+          const children = Array.from(shortlistContainer.children);
+          const shortlist = children.map((item, index) => {
+            var childId = item.id; 
+            var idNumber = Number(childId.split('-').pop()); 
+            var itemIndex = index + 1;
+            return {
+              [itemIndex] : [idNumber, 'nil']
+            };
+          });
+          console.log('shortlist:', JSON.stringify(shortlist));
+          console.log('user:', currentUser);
+          updateUserShortlist(currentUser, shortlist);
+        });
+      });
+    } else {
+      const shortlistMessage = document.getElementById("short-list-card-message");
+      shortlistMessage.innerText = "Your shortlist was already submitted!"
+      submitButton.disabled = true;
+    }
+    
     function updateUserShortlist(userId, shortlist) {
       fetch(`<%= update_shortlist_path(current_user.id) %>`, {
           method: 'POST',
@@ -113,6 +121,6 @@
       .catch(error => {
           console.error('Error submitting shortlist:', error);
       });
-      }
+   }
   });
 </script>
