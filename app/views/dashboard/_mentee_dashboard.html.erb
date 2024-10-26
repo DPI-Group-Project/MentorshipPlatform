@@ -52,8 +52,6 @@
   const currentUser = <%= current_user.id %>
   const currentUserShortlist = <%= current_user.shortlist.to_json.html_safe %>;
   const submitButton = document.getElementById("submit-shortlist-button");
-  const shortlistSection = document.getElementById("shortlist-section");
-  console.log("Shortlist", currentUserShortlist);
 
   document.addEventListener("DOMContentLoaded", function () {
     const containers = [
@@ -61,22 +59,20 @@
       document.getElementById("short-list-card"),
     ];
 
+    // Makes sure a user hasn't already submitted a shortlist
     if (currentUserShortlist.length === 0) {
+      // Creates a dragula instance 
       const drake = dragula(containers, {
         moves: function (el, container, handle) {
             return true;
         },
       });
 
+      // Creates shortlist array
       drake.on("drop", function (el, target, source, sibling) {
         var container = el.parentNode;
         var children = Array.from(container.children);
         const shortlistContainer = document.getElementById("short-list-card");
-
-console.log("Shortlist", currentUserShortlist);
-        console.log("Dropped:", el);
-        console.log("New Parent:", target);
-
 
         submitButton.addEventListener("click", function () {
           const shortlistContainer = document.getElementById("short-list-card");
@@ -89,18 +85,19 @@ console.log("Shortlist", currentUserShortlist);
               [itemIndex] : [idNumber, 'nil']
             };
           });
-          console.log('shortlist:', JSON.stringify(shortlist));
-          console.log('user:', currentUser);
           updateUserShortlist(currentUser, shortlist);
         });
       });
     } else {
       const shortlistMessage = document.getElementById("short-list-card-message");
+      const shortlistSection = document.getElementById("shortlist-section");
+
       shortlistMessage.innerText = "Your shortlist was already submitted!"
       submitButton.disabled = true;
       shortlistSection.hidden = true;
     }
     
+    // Sends shortlist to user controller to be added to database
     function updateUserShortlist(userId, shortlist) {
       fetch(`<%= update_shortlist_path(current_user.id) %>`, {
           method: 'POST',
