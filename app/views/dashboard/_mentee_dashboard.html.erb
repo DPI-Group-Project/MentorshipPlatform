@@ -70,10 +70,6 @@
 
       // Creates shortlist array
       drake.on("drop", function (el, target, source, sibling) {
-        var container = el.parentNode;
-        var children = Array.from(container.children);
-        const shortlistContainer = document.getElementById("short-list-card");
-
         submitButton.addEventListener("click", function () {
           const shortlistContainer = document.getElementById("short-list-card");
           const children = Array.from(shortlistContainer.children);
