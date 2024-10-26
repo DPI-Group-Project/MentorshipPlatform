@@ -50,10 +50,11 @@
 
 <script>
   const currentUser = <%= current_user.id %>
-  const currentUserShortlist = <%= current_user.shortlist %>
+  const currentUserShortlist = <%= current_user.shortlist.to_json.html_safe %>;
   const submitButton = document.getElementById("submit-shortlist-button");
+  const shortlistSection = document.getElementById("shortlist-section");
+  console.log("Shortlist", currentUserShortlist);
 
-  console.log("Shortlist", currentUserShortlist.length );
   document.addEventListener("DOMContentLoaded", function () {
     const containers = [
       document.getElementById("mentor-list-section"),
@@ -72,6 +73,7 @@
         var children = Array.from(container.children);
         const shortlistContainer = document.getElementById("short-list-card");
 
+console.log("Shortlist", currentUserShortlist);
         console.log("Dropped:", el);
         console.log("New Parent:", target);
 
@@ -96,6 +98,7 @@
       const shortlistMessage = document.getElementById("short-list-card-message");
       shortlistMessage.innerText = "Your shortlist was already submitted!"
       submitButton.disabled = true;
+      shortlistSection.hidden = true;
     }
     
     function updateUserShortlist(userId, shortlist) {
@@ -121,6 +124,6 @@
       .catch(error => {
           console.error('Error submitting shortlist:', error);
       });
-   }
+    }
   });
 </script>
