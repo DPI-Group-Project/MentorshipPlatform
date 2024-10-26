@@ -24,3 +24,8 @@
     color: #202020;
     border: solid, .5px, #DCDCDC;
 }
+#short-list-card-message{
+    color: #202020;
+    text-align: center;
+    justify-content: center;
+}
