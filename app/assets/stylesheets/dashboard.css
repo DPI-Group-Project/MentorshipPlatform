@@ -7,6 +7,9 @@
     border: 1px solid #DCDCDC; 
     background-color: #f9f9f9; 
 }
+#shortlist-section.hidden{
+    display: none;
+}
 
 #submit-shortlist-button {
     background: #202020;
@@ -24,6 +27,7 @@
     color: #202020;
     border: solid, .5px, #DCDCDC;
 }
+
 #short-list-card-message{
     color: #202020;
     text-align: center;
