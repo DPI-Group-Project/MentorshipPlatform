@@ -70,8 +70,8 @@
   </div>
 
   <%= f.simple_fields_for :cohorts, CohortMember.new do |cm| %>
-    <%= cm.input :capacity, required: true, label: false, input_html: { class: "hidden" } %>
-    <%= cm.hidden_field :role, value: 'Mentee' %>
+    <%= cm.input :capacity, required: true %>
+    <%= cm.hidden_field :role, value: 'mentor' %>
     <%= cm.hidden_field :cohort_id, value: Cohort.first.id %>
   <% end %>
 

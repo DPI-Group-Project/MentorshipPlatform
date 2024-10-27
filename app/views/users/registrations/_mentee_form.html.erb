@@ -66,11 +66,12 @@
       <label for="user_skills_array" class="block text-black">Skills</label>
       <%= f.input :skills_array, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
     </div>
+
   </div>
 
   <%= f.simple_fields_for :cohorts, CohortMember.new do |cm| %>
     <%= cm.input :capacity, required: true, label: false, input_html: { class: "hidden" } %>
-    <%= cm.hidden_field :role, value: 'Mentor' %>
+    <%= cm.hidden_field :role, value: 'mentee' %>
     <%= cm.hidden_field :cohort_id, value: Cohort.first.id %>
   <% end %>
 

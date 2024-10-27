@@ -1,0 +1,33 @@
+<%= form_with(model: cohort_member) do |form| %>
+  <% if cohort_member.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(cohort_member.errors.count, "error") %> prohibited this cohort member from being saved:</h2>
+
+      <ul>
+        <% cohort_member.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :member_email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :member_role, style: "display: block" %>
+    <%= form.text_field :role %>
+  </div>
+
+  <div>
+    <%= form.label :cohort_id, style: "display: block" %>
+    <%= form.text_field :cohort_id %>
+  </div>
+
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

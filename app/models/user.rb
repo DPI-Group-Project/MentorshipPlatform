@@ -28,22 +28,22 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :cohort_members, class_name: "CohortMember", foreign_key: "user_id", dependent: :destroy
-  has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
-  has_many :mentees, class_name: "Match", foreign_key: "mentee_id", dependent: :destroy
-  has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
-  has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
-  has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
-  has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
-  
-  
+  has_many :cohort_members, class_name: 'CohortMember', primary_key: 'email', foreign_key: 'email', dependent: :destroy
+  has_one :mentor, class_name: 'Match', foreign_key: 'mentor_id', dependent: :destroy
+  has_many :mentees, class_name: 'Match', foreign_key: 'mentee_id', dependent: :destroy
+  has_many :mentor_submissions, class_name: 'MatchSubmission', foreign_key: 'mentor_id', dependent: :destroy
+  has_many :mentee_submissions, class_name: 'MatchSubmission', foreign_key: 'mentee_id', dependent: :destroy
+  has_many :owned_cohorts, class_name: 'Cohort', foreign_key: 'creator_id', dependent: :destroy
+  has_many :owned_programs, class_name: 'Program', foreign_key: 'creator_id', dependent: :destroy
+
   accepts_nested_attributes_for :cohort_members
   after_create :create_first_cohort
   attr_accessor :cohort_members_attributes
+
   before_create :set_default_active_status
 
   # Returns list of mentees that are in the same cohort as the provided mentor
-  scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
+ scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentor')}
   scope :mentees_in_cohort, ->(cohort) { joins(:cohort_members)
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')}
@@ -51,29 +51,36 @@ class User < ApplicationRecord
                                   .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
                                   .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
                                   .where('matches.id IS NULL')}
+
   def name
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
+
   def matched?
-    Match.where('mentee_id = :id OR mentor_id = :id', id: self.id).exists?
+    Match.where('mentee_id = :id OR mentor_id = :id', id:).exists?
   end
+
   def cohort
-    cohort_id = CohortMember.where(user_id: self.id).pluck(:cohort_id).first
+    cohort_id = CohortMember.where(email:).pluck(:cohort_id).first
     cohort = Cohort.find_by(id: cohort_id)
   end
+
   def role
-    CohortMember.where(user_id: self.id).pluck(:role).first
+    CohortMember.where(email:).pluck(:role).first
   end
+
   def capacity
-    CohortMember.where(user_id: self.id).pluck(:capacity).first
+    CohortMember.where(email:).pluck(:capacity).first
   end
+
   # Return how many mentees a mentor currently has
   def mentee_capacity_count(cohort_id)
-    matches = Match.where('mentor_id = ? AND active = ? AND cohort_id = ?', self.id, 'true', cohort_id)
+    matches = Match.where('mentor_id = ? AND active = ? AND cohort_id = ?', id, 'true', cohort_id)
     matches.size
   end
 
   private
+
   def create_first_cohort
     return unless cohort_members_attributes.present?
 
@@ -85,6 +92,7 @@ class User < ApplicationRecord
       )
     end
   end
+
   def set_default_active_status
     self.status ||= 'Active'
   end

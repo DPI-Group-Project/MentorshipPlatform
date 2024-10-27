@@ -15,14 +15,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_201231) do
   enable_extension "plpgsql"
 
   create_table "cohort_members", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.string "email", null: false
     t.bigint "cohort_id", null: false
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "capacity"
     t.index ["cohort_id"], name: "index_cohort_members_on_cohort_id"
-    t.index ["user_id"], name: "index_cohort_members_on_user_id"
+    t.index ["email"], name: "index_cohort_members_on_email"
   end
 
   create_table "cohorts", force: :cascade do |t|
@@ -131,7 +131,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_201231) do
   end
 
   add_foreign_key "cohort_members", "cohorts"
-  add_foreign_key "cohort_members", "users"
+  add_foreign_key "cohort_members", "users", column: "email", primary_key: "email"
   add_foreign_key "cohorts", "programs"
   add_foreign_key "cohorts", "users", column: "contact_id"
   add_foreign_key "cohorts", "users", column: "creator_id"
