@@ -1,69 +1,92 @@
-<div class="grid grid-col-1 sm:grid-cols-4 gap-5 py-9 px-24 max-w-[100%]">
-  <!-- Left Section: Stack the two cards -->
-  <div class="flex flex-col space-y-5 col-span-1">
-    <%= render partial: 'user_card' %>
-    <%= render partial: 'program_card' %>
-  </div>
-  <!-- Right Section: Main Content -->
-  <% if @shortlist_time == 'closed' %>
-    <div class="col-span-3">
-  <% else %>
-    <div class="col-span-2">
-  <% end %>
-    <h1 class="text-2xl font-semibold text-[#202020] mb-1">
-      Available Mentors
-    </h1>
-    <p class="text-sm text-[#898989] mb-5">
-      Discover insights and stories from our mentors to inspire your own journey.
-    </p>
-    <!-- Grid of mentors -->
-    <% if @shortlist_time == 'closed' %>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
-    <% else %>
-      <div id="mentor-list-section"  class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
-      
-    <% end %>
-      <% available_mentors_count = 0 %>
-      <% mentors_data.each do |mentor| %>
-      <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
-        <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
-        <% capacity_cap = mentor.capacity %>
-        <% if current_user.cohort.running? && current_mentee_count < capacity_cap %>
-          <%= render 'profile_card', mentor: mentor %>
-          <% available_mentors_count += 1 %>
-        <% end %>
-      <% end %>
-      <!-- If no available mentors -->
-      <% if !current_user.cohort.running? %>
-        <h2> Mentor matching is closed for cohort <%= current_user.cohort.id %> </h2>
-      <% elsif available_mentors_count == 0 %>
-        <h2> No more available mentors in cohort <%= current_user.cohort.id %> </h2>
-      <% end %>
-    </div>
-  </div>
-  <% if @shortlist_time == 'open' %>
-    <div class="col-span-1">
-      <%= render partial: 'shortlist_card' %>
-    </div>
-  <% end %>
-</div>
+<% if @shortlist_time == 'open' && current_user.shortlist.length === 0 %>
+  <div class="desktop-view">
+    <%= render 'mentee_shortlist_desktop', mentors_data: mentors_data %>
+  </div> 
+  <div class="mobile-view">
+    <%= render 'mentee_shortlist_mobile', mentors_data: mentors_data %>
+  </div> 
+<% else %>
+  <%= render 'mentee_dashboard_1', mentors_data: mentors_data  %>
+<% end %>
 
 <script>
+  const currentUser = <%= current_user.id %>
+  const currentUserShortlist = <%= current_user.shortlist.to_json.html_safe %>;
+  const submitButton = document.getElementById("submit-shortlist-button");
+  const submitButtonM = document.getElementById("submit-shortlist-button-m");
+
   document.addEventListener("DOMContentLoaded", function () {
     const containers = [
-        document.getElementById("mentor-list-section"),
-        document.getElementById("short-list-card"),
+      document.getElementById("mentor-list-section"),
+      document.getElementById("short-list-card"),
+      document.getElementById("mentor-list-section-m"),
+      document.getElementById("short-list-card-m"),
     ];
 
+    // Creates a dragula instance 
     const drake = dragula(containers, {
-        moves: function (el, container, handle) {
-            return true;
-        },
+      moves: function (el, container, handle) {
+          return true;
+      },
     });
-
+    
+    // Creates shortlist array
     drake.on("drop", function (el, target, source, sibling) {
-        console.log("Dropped:", el);
-        console.log("New Parent:", target);
+      submitButton.addEventListener("click", function () {
+        const shortlistContainer = document.getElementById("short-list-card");
+        const children = Array.from(shortlistContainer.children);
+        const shortlist = children.map((item, index) => {
+          var childId = item.id; 
+          var idNumber = Number(childId.split('-').pop()); 
+          var itemIndex = index + 1;
+          return {
+            [itemIndex] : [idNumber, 'nil']
+          };
+        });
+        updateUserShortlist(currentUser, shortlist);
+      });
+
+      submitButtonM.addEventListener("click", function () {
+        const shortlistContainerM = document.getElementById("short-list-card-m");
+        const childrenM = Array.from(shortlistContainerM.children);
+        const shortlistM = childrenM.map((item, index) => {
+          var childId = item.id; 
+          var idNumber = Number(childId.split('-').pop()); 
+          var itemIndex = index + 1;
+          return {
+            [itemIndex] : [idNumber, 'nil']
+          };
+        });
+        updateUserShortlist(currentUser, shortlistM);
+      });
     });
+    
+    // Sends shortlist to user controller to be added to database
+    function updateUserShortlist(userId, shortlist) {
+      fetch(`<%= update_shortlist_path(current_user.id) %>`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: JSON.stringify({ shortlist: shortlist })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Shortlist submitted successfully:', data);
+          submitButton.disabled = true;
+          submitButtonM.disabled = true;
+          drake.destroy();
+      })
+      .catch(error => {
+          console.error('Error submitting shortlist:', error);
+      });
+    }
   });
 </script>
+
