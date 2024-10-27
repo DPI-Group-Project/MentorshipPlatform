@@ -2,12 +2,14 @@ class DashboardController < ApplicationController
   before_action :dashboard_params, only: [:show]
   def show
     @role = params[:role].downcase
-    @shortlist_time = current_user.cohort.shortlist_creation_open?
-    
+
     #Loads up data when role is valid
     if ['mentor', 'mentee'].include? (@role) then
       @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
       @mentees_data = CohortMember.where(role: 'mentee')
+
+      @shortlist_time = current_user.cohort.shortlist_creation_open?
+   
     elsif ['admin'].include? (@role) then
       @admin_data = ProgramAdmin.find_by(id: current_user.id)
       @programs_by_admin = Program.where(creator_id: current_user.id)
