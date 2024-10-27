@@ -1,0 +1,18 @@
+<div class="bg-gray-50 p-6 rounded-2xl shadow-md">
+  <!-- Section Header -->
+  <div class="bg-gray-200 p-3 rounded-lg shadow-sm mb-4">
+    <h2 class="text-xl font-bold text-center"><%= title %></h2>
+  </div>
+  <!-- Email Input Field -->
+  <div class="bg-gray-100 p-3 rounded-lg shadow-sm mb-4">
+    <%= form.label email_field, "Enter Email Address(es):", class: "block font-semibold text-gray-700" %>
+    <input type="text" id="<%= email_input_id %>" 
+           placeholder="email1@example.com, email2@example.com" 
+           class="w-full border rounded-lg p-2 mt-2 focus:ring-2 focus:ring-blue-400" 
+           data-role="<%= data_role %>" data-cohort-id="<%= @cohort.id %>">
+  </div>
+  <!-- Email List -->
+  <div class="bg-gray-100 h-32 border rounded-lg overflow-y-auto p-2 shadow-inner" id="<%= list_id %>">
+    <!-- Emails will be dynamically appended here by JavaScript -->
+  </div>
+</div>

@@ -1,124 +1,45 @@
 <div class="flex items-center justify-center h-screen p-8 bg-gray-100">
   <!-- Main Form Content -->
-  <div class="w-full max-w-3xl lg:max-w-5xl p-1 ">
+  <div class="w-full max-w-3xl lg:max-w-5xl p-1">
     <h1 class="text-2xl font-bold text-left mb-1"><%= @cohort.cohort_name %></h1>
     <h1 class="text-2xl font-bold text-left mb-8"><%= @current_program.name %></h1>
-    
     <!-- Form Container -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      
-      <!-- Mentors Section -->
-      <div class="bg-gray-50 p-6 rounded-2xl shadow-md">
-        <div class="bg-gray-200 p-3 rounded-lg shadow-sm mb-4">
-          <h2 class="text-xl font-bold text-center">Mentors</h2>
-        </div>
-        
-        <div class="bg-gray-100 p-3 rounded-lg shadow-sm mb-4">
-          <label class="block font-semibold text-gray-700">Enter Email Address(es):</label>
-          <input type="text" id="mentors_emails" placeholder="email1@example.com, email2@example.com" class="w-full border rounded-lg p-2 mt-2 focus:ring-2 focus:ring-blue-400">
-        </div>
+    <%= form_with model: @cohort_member, url: cohort_members_path, method: :post do |form| %>
+      <%= form.hidden_field :cohort_id, value: @cohort.id %>
+      <!-- Hidden Fields for Mentor and Mentee Emails -->
+      <%= form.hidden_field :mentor_emails, id: "hidden_mentor_emails" %>
+      <%= form.hidden_field :mentee_emails, id: "hidden_mentee_emails" %>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-        <!-- List of Emails -->
-        <div class="bg-gray-100 h-32 border rounded-lg overflow-y-auto p-2 shadow-inner" id="mentor-list"></div>
+       <%= render partial: "mentor_mentee_section", locals: {
+                    form: form,
+                    title: "Mentors",
+                    email_field: :mentor_emails,
+                    email_input_id: "mentors_emails",
+                    data_role: "mentor",
+                    list_id: "mentor_list",
+                  } %>
+
+        <%= render partial: "mentor_mentee_section", locals: {
+                     form: form,
+                     title: "Mentees",
+                     email_field: :mentee_emails,
+                     email_input_id: "mentees_emails",
+                     data_role: "mentee",
+                     list_id: "mentee_list",
+                   } %>
       </div>
-      
-      <!-- Mentees Section -->
-      <div class="bg-gray-50 p-6 rounded-2xl shadow-md">
-        <div class="bg-gray-200 p-3 rounded-lg shadow-sm mb-4">
-          <h2 class="text-xl font-bold text-center">Mentees</h2>
-        </div>
-
-        <div class="bg-gray-100 p-3 rounded-lg shadow-sm mb-4">
-          <label class="block font-semibold text-gray-700">Enter Email Address(es):</label>
-          <input type="text" id="mentees_emails" placeholder="email1@example.com, email2@example.com" class="w-full border rounded-lg p-2 mt-2 focus:ring-2 focus:ring-blue-400">
-        </div>
-
-        <!-- List of Emails -->
-        <div class="bg-gray-100 h-32 border rounded-lg overflow-y-auto p-2 shadow-inner" id="mentee-list"></div>
+      <!-- Save Button -->
+      <div class="mt-8 flex justify-center">
+        <%= form.submit "Save", class: "bg-black text-white font-semibold py-2 px-8 rounded-lg hover:bg-gray-900 transition duration-200" %>
       </div>
-    </div>
-    
-    <!-- Save Button -->
-    <div class="mt-8 flex justify-center">
-      <%= button_tag "Save", class: "bg-black text-white font-semibold py-2 px-8 rounded-lg hover:bg-blue-600 transition duration-200 ease-in-out" %>
-    </div>
-    
+    <% end %>
     <!-- Back Link -->
     <div class="flex justify-center mt-4">
-<%= link_to "Back to dashboard", dashboard_path(role: "admin"), class: "text-black hover:underline" %>
+      <%= link_to "Back to dashboard", dashboard_path(role: "admin"), class: "text-black hover:underline" %>
     </div>
   </div>
 </div>
-
-
 <!-- JavaScript -->
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const mentorInput = document.getElementById('mentors_emails');
-    const menteeInput = document.getElementById('mentees_emails');
-    const mentorList = document.getElementById('mentor-list');
-    const menteeList = document.getElementById('mentee-list');
+<%= render partial: "email_script" %>
 
-    // Function to create an email element
-    function createEmailElement(email) {
-      return `
-        <div class="flex items-center justify-between p-2 border-b email-item">
-          <input type="text" value="${email}" class="email-text text-gray-700 w-full border-none outline-none bg-transparent" readonly />
-          <div class="flex space-x-2">
-            <!-- Edit Button -->
-            <button type="button" class="bg-green-200 p-1 rounded edit-email">
-              <img src= <%= asset_path("icon/edit.svg") %> alt="edit icon"/>
-            </button>
-            <!-- Delete Button -->
-            <button type="button" class="bg-red-200 p-1 rounded delete-email">
-              <img src= <%= asset_path("icon/delete.svg") %> alt="delete icon"/>
-            </button>
-          </div>
-        </div>`;
-    }
-
-    // Add emails to list
-    function addEmails(input, list) {
-      const emails = input.value.split(',').map(email => email.trim()).filter(email => email);
-      emails.forEach(email => {
-        list.innerHTML += createEmailElement(email);
-      });
-      input.value = '';  // Clear input
-    }
-
-    // Add emails on Enter keypress
-    function addEmailOnEnter(input, list) {
-      input.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' && input.value.trim()) {
-          event.preventDefault();
-          addEmails(input, list);
-        }
-      });
-    }
-
-    // Initialize adding emails
-    addEmailOnEnter(mentorInput, mentorList);
-    addEmailOnEnter(menteeInput, menteeList);
-
-    // Toggle edit mode and delete email
-    document.addEventListener('click', function (e) {
-      const target = e.target;
-
-      // Edit email on edit button click
-      if (target.closest('.edit-email')) {
-        const emailItem = target.closest('.email-item');
-        const emailInput = emailItem.querySelector('.email-text');
-        emailInput.readOnly = !emailInput.readOnly;  // Toggle readonly state
-        if (!emailInput.readOnly) {
-          emailInput.focus();  // Focus on input when editable
-        }
-      }
-
-      // Delete email on delete button click
-      if (target.closest('.delete-email')) {
-        const emailItem = target.closest('.email-item');
-        emailItem.remove();  // Remove the entire email item
-      }
-    });
-  });
-</script>
