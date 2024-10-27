@@ -1,0 +1,2 @@
+class CohortMemberMailer < ApplicationMailer
+end
