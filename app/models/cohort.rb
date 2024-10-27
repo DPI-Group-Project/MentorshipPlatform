@@ -27,6 +27,9 @@ class Cohort < ApplicationRecord
       false
     end
   end
+  def shortlist_creation_open?
+    return 'open'
+  end
   def pairing_number
     matches = Match.where(cohort_id: self.id)
     matches.size
