@@ -33,3 +33,40 @@
     text-align: center;
     justify-content: center;
 }
+
+/* Mobile */
+#mentor-list-section-m {
+    min-height: 200px;
+    border: 1px solid #DCDCDC; 
+    background-color: #f9f9f9; 
+}
+#short-list-card-m {
+    border: 1px solid #DCDCDC; 
+    background-color: #f9f9f9; 
+}
+#shortlist-section-m.hidden{
+    display: none;
+}
+
+#submit-shortlist-button-m {
+    background: #202020;
+    color: #FFFFFF;
+    border: solid, .5px, #202020;
+}
+#submit-shortlist-button-m:hover {
+    background: transparent;
+    color: #202020;
+    border: solid, .5px, #202020;
+}
+#submit-shortlist-button-m:disabled {
+    background: transparent; 
+    cursor: not-allowed; 
+    color: #202020;
+    border: solid, .5px, #DCDCDC;
+}
+
+#short-list-card-message-m{
+    color: #202020;
+    text-align: center;
+    justify-content: center;
+}
