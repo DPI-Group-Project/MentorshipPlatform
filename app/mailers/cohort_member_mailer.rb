@@ -4,7 +4,7 @@ class CohortMemberMailer < ApplicationMailer
     @user = User.find_by(email: @cohort_member.email)
     @cohort = @cohort_member.cohort
 
-    mail(to: email_address_with_name(@user.email, @user.first_name),
+    mail(to: @user.email,
          subject: 'Welcome to MentE!')
   end
 
@@ -13,7 +13,7 @@ class CohortMemberMailer < ApplicationMailer
     @user = User.find_by(email: @cohort_member.email)
     @cohort = @cohort_member.cohort
 
-    mail(to: email_address_with_name(@user.email, @user.first_name),
+    mail(to: @user.email,
          subject: 'Welcome to MentE!')
   end
 end
