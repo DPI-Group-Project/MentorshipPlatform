@@ -143,3 +143,92 @@
         }
     });
 </script>
+=======
+  </div> 
+  <div class="mobile-view">
+    <%= render 'mentee_shortlist_mobile', mentors_data: mentors_data %>
+  </div> 
+<% else %>
+  <%= render 'mentee_dashboard_1', mentors_data: mentors_data  %>
+<% end %>
+
+<script>
+  const currentUser = <%= current_user.id %>
+  const currentUserShortlist = <%= current_user.shortlist.to_json.html_safe %>;
+  const submitButton = document.getElementById("submit-shortlist-button");
+  const submitButtonM = document.getElementById("submit-shortlist-button-m");
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const containers = [
+      document.getElementById("mentor-list-section"),
+      document.getElementById("short-list-card"),
+      document.getElementById("mentor-list-section-m"),
+      document.getElementById("short-list-card-m"),
+    ];
+
+    // Creates a dragula instance 
+    const drake = dragula(containers, {
+      moves: function (el, container, handle) {
+          return true;
+      },
+    });
+    
+    // Creates shortlist array
+    drake.on("drop", function (el, target, source, sibling) {
+      submitButton.addEventListener("click", function () {
+        const shortlistContainer = document.getElementById("short-list-card");
+        const children = Array.from(shortlistContainer.children);
+        const shortlist = children.map((item, index) => {
+          var childId = item.id; 
+          var idNumber = Number(childId.split('-').pop()); 
+          var itemIndex = index + 1;
+          return {
+            [itemIndex] : [idNumber, 'nil']
+          };
+        });
+        updateUserShortlist(currentUser, shortlist);
+      });
+
+      submitButtonM.addEventListener("click", function () {
+        const shortlistContainerM = document.getElementById("short-list-card-m");
+        const childrenM = Array.from(shortlistContainerM.children);
+        const shortlistM = childrenM.map((item, index) => {
+          var childId = item.id; 
+          var idNumber = Number(childId.split('-').pop()); 
+          var itemIndex = index + 1;
+          return {
+            [itemIndex] : [idNumber, 'nil']
+          };
+        });
+        updateUserShortlist(currentUser, shortlistM);
+      });
+    });
+    
+    // Sends shortlist to user controller to be added to database
+    function updateUserShortlist(userId, shortlist) {
+      fetch(`<%= update_shortlist_path(current_user.id) %>`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+          },
+          body: JSON.stringify({ shortlist: shortlist })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Shortlist submitted successfully:', data);
+          submitButton.disabled = true;
+          submitButtonM.disabled = true;
+          drake.destroy();
+      })
+      .catch(error => {
+          console.error('Error submitting shortlist:', error);
+      });
+    }
+  });
+</script>
