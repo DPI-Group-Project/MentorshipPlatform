@@ -111,3 +111,23 @@
 #short-list-card-m .mentor-button {
     display: none;
 }
+
+#mentor-list-section-m .order-number {
+    display: none;
+}
+
+.order-number {
+    position: absolute;
+    padding-top: 0.8rem;
+    width: 3.5rem; /* Equivalent to size-14 */
+    height: 3.5rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border-radius: 0.5rem;
+    z-index: 100;
+    text-align: center;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+}
