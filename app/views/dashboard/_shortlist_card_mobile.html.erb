@@ -1,14 +1,14 @@
 <%# Don't delete, but it can be styled. For js message%>
-<div id="shortlist-section-m" class="grid grid-col-1 gap-4 w-[22rem] py-4 px-3 bg-white rounded-[0.75rem] shadow-sm justify-items-center">
+<div id="shortlist-section-m" class="grid grid-col-1 gap-4 w-[100%] py-4 px-3 bg-white rounded-[0.75rem] shadow-sm border justify-items-center">
   <div>
     <h1 class="text-xl font-semibold text-[#202020] mb-1 text-center">
       Select Top 5 Mentors
     </h1>
     <p class="text-xs text-[#898989] text-center">
-      Drag and drop to rank your top 5 mentors
+      Click to add mentors and drag to rank your top 5.
     </p>
   </div>
-  <div id="short-list-card-m" class="flex justify-start items-center gap-2 p-2 bg-center bg-no-repeat bg-[url('<%= asset_path('bg/dragdrop_bg.svg') %>')] h-[7rem] w-[100%] rounded-[0.3rem] border-[#D9D9D9] border-2 border-dotted">
+  <div id="short-list-card-m" class="flex justify-start items-center gap-2 pl-2 bg-center bg-no-repeat bg-[url('<%= asset_path('bg/dragdrop_bg.svg') %>')] h-[7rem] w-[100%] overflow-hidden rounded-[0.3rem] border-[#D9D9D9] border-2 border-dotted">
   </div>
 
   <button id="submit-shortlist-button-m"
