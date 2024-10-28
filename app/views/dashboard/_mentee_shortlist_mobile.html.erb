@@ -1,4 +1,4 @@
-<div class="grid place-content-center grid-col-1 gap-4 py-9 px-4 max-w-[100%]">
+<div class="grid place-content-center grid-col-1 gap-4 px-4 max-w-[100%]">
   <!-- Right Section: Main Content -->
   <div class="grid grid-col-1 gap-3 place-content-center">
     <h1 class="text-xl font-semibold text-[#202020] text-center">
@@ -6,7 +6,7 @@
     </h1>
 
     <!-- Grid of mentors -->
-    <div id="mentor-list-section-m" class="grid grid-cols-1 gap-3 min-h-[10rem] max-h-[20rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 rounded-[0.55rem] ">
+    <div id="mentor-list-section-m" class="grid grid-cols-1 gap-3 min-h-[10rem] max-h-[18rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 rounded-[0.55rem] ">
       <% available_mentors_count = 0 %>
       <% mentors_data.each do |mentor| %>
         <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
