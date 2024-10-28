@@ -1,18 +1,19 @@
 class CohortMemberMailer < ApplicationMailer
-  def welcome_signup
-    @user = params[:user]
-    @role = params[:role]
-    @cohort = params[:cohort]
-    if @role == 'mentee'
-      mail(to: email_address_with_name(@user.email, @user.first_name)) do |format|
-        format.html { render layout: 'mentee_welcome_mail' }
-        format.text
-      end
-    elsif @role == 'mentor'
-      mail(to: email_address_with_name(@user.email, @user.first_name)) do |format|
-        format.html { render layout: 'mentor_welcome_mail' }
-        format.text
-      end
-    end
+  def mentor_welcome_mail
+    @cohort_member = params[:cohort_member]
+    @user = User.find_by(email: @cohort_member.email)
+    @cohort = @cohort_member.cohort
+
+    mail(to: email_address_with_name(@user.email, @user.first_name),
+         subject: "Welcome to MentE, #{@user.first_name}!")
+  end
+
+  def mentee_welcome_mail
+    @cohort_member = params[:cohort_member]
+    @user = User.find_by(email: @cohort_member.email)
+    @cohort = @cohort_member.cohort
+
+    mail(to: email_address_with_name(@user.email, @user.first_name),
+         subject: "Welcome to MentE, #{@user.first_name}!")
   end
 end
