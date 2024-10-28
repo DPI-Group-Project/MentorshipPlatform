@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'info@mente.com'
+  default from: 'onboarding@resend.dev'
   layout 'mailer'
 end

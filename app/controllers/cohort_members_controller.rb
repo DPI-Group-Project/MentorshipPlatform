@@ -109,7 +109,7 @@ class CohortMembersController < ApplicationController
 
     cm = CohortMember.create(user:, cohort_id:, role:)
 
-    role == 'mentor' ? CohortMemberMailer.mentor_welcome_mail.deliver_later! : CohortMemberMailer.mentee_welcome_mail.deliver_later!
+    role == 'mentor' ? CohortMemberMailer.mentor_welcome_mail(cm).deliver_later! : CohortMemberMailer.mentee_welcome_mail(cm).deliver_later!
   end
 
   # Helper method to split, clean, and format email strings
