@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   devise_scope :user do
     get 'signup', to: 'users/registrations#signup', as: :mentor_mentee_registration
+    post 'update_shortlist', to: 'users/registrations#update_shortlist', as: :update_shortlist
   end
 
 

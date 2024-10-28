@@ -105,3 +105,23 @@ body {
     --tw-border-opacity: 1 !important;
     border-color: black !important;
 }
+
+@media (max-width: 768px) {
+    /* Mobile styles */
+    .mobile-view {
+      display: block;
+    }
+    .desktop-view {
+      display: none;
+    }
+  }
+  
+@media (min-width: 769px) {
+    /* Desktop styles  */
+    .mobile-view {
+        display: none;
+    }
+    .desktop-view {
+        display: block;
+    }
+}
