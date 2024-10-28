@@ -22,7 +22,7 @@ class CohortMembersController < ApplicationController
   # POST /cohort_members or /cohort_members.json
   def create
     cohort_id = params[:cohort_member][:cohort_id]
-    
+
     # Split, clean up, and process emails from the form's hidden fields
     mentor_emails = extract_emails(params[:cohort_member][:mentor_emails])
     mentee_emails = extract_emails(params[:cohort_member][:mentee_emails])
@@ -32,7 +32,7 @@ class CohortMembersController < ApplicationController
     mentee_emails.each { |email| create_cohort_member(email, cohort_id, 'mentee') }
 
     respond_to do |format|
-      format.html { redirect_to dashboard_path(role: "admin"), notice: 'Mentors and mentees were successfully added.' }
+      format.html { redirect_to dashboard_path(role: 'admin'), notice: 'Mentors and mentees were successfully added.' }
       format.json { render json: { message: 'Mentors and mentees were successfully added.' }, status: :created }
     end
   end
@@ -57,8 +57,8 @@ class CohortMembersController < ApplicationController
     role = params[:role]
 
     cohort_member = CohortMember.joins(:user)
-                                .where(users: { email: email })
-                                .find_by(cohort_id: cohort_id, role: role)
+                                .where(users: { email: })
+                                .find_by(cohort_id:, role:)
 
     if cohort_member&.destroy
       render json: { message: 'Email deleted successfully' }, status: :ok
@@ -71,7 +71,7 @@ class CohortMembersController < ApplicationController
   def update
     respond_to do |format|
       if @cohort_member.update(cohort_member_params)
-        format.html { redirect_to cohort_member_url(@cohort_member), notice: "Cohort member was successfully updated." }
+        format.html { redirect_to cohort_member_url(@cohort_member), notice: 'Cohort member was successfully updated.' }
         format.json { render :show, status: :ok, location: @cohort_member }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -85,7 +85,7 @@ class CohortMembersController < ApplicationController
     @cohort_member.destroy!
 
     respond_to do |format|
-      format.html { redirect_to cohort_members_url, notice: "Cohort member was successfully destroyed." }
+      format.html { redirect_to cohort_members_url, notice: 'Cohort member was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -104,10 +104,12 @@ class CohortMembersController < ApplicationController
 
   # Helper method to find or create a user and associate them with a cohort
   def create_cohort_member(email, cohort_id, role)
-    user = User.find_or_create_by(email: email) { |u| u.password = SecureRandom.base36(10) }
+    user = User.find_or_create_by(email:) { |u| u.password = SecureRandom.base36(10) }
     return false unless user.persisted?
 
-    CohortMember.create(user: user, cohort_id: cohort_id, role: role)
+    cm = CohortMember.create(user:, cohort_id:, role:)
+
+    role == 'mentor' ? CohortMemberMailer.mentor_welcome_mail(cm).deliver_later! : CohortMemberMailer.mentee_welcome_mail(cm).deliver_later!
   end
 
   # Helper method to split, clean, and format email strings
