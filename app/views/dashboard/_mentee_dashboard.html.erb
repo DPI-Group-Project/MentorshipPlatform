@@ -9,7 +9,7 @@
   <%= render 'mentee_dashboard_1', mentors_data: mentors_data %>
 <% end %>
 
-<%= render 'short_list_confirm'%>
+<%= render 'short_list_confirm' %>
 
 <script>
     const currentUser =
@@ -19,6 +19,45 @@
     const submitButtonM = document.getElementById("submit-shortlist-button-m");
 
     document.addEventListener("DOMContentLoaded", function () {
+
+        // mobile tab to add
+        const mentorListSectionM = document.getElementById("mentor-list-section-m");
+        const shortListCardM = document.getElementById("short-list-card-m");
+
+        mentorListSectionM.querySelectorAll(".mentor-card").forEach((mentorCard) => {
+            mentorCard.addEventListener("click", function () {
+                if (shortListCardM.children.length >= 5) {
+                    alert("You can only select up to 5 mentors.");
+                    return;
+                }
+                // Check if the mentor is already in the shortlist
+                if (!shortListCardM.querySelector(`#${mentorCard.id}`)) {
+                    // Clone the clicked mentor card
+                    shortListCardM.appendChild(mentorCard);
+                    updateShortlistOrder();
+                }
+            });
+        });
+
+        function updateShortlistOrder() {
+            const shortlistOrder = document.querySelectorAll('#short-list-card-m .mentor-card .mentor-info');
+
+            shortlistOrder.forEach((child, index) => {
+                let orderNumber = child.querySelector('.order-number');
+
+                if (!orderNumber) {
+                    orderNumber = document.createElement('span');
+                    orderNumber.className = 'order-number';
+                    child.prepend(orderNumber);
+                }
+
+                orderNumber.textContent = `${index + 1}`;
+            });
+        }
+
+
+
+        // dragula
         const containers = [
             document.getElementById("mentor-list-section"),
             document.getElementById("short-list-card"),
@@ -35,6 +74,21 @@
 
         // Creates shortlist array
         drake.on("drop", function (el, target, source, sibling) {
+
+            const shortlistOrder = document.querySelectorAll('#short-list-card-m .mentor-card .mentor-info');
+
+            shortlistOrder.forEach((child, index) => {
+                let orderNumber = child.querySelector('.order-number');
+
+                if (!orderNumber) {
+                    orderNumber = document.createElement('span');
+                    orderNumber.className = 'order-number';
+                    child.prepend(orderNumber);
+                }
+
+                orderNumber.textContent = `${index + 1}`;
+            });
+
             submitButton.addEventListener("click", function () {
                 const shortlistContainer = document.getElementById("short-list-card");
                 const children = Array.from(shortlistContainer.children);
@@ -97,22 +151,21 @@
             const confirmButton = document.getElementById('confirm-submit');
             const cancelButton = document.getElementById('cancel-submit');
 
-            confirmButton.onclick = function() {
+            confirmButton.onclick = function () {
                 modal.classList.add('hidden');
 
                 const formattedShortlist = shortlist.map((mentor, index) => {
                     const idNumber = Object.values(mentor)[0][0];
-                    return { [index + 1]: [idNumber, 'nil'] };
+                    return {[index + 1]: [idNumber, 'nil']};
                 });
 
                 updateUserShortlist(userId, formattedShortlist);
             };
 
-            cancelButton.onclick = function() {
+            cancelButton.onclick = function () {
                 modal.classList.add('hidden');
             };
         }
-
 
         function updateUserShortlist(userId, shortlist) {
             fetch(`<%= update_shortlist_path(current_user.id) %>`, {
@@ -142,93 +195,4 @@
                 });
         }
     });
-</script>
-=======
-  </div> 
-  <div class="mobile-view">
-    <%= render 'mentee_shortlist_mobile', mentors_data: mentors_data %>
-  </div> 
-<% else %>
-  <%= render 'mentee_dashboard_1', mentors_data: mentors_data  %>
-<% end %>
-
-<script>
-  const currentUser = <%= current_user.id %>
-  const currentUserShortlist = <%= current_user.shortlist.to_json.html_safe %>;
-  const submitButton = document.getElementById("submit-shortlist-button");
-  const submitButtonM = document.getElementById("submit-shortlist-button-m");
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const containers = [
-      document.getElementById("mentor-list-section"),
-      document.getElementById("short-list-card"),
-      document.getElementById("mentor-list-section-m"),
-      document.getElementById("short-list-card-m"),
-    ];
-
-    // Creates a dragula instance 
-    const drake = dragula(containers, {
-      moves: function (el, container, handle) {
-          return true;
-      },
-    });
-    
-    // Creates shortlist array
-    drake.on("drop", function (el, target, source, sibling) {
-      submitButton.addEventListener("click", function () {
-        const shortlistContainer = document.getElementById("short-list-card");
-        const children = Array.from(shortlistContainer.children);
-        const shortlist = children.map((item, index) => {
-          var childId = item.id; 
-          var idNumber = Number(childId.split('-').pop()); 
-          var itemIndex = index + 1;
-          return {
-            [itemIndex] : [idNumber, 'nil']
-          };
-        });
-        updateUserShortlist(currentUser, shortlist);
-      });
-
-      submitButtonM.addEventListener("click", function () {
-        const shortlistContainerM = document.getElementById("short-list-card-m");
-        const childrenM = Array.from(shortlistContainerM.children);
-        const shortlistM = childrenM.map((item, index) => {
-          var childId = item.id; 
-          var idNumber = Number(childId.split('-').pop()); 
-          var itemIndex = index + 1;
-          return {
-            [itemIndex] : [idNumber, 'nil']
-          };
-        });
-        updateUserShortlist(currentUser, shortlistM);
-      });
-    });
-    
-    // Sends shortlist to user controller to be added to database
-    function updateUserShortlist(userId, shortlist) {
-      fetch(`<%= update_shortlist_path(current_user.id) %>`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-          },
-          body: JSON.stringify({ shortlist: shortlist })
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json();
-      })
-      .then(data => {
-          console.log('Shortlist submitted successfully:', data);
-          submitButton.disabled = true;
-          submitButtonM.disabled = true;
-          drake.destroy();
-      })
-      .catch(error => {
-          console.error('Error submitting shortlist:', error);
-      });
-    }
-  });
 </script>
