@@ -1,0 +1,18 @@
+<%# Don't delete, but it can be styled. For js message%>
+<div id="shortlist-section-m" class="grid grid-col-1 gap-4 w-[22rem] py-4 px-3 bg-white rounded-[0.75rem] shadow-sm justify-items-center">
+  <div>
+    <h1 class="text-xl font-semibold text-[#202020] mb-1 text-center">
+      Select Top 5 Mentors
+    </h1>
+    <p class="text-xs text-[#898989] text-center">
+      Drag and drop to rank your top 5 mentors
+    </p>
+  </div>
+  <div id="short-list-card-m" class="flex justify-start items-center gap-2 p-2 bg-center bg-no-repeat bg-[url('<%= asset_path('bg/dragdrop_bg.svg') %>')] h-[7rem] w-[100%] rounded-[0.3rem] border-[#D9D9D9] border-2 border-dotted">
+  </div>
+
+  <button id="submit-shortlist-button-m"
+          class="text-xs bg-[#202020] w-[4rem] h-[1.75rem] text-[#FFFFFF] border border-transparent rounded-md hover:bg-transparent hover:text-[#202020] hover:border-[#202020]">
+    Submit
+  </button>
+</div>

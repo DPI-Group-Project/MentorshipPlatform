@@ -1,0 +1,32 @@
+<div class="grid place-content-center grid-col-1 gap-4 py-9 px-4 max-w-[100%]">
+  <!-- Right Section: Main Content -->
+  <div class="grid grid-col-1 gap-3 place-content-center">
+    <h1 class="text-xl font-semibold text-[#202020] text-center">
+      Available Mentors
+    </h1>
+
+    <!-- Grid of mentors -->
+    <div id="mentor-list-section-m" class="grid grid-cols-1 gap-3 min-h-[10rem] max-h-[20rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 rounded-[0.55rem] ">
+      <% available_mentors_count = 0 %>
+      <% mentors_data.each do |mentor| %>
+        <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
+        <% capacity_cap = mentor.capacity %>
+        <% if current_user.cohort.running? && current_mentee_count < capacity_cap %>
+          <%= render 'profile_card_sm', mentor: mentor %>
+          <% available_mentors_count += 1 %>
+        <% end %>
+      <% end %>
+
+      <!-- If no available mentors -->
+      <% if !current_user.cohort.running? %>
+        <h2> Mentor matching is closed for cohort <%= current_user.cohort.id %> </h2>
+      <% elsif available_mentors_count == 0 %>
+        <h2> No more available mentors in cohort <%= current_user.cohort.id %> </h2>
+      <% end %>
+    </div>
+  </div>
+  <div class="w-[22rem] border-t border-[#DCDCDC]"></div>
+  <div>
+    <%= render partial: 'shortlist_card_mobile' %>
+  </div>
+</div>
