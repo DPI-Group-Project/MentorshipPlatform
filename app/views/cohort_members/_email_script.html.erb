@@ -1,0 +1,75 @@
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const mentorInput = document.getElementById('mentors_emails');
+    const menteeInput = document.getElementById('mentees_emails');
+    const mentorList = document.getElementById('mentor_list');
+    const menteeList = document.getElementById('mentee_list');
+    const hiddenMentorEmails = document.getElementById('hidden_mentor_emails');
+    const hiddenMenteeEmails = document.getElementById('hidden_mentee_emails');
+    const saveButton = document.querySelector('input[type="submit"]'); 
+
+    // Function to create an email element and append it to the list
+    function createEmailElement(email, list) {
+      const emailElement = document.createElement('div');
+      emailElement.className = 'flex items-center justify-between p-2 border-b email-item';
+      emailElement.innerHTML = `
+        <span class="email-text text-gray-700">${email}</span>
+          <div class="flex space-x-2">
+          <button type="button" class="bg-green-200 p-1 rounded edit-email">
+            <img src="<%= asset_path("icon/edit.svg") %>" alt="edit icon"/>
+          </button>
+          <button type="button" class="bg-red-200 p-1 rounded delete-email">
+            <img src="<%= asset_path("icon/delete.svg") %>" alt="delete icon"/>
+          </button>
+          </div>
+      `;
+      list.appendChild(emailElement);
+    }
+
+    // Function to update hidden fields with the emails from the list before save
+    function updateHiddenFields() {
+      hiddenMentorEmails.value = Array.from(mentorList.querySelectorAll('.email-text'))
+        .map(email => email.textContent)
+        .join(',');
+      hiddenMenteeEmails.value = Array.from(menteeList.querySelectorAll('.email-text'))
+        .map(email => email.textContent)
+        .join(',');
+    }
+
+    // Function to handle adding emails to the list
+    function addEmails(input, list) {
+      const emails = input.value.split(',').map(email => email.trim()).filter(email => email);
+      emails.forEach(email => createEmailElement(email, list)); // Render emails immediately in the list
+      input.value = ''; // Clear input field after adding emails
+    }
+
+    // Add emails on Enter keypress
+    function addEmailOnEnter(input, list) {
+      input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && input.value.trim()) {
+          event.preventDefault();
+          addEmails(input, list); // Add emails to the list immediately
+        }
+      });
+    }
+
+    // Initialize adding emails for mentor and mentee inputs
+    addEmailOnEnter(mentorInput, mentorList);
+    addEmailOnEnter(menteeInput, menteeList);
+
+    // Update hidden fields only when the Save button is clicked
+    saveButton.addEventListener('click', function (event) {
+      updateHiddenFields(); // Populate hidden fields with list contents before submitting
+    });
+
+    // Delete email on delete button click
+    document.addEventListener('click', function (e) {
+      const target = e.target;
+      if (target.closest('.delete-email')) {
+        const emailItem = target.closest('.email-item');
+        emailItem.remove();
+        updateHiddenFields(); // Sync hidden fields after deletion
+      }
+    });
+  });
+</script>

@@ -34,7 +34,7 @@
         </li>
       </ul>
     </div>
-   <div>
+    <div>
       <div class="flex items-center justify-between">
         <h4 class="font-semibold text-black">ACTIVE COHORTS</h4>
         <button 
@@ -45,7 +45,6 @@
           <i class="fas fa-plus-circle text-xl"></i>
         </button>
       </div>
-
       <div class="mt-2">
         <% @cohorts.each do |cohort| %>
           <div class="dropdown">
@@ -59,6 +58,9 @@
                   View dashboard
                 </button>
               </li>
+              <li>
+                <%= link_to "Add Members", new_cohort_member_path(cohort_id: cohort.id), class: "text-black" %>
+              </li>
               <li>Surveys</li>
               <li>Email Templates</li>
               <li>Pairings</li>
@@ -70,9 +72,7 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Popups -->
-
 <div 
   id="program-list-modal" 
   class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
@@ -84,57 +84,53 @@
     >
       <i class="fas fa-times"></i>
     </button>
-
     <h1 class="font-medium mb-1">Programs:</h1>
-    <ul class="mt-2 space-y-2"> 
+    <ul class="mt-2 space-y-2">
       <% @programs_by_admin.each do |program| %>
-      <li>
-        <button onclick="window.location.href='/dashboard/admin/<%= program.id %>'" class="text-sm text-black-500 ml-5"><%= program.name %></button>
-      <li>
-      <% end %>
-    </ul>     
-  </div>
-</div>
-
-<div 
+        <li>
+          <button onclick="window.location.href='/dashboard/admin/<%= program.id %>'" class="text-sm text-black-500 ml-5"><%= program.name %></button>
+          <li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div 
   id="create_cohort_modal" 
   class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
 >
-  <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
-    <button 
+      <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
+        <button 
       class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
       onclick="closeModal('create_cohort_modal')"
     >
-      <i class="fas fa-times"></i>
-    </button>
+          <i class="fas fa-times"></i>
+        </button>
+        <!-- Cohort Form Partial -->
+        <%= render partial: "cohorts/form", locals: { cohort: Cohort.new } %>
+      </div>
+    </div>
+    <script>
+      function openModal(modalId) {
+         const modal = document.getElementById(modalId);
+         modal.classList.remove('hidden');
+         modal.classList.add('flex');
+       }
+       function closeModal(modalId) {
+         const modal = document.getElementById(modalId);
+         modal.classList.add('hidden');
+         modal.classList.remove('flex');
+       }
+       function toggleForm() {
+         const form = document.getElementById('cohortForm');
+         form.classList.toggle('hidden');
+       }
+       function cohortInfo(name, pairing_number){
+         const cohortName = document.getElementById('cohort_name');
+         const nunberOfParings = document.getElementById('nunber_of_pairings');
+         const scheduledMeetings = document.getElementById('scheduled_meetings');
 
-    <!-- Cohort Form Partial -->
-    <%= render partial: "cohorts/form", locals: { cohort: Cohort.new } %>
-  </div>
-</div>
-
-<script>
- function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    modal.classList.remove('hidden');
-    modal.classList.add('flex'); 
-  }
-  function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    modal.classList.add('hidden');
-    modal.classList.remove('flex'); 
-  }
-  function toggleForm() {
-    const form = document.getElementById('cohortForm');
-    form.classList.toggle('hidden');
-  }
-  function cohortInfo(name, pairing_number){
-    const cohortName = document.getElementById('cohort_name');
-    const nunberOfParings = document.getElementById('nunber_of_pairings');
-    const scheduledMeetings = document.getElementById('scheduled_meetings');
-
-    cohortName.textContent = name
-    nunberOfParings.textContent = paring_number + " Pairs"
-    scheduledMeetings.textContent = "N/A"
-  }
-</script>
+         cohortName.textContent = name
+         nunberOfParings.textContent = paring_number + " Pairs"
+         scheduledMeetings.textContent = "N/A"
+       }
+    </script>
