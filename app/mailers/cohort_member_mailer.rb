@@ -1,6 +1,6 @@
 class CohortMemberMailer < ApplicationMailer
-  def mentor_welcome_mail
-    @cohort_member = params[:cohort_member]
+  def mentor_welcome_mail(cohort_member)
+    @cohort_member = cohort_member
     @user = User.find_by(email: @cohort_member.email)
     @cohort = @cohort_member.cohort
 
@@ -8,8 +8,8 @@ class CohortMemberMailer < ApplicationMailer
          subject: "Welcome to MentE, #{@user.first_name}!")
   end
 
-  def mentee_welcome_mail
-    @cohort_member = params[:cohort_member]
+  def mentee_welcome_mail(cohort_member)
+    @cohort_member = cohort_member
     @user = User.find_by(email: @cohort_member.email)
     @cohort = @cohort_member.cohort
 
