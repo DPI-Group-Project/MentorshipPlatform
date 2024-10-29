@@ -1,0 +1,19 @@
+<div id="confirmation-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+  <div class="bg-white rounded-[0.75rem] w-[80%] p-[2rem] max-w-md text-center">
+    <div class="flex flex-col gap-2 items-center">
+      <img src="<%= asset_path("icon/check_one.svg") %>" alt="close" class="w-[2.5rem] h-[2.5rem]">
+      <div class="flex flex-col gap-0.5">
+        <h2 class="text-[#202020] text-lg font-semibold">Sure you want to submit?</h2>
+        <p class="text-xs text-[#898989] text-center">Just a heads-up-changes can’t be made after!</p>
+      </div>
+      <!-- Shortlist Display Section -->
+      <div id="shortlist-display" class="my-4 text-left text-[#202020] text-xs font-medium">
+        <!-- Shortlist items will be populated here -->
+      </div>
+    </div>
+    <div class="flex flex-col justify-center gap-2">
+      <button id="confirm-submit" class="bg-[#202020] text-xs text-white px-4 py-2 rounded">Yes, Confirm</button>
+      <button id="cancel-submit" class="bg-transparent text-xs text-[#202020] border border-[#202020] px-4 py-2 rounded">No, Cancel</button>
+    </div>
+  </div>
+</div>

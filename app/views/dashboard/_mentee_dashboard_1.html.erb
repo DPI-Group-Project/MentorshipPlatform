@@ -1,37 +1,39 @@
-<div class="grid grid-col-1 sm:grid-cols-4 gap-5 py-9 px-24 max-w-[100%]">
+<div class="grid grid-col-1 sm:grid-cols-4 gap-5 py-3 px-4 sm:py-9 sm:px-24 max-w-[100%]">
   <!-- Left Section: Stack the two cards -->
-  <div class="flex flex-col space-y-5 col-span-1">
-    <%= render partial: 'user_card' %>
-    <%= render partial: 'program_card' %>
+  <div class="desktop-view">
+    <div class="flex flex-col space-y-5 col-span-1">
+      <%= render partial: 'user_card' %>
+      <%= render partial: 'program_card' %>
+    </div>
   </div>
 
   <!-- Right Section: Main Content -->
-    <div class="col-span-3">
-        <h1 class="text-2xl font-semibold text-[#202020] mb-1">
-        Available Mentors
-        </h1>
-        <p class="text-sm text-[#898989] mb-5">
-        Discover insights and stories from our mentors to inspire your own journey.
-        </p>
+  <div class="col-span-3">
+    <h1 class="text-2xl font-semibold text-[#202020] mb-1">
+      Available Mentors
+    </h1>
+    <p class="text-sm text-[#898989] mb-5">
+      Discover insights and stories from our mentors to inspire your own journey.
+    </p>
 
-        <!-- Grid of mentors -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
-            <% available_mentors_count = 0 %>
-            <% mentors_data.each do |mentor| %>
-            <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
-                <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
-                <% capacity_cap = mentor.capacity %>
-                <% if current_user.cohort.running? && current_mentee_count < capacity_cap %>
-                <%= render 'profile_card', mentor: mentor %>
-                <% available_mentors_count += 1 %>
-                <% end %>
-            <% end %>
-            <!-- If no available mentors -->
-            <% if !current_user.cohort.running? %>
-                <h2> Mentor matching is closed for cohort <%= current_user.cohort.id %> </h2>
-            <% elsif available_mentors_count == 0 %>
-                <h2> No more available mentors in cohort <%= current_user.cohort.id %> </h2>
-            <% end %>
-        </div>
+    <!-- Grid of mentors -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
+      <% available_mentors_count = 0 %>
+      <% mentors_data.each do |mentor| %>
+        <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
+        <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
+        <% capacity_cap = mentor.capacity %>
+        <% if current_user.cohort.running? && current_mentee_count < capacity_cap %>
+          <%= render 'profile_card', mentor: mentor %>
+          <% available_mentors_count += 1 %>
+        <% end %>
+      <% end %>
+      <!-- If no available mentors -->
+      <% if !current_user.cohort.running? %>
+        <h2> Mentor matching is closed for cohort <%= current_user.cohort.id %> </h2>
+      <% elsif available_mentors_count == 0 %>
+        <h2> No more available mentors in cohort <%= current_user.cohort.id %> </h2>
+      <% end %>
     </div>
+  </div>
 </div>

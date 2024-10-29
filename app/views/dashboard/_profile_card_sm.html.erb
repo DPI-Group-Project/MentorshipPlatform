@@ -1,0 +1,12 @@
+<div id="mentor-card-<%= mentor.id %>" class="mentor-card">
+  <div class="mentor-info">
+    <img src="<%= asset_path('sample_img/mentor_sample.png') %>" alt="mentor_profile_picture" class="mentor-image">
+    <div class="mentor-details">
+      <div class="mentor-name"><%= mentor.name %></div>
+      <div class="mentor-title"><%= mentor.title %></div>
+    </div>
+  </div>
+  <button class="mentor-button" onclick="location.href='<%= profile_path(mentor.id) %>'">
+    View
+  </button>
+</div>
