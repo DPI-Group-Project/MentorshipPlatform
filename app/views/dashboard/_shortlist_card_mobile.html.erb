@@ -1,13 +1,18 @@
 <%# Don't delete, but it can be styled. For js message%>
-<h2 id="short-list-card-message-m"></h2>
-
-<div id="shortlist-section-m" class="pt-6 px-6 bg-white rounded-[0.75rem] shadow-md w-full h-full">
-    <h1 class="text-center pb-2 text-base font-semibold">
-        Your Mentor Shortlist!
+<div id="shortlist-section-m" class="grid grid-col-1 gap-4 w-[100%] py-4 px-3 bg-white rounded-[0.75rem] shadow-sm border justify-items-center">
+  <div>
+    <h1 class="text-xl font-semibold text-[#202020] mb-1 text-center">
+      Select Top 5 Mentors
     </h1>
-    <div id="short-list-card-m" class="rounded-[0.55rem] h-5/6"></div>
-    <button id="submit-shortlist-button-m" class="text-xs w-[70.073px] h-[32px] mt-2 text-[#FFFFFF] border border-transparent rounded-md "
-                    onclick="#">
-        Submit
-    </button>
+    <p class="text-xs text-[#898989] text-center">
+      Click to add mentors and drag to rank your top 5.
+    </p>
+  </div>
+  <div id="short-list-card-m" class="flex justify-start items-center gap-2 pl-2 bg-center bg-no-repeat bg-[url('<%= asset_path('bg/dragdrop_bg.svg') %>')] h-[7rem] w-[100%] overflow-hidden rounded-[0.3rem] border-[#D9D9D9] border-2 border-dotted">
+  </div>
+
+  <button id="submit-shortlist-button-m"
+          class="text-xs bg-[#202020] w-[5rem] h-[1.75rem] text-[#FFFFFF] border border-transparent rounded-md hover:bg-transparent hover:text-[#202020] hover:border-[#202020]">
+    Submit
+  </button>
 </div>
