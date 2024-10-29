@@ -1,5 +1,5 @@
 <div id="landing_nav_mb" class="p-5">
-  <div class="bg-white flex flex-col border-slate-300 rounded-xl px-5 py-5 z-40 " style="background: rgba(255, 255, 255, 0.30);">
+  <div class="bg-white flex flex-col border-slate-300 rounded-xl px-5 py-5 z-40 " style="background: rgba(255, 255, 255, 0.50);">
     <div class="flex items-center justify-between">
       <a href="/">
         <img src="<%= asset_path("icon/Logo.svg") %>" alt="DPI Logo" class="h-[2rem]">
@@ -11,7 +11,7 @@
         <li><a href="/" class="hover:font-semibold">Home</a></li>
         <li><a href="/" class="hover:font-semibold">Demo</a></li>
         <% if user_signed_in? %>
-          <%= link_to "Dashboard", dashboard_path(role: current_user.role), class: "hover:text-gray-600" %>
+          <%= link_to "Dashboard", dashboard_path(role: current_user.role), class: "hover:font-semibold" %>
         <% else %>
           <%= link_to "Dashboard", new_user_session_path %>
         <% end %>
