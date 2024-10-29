@@ -1,16 +1,22 @@
-<h2>Members of <%= @cohort.cohort_name if @cohort %></h2>
-<% if params[:show_all_members] %>
-  <% @cohort_members.each do |cohort_member| %>
-    <%= render partial: "cohort_member", locals: { cohort_member: cohort_member } %>
-  <% end %>
-<% else %>
-  <h3>Mentors</h3>
-  <% @mentors.each do |mentor| %>
-    <%= render partial: "cohort_member", locals: { cohort_member: mentor } %>
-  <% end %>
-  
-  <h3>Mentees</h3>
-  <% @mentees.each do |mentee| %>
-    <%= render partial: "cohort_member", locals: { cohort_member: mentee } %>
-  <% end %>
-<% end %>
+<h2 class="text-center text-3xl font-bold mb-8">Members of <%= @cohort.cohort_name if @cohort %></h2>
+<div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-8 p-6">
+  <!-- Mentor Card -->
+  <div class="w-full md:w-1/3 max-w-md bg-white p-6 rounded-xl shadow-lg border border-gray-200 space-y-4">
+    <h3 class="text-2xl font-bold text-gray-800 text-center mb-4">Mentors</h3>
+    <div class="max-h-96 overflow-y-auto space-y-4">
+      <% @mentors.each do |mentor| %>
+        <%= render partial: "cohort_member", locals: { cohort_member: mentor } %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Mentee Card -->
+  <div class="w-full md:w-1/3 max-w-md bg-white p-6 rounded-xl shadow-lg border border-gray-200 space-y-4">
+    <h3 class="text-2xl font-bold text-gray-800 text-center mb-4">Mentees</h3>
+    <div class="max-h-96 overflow-y-auto space-y-4">
+      <% @mentees.each do |mentee| %>
+        <%= render partial: "cohort_member", locals: { cohort_member: mentee } %>
+      <% end %>
+    </div>
+  </div>
+</div>

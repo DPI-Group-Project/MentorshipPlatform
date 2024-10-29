@@ -1,14 +1,30 @@
-<div id="<%= dom_id(cohort_member) %>" class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-100">
-  <div class="flex items-center justify-between">
-    <p class="text-gray-600 font-semibold">
-      <span class="text-gray-700">Email:</span> <%= cohort_member.user.email %>
-    </p>
-    <span class="text-sm font-semibold <%= cohort_member.role == "mentor" ? "text-blue-600 bg-blue-100" : "text-green-600 bg-green-100" %> px-3 py-1 rounded-lg">
-      <%= cohort_member.role.capitalize %>
-    </span>
+<div id="<%= dom_id(cohort_member) %>" class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-100 flex items-center space-x-4">
+  <!-- Profile Picture Section -->
+  <div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+    <img src="<%= cohort_member.user.profile_picture || asset_path("sample_img/user_mini_image.png") %>" alt="Profile Picture" class="w-full h-full object-cover">
   </div>
-  <div class="flex flex-col mt-2">
-    <p class="text-gray-500 text-sm font-semibold">Cohort:</p>
-    <p class="text-gray-700 font-medium"><%= cohort_member.cohort.cohort_name %></p>
+  
+  <!-- User Information Section -->
+  <div class="flex flex-col space-y-2">
+    <div class="flex items-center justify-between">
+      <p class="text-gray-600 font-semibold">
+        <span class="text-gray-700">Email:</span> <%= cohort_member.user.email %>
+      </p>
+      <span class="text-sm font-semibold <%= cohort_member.role == "mentor" ? "text-blue-600 bg-blue-100" : "text-green-600 bg-green-100" %> px-3 py-1 rounded-lg">
+        <%= cohort_member.role.capitalize %>
+      </span>
+    </div>
+
+    <!-- Program Information Section -->
+    <div class="flex flex-col">
+      <p class="text-gray-500 text-sm font-semibold">Program:</p>
+      <p class="text-gray-700 font-medium"><%= cohort_member.cohort.program.name if cohort_member.cohort.program %></p>
+    </div>
+
+    <!-- Cohort Information Section -->
+    <div class="flex flex-col">
+      <p class="text-gray-500 text-sm font-semibold">Cohort:</p>
+      <p class="text-gray-700 font-medium"><%= cohort_member.cohort.cohort_name %></p>
+    </div>
   </div>
 </div>
