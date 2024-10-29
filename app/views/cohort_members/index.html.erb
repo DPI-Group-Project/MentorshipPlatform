@@ -1,0 +1,16 @@
+<h2>Members of <%= @cohort.cohort_name if @cohort %></h2>
+<% if params[:show_all_members] %>
+  <% @cohort_members.each do |cohort_member| %>
+    <%= render partial: "cohort_member", locals: { cohort_member: cohort_member } %>
+  <% end %>
+<% else %>
+  <h3>Mentors</h3>
+  <% @mentors.each do |mentor| %>
+    <%= render partial: "cohort_member", locals: { cohort_member: mentor } %>
+  <% end %>
+  
+  <h3>Mentees</h3>
+  <% @mentees.each do |mentee| %>
+    <%= render partial: "cohort_member", locals: { cohort_member: mentee } %>
+  <% end %>
+<% end %>

@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   resources :organizations
   resources :reviews
   resources :matches
-  resources :cohorts
+  resources :cohorts do
+    resources :cohort_members, only: [:index]
+  end
   resources :programs
   devise_for :users, controllers: { registrations: 'users/registrations' }
  
