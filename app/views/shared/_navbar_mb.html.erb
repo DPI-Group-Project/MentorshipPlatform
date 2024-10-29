@@ -1,0 +1,51 @@
+<nav class="flex flex-col px-8 bg-[#FFFFFF] py-4 shadow-sm fixed top-0 w-full z-20 md:hidden">
+  <div class="flex items-center justify-between w-full">
+    <img src="<%= asset_path("icon/Logo.svg") %>" alt="DPI Logo" class="h-[2rem]">
+    <img src="<%= asset_path("icon/nav_icon.svg") %>" alt="nav" class="h-[1.5rem]" id="menu-toggle">
+  </div>
+  <div id="menu" class="hidden transition-all flex flex-col items-center">
+    <ul class="text-[1.5rem] font-normal text-center my-[8rem] flex flex-col gap-[3rem]">
+      <li><a href="/" class="hover:text-[#898989]">Home</a></li>
+      <li><a href="/dashboard/mentee" class="hover:text-[#898989]">Mentors</a></li>
+      <li class="text-[#898989] inactive">Meeting</li>
+      <li class="text-[#898989] inactive">Survey</li>
+    </ul>
+    <div class="flex flex-col gap-4 mb-[2.7rem]">
+      <div class="text-[1.2rem] text-center font-semibold bg-[#FFF] text-[#202020] border shadow-xs rounded-md w-[20rem] py-3 px-5 mr-auto hover:scale-105">
+        <% if user_signed_in? %>
+          <%= link_to "Edit", edit_user_registration_path %>
+        <% else %>
+          <%= link_to "Sign Up", mentor_mentee_registration_path(signup_type: "mentee") %>
+        <% end %>
+      </div>
+      <div class="text-[1.2rem] text-center font-semibold bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md w-[20rem] py-3 px-5 mr-auto hover:scale-105">
+        <% if user_signed_in? %>
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
+        <% else %>
+          <%= link_to "Sign Up", mentor_mentee_registration_path(signup_type: "mentee") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        const openIconSrc = "<%= asset_path('icon/menu.svg') %>";
+        const closeIconSrc = "<%= asset_path('icon/close_bl.svg') %>";
+
+        menuToggle.addEventListener('click', function () {
+            menu.classList.toggle('hidden');
+            menu.style.maxHeight = menu.classList.contains('hidden') ? '0' : `${menu.scrollHeight + 30 }px`;
+
+            if (menu.classList.contains('hidden')) {
+                menuToggle.src = openIconSrc;
+            } else {
+                menuToggle.src = closeIconSrc;
+            }
+        });
+    });
+</script>
