@@ -1,22 +1,24 @@
-<nav class="flex flex-wrap items-center justify-between px-24 bg-[#FFFFFF] h-[4.5rem] mb-10 shadow-sm fixed top-0 w-full z-20">
+<nav class="flex flex-wrap items-center justify-between px-24 bg-[#FFFFFF] h-[4.5rem] mb-10 shadow-sm fixed top-0 w-full z-20 max-md:hidden">
   <div>
-    <img src="<%= asset_path("icon/Logo.svg") %>" alt="DPI Logo" class="h-6">
+    <a href="/" class="flex items-center">
+      <img src="<%= asset_path("icon/Logo.svg") %>" alt="DPI Logo" class="h-7">
+    </a>
   </div>
   <div>
-    <ul class="flex space-x-14 text-base text-black">
-      <li><a href="/" class="hover:text-gray-600">Home</a></li>
-      <li><a href="/dashboard/mentee" class="hover:text-gray-600">Mentors</a></li>
-      <li class="text-gray-400 inactive">Meeting</li>
-      <li class="text-gray-400 inactive">Survey</li>
+    <ul class="flex space-x-14 text-[#202020] font-normal">
+      <li><a href="/" class="hover:text-[#898989]">Home</a></li>
+      <li><a href="/dashboard/mentee" class="hover:text-[#898989]">Mentors</a></li>
+      <li class="text-[#898989] inactive">Meeting</li>
+      <li class="text-[#898989] inactive">Survey</li>
     </ul>
   </div>
   <div class="flex items-center space-x-4">
     <% if user_signed_in? %>
       <img src="<%= asset_path("icon/Notification.svg") %>" alt="Notifications" class="h-6 w-6">
-      <img 
-        src="<%= asset_path("sample_img/user_mini_image.png") %>" 
-        alt="User Image" 
-        class="h-10 w-10 rounded-full cursor-pointer"
+      <img
+        src="<%= asset_path("sample_img/user_mini_image.png") %>"
+        alt="User Image"
+        class="h-8 w-8 rounded-full cursor-pointer"
         id="user-image"
         onclick="toggleModal()"
       >
