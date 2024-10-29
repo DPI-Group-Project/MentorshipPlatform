@@ -1,9 +1,47 @@
-<h1 style="margin-top: 5rem;">New Cohort Member</h1>
+<div class="flex items-center justify-center min-h-screen bg-gray-100 p-8">
+  <div class="w-full max-w-3xl lg:max-w-5xl">
+    <!-- Form Titles -->
+    <h1 class="text-3xl font-semibold text-left text-gray-800 mb-2"><%= @cohort.cohort_name %></h1>
+    <h2 class="text-xl font-medium text-left text-gray-600 mb-6"><%= @current_program.name %></h2>
+    
+    <!-- Main Form -->
+    <%= form_with model: @cohort_member, url: cohort_members_path, method: :post, html: { class: "space-y-6" } do |form| %>
+      <%= form.hidden_field :cohort_id, value: @cohort.id %>
+      <%= form.hidden_field :mentor_emails, id: "hidden_mentor_emails" %>
+      <%= form.hidden_field :mentee_emails, id: "hidden_mentee_emails" %>
 
-<%= render "form", cohort_member: @cohort_member %>
+      <!-- Mentor and Mentee Sections -->
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <%= render partial: "mentor_mentee_section", locals: {
+                     form: form,
+                     title: "Mentors",
+                     email_field: :mentor_emails,
+                     email_input_id: "mentors_emails",
+                     data_role: "mentor",
+                     list_id: "mentor_list",
+                   } %>
 
-<br>
+        <%= render partial: "mentor_mentee_section", locals: {
+                     form: form,
+                     title: "Mentees",
+                     email_field: :mentee_emails,
+                     email_input_id: "mentees_emails",
+                     data_role: "mentee",
+                     list_id: "mentee_list",
+                   } %>
+      </div>
 
-<div>
-  <%= link_to "Back to Cohorts", cohorts_path %>
+      <!-- Save Button -->
+      <div class="mt-8 flex justify-center">
+        <%= form.submit "Save", class: "bg-black text-white font-semibold py-2 px-6 rounded-lg hover:bg-gray-900 transition ease-in-out duration-200" %>
+      </div>
+    <% end %>
+
+    <!-- Back Link -->
+    <div class="flex justify-center mt-4">
+      <%= link_to "Back to dashboard", dashboard_path(role: "admin"), class: "text-gray-500 hover:text-black hover:underline" %>
+    </div>
+  </div>
 </div>
+
+<%= render partial: "email_script" %>

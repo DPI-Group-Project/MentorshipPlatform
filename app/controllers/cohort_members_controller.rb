@@ -1,6 +1,5 @@
 class CohortMembersController < ApplicationController
   before_action :set_cohort_member, only: %i[show edit update destroy]
-  before_action -> { find_or_create_user(cohort_member_params) }, only: [:create]
 
   # GET /cohort_members or /cohort_members.json
   def index
@@ -8,30 +7,63 @@ class CohortMembersController < ApplicationController
   end
 
   # GET /cohort_members/1 or /cohort_members/1.json
-  def show
-  end
+  def show; end
 
   # GET /cohort_members/new
   def new
     @cohort_member = CohortMember.new
+    @cohort = Cohort.find(params[:cohort_id])
+    @current_program = Program.find_by(creator_id: current_user.id)
   end
 
   # GET /cohort_members/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /cohort_members or /cohort_members.json
   def create
-    @cohort_member = CohortMember.new(cohort_member_params)
+    cohort_id = params[:cohort_member][:cohort_id]
+
+    # Split, clean up, and process emails from the form's hidden fields
+    mentor_emails = extract_emails(params[:cohort_member][:mentor_emails])
+    mentee_emails = extract_emails(params[:cohort_member][:mentee_emails])
+
+    # Create cohort members for mentors and mentees
+    mentor_emails.each { |email| create_cohort_member(email, cohort_id, 'mentor') }
+    mentee_emails.each { |email| create_cohort_member(email, cohort_id, 'mentee') }
 
     respond_to do |format|
-      if @cohort_member.save
-        format.html { redirect_to cohort_member_url(@cohort_member), notice: 'Cohort member was successfully created.' }
-        format.json { render :show, status: :created, location: @cohort_member }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @cohort_member.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to dashboard_path(role: 'admin'), notice: 'Mentors and mentees were successfully added.' }
+      format.json { render json: { message: 'Mentors and mentees were successfully added.' }, status: :created }
+    end
+  end
+
+  # POST /cohort_members/add_email
+  def add_email
+    cohort_id = params[:cohort_id]
+    email = params[:email]
+    role = params[:role]
+
+    if create_cohort_member(email, cohort_id, role)
+      render json: { message: 'Email added successfully' }, status: :ok
+    else
+      render json: { error: 'Failed to add email' }, status: :unprocessable_entity
+    end
+  end
+
+  # POST /cohort_members/delete_email
+  def delete_email
+    cohort_id = params[:cohort_id]
+    email = params[:email]
+    role = params[:role]
+
+    cohort_member = CohortMember.joins(:user)
+                                .where(users: { email: })
+                                .find_by(cohort_id:, role:)
+
+    if cohort_member&.destroy
+      render json: { message: 'Email deleted successfully' }, status: :ok
+    else
+      render json: { error: 'Failed to delete email' }, status: :unprocessable_entity
     end
   end
 
@@ -70,12 +102,18 @@ class CohortMembersController < ApplicationController
     params.require(:cohort_member).permit(:email, :cohort_id, :role)
   end
 
-  def find_or_create_user(cohort_member_params)
-    user = User.find_or_create_by(email: cohort_member_params[:email]) do |u|
-      u.password = SecureRandom.base36(10)
-    end
-    return unless user.new_record?
+  # Helper method to find or create a user and associate them with a cohort
+  def create_cohort_member(email, cohort_id, role)
+    user = User.find_or_create_by(email:) { |u| u.password = SecureRandom.base36(10) }
+    return false unless user.persisted?
 
-    user.save!
+    cm = CohortMember.create(user:, cohort_id:, role:)
+
+    role == 'mentor' ? CohortMemberMailer.mentor_welcome_mail(cm).deliver_later! : CohortMemberMailer.mentee_welcome_mail(cm).deliver_later!
+  end
+
+  # Helper method to split, clean, and format email strings
+  def extract_emails(email_string)
+    email_string.to_s.split(',').map(&:strip).reject(&:empty?)
   end
 end
