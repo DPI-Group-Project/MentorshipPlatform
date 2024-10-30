@@ -41,6 +41,7 @@ class User < ApplicationRecord
   attr_accessor :cohort_members_attributes
 
   before_create :set_default_active_status
+  after_create :generate_signup_token
 
   # Returns list of mentees that are in the same cohort as the provided mentor
  scope :mentors_in_cohort, ->(cohort) { joins(:cohort_members)
@@ -95,5 +96,9 @@ class User < ApplicationRecord
 
   def set_default_active_status
     self.status ||= 'Active'
+  end
+
+  def generate_signup_token
+    self.signup_token ||= SecureRandom.hex(10)
   end
 end
