@@ -15,6 +15,18 @@
     </div>
 
     <div>
+      <label for="user_password" class="block text-black">Create password</label>
+      <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm", autocomplete: "new-password" }, label: false %>
+      <p class="mt-2 text-xs text-gray-500">Password must contain a minimum of 8 characters</p>
+      <p class="text-xs text-gray-500">Password must contain at least one symbol e.g. @, !</p>
+    </div>
+
+    <div>
+      <label for="user_password_confirmation" class="block text-black">Confirm password</label>
+      <%= f.input :password_confirmation, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm", autocomplete: "new-password" }, label: false %>
+    </div>
+
+    <div>
       <label for="user_phone_number" class="block text-black">Phone number</label>
       <%= f.input :phone_number, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
     </div>
@@ -48,13 +60,13 @@
       <label for="user_skills_array" class="block text-black">Skills</label>
       <%= f.input :skills_array, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
     </div>
-
   </div>
 
-  <%= f.simple_fields_for :cohort_members, CohortMember.new do |cm| %>
-    <%= cm.input :capacity, required: true %>
+  <%= f.simple_fields_for :cohort_members, resource.cohort_members.build do |cm| %>
+    <label for="user_capacity" class="block text-black mt-4">Capacity</label>
+    <%= cm.input :capacity, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
     <%= cm.hidden_field :role, value: 'mentor' %>
-    <%= cm.hidden_field :cohort_id, value: Cohort.first.id %>
+    <%= cm.hidden_field :cohort_id, value: current_user.cohort.id %>
   <% end %>
 
   <div class="form-actions mt-8">

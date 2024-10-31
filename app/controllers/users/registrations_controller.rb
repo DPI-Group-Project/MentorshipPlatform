@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [:create, :update]
   after_action :set_csrf_headers, only: :create
-  before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   def new
@@ -28,7 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.find_by(signup_token: params[:signup_token])
 
     if @user.nil?
-      redirect_to root_path, alert: "Invalid or expired signup link."
+      redirect_to home_path, alert: "Invalid or expired signup link."
     else
       sign_in(@user) # automatically sign in the user if token is valid
       render 'users/registrations/signup'
@@ -37,9 +36,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def update
     @user = current_user
-    if @user.update(account_update_params)
+    if @user.update(sign_up_params)
       @user.update(signup_token: nil)
-      redirect_to root_path, notice: "Account created successfully."
+      redirect_to home_path, notice: "Account created successfully."
     else
       render :signup, alert: "There was an error creating your account."
     end
@@ -86,11 +85,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:sign_up,
                                       keys: [:first_name, :last_name, :status, :inactive_reason, :phone_number, :bio, :timezone, :title, :linkedin_link, :profile_picture,
                                              :skills_array, :signup_token, { cohort_members_attributes: %i[role capacity cohort_id] }])
-  end
-
-  def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :bio, :skills_array, :linkedin_link, :profile_picture])
-  end
+  end  
 
   def set_csrf_headers
     return unless request.xhr?
