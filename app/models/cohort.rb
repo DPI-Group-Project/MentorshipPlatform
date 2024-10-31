@@ -27,6 +27,16 @@ class Cohort < ApplicationRecord
       false
     end
   end
+  def shortlist_creation_open?
+    user_timezone = 'America/Chicago'
+    current_time = Time.current.in_time_zone(user_timezone)
+    current_time_in_user_zone = current_time.strftime('%Y-%m-%d %H:%M:%S UTC')
+    if shortlist_start_time <= current_time_in_user_zone && shortlist_end_time >= current_time_in_user_zone
+      'open'
+    else
+      'closed'
+    end
+  end
   def pairing_number
     matches = Match.where(cohort_id: self.id)
     matches.size

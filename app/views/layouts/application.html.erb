@@ -7,7 +7,8 @@
   <%= csp_meta_tag %>
   <script src="https://cdn.tailwindcss.com"></script>
   <%= render partial: "shared/cdn_assets" %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application" %>
   <%= javascript_importmap_tags %>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -16,16 +17,17 @@
   <%= render 'shared/landing_nav' %>
 <% else %>
   <%= render 'shared/navbar' %>
+  <%= render 'shared/navbar_mb' %>
 <% end %>
-<div>
-  <% if notice.present? %>
-    <%= render partial: "shared/flash_notice", locals: { message: notice } %>
-  <% end %>
-  <% if alert.present? %>
-    <%= render partial: "shared/flash_alert", locals: { message: alert } %>
-  <% end %>
-</div>
-<%= yield %>
+  <div>
+    <% if notice.present? %>
+      <%= render partial: "shared/flash_notice", locals: { message: notice, css_class: "success" } %>
+    <% end %>
+    <% if alert.present? %>
+      <%= render partial: "shared/flash_alert", locals: { message: alert, css_class: "danger" } %>
+    <% end %>
+  </div>
+  <%= yield %>
 <%= render partial: "shared/footer" %>
 </body>
 </html>

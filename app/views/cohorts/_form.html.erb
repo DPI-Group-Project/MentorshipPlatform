@@ -12,11 +12,9 @@
     </div>
   <% end %>
 
-  <div class="flex flex-col">
-    <%= form.label :program_id, class: "font-medium mb-1" %>
-    <%= form.number_field :program_id,
-                          class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
-  </div>
+  <%= form.hidden_field :program_id, value: @current_program.id %>
+  <%= form.hidden_field :creator_id, value: current_user.id %>
+  <%= form.hidden_field :contact_id, value: current_user.id %>
 
   <div class="flex flex-col">
     <%= form.label :cohort_name, class: "font-medium mb-1" %>
@@ -31,27 +29,33 @@
   </div>
 
   <div class="flex flex-col">
-    <%= form.label :start_date, class: "font-medium mb-1" %>
+    <%= form.label :start_date, "Cohort Start Time", class: "font-medium mb-1" %>
     <%= form.datetime_field :start_date,
                             class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
   <div class="flex flex-col">
-    <%= form.label :end_date, class: "font-medium mb-1" %>
+    <%= form.label :end_date, "Cohort End Time", class: "font-medium mb-1" %>
     <%= form.datetime_field :end_date,
                             class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
   <div class="flex flex-col">
-    <%= form.label :creator_id, class: "font-medium mb-1" %>
-    <%= form.number_field :creator_id,
-                          class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    <%= form.label :shortlist_start_time, "Shotlist Start Time", class: "font-medium mb-1" %>
+    <%= form.datetime_field :shortlist_start_time,
+                            class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
   <div class="flex flex-col">
-    <%= form.label :contact_id, class: "font-medium mb-1" %>
-    <%= form.number_field :contact_id,
-                          class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    <%= form.label :shortlist_end_time, "Shotlist End Time", class: "font-medium mb-1" %>
+    <%= form.datetime_field :shortlist_end_time,
+                            class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+  </div>
+
+  <div class="flex flex-col">
+    <%= form.label :required_meetings, "Required Meetings", class: "font-medium mb-1" %>
+    <%= form.number_field :required_meetings,
+                            class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
   <div class="flex justify-end">

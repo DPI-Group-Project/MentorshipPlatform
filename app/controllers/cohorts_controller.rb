@@ -67,6 +67,6 @@ class CohortsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def cohort_params
     params.require(:cohort).permit(:program_id, :cohort_name, :description, :start_date, :end_date, :creator_id,
-                                   :contact_id)
+                                   :contact_id, :required_meetings, :shortlist_start_time, :shortlist_end_time)
   end
 end
