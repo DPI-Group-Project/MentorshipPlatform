@@ -2,7 +2,7 @@
 
 <p>Thank you for volunteering as a mentor for Discovery Partners Institute's <%= @cohort.program.name %> <%= @cohort.cohort_name %>!</p>
 
-<p>Please follow this link to register your account: insert link.</p>
+<p>Please follow this link to register your account: <%= link_to 'Complete Your Profile', mentor_mentee_registration_url(signup_token: @user.signup_token) %></p>
 
 <p>Yours Truly,</p>
 <p>The MentE Team</p>
