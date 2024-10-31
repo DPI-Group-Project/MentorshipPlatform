@@ -26,8 +26,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def signup
     @user = User.find_by(signup_token: params[:signup_token])
-    pp params[:signup_token]
-    pp @user
 
     if @user.nil?
       redirect_to root_path, alert: "Invalid or expired signup link."
