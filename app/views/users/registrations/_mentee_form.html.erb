@@ -60,14 +60,7 @@
       <label for="user_skills_array" class="block text-black">Skills</label>
       <%= f.input :skills_array, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
     </div>
-
   </div>
-
-  <%= f.simple_fields_for :cohort_members, resource.cohort_members.build do |cm| %>
-    <%= cm.input :capacity, required: true, label: false, input_html: { class: "hidden" } %>
-    <%= cm.hidden_field :role, value: 'mentee' %>
-    <%= cm.hidden_field :cohort_id, value: current_user.cohort.id %>
-  <% end %>
 
   <div class="form-actions mt-8">
     <%= f.button :submit, "Sign up", class: "w-full lg:w-[400px] h-10 bg-[#27485d] text-white font-bold rounded shadow-sm hover:bg-[#1b3c4a]" %>

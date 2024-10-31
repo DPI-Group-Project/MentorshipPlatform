@@ -62,11 +62,9 @@
     </div>
   </div>
 
-  <%= f.simple_fields_for :cohort_members, resource.cohort_members.build do |cm| %>
+  <%= f.simple_fields_for :cohort_members, resource.cohort_members.find_by(email: current_user.email) do |cm| %>
     <label for="user_capacity" class="block text-black mt-4">Capacity</label>
     <%= cm.input :capacity, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
-    <%= cm.hidden_field :role, value: 'mentor' %>
-    <%= cm.hidden_field :cohort_id, value: current_user.cohort.id %>
   <% end %>
 
   <div class="form-actions mt-8">
