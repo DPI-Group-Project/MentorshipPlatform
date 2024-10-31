@@ -100,5 +100,6 @@ class User < ApplicationRecord
 
   def generate_signup_token
     self.signup_token ||= SecureRandom.hex(10)
+    self.save
   end
 end
