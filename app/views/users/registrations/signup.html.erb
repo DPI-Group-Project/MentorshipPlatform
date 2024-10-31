@@ -3,27 +3,11 @@
     
     <!-- right section with form (60% width) -->
     <div class="flex flex-col items-center w-full lg:w-3/5 lg:flex-grow px-4 lg:px-12 py-12">
-      
-      <div data-controller="signup">
-        <button data-signup-target="menteeButton" class="w-full lg:w-[150px] h-10 bg-[#517879] text-white font-bold rounded shadow-sm hover:bg-[#3e6176] active:bg-[#3e6176]" data-action="signup#showForm" data-signup-content-param="menteeForm">
-          Mentee Sign-up
-        </button>
-        
-        <button data-signup-target="mentorButton" class="w-full lg:w-[150px] h-10 bg-[#517879] text-white font-bold rounded shadow-sm hover:bg-[#3e6176] active:bg-[#3e6176]" data-action="signup#showForm" data-signup-content-param="mentorForm">
-          Mentor Sign-up
-        </button>
-        
-        <!-- form content -->
-        <div>
-          <div data-signup-target="mentorForm" hidden>
-            <%= render partial: "users/registrations/mentor_form" %>
-          </div>
-          <div data-signup-target="menteeForm">
-            <%= render partial: "users/registrations/mentee_form" %>
-          </div>
-        </div>
-      </div>
-
+      <% if current_user.role == 'mentor' %>
+        <%= render partial: "users/registrations/mentor_form", locals: { user: current_user } %>
+      <% else %>
+        <%= render partial: "users/registrations/mentee_form", locals: { user: current_user } %>
+      <% end %>
       <div class="mt-8 flex items-center justify-center space-x-2">
         <span class="text-gray-400 font-bold">Already a user?</span>
         <%= link_to "Login", new_user_session_path, class: "text-[#476d73] font-bold underline" %>
