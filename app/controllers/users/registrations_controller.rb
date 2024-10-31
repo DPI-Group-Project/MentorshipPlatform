@@ -3,7 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   after_action :set_csrf_headers, only: :create
-  # before_action :configure_account_update_params, only: [:update]
+  before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   def new
@@ -25,8 +25,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def signup
-    @user = User.new
-    render 'users/registrations/signup'
+    @user = User.find_by(signup_token: params[:signup_token])
+    pp params[:signup_token]
+    pp @user
+
+    if @user.nil?
+      redirect_to root_path, alert: "Invalid or expired signup link."
+    else
+      sign_in(@user) # automatically sign in the user if token is valid
+      render 'users/registrations/signup'
+    end
+  end
+  
+  def update
+    @user = current_user
+    if @user.update(account_update_params)
+      @user.update(signup_token: nil)
+      redirect_to profile_path, notice: "Account updated successfully."
+    else
+      render :signup, alert: "There was an error updating your account."
+    end
   end
 
   def update_shortlist
@@ -69,7 +87,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up,
                                       keys: [:first_name, :last_name, :status, :inactive_reason, :phone_number, :bio, :timezone, :title, :linkedin_link, :profile_picture,
-                                             :skills_array, { cohort_members_attributes: %i[role capacity cohort_id] }])
+                                             :skills_array, :signup_token, { cohort_members_attributes: %i[role capacity cohort_id] }])
+  end
+
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :bio, :skills_array, :linkedin_link, :profile_picture])
   end
 
   def set_csrf_headers
