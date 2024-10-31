@@ -39,9 +39,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = current_user
     if @user.update(account_update_params)
       @user.update(signup_token: nil)
-      redirect_to profile_path, notice: "Account updated successfully."
+      redirect_to root_path, notice: "Account created successfully."
     else
-      render :signup, alert: "There was an error updating your account."
+      render :signup, alert: "There was an error creating your account."
     end
   end
 

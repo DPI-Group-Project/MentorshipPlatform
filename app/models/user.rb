@@ -54,7 +54,7 @@ class User < ApplicationRecord
                                   .where('matches.id IS NULL')}
 
   def name
-    "#{first_name.capitalize} #{last_name.capitalize}"
+    "#{first_name&.capitalize || ''} #{last_name&.capitalize || ''}".strip
   end
 
   def matched?
