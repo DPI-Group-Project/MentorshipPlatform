@@ -36,7 +36,7 @@ class User < ApplicationRecord
   has_many :owned_cohorts, class_name: 'Cohort', foreign_key: 'creator_id', dependent: :destroy
   has_many :owned_programs, class_name: 'Program', foreign_key: 'creator_id', dependent: :destroy
 
-  accepts_nested_attributes_for :cohort_members
+  accepts_nested_attributes_for :cohort_members, update_only: true, allow_destroy: true
   after_create :create_first_cohort
   attr_accessor :cohort_members_attributes
 

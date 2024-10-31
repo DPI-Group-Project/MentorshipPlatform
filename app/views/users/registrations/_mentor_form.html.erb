@@ -2,6 +2,7 @@
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), defaults: { input_html: { class: "subForm" } }) do |f| %>
   <%= f.error_notification %>
+  <%= f.hidden_field :id %>
 
   <div class="form-inputs space-y-6 w-full lg:max-w-lg">
     <div>
@@ -62,9 +63,14 @@
     </div>
   </div>
 
-  <%= f.simple_fields_for :cohort_members, resource.cohort_members.find_by(email: current_user.email) do |cm| %>
-    <label for="user_capacity" class="block text-black mt-4">Capacity</label>
-    <%= cm.input :capacity, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+  <% current_user.cohort_members.where(email: current_user.email).each do |cohort_member| %>
+    <div class="mt-4">
+      <label for="user_cohort_members_attributes_capacity" class="block text-black">Capacity</label>
+      <%= f.fields_for :cohort_members, cohort_member do |cm| %>
+        <%= cm.hidden_field :id %>
+        <%= cm.input :capacity, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+      <% end %>
+    </div>
   <% end %>
 
   <div class="form-actions mt-8">
