@@ -15,7 +15,7 @@
         Available Mentors
       </h1>
       <!-- Grid of mentors -->
-      <div id="mentor-list-section" class="grid sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 rounded-[0.55rem] max-h-[20rem] overflow-y-auto">
+      <div id="mentor-list-section" class="grid sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 rounded-[0.55rem] min-w-[55rem] max-h-[18rem] overflow-y-auto">
         <% available_mentors_count = 0 %>
         <% mentors_data.each do |mentor| %>
           <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
@@ -26,14 +26,21 @@
             <% available_mentors_count += 1 %>
           <% end %>
         <% end %>
-
-        <!-- If no available mentors -->
-        <% if !current_user.cohort.running? %>
-          <h2> Mentor matching is closed for cohort <%= current_user.cohort.id %> </h2>
-        <% elsif available_mentors_count == 0 %>
-          <h2> No more available mentors in cohort <%= current_user.cohort.id %> </h2>
-        <% end %>
       </div>
+      <!-- If no available mentors -->
+      <% if !current_user.cohort.running? %>
+        <div class="flex flex-col border items-center justify-center text-sm text-[#898989] border-[#D9D9D9] h-[17rem] rounded-[0.55rem]">
+          <img src=<%= asset_path('icon/danger_circle.svg') %> alt="danger_icon" class="h-[2rem]">
+          <p>Thank you for participating!</p>
+          <p class="font-normal">Mentor matching for your cohort is now closed.</p>
+        </div>
+      <% elsif available_mentors_count == 0 %>
+        <div class="flex flex-col border items-center justify-center text-sm text-[#898989] border-[#D9D9D9] h-[17rem] rounded-[0.55rem]">
+          <img src=<%= asset_path('icon/danger_circle.svg') %> alt="danger_icon" class="h-[2rem]">
+          <p>Thank you for participating!</p>
+          <p class="font-normal">All mentors for your cohort are currently matched.</p>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
