@@ -1,18 +1,20 @@
-<section class="py-24 ">
+<section class="py-24 mt-20">
   <div class="mx-auto max-w-10xl px-4 sm:px-6 lg:px-8">
     <div class="mb-14 flex flex-col justify-center items-center sm:flex-row sm:items-center sm:justify-between max-sm:gap-8">
       <!-- Slider controls -->
       <button id="slider-button-left"
-            class="swiper-button-prev group flex justify-center items-center border border-solid border-black w-12 h-12 transition-all duration-500 rounded-full hover:bg-gray-900"
+            class="swiper-button-prev bg-white group flex justify-center items-center w-12 h-12 transition-all duration-500 rounded-full hover:bg-gray-900"
             data-carousel-prev>
         <i class="fas fa-chevron-left text-black group-hover:text-white"></i>
       </button>
-      <div class="flex flex-col items-center mt-40 mb-9">
-        <h1 class="font-bold text-6xl">Reviews</h1>
-        <p class="text-center w-1/2 mt-3 text-xl">Take a look at some of our recent projects to see how we've helped businesses like yours succeed online.</p>
+      <div class="flex flex-col justify-center items-center">
+        <h1 class="font-bold text-[2.5rem]">Reviews</h1>
+        <p class="text-center w-2/3 mt-3 text-base">
+          Explore feedback from our mentees and mentors to see how Mente has supported impactful growth and connections.
+        </p>
       </div>
       <button id="slider-button-right"
-            class="swiper-button-next group flex justify-center items-center border border-solid border-black w-12 h-12 transition-all duration-500 rounded-full hover:bg-gray-900"
+            class="swiper-button-next bg-white group flex justify-center items-center w-12 h-12 transition-all duration-500 rounded-full hover:bg-gray-900"
             data-carousel-next>
         <i class="fas fa-chevron-right text-black group-hover:text-white"></i>
       </button>
@@ -20,51 +22,51 @@
   </div>
   <div class="lg:flex grid grid-cols-1 md:grid-cols-3 justify-center items-center gap-8 swiper mySwiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide group bg-white rounded-2xl p-8 w-full  ">
-        <img class="w-[9rem] h-[3rem] mb-4" src=<%= asset_path("sample_img/dpi_logo.png") %> alt="Logo" />
+      <div class="swiper-slide group bg-white rounded-2xl p-[4rem] w-full">
+        <img class="h-[2.7rem] mb-4" src=<%= asset_path("sample_img/dpi_logo.png") %> alt="Logo" />
         <p class="text-lg text-gray-500 leading-8 h-24 mb-9">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo         </p>
-        <div class="flex items-center gap-5">
-          <img class="rounded-full object-cover" src=<%= asset_path("sample_img/user_review_mini.png") %> alt="avatar" />
-          <div class="grid gap-1">
+        <div class="flex items-center gap-5 pt-8">
+          <img class="rounded-full object-cover h-10" src=<%= asset_path("sample_img/user_review_mini.png") %> alt="avatar" />
+          <div class="grid">
             <h5 class="text-gray-900 font-medium">Beth Wilson</h5>
             <span class="text-sm leading-6 text-gray-500">Product Manager at LinkedIn</span>
           </div>
         </div>
       </div>
-      <div class="swiper-slide group bg-white rounded-2xl p-8  w-full">
-        <img class="w-[9rem] h-[3rem] mb-4" src=<%= asset_path("sample_img/dpi_logo.png") %> alt="Logo" />
+      <div class="swiper-slide group bg-white rounded-2xl p-[4rem] w-full">
+        <img class="h-[2.7rem] mb-4" src=<%= asset_path("sample_img/dpi_logo.png") %> alt="Logo" />
         <p class="text-lg text-gray-500 leading-8 h-24 mb-9">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo         </p>
       </p>
-      <div class="flex items-center gap-5">
-        <img class="rounded-full object-cover" src=<%= asset_path("sample_img/user_review_mini_2.png") %>  alt="avatar" />
+        <div class="flex items-center gap-5 pt-8">
+        <img class="rounded-full object-cover h-10" src=<%= asset_path("sample_img/user_review_mini_2.png") %>  alt="avatar" />
         <div class="grid gap-1">
           <h5 class="text-gray-900 font-medium">Harsh P.</h5>
           <span class="text-sm leading-6 text-gray-500">Product Designer</span>
         </div>
       </div>
     </div>
-    <div class="swiper-slide group bg-white rounded-2xl p-8 w-full">
-      <img class="w-[9rem] h-[3rem] mb-4" src=<%= asset_path("sample_img/dpi_logo.png") %> alt="Logo" />
+    <div class="swiper-slide group bg-white rounded-2xl p-[4rem] w-full">
+      <img class="h-[2.7rem] mb-4" src=<%= asset_path("sample_img/dpi_logo.png") %> alt="Logo" />
       <p class="text-lg text-gray-500 leading-8 h-24 mb-9 ">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo         </p>
     </p>
-    <div class="flex items-center gap-5">
-      <img class="rounded-full object-cover"  src=<%= asset_path("sample_img/user_review_mini.png") %>  alt="avatar" />
+      <div class="flex items-center gap-5 pt-8">
+      <img class="rounded-full object-cover h-10" src=<%= asset_path("sample_img/user_review_mini.png") %>  alt="avatar" />
       <div class="grid gap-1">
         <h5 class="text-gray-900 font-medium">Harsh P.</h5>
         <span class="text-sm leading-6 text-gray-500">Product Designer</span>
       </div>
     </div>
   </div>
-  <div class="swiper-slide group bg-white rounded-2xl p-8 w-full ">
-    <img class="w-[9rem] h-[3rem] mb-4" src=<%= asset_path("sample_img/dpi_logo.png") %> alt="Logo" />
+  <div class="swiper-slide group bg-white rounded-2xl p-[4rem] w-full ">
+    <img class="h-[2.7rem] mb-4" src=<%= asset_path("sample_img/dpi_logo.png") %> alt="Logo" />
     <p class="text-lg text-gray-500 leading-8 h-24 mb-9 ">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo         </p>
   </p>
-  <div class="flex items-center gap-5">
-    <img class="rounded-full object-cover" src=<%= asset_path("sample_img/user_review_mini.png") %> alt="avatar" />
+    <div class="flex items-center gap-5 pt-8">
+    <img class="rounded-full object-cover h-10" src=<%= asset_path("sample_img/user_review_mini.png") %> alt="avatar" />
     <div class="grid gap-1">
       <h5 class="text-gray-900 font-medium">Harsh P.</h5>
       <span class="text-sm leading-6 text-gray-500">Product Designer</span>
