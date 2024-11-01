@@ -102,7 +102,7 @@ class CohortMembersController < ApplicationController
     params.require(:cohort_member).permit(:email, :cohort_id, :role)
   end
 
-  # Helper method to find or create a user and associate them with a cohort
+  # Helper method to find or create a cohort member and associate them with a cohort/change or update role
   def create_cohort_member(email, cohort_id, role)
     cm = CohortMember.find_or_initialize_by(email:)
     cm.cohort_id = cohort_id
