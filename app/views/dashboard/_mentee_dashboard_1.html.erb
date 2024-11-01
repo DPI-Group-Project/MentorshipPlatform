@@ -1,4 +1,4 @@
-<div class="flex justify-center px-24 py-10 gap-[1.3rem]">
+<div class="flex justify-center p-6 lg:px-24 lg:py-10 gap-[1.3rem]">
 <!-- Left Section: Stack the two cards -->
   <div class="desktop-view">
     <div class="flex flex-col space-y-5 col-span-1 w-[17rem]">
@@ -7,5 +7,32 @@
     </div>
   </div>
   <!-- Right Section: Main Content -->
-  <%= render partial: 'available_mentors' %>
+  <div class="col-span-3">
+    <h1 class="text-2xl font-semibold text-[#202020] mb-1">
+      Available Mentors
+    </h1>
+    <p class="text-sm text-[#898989] mb-5">
+      Discover insights and stories from our mentors to inspire your own journey.
+    </p>
+
+    <!-- Grid of mentors -->
+    <div class="grid sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 rounded-[0.55rem] lg:max-h-[26.7rem] overflow-y-auto">
+      <% available_mentors_count = 0 %>
+      <% mentors_data.each do |mentor| %>
+        <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
+        <% current_mentee_count = mentor.mentee_capacity_count(mentor.cohort.id) %>
+        <% capacity_cap = mentor.capacity %>
+        <% if current_user.cohort.running? && current_mentee_count < capacity_cap %>
+          <%= render 'profile_card', mentor: mentor %>
+          <% available_mentors_count += 1 %>
+        <% end %>
+      <% end %>
+      <!-- If no available mentors -->
+      <% if !current_user.cohort.running? %>
+        <h2> Mentor matching is closed for cohort <%= current_user.cohort.id %> </h2>
+      <% elsif available_mentors_count == 0 %>
+        <h2> No more available mentors in cohort <%= current_user.cohort.id %> </h2>
+      <% end %>
+    </div>
+  </div>
 </div>
