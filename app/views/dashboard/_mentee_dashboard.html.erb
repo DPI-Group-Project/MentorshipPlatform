@@ -55,6 +55,22 @@
             });
         }
 
+        function updateShortlistOrderDesk() {
+            const shortlistOrderDesk = document.querySelectorAll('#short-list-card .mentor-card .mentor-info');
+
+            shortlistOrderDesk.forEach((child, index) => {
+                let orderNumber = child.querySelector('.order-number');
+
+                if (!orderNumber) {
+                    orderNumber = document.createElement('span');
+                    orderNumber.className = 'order-number';
+                    child.prepend(orderNumber);
+                }
+
+                orderNumber.textContent = `${index + 1}`;
+            });
+        }
+
 
 
         // dragula
@@ -75,7 +91,7 @@
         // Creates shortlist array
         drake.on("drop", function (el, target, source, sibling) {
 
-            const shortlistOrder = document.querySelectorAll('#short-list-card-m .mentor-card .mentor-info');
+            const shortlistOrder = document.querySelectorAll('#short-list-card .mentor-card .mentor-info');
 
             shortlistOrder.forEach((child, index) => {
                 let orderNumber = child.querySelector('.order-number');
@@ -143,6 +159,7 @@
                 mentorItem.classList.add('mb-2');
                 mentorItem.innerHTML = `<strong>${index + 1}.</strong> ${name} (${title})`;
                 shortlistDisplay.appendChild(mentorItem);
+                updateShortlistOrderDesk()
             });
 
             const modal = document.getElementById('confirmation-modal');
