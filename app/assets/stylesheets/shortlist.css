@@ -204,6 +204,10 @@
 
 /* numbering */
 
+.order-number{
+    color: transparent;
+}
+
 #mentor-list-section-m .order-number {
     display: none;
 }
@@ -216,7 +220,7 @@
 #short-list-card-m .order-number {
     position: absolute;
     padding-top: 0.8rem;
-    width: 3.5rem; /* Equivalent to size-14 */
+    width: 3.5rem;
     height: 3.5rem;
     background-color: rgba(0, 0, 0, 0.3);
     color: #fff;

@@ -91,19 +91,23 @@
         // Creates shortlist array
         drake.on("drop", function (el, target, source, sibling) {
 
-            const shortlistOrder = document.querySelectorAll('#short-list-card .mentor-card .mentor-info');
 
-            shortlistOrder.forEach((child, index) => {
-                let orderNumber = child.querySelector('.order-number');
+            updateShortlistOrder();
+            updateShortlistOrderDesk();
 
-                if (!orderNumber) {
-                    orderNumber = document.createElement('span');
-                    orderNumber.className = 'order-number';
-                    child.prepend(orderNumber);
-                }
-
-                orderNumber.textContent = `${index + 1}`;
-            });
+            // const shortlistOrder = document.querySelectorAll('#short-list-card .mentor-card .mentor-info');
+            //
+            // shortlistOrder.forEach((child, index) => {
+            //     let orderNumber = child.querySelector('.order-number');
+            //
+            //     if (!orderNumber) {
+            //         orderNumber = document.createElement('span');
+            //         orderNumber.className = 'order-number';
+            //         child.prepend(orderNumber);
+            //     }
+            //
+            //     orderNumber.textContent = `${index + 1}`;
+            // });
 
             submitButton.addEventListener("click", function () {
                 const shortlistContainer = document.getElementById("short-list-card");
