@@ -3,8 +3,20 @@ class CohortMembersController < ApplicationController
 
   # GET /cohort_members or /cohort_members.json
   def index
-    @cohort_members = CohortMember.all
+    if params[:cohort_id]
+      @cohort = Cohort.find(params[:cohort_id])
+      @cohort_members = @cohort.members.includes(:user)
+    else
+      @cohort_members = CohortMember.includes(:user).all
+    end
+
+    @mentors = @cohort_members.select { |member| member.role == 'mentor' }
+    @mentees = @cohort_members.select { |member| member.role == 'mentee' }
   end
+
+  
+  
+   
 
   # GET /cohort_members/1 or /cohort_members/1.json
   def show; end

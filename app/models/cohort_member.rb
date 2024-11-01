@@ -15,3 +15,5 @@ class CohortMember < ApplicationRecord
   belongs_to :cohort, required: true, class_name: 'Cohort', foreign_key: 'cohort_id'
   validates :email, uniqueness: true
 end
+
+

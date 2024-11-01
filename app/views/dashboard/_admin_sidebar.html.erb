@@ -61,6 +61,9 @@
               <li>
                 <%= link_to "Add Members", new_cohort_member_path(cohort_id: cohort.id), class: "text-black" %>
               </li>
+              <li>
+                <%= link_to "View Members", cohort_members_path(cohort_id: cohort.id), class: "text-black" %>
+              </li>
               <li>Surveys</li>
               <li>Email Templates</li>
               <li>Pairings</li>
