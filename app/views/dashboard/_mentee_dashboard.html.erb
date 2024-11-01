@@ -12,15 +12,13 @@
 <%= render 'short_list_confirm' %>
 
 <script>
-    const currentUser =
-    <%= current_user.id %>
+    const currentUser =<%= current_user.id %>
     const currentUserShortlist = <%= current_user.shortlist.to_json.html_safe %>;
     const submitButton = document.getElementById("submit-shortlist-button");
     const submitButtonM = document.getElementById("submit-shortlist-button-m");
 
     document.addEventListener("DOMContentLoaded", function () {
 
-        // mobile tab to add
         const mentorListSectionM = document.getElementById("mentor-list-section-m");
         const shortListCardM = document.getElementById("short-list-card-m");
 
@@ -56,9 +54,9 @@
         }
 
         function updateShortlistOrderDesk() {
-            const shortlistOrderDesk = document.querySelectorAll('#short-list-card .mentor-card .mentor-info');
+            const shortlistOrder = document.querySelectorAll('#short-list-card .mentor-card .mentor-info');
 
-            shortlistOrderDesk.forEach((child, index) => {
+            shortlistOrder.forEach((child, index) => {
                 let orderNumber = child.querySelector('.order-number');
 
                 if (!orderNumber) {
@@ -90,24 +88,8 @@
 
         // Creates shortlist array
         drake.on("drop", function (el, target, source, sibling) {
-
-
-            updateShortlistOrder();
-            updateShortlistOrderDesk();
-
-            // const shortlistOrder = document.querySelectorAll('#short-list-card .mentor-card .mentor-info');
-            //
-            // shortlistOrder.forEach((child, index) => {
-            //     let orderNumber = child.querySelector('.order-number');
-            //
-            //     if (!orderNumber) {
-            //         orderNumber = document.createElement('span');
-            //         orderNumber.className = 'order-number';
-            //         child.prepend(orderNumber);
-            //     }
-            //
-            //     orderNumber.textContent = `${index + 1}`;
-            // });
+            updateShortlistOrderDesk()
+            updateShortlistOrder()
 
             submitButton.addEventListener("click", function () {
                 const shortlistContainer = document.getElementById("short-list-card");
@@ -163,7 +145,6 @@
                 mentorItem.classList.add('mb-2');
                 mentorItem.innerHTML = `<strong>${index + 1}.</strong> ${name} (${title})`;
                 shortlistDisplay.appendChild(mentorItem);
-                updateShortlistOrderDesk()
             });
 
             const modal = document.getElementById('confirmation-modal');
@@ -197,23 +178,23 @@
                 },
                 body: JSON.stringify({shortlist: shortlist})
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Shortlist submitted successfully:', data);
-                    submitButton.disabled = true;
-                    submitButtonM.disabled = true;
-                    drake.destroy();
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('Shortlist submitted successfully:', data);
+                  submitButton.disabled = true;
+                  submitButtonM.disabled = true;
+                  drake.destroy();
 
-                    location.reload();
-                })
-                .catch(error => {
-                    console.error('Error submitting shortlist:', error);
-                });
+                  location.reload();
+              })
+              .catch(error => {
+                  console.error('Error submitting shortlist:', error);
+              });
         }
     });
 </script>
