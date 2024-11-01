@@ -38,9 +38,6 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
 
-  accepts_nested_attributes_for :cohort_members
-  attr_accessor :cohort_members_attributes
-
   before_create :set_default_active_status
 
   # Returns list of mentees that are in the same cohort as the provided mentor

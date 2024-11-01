@@ -104,9 +104,6 @@ class CohortMembersController < ApplicationController
 
   # Helper method to find or create a user and associate them with a cohort
   def create_cohort_member(email, cohort_id, role)
-    # user = User.find_or_create_by(email:) { |u| u.password = SecureRandom.base36(10) }
-    # return false unless user.persisted?
-
     cm = CohortMember.find_or_initialize_by(email:)
     cm.cohort_id = cohort_id
     cm.role = role
