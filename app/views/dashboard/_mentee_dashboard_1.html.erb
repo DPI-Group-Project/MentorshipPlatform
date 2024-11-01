@@ -1,12 +1,11 @@
-<div class="grid grid-col-1 sm:grid-cols-4 gap-5 py-3 px-4 sm:py-9 sm:px-24 max-w-[100%]">
-  <!-- Left Section: Stack the two cards -->
+<div class="flex justify-center p-6 lg:px-24 lg:py-10 gap-[1.3rem]">
+<!-- Left Section: Stack the two cards -->
   <div class="desktop-view">
-    <div class="flex flex-col space-y-5 col-span-1">
+    <div class="flex flex-col space-y-5 col-span-1 w-[17rem]">
       <%= render partial: 'user_card' %>
       <%= render partial: 'program_card' %>
     </div>
   </div>
-
   <!-- Right Section: Main Content -->
   <div class="col-span-3">
     <h1 class="text-2xl font-semibold text-[#202020] mb-1">
@@ -17,7 +16,7 @@
     </p>
 
     <!-- Grid of mentors -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[55rem] rounded-[0.55rem] place-content-center">
+    <div class="grid sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 rounded-[0.55rem] lg:max-h-[26.7rem] overflow-y-auto">
       <% available_mentors_count = 0 %>
       <% mentors_data.each do |mentor| %>
         <%# TODO: Refactor section below (might need to modify user methods in model or create new scope) %>
