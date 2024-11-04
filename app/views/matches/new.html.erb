@@ -1,6 +1,9 @@
-<h1>New match</h1>
+<h1 class="mt-[10rem]">New match</h1>
 
-<%= render "form", match: @match %>
+<%= form_with url: matches_path do |form| %>
+  <%#= form.hidden_field :cohort_id, value: @cohort_id %>
+  <%= form.submit "Create Matches" %>
+<% end %>
 
 <br>
 
