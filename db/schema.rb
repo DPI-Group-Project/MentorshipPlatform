@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_27_223209) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_04_081912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,12 +77,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_27_223209) do
   end
 
   create_table "program_admins", force: :cascade do |t|
-    t.string "email", null: false
+    t.bigint "user_id", null: false
     t.bigint "program_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_program_admins_on_email"
     t.index ["program_id"], name: "index_program_admins_on_program_id"
+    t.index ["user_id"], name: "index_program_admins_on_user_id"
   end
 
   create_table "programs", force: :cascade do |t|
@@ -106,6 +106,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_27_223209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["match_id"], name: "index_reviews_on_match_id"
+  end
+
+  create_table "short_lists", force: :cascade do |t|
+    t.bigint "mentor_id", null: false
+    t.bigint "mentee_id", null: false
+    t.bigint "cohort_id", null: false
+    t.integer "ranking"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_short_lists_on_cohort_id"
+    t.index ["mentee_id"], name: "index_short_lists_on_mentee_id"
+    t.index ["mentor_id"], name: "index_short_lists_on_mentor_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -145,8 +157,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_27_223209) do
   add_foreign_key "meetings", "matches"
   add_foreign_key "meetings", "reviews"
   add_foreign_key "program_admins", "programs"
-  add_foreign_key "program_admins", "users", column: "email", primary_key: "email"
+  add_foreign_key "program_admins", "users"
   add_foreign_key "programs", "users", column: "contact_id"
   add_foreign_key "programs", "users", column: "creator_id"
   add_foreign_key "reviews", "matches"
+  add_foreign_key "short_lists", "cohorts"
+  add_foreign_key "short_lists", "users", column: "mentee_id"
+  add_foreign_key "short_lists", "users", column: "mentor_id"
 end
