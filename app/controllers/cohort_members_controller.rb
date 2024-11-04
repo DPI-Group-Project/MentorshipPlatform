@@ -114,12 +114,13 @@ class CohortMembersController < ApplicationController
     params.require(:cohort_member).permit(:email, :cohort_id, :role)
   end
 
-  # Helper method to find or create a user and associate them with a cohort
+  # Helper method to find or create a cohort member and associate them with a cohort/change or update role
   def create_cohort_member(email, cohort_id, role)
-    user = User.find_or_create_by(email:) { |u| u.password = SecureRandom.base36(10) }
-    return false unless user.persisted?
+    cm = CohortMember.find_or_initialize_by(email:)
+    cm.cohort_id = cohort_id
+    cm.role = role
 
-    cm = CohortMember.create(user:, cohort_id:, role:)
+    cm.save!
 
     role == 'mentor' ? CohortMemberMailer.mentor_welcome_mail(cm).deliver_later! : CohortMemberMailer.mentee_welcome_mail(cm).deliver_later!
   end

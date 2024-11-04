@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_11_04_081912) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -145,7 +146,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_04_081912) do
   end
 
   add_foreign_key "cohort_members", "cohorts"
-  add_foreign_key "cohort_members", "users", column: "email", primary_key: "email"
   add_foreign_key "cohorts", "programs"
   add_foreign_key "cohorts", "users", column: "contact_id"
   add_foreign_key "cohorts", "users", column: "creator_id"
