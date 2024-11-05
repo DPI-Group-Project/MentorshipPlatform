@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_01_193754) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_05_225311) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,6 +106,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_01_193754) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["match_id"], name: "index_reviews_on_match_id"
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.integer "match_id"
+    t.boolean "responsive"
+    t.string "answer_if_other"
+    t.text "body"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
