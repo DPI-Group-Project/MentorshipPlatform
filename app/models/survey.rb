@@ -12,4 +12,5 @@
 #  updated_at      :datetime         not null
 #
 class Survey < ApplicationRecord
+	validates :match_id, presence: true
 end
