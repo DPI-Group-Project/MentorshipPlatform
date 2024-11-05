@@ -29,6 +29,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :cohort_member, primary_key: 'email', foreign_key: 'email', optional: true, dependent: :destroy
+  has_many :program_admins, class_name: 'ProgramAdmin', primary_key: 'email', foreign_key: 'email', dependent: :destroy
   has_one :mentor, class_name: 'Match', foreign_key: 'mentor_id', dependent: :destroy
   has_many :mentees, class_name: 'Match', foreign_key: 'mentee_id', dependent: :destroy
   has_many :mentor_submissions, class_name: 'MatchSubmission', foreign_key: 'mentor_id', dependent: :destroy
