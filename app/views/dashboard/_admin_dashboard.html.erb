@@ -108,6 +108,20 @@
   </main>
 </div>
 
+<!-- Add admin to cohort Modal -->
+<div id="new-admin-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-gray-50 p-6 rounded-2xl shadow-lg space-y-4 w-[30rem] relative">
+    <button class="absolute top-5 right-5 text-gray-500 hover:text-gray-700" onclick="closeModal('new-admin-modal')">
+    <i class="fas fa-times"></i>
+    </button>
+    <h3 class="text-lg font-bold ml-4 text-gray-80">Add New Admin</h3>
+    <div>
+      <!-- form goes here -->
+      <%= render "program_admins/form", program_admin: @program_admin %>
+    </div>
+  </div>
+</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const dropdowns = document.querySelectorAll('.dropdown');
