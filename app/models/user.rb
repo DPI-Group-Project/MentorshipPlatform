@@ -21,6 +21,7 @@
 #  linkedin_link          :string
 #  profile_picture        :string
 #  skills_array           :text             default([]), is an Array
+#  shortlist              :jsonb            is an Array
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:

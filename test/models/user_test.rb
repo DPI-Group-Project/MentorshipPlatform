@@ -21,6 +21,7 @@
 #  linkedin_link          :string
 #  profile_picture        :string
 #  skills_array           :text             default([]), is an Array
+#  shortlist              :jsonb            is an Array
 #
 require "test_helper"
 
