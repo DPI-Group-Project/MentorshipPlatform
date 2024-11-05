@@ -37,7 +37,9 @@ task({ sample_data: :environment }) do
                     'Product Manager', 'UI/UX Designer', 'Sales Coordinator'].sample
     inactive_reason = ['Did not like the platform.', 'Did not have a good experience.', 'I will be back!',
                        'Other'].sample
-    role = { 'admin' => 5, 'observer' => 7, 'mentor' => 25, 'mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    role = { 'admin' => 5, 'observer' => 7, 'mentor' => 25, 'mentee' => 100 }.find do |_key, value|
+      rand * 100 <= value
+    end.first
     image_link = "https://api.dicebear.com/9.x/notionists/svg?seed=#{image_name.sample}&radius=50&backgroundColor=D2042D&bodyIcon=galaxy,
                   saturn,electric&bodyIconProbability=10&gesture=hand,handPhone,ok,okLongArm,point,pointLongArm,waveLongArm&gestureProbability=20&
                   lips=variant01,variant02,variant03,variant04,variant05,variant06,variant07,variant08,variant10,variant11,variant13,
@@ -131,8 +133,8 @@ task({ sample_data: :environment }) do
   admins.each do |admin|
     program = Program.find_by(creator_id: admin.id)
     ProgramAdmin.create(
-      user_id: admin.id,
-      program_id: program.id
+      program_id: program.id,
+      email: admin.email
     )
   end
 
@@ -164,7 +166,7 @@ task({ sample_data: :environment }) do
 
   # Creating Matches
   mentees.each do |mentee|
-    cohort_member_mentee = mentee.cohort_members.first
+    cohort_member_mentee = mentee.cohort_member
     if cohort_member_mentee.nil?
       puts "No cohort member found for mentee with email: #{mentee.email}"
       next # Skip to the next mentee
