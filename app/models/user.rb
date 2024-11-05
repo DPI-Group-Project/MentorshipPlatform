@@ -83,6 +83,18 @@ class User < ApplicationRecord
     matches.size
   end
 
+  def assigned_programs
+    admins = ProgramAdmin.where(email:)
+    programs = []
+
+    admins.each do |admin|
+      program_id = admin.program_id
+      programs << Program.find_by(id: program_id)
+    end
+
+    programs
+  end
+
   private
 
   def set_default_active_status
