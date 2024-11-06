@@ -6,8 +6,15 @@
       <%= f.error_notification %>
 
       <div class="form-inputs space-y-4">
+        <!-- Email Field -->
         <%= f.input :email, required: true, autofocus: true, input_html: { class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
 
+        <!-- Additional Fields -->
+        <%= f.input :first_name, required: true, input_html: { class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
+        <%= f.input :last_name, required: true, input_html: { class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
+        <%= f.input :phone_number, required: false, input_html: { class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
+
+        <!-- Password Fields -->
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <p class="text-sm text-gray-600">Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
         <% end %>
@@ -23,7 +30,6 @@
         <%= f.button :submit, "Update", class: "w-1/2 bg-black text-white p-3 rounded-md hover:bg-gray-700 transition duration-200" %>
       </div>
     <% end %>
-
 
     <div class="text-center mt-4">
       <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "w-1/2 bg-black text-white p-3 rounded-md hover:bg-gray-700 transition duration-200" %>
