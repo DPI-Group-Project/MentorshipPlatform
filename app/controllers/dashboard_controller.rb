@@ -9,8 +9,9 @@ class DashboardController < ApplicationController
       @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
       @mentees_data = CohortMember.where(role: 'mentee')
     elsif ['admin'].include?(@role)
-      @admin_data = ProgramAdmin.find_by(id: current_user.id)
+      @admin_data = ProgramAdmin.find_by(email: current_user.email)
       @programs_by_admin = current_user.assigned_programs
+      @program_admin = ProgramAdmin.new
       if params[:program_id].present?
         @current_program = Program.find_by(id: params[:program_id])
         @cohorts = Cohort.where(program_id: params[:program_id])
