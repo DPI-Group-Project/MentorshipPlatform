@@ -15,8 +15,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do |resource|
       if resource.persisted?
         Rails.logger.info "User created: #{resource.inspect}"
-        if resource.cohort_members.any?
-          Rails.logger.info "CohortMember created: #{resource.cohort_members.last.inspect}"
+        if resource.cohort_member.any?
+          Rails.logger.info "CohortMember created: #{resource.cohort_member.last.inspect}"
         else
           Rails.logger.error 'CohortMember creation failed'
         end

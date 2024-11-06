@@ -129,12 +129,19 @@ task({ sample_data: :environment }) do
     end
   end
 
+  next unless admins.length
+
   # Creating Program Admins
   admins.each do |admin|
-    program = Program.find_by(creator_id: admin.id)
-    ProgramAdmin.create(
-      program_id: program.id,
-      email: admin.email
+    email = admin.email
+
+    program = Program.all.sample
+
+    id = program.id
+
+    ProgramAdmin.create!(
+      program_id: id,
+      email:
     )
   end
 
@@ -172,6 +179,8 @@ task({ sample_data: :environment }) do
       next # Skip to the next mentee
     end
     mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: 'mentor').sample
+    next unless mentor_cohort_member_object
+
     shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
     this_mentor = User.find_by(email: mentor_cohort_member_object.email)
     Match.create(
