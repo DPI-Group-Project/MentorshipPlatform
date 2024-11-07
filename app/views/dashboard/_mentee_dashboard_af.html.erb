@@ -1,0 +1,47 @@
+<div class="flex justify-center p-6 lg:px-24 lg:py-10 gap-[1.3rem]">
+  <!-- Left Section: Stack the two cards -->
+  <div class="desktop-view">
+    <div class="flex flex-col space-y-5 col-span-1 w-[17rem]">
+      <%= render 'user_card' %>
+      <%= render 'program_card' %>
+    </div>
+  </div>
+  <!-- Right Section: Main Content -->
+  <div class="flex">
+    <div class="flex flex-col gap-3">
+      <h1 class="text-2xl font-semibold text-[#202020] mb-2">
+        Your Mentor
+      </h1>
+      <div id="mentor-card-<%= current_user.current_user_mentor.id %>" class="bg-[#FFFFFF] flex-col border-slate-300 rounded-lg min-x[438px] max-w-[438px]">
+        <div class="flex justify-between pt-6 px-6 items-center">
+          <div class="flex gap-5">
+            <img src=<%= asset_path('sample_img/mentor_sample.png') %> alt="mentor_profile_picture" class="size-14 object-cover rounded-lg border">
+            <div class="flex flex-col justify-center">
+              <b class="text-lg text-[#202020] font-bold"><%= current_user.current_user_mentor.name %></b>
+              <p class="text-xs text-[#202020] mb-2.5"><%= current_user.current_user_mentor.title %></p>
+            </div>
+          </div>
+          <button class="text-xs w-[70.073px] h-[32px] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:bg-transparent hover:text-[#202020] hover:border-[#202020]"
+                  onclick="location.href='<%= profile_path(current_user.current_user_mentor.id) %>'">
+            View
+          </button>
+        </div>
+        <div class="w-full border-t border-[#DCDCDC] my-4"></div>
+        <div class="flex flex-col px-5 gap-2">
+          <div class="flex gap-1.5">
+            <% current_user.current_user_mentor.skills_array.each do |skill| %>
+              <p class="text-xs text-[#202020] bg-[#EEF6F8] rounded-md py-0.5 px-1"><%= skill %></p>
+            <% end %>
+          </div>
+          <p class="text-xs text-[#898989] mb-5">
+            <%= current_user.current_user_mentor.bio.length > 150 ? current_user.current_user_mentor.bio[0...150] + '...' : current_user.current_user_mentor.bio %>
+          </p>
+        </div>
+      </div>
+      <%= render 'meetings_card' %>
+    </div>
+    <div>
+      <%= render 'calendar' %>
+    </div>
+  </div>
+</div>

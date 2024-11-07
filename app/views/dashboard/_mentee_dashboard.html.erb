@@ -6,7 +6,11 @@
     <%= render 'mentee_shortlist_mobile', mentors_data: mentors_data %>
   </div>
 <% else %>
-  <%= render 'mentee_dashboard_1', mentors_data: mentors_data %>
+  <% if current_user.matched? %>
+    <%= render 'mentee_dashboard_af', mentors_data: mentors_data %>
+  <% else %>
+    <%= render 'mentee_dashboard_bf', mentors_data: mentors_data %>
+  <% end %><
 <% end %>
 
 <%= render 'short_list_confirm' %>
