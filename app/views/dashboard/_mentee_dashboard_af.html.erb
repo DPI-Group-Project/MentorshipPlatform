@@ -7,7 +7,7 @@
     </div>
   </div>
   <!-- Right Section: Main Content -->
-  <div class="flex">
+  <div class="grid md:grid-cols-2 sm:grid-cols-1">
     <div class="flex flex-col gap-3">
       <h1 class="text-2xl font-semibold text-[#202020] mb-2">
         Your Mentor
@@ -40,7 +40,7 @@
       </div>
       <%= render 'meetings_card' %>
     </div>
-    <div>
+    <div class="md:my-5">
       <%= render 'calendar' %>
     </div>
   </div>

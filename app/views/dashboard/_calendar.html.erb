@@ -1,4 +1,4 @@
-<div class="flex items-center justify-center px-4 min-w-[27.0625rem]">
+<div class="flex items-center justify-center px-4 md:w-[27.0625rem] sm:min-x[438px] sm:max-w-[438px]">
   <div class="max-w-sm w-full shadow-sm">
     <div class="md:p-8 p-5 dark:bg-gray-800 bg-white rounded-[1rem]">
       <h1 class="text-2xl font-semibold text-[#202020] mb-4"> Schedule </h1>
@@ -130,7 +130,7 @@
                     cellDiv.innerHTML = '';
                 } else {
                     // Populate actual date
-                    cellDiv.innerHTML = `<p class="text-[1rem] text-[#202020]">${day}</p>`;
+                    cellDiv.innerHTML = `<p class="text-[0.95rem] text-[#202020]">${day}</p>`;
                     day++;
                 }
 
