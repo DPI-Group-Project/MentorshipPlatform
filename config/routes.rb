@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   end
   resources :organizations
   resources :reviews
-  resources :matches
+  resources :matches do
+    collection do
+      post 'create_with_cohort/:cohort_id', to: 'matches#create', as: 'create_with_cohort'
+    end
+  end
   resources :cohorts do
     resources :cohort_members, only: [:index]
   end
