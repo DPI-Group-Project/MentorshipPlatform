@@ -33,7 +33,7 @@ class DashboardController < ApplicationController
       @cohorts = Cohort.where(program_id: @current_program.id)
     end
 
-    @program_admin = create_user_from_admin(program_admin_params[:email], @current_program.id)
+    @program_admin = create_admin(program_admin_params[:email], @current_program.id)
 
     respond_to do |format|
       if @program_admin.save
@@ -57,10 +57,7 @@ class DashboardController < ApplicationController
     params.require(:program_admin).permit(:email, :program_id)
   end
 
-  def create_user_from_admin(email, program_id)
-    user = User.find_or_create_by(email:) { |u| u.password = SecureRandom.base36(10) }
-    return false unless user.persisted?
-
-    ProgramAdmin.create(email: user.email, program_id:)
+  def create_admin(email, program_id)
+    ProgramAdmin.create(email:, program_id:)
   end
 end
