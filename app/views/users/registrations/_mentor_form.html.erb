@@ -63,8 +63,16 @@
     </div>
 
     <div>
-      <label for="user_skills_array" class="block text-black">Skills</label>
-      <%= f.input :skills_array, required: true, input_html: { class: "mt-1 w-full h-10 px-4 rounded border border-gray-300 shadow-sm" }, label: false %>
+      <label class="block text-black mb-2">Select Your Skills</label>
+
+      <div class="mt-2 space-y-2">
+        <% @skills.each do |skill| %>
+          <div class="flex items-center bg-gray-100 p-2 rounded shadow-sm border border-gray-300">
+            <%= check_box_tag 'user[skills_array][]', skill, resource.skills_array.include?(skill), class: "rounded text-blue-600 border-gray-300 focus:ring-2 focus:ring-blue-400" %>
+            <label class="ml-2 text-gray-700 font-medium"><%= skill %></label>
+          </div>
+        <% end %>
+      </div>
     </div>
 
   </div>

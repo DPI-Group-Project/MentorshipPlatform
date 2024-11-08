@@ -164,7 +164,7 @@ task({ sample_data: :environment }) do
 
   # Creating Matches
   mentees.each do |mentee|
-    cohort_member_mentee = mentee.cohort_members.first
+    cohort_member_mentee = mentee.cohort_member
     if cohort_member_mentee.nil?
       puts "No cohort member found for mentee with email: #{mentee.email}"
       next # Skip to the next mentee
