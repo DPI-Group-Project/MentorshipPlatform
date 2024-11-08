@@ -20,7 +20,7 @@ class MatchesController < ApplicationController
   end
 
   def create
-    cohort_id = 1  # TODO: get cohort_id from param
+    cohort_id = current_user.cohort.id  # TODO: get cohort_id from param
     sorted_shortlist = ShortList.where(cohort_id: cohort_id)
                                 .order(:ranking, :created_at)
 

@@ -31,7 +31,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def update_shortlist
     user = current_user
-    cohort_id = 1
+    cohort_id = current_user.cohort.id
     shortlist_data = params[:shortlist]
 
     # Clear the user's previous shortlist before updating
