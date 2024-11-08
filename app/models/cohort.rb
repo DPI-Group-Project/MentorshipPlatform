@@ -37,6 +37,9 @@ class Cohort < ApplicationRecord
       'closed'
     end
   end
+  def run_matching(cohort_id)
+    create_with_cohort(cohort_id)
+  end
   def pairing_number
     matches = Match.where(cohort_id: self.id)
     matches.size
