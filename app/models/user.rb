@@ -65,6 +65,11 @@ class User < ApplicationRecord
     Match.where('mentee_id = :id OR mentor_id = :id', id:).exists?
   end
 
+  def current_user_mentor
+    match = Match.find_by(mentee_id: self.id)
+    match ? User.find(match.mentor_id) : nil
+  end
+
   def cohort
     cohort_id = CohortMember.where(email:).pluck(:cohort_id).first
     cohort = Cohort.find_by(id: cohort_id)
