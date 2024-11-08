@@ -12,7 +12,7 @@ Rails.application.config.to_prepare do
     scheduler.at shortlist_end_date do
       p cohort.id
       p "ITS TIME TO MATCH 2"
-        Cohort.run_matching(502)
+      # cohort.run_matching
     end
   end
 end
