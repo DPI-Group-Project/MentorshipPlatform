@@ -10,7 +10,7 @@ cohorts.each_with_index do |cohort, index|
   scheduler.at "#{shortlist_end_date_[index]}" do
     # Call your task (the Matching logic)
     p "ITS TIME TO MATCH 1"
-    Match.run_matching(cohort.id)
+    # Match.run_matching(cohort.id)
   end
 end
   
@@ -21,6 +21,6 @@ if current_time_in_user_zone == "2024-11-07 22:15:00"
   p "ITS TIME TO MATCH 2"
   scheduler.at "#{current_time}" do
     # Call your task (the Matching logic)
-    Match.run_matching(502)
+    # Match.run_matching(502)
   end
 end
