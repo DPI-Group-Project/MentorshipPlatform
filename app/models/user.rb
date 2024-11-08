@@ -45,11 +45,11 @@ class User < ApplicationRecord
   # Returns list of mentees that are in the same cohort as the provided mentor
   scope :mentors_in_cohort, lambda { |cohort|
                               joins(:cohort_member)
-                                .where('cohort_member.cohort_id = ? AND cohort_member.role = ?', cohort, 'mentor')
+                                .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentor')
                             }
   scope :mentees_in_cohort, lambda { |cohort|
                               joins(:cohort_member)
-                                .where('cohort_member.cohort_id = ? AND cohort_member.role = ?', cohort, 'mentee')
+                                .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
                             }
   scope :unpaired_mentees_in_cohort, lambda { |cohort|
                                        joins(:cohort_member)
@@ -64,6 +64,11 @@ class User < ApplicationRecord
 
   def matched?
     Match.where('mentee_id = :id OR mentor_id = :id', id:).exists?
+  end
+
+  def current_user_mentor
+    match = Match.find_by(mentee_id: self.id)
+    match ? User.find(match.mentor_id) : nil
   end
 
   def cohort

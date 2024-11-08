@@ -3,9 +3,9 @@ class DashboardController < ApplicationController
   def show
     @role = params[:role].downcase
 
-    # Loads up data when role is valid
-    if %w[mentor mentee].include?(@role)
-      @shortlist_time = current_user.cohort.shortlist_creation_open?
+    #Loads up data when role is valid
+    if ['mentor', 'mentee'].include? (@role) then
+      #@shortlist_time = current_user.cohort.shortlist_creation_open?
       @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
       @mentees_data = CohortMember.where(role: 'mentee')
     elsif ['admin'].include?(@role)
