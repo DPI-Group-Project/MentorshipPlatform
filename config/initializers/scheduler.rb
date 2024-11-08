@@ -17,9 +17,9 @@ end
 user_timezone = 'America/Chicago'
 current_time = Time.current.in_time_zone(user_timezone)
 current_time_in_user_zone = current_time.strftime('%Y-%m-%d %H:%M:%S UTC')
-if current_time_in_user_zone == "2024-11-07 22:15:00"
+if current_time_in_user_zone == "2024-11-07 22:29:00"
   p "ITS TIME TO MATCH 2"
-  scheduler.at "#{current_time}" do
+  scheduler.at "#{current_time_in_user_zone}" do
     # Call your task (the Matching logic)
     # Match.run_matching(502)
   end
