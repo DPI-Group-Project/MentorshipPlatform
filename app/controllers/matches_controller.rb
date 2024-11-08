@@ -39,7 +39,6 @@ class MatchesController < ApplicationController
         cohort_id: cohort.id,
         active: true
       )
-      cohort_member.update!(capacity: cohort_member.capacity - 1)
     end
 
     flash[:notice] = "Matches created successfully."
