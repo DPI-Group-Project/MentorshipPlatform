@@ -17,4 +17,5 @@ class Match < ApplicationRecord
   has_many :meetings, class_name: "Meeting", foreign_key: "match_id", dependent: :destroy
   has_many :reviews, class_name: "Review", foreign_key: "match_id", dependent: :destroy
   
+  
 end
