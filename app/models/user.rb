@@ -54,7 +54,7 @@ class User < ApplicationRecord
   scope :unpaired_mentees_in_cohort, lambda { |cohort|
                                        joins(:cohort_member)
                                          .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
-                                         .where('cohort_member.cohort_id = ? AND cohort_member.role = ?', cohort, 'mentee')
+                                         .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
                                          .where('matches.id IS NULL')
                                      }
 
