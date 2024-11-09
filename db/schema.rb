@@ -156,7 +156,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_225311) do
   add_foreign_key "meetings", "matches"
   add_foreign_key "meetings", "reviews"
   add_foreign_key "program_admins", "programs"
-  add_foreign_key "program_admins", "users", column: "email", primary_key: "email"
   add_foreign_key "programs", "users", column: "contact_id"
   add_foreign_key "programs", "users", column: "creator_id"
   add_foreign_key "reviews", "matches"
