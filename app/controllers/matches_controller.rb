@@ -20,7 +20,7 @@ class MatchesController < ApplicationController
   end
 
   def create
-    cohort_id = current_user.cohort.id  # You can adjust this based on how the cohort is assigned to the user
+    cohort_id = current_user.cohort.id 
     create_matches_for_cohort(cohort_id)
     
     flash[:notice] = "Matches created successfully."
@@ -36,7 +36,7 @@ class MatchesController < ApplicationController
   end
 
   private
-
+  
   def create_matches_for_cohort(cohort_id)
     sorted_shortlist = ShortList.where(cohort_id: cohort_id).order(:ranking, :created_at)
     Rails.logger.info "Starting match creation for cohort ##{cohort_id} at #{Time.current}"
@@ -50,7 +50,6 @@ class MatchesController < ApplicationController
 
       # Skip if either mentor or mentee is not found
       next if mentor.nil? || mentee.nil?
-
       # Skip if a match already exists for this mentor/mentee pair in the same cohort
       next if Match.exists?(mentee_id: mentee.id, cohort_id: cohort.id)
 
