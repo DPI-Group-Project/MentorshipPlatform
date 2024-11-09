@@ -55,7 +55,6 @@ class Cohort < ApplicationRecord
         require 'rufus-scheduler'
         # Initialize a new scheduler instance
         scheduler = Rufus::Scheduler.new
-
         cohorts = Cohort.where.not(shortlist_start_time: nil)
               .where.not(shortlist_end_time: nil)
 
