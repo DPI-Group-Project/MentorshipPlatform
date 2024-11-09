@@ -20,6 +20,8 @@ class Cohort < ApplicationRecord
   has_many :members, class_name: "CohortMember", foreign_key: "cohort_id", dependent: :destroy
   has_many :matches, class_name: "Match", foreign_key: "cohort_id", dependent: :destroy
   
+  after_commit :start_scheduler_on_creation, on: [:create, :update, :destroy]
+
   def running?
     if end_date > Date.today
       true
@@ -44,5 +46,26 @@ class Cohort < ApplicationRecord
   def pairing_number
     matches = Match.where(cohort_id: self.id)
     matches.size
+  end
+  def start_scheduler_on_creation
+    # Only start the scheduler in a separate thread if it's not already running
+    unless  @scheduler_thread&.alive?
+      Rails.logger.info "Creating new scheduler thread..."
+      @scheduler_thread = Thread.new(name: 'MatchingThread') do
+        require 'rufus-scheduler'
+        # Initialize a new scheduler instance
+        scheduler = Rufus::Scheduler.new
+
+        cohorts = Cohort.where.not(shortlist_start_time: nil)
+              .where.not(shortlist_end_time: nil)
+
+        cohorts.each_with_index do |cohort, index|
+          shortlist_end_date = cohort.shortlist_end_time.in_time_zone.utc
+          scheduler.at shortlist_end_date do
+            MatchesController.new.create_for_cohort(cohort)
+          end
+        end
+      end
+    end
   end
 end

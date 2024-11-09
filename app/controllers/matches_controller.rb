@@ -42,7 +42,6 @@ class MatchesController < ApplicationController
     Rails.logger.info "Starting match creation for cohort ##{cohort_id} at #{Time.current}"
 
     sorted_shortlist.each do |shortlist|
-      p "Shortlist item  #{shortlist}"
       mentor = User.find_by(id: shortlist.mentor_id)
       mentee = User.find_by(id: shortlist.mentee_id)
       cohort = Cohort.find(shortlist.cohort_id)
@@ -50,23 +49,19 @@ class MatchesController < ApplicationController
       Rails.logger.debug "Creating match: mentor=#{mentor.inspect}, mentee=#{mentee.inspect}, cohort=#{cohort.inspect}"
 
       # Skip if either mentor or mentee is not found
-      p "1 AT mentor.nil? || mentee.nil?"
       next if mentor.nil? || mentee.nil?
 
       # Skip if a match already exists for this mentor/mentee pair in the same cohort
-      p "2 AT Match.exists?"
       next if Match.exists?(mentee_id: mentee.id, cohort_id: cohort.id)
 
       # Log cohort member and capacity
       cohort_member = CohortMember.find_by(email: mentor.email, cohort_id: cohort.id)
-      p "3 AT cohort_member.nil? || cohort_member.capacity <= 0" 
       if cohort_member.nil? || cohort_member.capacity.nil? || mentor.mentee_capacity_count(cohort.id) >= cohort_member.capacity
         Rails.logger.warn "Skipping match creation for cohort #{cohort.id}, mentor #{mentor.email} due to invalid cohort member, no capacity, or reached capacity."
         next
       end
 
       # Try to create the match and log any exceptions
-      p "4 AT match creation"
       begin
         match = Match.create!(
           mentor_id: mentor.id,
