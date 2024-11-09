@@ -47,8 +47,9 @@ class Cohort < ApplicationRecord
     matches = Match.where(cohort_id: self.id)
     matches.size
   end
+
+  # Creates thread that runs matching code in matches controller
   def start_scheduler_on_creation
-    # Only start the scheduler in a separate thread if it's not already running
     unless  @scheduler_thread&.alive?
       Rails.logger.info "Creating new scheduler thread..."
       @scheduler_thread = Thread.new(name: 'MatchingThreadInCohortModel') do
