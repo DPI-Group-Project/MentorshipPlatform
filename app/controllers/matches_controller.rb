@@ -20,66 +20,68 @@ class MatchesController < ApplicationController
   end
 
   def create
-    cohort_id = current_user.cohort.id  # TODO: get cohort_id from param
-    sorted_shortlist = ShortList.where(cohort_id: cohort_id)
-                                .order(:ranking, :created_at)
-
-    sorted_shortlist.each do |shortlist|
-      mentor = User.find(shortlist.mentor_id)
-      mentee = User.find(shortlist.mentee_id)
-      cohort = Cohort.find(shortlist.cohort_id)
-
-      next if Match.exists?(mentee_id: mentee.id, cohort_id: cohort.id)
-      cohort_member = CohortMember.find_by(email: mentor.email, cohort_id: cohort.id)
-      next if cohort_member.nil? || cohort_member.capacity <= 0
-
-      Match.create!(
-        mentor_id: mentor.id,
-        mentee_id: mentee.id,
-        cohort_id: cohort.id,
-        active: true
-      )
-    end
-
+    cohort_id = current_user.cohort.id  # You can adjust this based on how the cohort is assigned to the user
+    create_matches_for_cohort(cohort_id)
+    
     flash[:notice] = "Matches created successfully."
     redirect_to matches_path
-
   rescue ActiveRecord::RecordInvalid => e
     flash[:alert] = "Failed to create matches: #{e.message}"
     redirect_to matches_path
   end
 
-  # POST /matches or /matches.json
-  # def create
-  #   cohort_id = 1
-  #   mentors = CohortMember.where(role: 'mentor', cohort_id: cohort_id).select(:email, :capacity)
-  #
-  #   mentors.each do |mentor|
-  #     user = User.find_by(email: mentor.email)
-  #     next unless user
-  #
-  #     shortlisted_mentees = ShortList.where(mentor_id: user.id)
-  #                                    .order(:ranking, :created_at)
-  #                                    .limit(mentor.capacity)
-  #
-  #     shortlisted_mentees.each do |shortlist|
-  #       Match.create!(
-  #         mentor_id: user.id,
-  #         mentee_id: shortlist.mentee_id,
-  #         cohort_id: shortlist.cohort_id,
-  #         active: true
-  #       )
-  #     end
-  #
-  #     mentor.update(capacity: mentor.capacity - shortlisted_mentees.count)
-  #   end
+  # Method triggered by the scheduler (Programmatically Triggered)
+  def create_for_cohort(cohort)
+    create_matches_for_cohort(cohort.id)
+  end
 
-  #   flash[:notice] = "Matches created successfully."
-  #   redirect_to matches_path
-  # rescue ActiveRecord::RecordInvalid => e
-  #   flash[:alert] = "Failed to create matches: #{e.message}"
-  #   redirect_to matches_path
-  # end
+  private
+
+  def create_matches_for_cohort(cohort_id)
+    sorted_shortlist = ShortList.where(cohort_id: cohort_id).order(:ranking, :created_at)
+    Rails.logger.info "Starting match creation for cohort ##{cohort_id} at #{Time.current}"
+
+    sorted_shortlist.each do |shortlist|
+      p "Shortlist item  #{shortlist}"
+      mentor = User.find_by(id: shortlist.mentor_id)
+      mentee = User.find_by(id: shortlist.mentee_id)
+      cohort = Cohort.find(shortlist.cohort_id)
+      # Log mentor, mentee, and cohort data
+      Rails.logger.debug "Creating match: mentor=#{mentor.inspect}, mentee=#{mentee.inspect}, cohort=#{cohort.inspect}"
+
+      # Skip if either mentor or mentee is not found
+      p "1 AT mentor.nil? || mentee.nil?"
+      next if mentor.nil? || mentee.nil?
+
+      # Skip if a match already exists for this mentor/mentee pair in the same cohort
+      p "2 AT Match.exists?"
+      next if Match.exists?(mentee_id: mentee.id, cohort_id: cohort.id)
+
+      # Log cohort member and capacity
+      cohort_member = CohortMember.find_by(email: mentor.email, cohort_id: cohort.id)
+      p "3 AT cohort_member.nil? || cohort_member.capacity <= 0" 
+      if cohort_member.nil? || cohort_member.capacity.nil? || mentor.mentee_capacity_count(cohort.id) >= cohort_member.capacity
+        Rails.logger.warn "Skipping match creation for cohort #{cohort.id}, mentor #{mentor.email} due to invalid cohort member, no capacity, or reached capacity."
+        next
+      end
+
+      # Try to create the match and log any exceptions
+      p "4 AT match creation"
+      begin
+        match = Match.create!(
+          mentor_id: mentor.id,
+          mentee_id: mentee.id,
+          cohort_id: cohort.id,
+          active: true
+        )
+        Rails.logger.info "Successfully created match: mentor=#{mentor.id}, mentee=#{mentee.id}, cohort=#{cohort.id}"
+      rescue ActiveRecord::RecordInvalid => e
+        Rails.logger.error "Failed to create match: #{e.message}"
+      end
+    end
+
+    Rails.logger.info "Finished match creation for cohort ##{cohort_id} at #{Time.current}"
+  end
 
   # PATCH/PUT /matches/1 or /matches/1.json
   def update

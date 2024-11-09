@@ -12,7 +12,8 @@ Rails.application.config.to_prepare do
     scheduler.at shortlist_end_date do
       p cohort.id
       p "ITS TIME TO MATCH 2"
-      # cohort.run_matching
+      Rails.logger.info "Triggering match creation for cohort ##{cohort.id}"
+      MatchesController.new.create_for_cohort(cohort)
     end
   end
 end
