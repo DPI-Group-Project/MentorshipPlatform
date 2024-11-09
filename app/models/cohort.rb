@@ -51,7 +51,7 @@ class Cohort < ApplicationRecord
     # Only start the scheduler in a separate thread if it's not already running
     unless  @scheduler_thread&.alive?
       Rails.logger.info "Creating new scheduler thread..."
-      @scheduler_thread = Thread.new(name: 'MatchingThread') do
+      @scheduler_thread = Thread.new(name: 'MatchingThreadInCohortModel') do
         require 'rufus-scheduler'
         # Initialize a new scheduler instance
         scheduler = Rufus::Scheduler.new

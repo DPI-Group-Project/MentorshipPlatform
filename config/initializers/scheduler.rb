@@ -1,0 +1,19 @@
+require 'rufus-scheduler'
+
+Rails.application.config.to_prepare do
+  p "Initiating Matching Thread"
+  @scheduler_thread = Thread.new(name: 'MatchingThreadInSchedulerFile') do
+    require 'rufus-scheduler'
+    # Initialize a new scheduler instance
+    scheduler = Rufus::Scheduler.new
+    cohorts = Cohort.where.not(shortlist_start_time: nil)
+          .where.not(shortlist_end_time: nil)
+
+    cohorts.each_with_index do |cohort, index|
+      shortlist_end_date = cohort.shortlist_end_time.in_time_zone.utc
+      scheduler.at shortlist_end_date do
+        MatchesController.new.create_for_cohort(cohort)
+      end
+    end
+  end 
+end
