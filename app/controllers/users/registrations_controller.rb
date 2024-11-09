@@ -15,7 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do |resource|
       if resource.persisted?
         Rails.logger.info "User created: #{resource.inspect}"
-        if resource.cohort_members.any?
+        if resource.cohort_member.any?
           Rails.logger.info "CohortMember created: #{resource.cohort_members.last.inspect}"
         else
           Rails.logger.error 'CohortMember creation failed'
@@ -26,6 +26,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def signup
     @user = User.new
+    @skills = ["Java", "Ruby", "Python", "Communication", "Networking", "Organization", "Leadership", "Writing"]
     render 'users/registrations/signup'
   end
 
@@ -67,10 +68,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up,
-                                      keys: [:first_name, :last_name, :status, :inactive_reason, :phone_number, :bio, :timezone, :title, :linkedin_link, :profile_picture,
-                                             :skills_array, { cohort_members_attributes: %i[role capacity cohort_id] }])
+    devise_parameter_sanitizer.permit(:sign_up, 
+                                      keys: [:first_name, :last_name, :status, :inactive_reason, :phone_number, 
+                                             :bio, :timezone, :title, :linkedin_link, :profile_picture, 
+                                             { skills_array: [] },
+                                             cohort_members_attributes: %i[role capacity cohort_id]])
   end
+  
 
 
   def configure_account_update_params

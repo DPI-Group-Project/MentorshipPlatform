@@ -5,11 +5,11 @@
     </a>
   </div>
   <div>
-    <ul class="flex space-x-14 text-gray-800 font-normal">
-      <li><a href="/" class="hover:text-gray-500">Home</a></li>
-      <li><a href="/dashboard/mentee" class="hover:text-gray-500">Mentors</a></li>
-      <li class="text-gray-500 cursor-default">Meeting</li>
-      <li class="text-gray-500 cursor-default">Survey</li>
+    <ul class="flex space-x-14 text-[#202020] font-normal">
+      <li><a href="/" class="hover:text-[#898989]">Home</a></li>
+      <li><a href="/dashboard/mentee" class="hover:text-[#898989]">Mentors</a></li>
+      <li><a href="/meetings" class="hover:text-[#898989]">Meeting</a></li>
+      <li class="text-[#898989] inactive">Survey</li>
     </ul>
   </div>
   <div class="flex items-center space-x-4 relative">
@@ -28,13 +28,21 @@
             <li>
               <a href="/users/edit" class="block px-4 py-2 text-sm hover:bg-gray-100">Edit Profile</a>
             </li>
+
+            <% if current_user.role == "mentee" || current_user.role == "mentor" %>
+             <p onclick="window.location.href='/profile/<%= current_user.id %>'" class="block px-4 py-2 text-sm hover:bg-gray-100">View Profile</p>
+
+            <% else %>
+      
             <li>
               <button onclick="showUserModal()" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">View Profile</button>
             </li>
+
+            <% end %>
             <% if current_user.role == "mentee" || current_user.role == "mentor" %>
               <!-- Sign out -->
               <li>
-                <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "w-full px-4 py-2 text-sm hover:bg-gray-100" %>
+                <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "text-left w-full px-4 py-2 text-sm hover:bg-gray-100" %>
               </li>
             <% else %>
               <!-- Admin Dashboard shortcut -->

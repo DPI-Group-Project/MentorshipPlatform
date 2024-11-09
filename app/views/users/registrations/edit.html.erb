@@ -1,42 +1,122 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-100 pt-20">
   <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-2xl">
     <h2 class="text-2xl font-semibold text-center mb-6">Edit <%= resource_name.to_s.humanize %></h2>
-
-    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-      <%= f.error_notification %>
-
+    <%= form_for(resource, url: registration_path(resource_name), html: { method: :put, id: "update-form" }) do |f| %>
+      <% if resource.errors.any? %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+          <strong class="font-bold">Oops!</strong> There were some problems with your submission:
+          <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+            <% resource.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
       <div class="form-inputs space-y-4">
         <!-- Email Field -->
-        <%= f.input :email, required: true, autofocus: true, input_html: { class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
-
-        <!-- Additional Fields -->
-        <%= f.input :first_name, required: true, input_html: { class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
-        <%= f.input :last_name, required: true, input_html: { class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
-        <%= f.input :phone_number, required: false, input_html: { class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
-
-        <!-- Password Fields -->
-        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-          <p class="text-sm text-gray-600">Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-        <% end %>
-
-        <%= f.input :password, hint: "Leave it blank if you don't want to change it", required: false, input_html: { autocomplete: "new-password", class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
-
-        <%= f.input :password_confirmation, required: false, input_html: { autocomplete: "new-password", class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
-
-        <%= f.input :current_password, hint: "We need your current password to confirm your changes", required: true, input_html: { autocomplete: "current-password", class: "w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
+        <div class="relative z-0 w-full mb-5 group">
+          <%= f.email_field :email, required: true, autofocus: true, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
+          <label for="user_email" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+        </div>
+        <!-- First Name Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <%= f.text_field :first_name, required: true, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
+          <label for="user_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
+        </div>
+        <!-- Last Name Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <%= f.text_field :last_name, required: true, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
+          <label for="user_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
+        </div>
+        <!-- Phone Number Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <%= f.telephone_field :phone_number, required: false, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
+          <label for="user_phone_number" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number</label>
+        </div>
+        <!-- Password Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <%= f.password_field :password, required: false, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
+          <label for="user_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+        </div>
+        <!-- Password Confirmation Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <%= f.password_field :password_confirmation, required: false, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
+          <label for="user_password_confirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
+        </div>
+        <!-- Current Password Field -->
+        <div class="relative z-0 w-full mb-5 group">
+          <%= f.password_field :current_password, required: true, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
+          <label for="user_current_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Enter current password for updates</label>
+        </div>
       </div>
-
       <div class="form-actions mt-6 text-center">
-        <%= f.button :submit, "Update", class: "w-1/2 bg-black text-white p-3 rounded-md hover:bg-gray-700 transition duration-200" %>
+        <!-- Update Button -->
+        <%= f.submit "Update", class: "text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center", id: "update-button" %>
       </div>
     <% end %>
-
+    
+    <!-- Cancel My Account Button -->
     <div class="text-center mt-4">
-      <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "w-1/2 bg-black text-white p-3 rounded-md hover:bg-gray-700 transition duration-200" %>
+      <%= button_to "Cancel my account", registration_path(resource_name), method: :delete, id: "cancel-button", class: "text-white bg-red-700 hover:bg-red-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center ml-4" %>
     </div>
 
+    <!-- Back Button -->
     <div class="text-left mt-8">
       <%= link_to "Back", :back, class: "w-full p-3 rounded-md text-white bg-black hover:bg-gray-700 transition duration-200" %>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cancelButton = document.getElementById("cancel-button");
+    const modal = document.getElementById("confirmation-modal");
+    const confirmYes = document.getElementById("confirm-yes");
+    const confirmNo = document.getElementById("confirm-no");
+    const confirmationMessage = document.getElementById("confirmation-message");
+
+    let currentAction = null;
+
+    // Show modal with custom message
+    function showModal(message, action) {
+      confirmationMessage.textContent = message;
+      modal.classList.remove("hidden");
+      currentAction = action;
+    }
+
+    // Hide modal
+    function hideModal() {
+      modal.classList.add("hidden");
+      currentAction = null;
+    }
+
+    // Cancel button listener (now outside the form)
+    cancelButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      showModal("Are you sure you want to cancel your account? This action cannot be undone.", function () {
+        document.getElementById("cancel-button").closest("form").submit();
+      });
+    });
+
+    // Modal actions
+    confirmYes.addEventListener("click", function () {
+      if (currentAction) currentAction();
+      hideModal();
+    });
+
+    confirmNo.addEventListener("click", function () {
+      hideModal();
+    });
+  });
+</script>
+
+<!-- Confirmation Modal -->
+<div id="confirmation-modal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
+    <p id="confirmation-message" class="text-lg text-center mb-4"></p>
+    <div class="flex justify-center space-x-4">
+      <button id="confirm-yes" class="bg-gray-900 text-white px-4 py-2 rounded border-2 border-transparent hover:border-green-500">Yes</button>
+      <button id="confirm-no" class="bg-gray-900 text-white px-4 py-2 rounded border-2 border-transparent hover:border-red-500">No</button>
     </div>
   </div>
 </div>
