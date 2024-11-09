@@ -49,24 +49,19 @@
           <label for="user_current_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Enter current password for updates</label>
         </div>
       </div>
-      <div class="form-actions mt-6 text-center">
+      <div class="form-actions mt-6 flex justify-between items-center">
         <!-- Update Button -->
         <%= f.submit "Update", class: "text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center", id: "update-button" %>
+        <!-- Cancel My Account Button -->
+        <%= button_to "Cancel my account", registration_path(resource_name), method: :delete, id: "cancel-button", class: "text-white bg-red-700 hover:bg-red-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center ml-4" %>
       </div>
     <% end %>
-    
-    <!-- Cancel My Account Button -->
-    <div class="text-center mt-4">
-      <%= button_to "Cancel my account", registration_path(resource_name), method: :delete, id: "cancel-button", class: "text-white bg-red-700 hover:bg-red-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center ml-4" %>
-    </div>
-
     <!-- Back Button -->
     <div class="text-left mt-8">
       <%= link_to "Back", :back, class: "w-full p-3 rounded-md text-white bg-black hover:bg-gray-700 transition duration-200" %>
     </div>
   </div>
 </div>
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const cancelButton = document.getElementById("cancel-button");
@@ -109,7 +104,6 @@
     });
   });
 </script>
-
 <!-- Confirmation Modal -->
 <div id="confirmation-modal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
   <div class="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
