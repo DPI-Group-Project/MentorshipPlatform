@@ -1,6 +1,8 @@
 require 'rufus-scheduler'
 
 Rails.application.config.to_prepare do
+  thread_to_kill = Thread.list.find { |t| t[:name] == 'rufus_scheduler_17900_scheduler' }
+  thread_to_kill.kill if thread_to_kill
   p "Initiating Matching Thread"
   @scheduler_thread = Thread.new(name: 'MatchingThreadInSchedulerFile') do
     require 'rufus-scheduler'
