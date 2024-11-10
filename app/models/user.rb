@@ -21,6 +21,7 @@
 #  linkedin_link          :string
 #  profile_picture        :string
 #  skills_array           :text             default([]), is an Array
+#  shortlist              :jsonb            is an Array
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -29,6 +30,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :cohort_member, primary_key: 'email', foreign_key: 'email', optional: true, dependent: :destroy
+  has_many :program_admins, primary_key: 'email', foreign_key: 'email', dependent: :destroy
   has_one :mentor, class_name: 'Match', foreign_key: 'mentor_id', dependent: :destroy
   has_many :mentees, class_name: 'Match', foreign_key: 'mentee_id', dependent: :destroy
   has_many :mentor_submissions, class_name: 'MatchSubmission', foreign_key: 'mentor_id', dependent: :destroy
@@ -64,6 +66,11 @@ class User < ApplicationRecord
     Match.where('mentee_id = :id OR mentor_id = :id', id:).exists?
   end
 
+  def current_user_mentor
+    match = Match.find_by(mentee_id: self.id)
+    match ? User.find(match.mentor_id) : nil
+  end
+
   def cohort
     cohort_id = CohortMember.where(email:).pluck(:cohort_id).first
     cohort = Cohort.find_by(id: cohort_id)
@@ -81,6 +88,18 @@ class User < ApplicationRecord
   def mentee_capacity_count(cohort_id)
     matches = Match.where('mentor_id = ? AND active = ? AND cohort_id = ?', id, 'true', cohort_id)
     matches.size
+  end
+
+  def assigned_programs
+    admins = ProgramAdmin.where(email:)
+    programs = []
+
+    admins.each do |admin|
+      program_id = admin.program_id
+      programs << Program.find_by(id: program_id)
+    end
+
+    programs
   end
 
   private

@@ -3,13 +3,12 @@
 # Table name: program_admins
 #
 #  id         :bigint           not null, primary key
-#  user_id    :bigint           not null
+#  email      :string           not null
 #  program_id :bigint           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 class ProgramAdmin < ApplicationRecord
-  belongs_to :program, required: true, class_name: "Program", foreign_key: "program_id"
-  belongs_to :admin, required: true, class_name: "User", foreign_key: "user_id"
-
+  belongs_to :program, required: true, class_name: 'Program', foreign_key: 'program_id'
+  belongs_to :admin, class_name: 'User', foreign_key: 'email', primary_key: 'email', optional: true
 end
