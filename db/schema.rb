@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.1].define(version: 2024_11_05_225311) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_07_213142) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,6 +109,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_225311) do
     t.index ["match_id"], name: "index_reviews_on_match_id"
   end
 
+  create_table "short_lists", force: :cascade do |t|
+    t.bigint "mentor_id", null: false
+    t.bigint "mentee_id", null: false
+    t.bigint "cohort_id", null: false
+    t.integer "ranking"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cohort_id"], name: "index_short_lists_on_cohort_id"
+    t.index ["mentee_id"], name: "index_short_lists_on_mentee_id"
+    t.index ["mentor_id"], name: "index_short_lists_on_mentor_id"
+  end
+
   create_table "surveys", force: :cascade do |t|
     t.integer "match_id"
     t.boolean "responsive"
@@ -154,9 +165,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_05_225311) do
   add_foreign_key "matches", "users", column: "mentee_id"
   add_foreign_key "matches", "users", column: "mentor_id"
   add_foreign_key "meetings", "matches"
-  add_foreign_key "meetings", "reviews"
   add_foreign_key "program_admins", "programs"
   add_foreign_key "programs", "users", column: "contact_id"
   add_foreign_key "programs", "users", column: "creator_id"
   add_foreign_key "reviews", "matches"
+  add_foreign_key "short_lists", "cohorts"
+  add_foreign_key "short_lists", "users", column: "mentee_id"
+  add_foreign_key "short_lists", "users", column: "mentor_id"
 end
