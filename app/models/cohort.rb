@@ -65,4 +65,22 @@ class Cohort < ApplicationRecord
       end
     end
   end
+  def send_matching_results_emails
+    emails_of_cohort_members = CohortMember.where(cohort_id: self.id).pluck(:email)
+    matched_users = []
+    unmatched_users = []
+
+    emails_of_cohort_members.each do |email|
+      user = User.find_by(email: email)
+
+      if user.matched?
+        matched_users << user.email
+      else
+        unmatched_users << user.email
+      end
+    end
+    p matched_users
+    p unmatched_users
+    p "Emails sent"
+  end
 end

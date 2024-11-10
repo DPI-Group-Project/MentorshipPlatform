@@ -75,6 +75,10 @@ class MatchesController < ApplicationController
     end
 
     Rails.logger.info "Finished match creation for cohort ##{cohort_id} at #{Time.current}"
+
+    #TODO: might need to be a background job
+    cohort = Cohort.find_by(id: cohort_id)
+    cohort.send_matching_results_emails
   end
 
   # PATCH/PUT /matches/1 or /matches/1.json
