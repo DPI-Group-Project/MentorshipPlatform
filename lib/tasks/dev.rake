@@ -115,6 +115,8 @@ task({ sample_data: :environment }) do
     cohort_random_number.times do
       start_date = Faker::Date.between(from: '2023-01-1', to: '2023-12-30')
       end_date = Faker::Date.between(from: '2024-1-30', to: '2025-12-30')
+      shortlist_start_time = Faker::Date.between(from: start_date + 2.day, to: start_date + 3.days)
+      shortlist_end_time = Faker::Date.between(from: shortlist_start_time + 1.day, to: shortlist_start_time + 3.days)
 
       Cohort.create(
         cohort_name: "Cohort #{count}",
@@ -124,6 +126,8 @@ task({ sample_data: :environment }) do
         contact_id: program.creator_id,
         start_date:,
         end_date:,
+        shortlist_start_time:,
+        shortlist_end_time:,
         required_meetings: [6, 10].sample
       )
       count += 1
