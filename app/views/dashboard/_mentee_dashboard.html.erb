@@ -1,5 +1,4 @@
-<% if @shortlist_time == 'open' && !ShortList.exists?(mentee_id: current_user.id)
-%>
+<% if @shortlist_time == 'open' && !ShortList.exists?(mentee_id: current_user.id) %>
   <div class="desktop-view">
     <%= render 'mentee_shortlist_desktop', mentors_data: mentors_data %>
   </div>
