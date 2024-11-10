@@ -4,6 +4,7 @@ task({ sample_data: :environment }) do
   p 'Creating sample data...'
 
   Match.delete_all
+  ShortList.delete_all
   CohortMember.delete_all
   ProgramAdmin.delete_all
   Cohort.delete_all
