@@ -3,7 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   after_action :set_csrf_headers, only: :create
-  # before_action :configure_account_update_params, only: [:update]
+  before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   def new
@@ -91,6 +91,13 @@ protected
   end
   
 
+
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update,
+                                      keys: [:first_name, :last_name, :status, :inactive_reason, :phone_number, :bio, :timezone, :title, :linkedin_link, :profile_picture,
+                                             :skills_array])
+  end
+  
 def set_csrf_headers
   return unless request.xhr?
 

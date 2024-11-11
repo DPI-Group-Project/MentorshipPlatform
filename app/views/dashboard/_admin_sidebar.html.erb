@@ -1,39 +1,47 @@
 <div class="w-[17.5rem] h-auto p-6 bg-white rounded-[12px] shadow-md mr-8">
-  <div class="flex items-center mb-8">
+  <div class="flex items-center mb-4">
     <img src="<%= asset_path("sample_img/admin_user.png") %>" alt="Admin Avatar" class="w-12 h-12 rounded-full">
     <div class="ml-4">
       <h3 class="text-lg font-semibold"><%= current_user.name %></h3>
-      <p class="text-sm text-gray-500"><%= current_user.title %><br>
-        Discovery Partners Institute</p>
+      <p class="text-sm text-gray-500"><%= current_user.title %></p>
     </div>
   </div>
+  <!-- Program and DPI text -->
+  <div class="mb-4 text-gray-500">
+    <p class="text-sm font-medium"><%= @current_program.name %></p>
+    <p class="text-xs text-gray-400">Discovery Partners Institute</p>
+  </div>
+  <!-- Sidebar Links with Hover Effect -->
   <div class="text-sm">
     <div class="mb-4">
       <h4 class="font-semibold text-gray-700">ORGANIZATION</h4>
       <ul class="mt-2 space-y-2">
-        <li class="flex items-center">
+        <li class="flex items-center hover:bg-gray-100 p-2 rounded transition-colors duration-200">
           <i class="fas fa-th-large mr-2"></i> Overview
         </li>
-        <li class="flex items-center">
+        <li class="flex items-center hover:bg-gray-100 p-2 rounded transition-colors duration-200">
           <button 
             id="openModalBtn" 
             class="text-black flex items-center"
             onclick="openModal('program-list-modal')"
           >
-            <i class="fas fa-folder-open mr-2"></i> Programs
+            <i class="fas fa-folder-open mr-2"></i> Cohorts
           </button>
         </li>
-        <li class="flex items-center">
-          <i class="fas fa-envelope mr-2"></i> Message <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">8</span>
+        <li class="flex items-center hover:bg-gray-100 p-2 rounded transition-colors duration-200">
+          <i class="fas fa-envelope mr-2"></i> Message 
+          <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">8</span>
         </li>
-        <li class="flex items-center">
-          <i class="fas fa-bell mr-2"></i> Notification <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">1</span>
+        <li class="flex items-center hover:bg-gray-100 p-2 rounded transition-colors duration-200">
+          <i class="fas fa-bell mr-2"></i> Notification 
+          <span class="ml-auto bg-red-500 text-white px-2 py-1 text-xs rounded-full">1</span>
         </li>
-        <li class="flex items-center">
+        <li class="flex items-center hover:bg-gray-100 p-2 rounded transition-colors duration-200">
           <i class="fas fa-users mr-2"></i> Members
         </li>
       </ul>
     </div>
+    <!-- Active Cohorts with Dropdown Links -->
     <div>
       <div class="flex items-center justify-between">
         <h4 class="font-semibold text-black">ACTIVE COHORTS</h4>
@@ -48,26 +56,26 @@
       <div class="mt-2">
         <% @cohorts.each do |cohort| %>
           <div class="dropdown">
-            <button class="dropdown-toggle flex justify-between w-full text-left">
+            <button class="dropdown-toggle flex justify-between w-full text-left hover:bg-gray-100 p-2 rounded transition-colors duration-200">
               <span><i class="fas fa-folder mr-2"></i><%= cohort.cohort_name %></span>
               <i class="chevron fas fa-chevron-down transition-transform duration-300 mr-1"></i>
             </button>
             <ul class="dropdown-menu mt-2 pl-4 space-y-2 text-sm hidden">
-              <li>
+              <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">
                 <button onclick="cohortInfo('<%= cohort.cohort_name %>', '<%= cohort.pairing_number %>')">
                   View dashboard
                 </button>
               </li>
-              <li>
+              <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">
                 <%= link_to "Add Members", new_cohort_member_path(cohort_id: cohort.id), class: "text-black" %>
               </li>
-              <li>
+              <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">
                 <%= link_to "View Members", cohort_members_path(cohort_id: cohort.id), class: "text-black" %>
               </li>
-              <li>Surveys</li>
-              <li>Email Templates</li>
-              <li>Pairings</li>
-              <li>Calendar</li>
+              <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">Surveys</li>
+              <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">Email Templates</li>
+              <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">Pairings</li>
+              <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">Calendar</li>
             </ul>
           </div>
         <% end %>
