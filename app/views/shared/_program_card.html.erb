@@ -1,0 +1,14 @@
+<div class="rounded-[0.75rem] shadow-sm mt-4 bg-[#fff]">
+  <img class="w-full h-[5.538]" src="<%= asset_path("sample_img/dpi_building.png") %>" alt="Dpi building">
+  <div class="px-6 py-4 ">
+    <p class="text-[0.7rem] text-[#898989]">Program name</p>
+    <div class="text-base font-semibold mb-2"> <%= current_user.cohort.cohort_name %> </div>
+    <p class="text-[0.8rem] text-[#898989] text-wrap font-400 mb-2 leading-tight line-clamp-2">
+      <%= current_user.cohort.description %>
+    </p>
+    <button class="text-xs w-[8rem] h-[2rem] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:scale-105"
+            onclick="location.href='/'">
+      About Program
+    </button>
+  </div>
+</div>
