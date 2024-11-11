@@ -3,7 +3,11 @@ class MeetingsController < ApplicationController
 
   # GET /meetings or /meetings.json
   def index
-    @meetings = Meeting.all
+    @match = Match.where('mentee_id = :id OR mentor_id = :id', id: current_user.id).first
+    @meetings = @match.meetings.order(:created_at)
+    @mentor = @match.mentor
+    @required_meetings_count = @match.cohort.required_meetings
+    @remaining_meetings = @required_meetings_count - @meetings.count
   end
 
   # GET /meetings/1 or /meetings/1.json

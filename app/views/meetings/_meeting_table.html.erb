@@ -12,9 +12,6 @@
   Where conversations spark growth. Schedule your next meeting with your mentor today!
 </p>
 
-<%= link_to "New meeting", new_meeting_path %>
-
-
 <table class="w-full text-[0.8rem] text-center rtl:text-right text-[#898989]">
   <thead class="text-xs text-white bg-[#202020] rounded-t-lg">
   <tr>
@@ -28,15 +25,15 @@
   </tr>
   </thead>
   <tbody>
-  <% @meetings.each do |meeting| %>
+  <% @meetings.each_with_index do |meeting, i| %>
     <tr id="meeting-<%= meeting.id %>" class="text-[#202020] font-medium bg-white border-b dark:bg-[#202020] dark:border-[#676666] hover:bg-gray-50 dark:hover:bg-[#898989]">
-      <td class="px-6 py-2"><%= meeting.id %></td>
-      <th scope="row" class="flex items-center px-6 py-4 text-[#202020] whitespace-nowrap dark:text-white">
+      <td class="px-6 py-2"><%= i + 1 %></td>
+      <td class="flex items-center px-6 py-4 text-[#202020] whitespace-nowrap dark:text-white">
         <img src="<%= asset_path("sample_img/mentor_sample.png") %>" alt="User picture" class="w-8 h-8 rounded-full">
         <div class="ps-3">
           <div class="font-medium"><%= meeting.mentor.name %></div>
         </div>
-      </th>
+      </td>
       <td class="px-6 py-2"><%= meeting.date %></td>
       <td class="px-6 py-2"><%= meeting.time %></td>
       <td class="px-6 py-2"><%= meeting.location %></td>
@@ -46,7 +43,28 @@
         </a>
       </td>
       <td class="px-6 py-2 font-medium text-[#898989]">
-        <%= link_to "Edit", edit_meeting_path %>
+        <%= link_to "Edit", edit_meeting_path(meeting.id) %>
+      </td>
+    </tr>
+  <% end %>
+
+  <% @remaining_meetings.times do |i| %>
+    <tr id="meeting-empty-<%= i + 1 %>" class="text-[#898989] font-medium bg-white border-b hover:bg-gray-50">
+      <td class="px-6 py-2">
+        <%= @meetings.count + i + 1%>
+      </td>
+      <td class="flex items-center px-6 py-4 text-[#898989] whitespace-nowrap dark:text-white">
+        <img src="<%= asset_path("sample_img/mentor_sample.png") %>" alt="User picture" class="w-8 h-8 rounded-full">
+        <div class="ps-3">
+          <div class="font-medium"><%= @mentor.name %></div>
+        </div>
+      </td>
+      <td class="px-6 py-2">Not Scheduled Yet</td>
+      <td class="px-6 py-2">Not Scheduled Yet</td>
+      <td class="px-6 py-2">Not Scheduled Yet</td>
+      <td class="px-6 py-2"></td>
+      <td class="px-6 py-2 font-medium text-[#898989]">
+        <%= link_to "Add Meeting", new_meeting_path, data: { turbo_frame: 'modal' } %>
       </td>
     </tr>
   <% end %>
