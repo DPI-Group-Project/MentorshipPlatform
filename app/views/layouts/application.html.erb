@@ -8,10 +8,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <%= render partial: "shared/cdn_assets" %>
   <%= stylesheet_link_tag "application.tailwind", "data-turbo-track": "reload" %>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
   <%= stylesheet_link_tag "application" %>
   <%= javascript_importmap_tags %>
 </head>
 <body class="min-h-screen flex flex-col">
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 <% if current_page?(home_path) %>
   <%= render 'shared/landing_nav_mb' %>
   <%= render 'shared/landing_nav' %>
