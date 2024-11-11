@@ -22,6 +22,8 @@ class Cohort < ApplicationRecord
   has_many :members, class_name: "CohortMember", foreign_key: "cohort_id", dependent: :destroy
   has_many :matches, class_name: "Match", foreign_key: "cohort_id", dependent: :destroy
   
+  after_commit :start_scheduler_on_creation, on: [:create, :update, :destroy]
+
   def running?
     if end_date > Date.today
       true
@@ -30,8 +32,7 @@ class Cohort < ApplicationRecord
     end
   end
   def shortlist_creation_open?
-    user_timezone = 'America/Chicago'
-    current_time = Time.current.in_time_zone(user_timezone)
+    current_time = Time.current.in_time_zone.utc
     current_time_in_user_zone = current_time.strftime('%Y-%m-%d %H:%M:%S UTC')
     if shortlist_start_time <= current_time_in_user_zone && shortlist_end_time >= current_time_in_user_zone
       'open'
@@ -42,5 +43,26 @@ class Cohort < ApplicationRecord
   def pairing_number
     matches = Match.where(cohort_id: self.id)
     matches.size
+  end
+
+  # Creates thread that runs matching code in matches controller
+  def start_scheduler_on_creation
+    unless  @scheduler_thread&.alive?
+      Rails.logger.info "Creating new scheduler thread..."
+      @scheduler_thread = Thread.new(name: 'MatchingThreadInCohortModel') do
+        require 'rufus-scheduler'
+        # Initialize a new scheduler instance
+        scheduler = Rufus::Scheduler.new
+        cohorts = Cohort.where.not(shortlist_start_time: nil)
+              .where.not(shortlist_end_time: nil)
+
+        cohorts.each_with_index do |cohort, index|
+          shortlist_end_date = cohort.shortlist_end_time.in_time_zone.utc
+          scheduler.at shortlist_end_date do
+            MatchesController.new.create_for_cohort(cohort)
+          end
+        end
+      end
+    end
   end
 end
