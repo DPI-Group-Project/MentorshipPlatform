@@ -13,6 +13,6 @@
 #
 class Review < ApplicationRecord
   belongs_to :match, required: true, class_name: "Match", foreign_key: "match_id"
-  has_many :meetings, class_name: "Meeting", foreign_key: "review_id", dependent: :destroy
+  # has_many :meetings, class_name: "Meeting", foreign_key: "review_id", dependent: :destroy
 
 end
