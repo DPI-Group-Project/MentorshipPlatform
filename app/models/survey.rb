@@ -14,4 +14,12 @@
 class Survey < ApplicationRecord
 	validates :match_id, presence: true
 	belongs_to :match, required: true, class_name: "Match", foreign_key: "match_id"
+
+	after_create :send_creation_notification
+
+  private
+
+  def send_creation_notification
+    SurveyMailer.notify_admin_of_survey_creation(self).deliver_later
+  end
 end
