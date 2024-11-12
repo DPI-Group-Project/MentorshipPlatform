@@ -78,13 +78,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_07_213142) do
   end
 
   create_table "program_admins", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.string "email", null: false
     t.bigint "program_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role"
+    t.index ["email"], name: "index_program_admins_on_email"
     t.index ["program_id"], name: "index_program_admins_on_program_id"
-    t.index ["user_id"], name: "index_program_admins_on_user_id"
   end
 
   create_table "programs", force: :cascade do |t|
