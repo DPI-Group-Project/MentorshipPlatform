@@ -15,6 +15,9 @@ gem 'tailwindcss-rails', '~> 2.7'
 
 gem 'resend'
 
+# For async matching automation
+gem 'rufus-scheduler'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 

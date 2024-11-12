@@ -1,4 +1,4 @@
-<% if @shortlist_time == 'open' && current_user.shortlist.length === 0 %>
+<% if @shortlist_time == 'open' && !ShortList.exists?(mentee_id: current_user.id) && !current_user.matched? %>
   <div class="desktop-view">
     <%= render 'mentee_shortlist_desktop', mentors_data: mentors_data %>
   </div>
@@ -127,7 +127,7 @@
                     const title = item.querySelector('.mentor-title')?.innerText || 'Unknown Title';
 
                     return {
-                        [itemIndex]: [idNumber, 'nil'],
+                        [itemIndex]: [idNumber],
                         name: name,
                         title: title
                     };
@@ -159,11 +159,9 @@
 
             confirmButton.onclick = function () {
                 modal.classList.add('hidden');
+                modal.classList.add('hidden');
 
-                const formattedShortlist = shortlist.map((mentor, index) => {
-                    const idNumber = Object.values(mentor)[0][0];
-                    return {[index + 1]: [idNumber, 'nil']};
-                });
+                const formattedShortlist = shortlist.map(mentor => Object.values(mentor)[0][0]);
 
                 updateUserShortlist(userId, formattedShortlist);
             };

@@ -4,6 +4,7 @@ task({ sample_data: :environment }) do
   p 'Creating sample data...'
 
   Match.delete_all
+  ShortList.delete_all
   CohortMember.delete_all
   ProgramAdmin.delete_all
   Cohort.delete_all
@@ -37,7 +38,9 @@ task({ sample_data: :environment }) do
                     'Product Manager', 'UI/UX Designer', 'Sales Coordinator'].sample
     inactive_reason = ['Did not like the platform.', 'Did not have a good experience.', 'I will be back!',
                        'Other'].sample
-    role = { 'admin' => 5, 'observer' => 7, 'mentor' => 25, 'mentee' => 100 }.find { |_key, value| rand * 100 <= value }.first
+    role = { 'admin' => 5, 'observer' => 7, 'mentor' => 25, 'mentee' => 100 }.find do |_key, value|
+      rand * 100 <= value
+    end.first
     image_link = "https://api.dicebear.com/9.x/notionists/svg?seed=#{image_name.sample}&radius=50&backgroundColor=D2042D&bodyIcon=galaxy,
                   saturn,electric&bodyIconProbability=10&gesture=hand,handPhone,ok,okLongArm,point,pointLongArm,waveLongArm&gestureProbability=20&
                   lips=variant01,variant02,variant03,variant04,variant05,variant06,variant07,variant08,variant10,variant11,variant13,
@@ -112,6 +115,8 @@ task({ sample_data: :environment }) do
     cohort_random_number.times do
       start_date = Faker::Date.between(from: '2023-01-1', to: '2023-12-30')
       end_date = Faker::Date.between(from: '2024-1-30', to: '2025-12-30')
+      shortlist_start_time = Faker::Date.between(from: start_date + 2.day, to: start_date + 3.days)
+      shortlist_end_time = Faker::Date.between(from: shortlist_start_time + 1.day, to: shortlist_start_time + 3.days)
 
       Cohort.create(
         cohort_name: "Cohort #{count}",
@@ -121,18 +126,27 @@ task({ sample_data: :environment }) do
         contact_id: program.creator_id,
         start_date:,
         end_date:,
+        shortlist_start_time:,
+        shortlist_end_time:,
         required_meetings: [6, 10].sample
       )
       count += 1
     end
   end
 
+  next unless admins.length
+
   # Creating Program Admins
   admins.each do |admin|
-    program = Program.find_by(creator_id: admin.id)
-    ProgramAdmin.create(
-      user_id: admin.id,
-      program_id: program.id
+    email = admin.email
+
+    program = Program.all.sample
+
+    id = program.id
+
+    ProgramAdmin.create!(
+      program_id: id,
+      email:
     )
   end
 
@@ -170,6 +184,8 @@ task({ sample_data: :environment }) do
       next # Skip to the next mentee
     end
     mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: 'mentor').sample
+    next unless mentor_cohort_member_object
+
     shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
     this_mentor = User.find_by(email: mentor_cohort_member_object.email)
     Match.create(
