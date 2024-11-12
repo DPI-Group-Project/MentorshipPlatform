@@ -59,8 +59,10 @@ class Cohort < ApplicationRecord
         require 'rufus-scheduler'
         # Initialize a new scheduler instance
         scheduler = Rufus::Scheduler.new
-        cohorts = Cohort.where.not(shortlist_start_time: nil)
-              .where.not(shortlist_end_time: nil)
+        cohorts = Cohort.where.not(start_date: nil)
+          .where.not(end_date: nil)
+          .where.not(shortlist_start_time: nil)
+          .where.not(shortlist_end_time: nil)
 
         cohorts.each do |cohort|
           shortlist_end_date = cohort.shortlist_end_time.in_time_zone.utc
@@ -122,6 +124,6 @@ class Cohort < ApplicationRecord
       # send email to admin that matching is complete (if all mentees are matched)
       CohortMailer.matching_complete_notification(self.creator.email, self).deliver_later
     end
-    p "Emails sent"
+    p "Emails sent for unmactched users"
   end
 end

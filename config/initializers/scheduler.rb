@@ -10,7 +10,7 @@ Rails.application.config.to_prepare do
     scheduler = Rufus::Scheduler.new
     cohorts = Cohort.where.not(start_date: nil)
           .where.not(end_date: nil)
-          .where.not(shortlist_end_time: nil)
+          .where.not(shortlist_start_time: nil)
           .where.not(shortlist_end_time: nil)
 
     cohorts.each do |cohort|
@@ -23,8 +23,9 @@ Rails.application.config.to_prepare do
     
       # Schedule the email notification at the shortlist start time
       scheduler.at cohort.shortlist_start_time.in_time_zone.utc do
+        p "Shortlist Open Email sent for cohort ##{cohort.id}"
         cohort.members.each do |member|
-          CohortMailer.shortlist_start_notification(member.user, cohort).deliver_later
+          # CohortMailer.shortlist_start_notification(member.user, cohort).deliver_later
         end
       end
 
