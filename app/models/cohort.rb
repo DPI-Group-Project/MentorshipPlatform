@@ -74,9 +74,9 @@ class Cohort < ApplicationRecord
       user = User.find_by(email: email)
 
       if user.matched?
-        matched_users << user.email
+        matched_users << user
       else
-        unmatched_users << user.email
+        unmatched_users << user
       end
     end
     p matched_users
