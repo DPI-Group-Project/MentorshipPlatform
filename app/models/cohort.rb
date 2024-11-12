@@ -107,6 +107,7 @@ class Cohort < ApplicationRecord
       if user.matched?
         matched_users << user
       else
+        ShortList.where(mentee_id: user.id).destroy_all
         unmatched_users << user
       end
     end

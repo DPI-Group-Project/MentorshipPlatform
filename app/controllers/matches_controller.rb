@@ -38,7 +38,7 @@ class MatchesController < ApplicationController
   private
   
   def create_matches_for_cohort(cohort_id)
-    sorted_shortlist = ShortList.where(cohort_id: cohort_id).order(:ranking, :created_at)
+    sorted_shortlist = ShortList.where(cohort_id: cohort_id).order(:created_at, :ranking)
     Rails.logger.info "Starting match creation for cohort ##{cohort_id} at #{Time.current}"
 
     sorted_shortlist.each do |shortlist|
