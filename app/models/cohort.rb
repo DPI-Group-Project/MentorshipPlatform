@@ -56,11 +56,48 @@ class Cohort < ApplicationRecord
         cohorts = Cohort.where.not(shortlist_start_time: nil)
               .where.not(shortlist_end_time: nil)
 
+        # trigger email when the scheduler is reached
+        cohorts.each do |cohort|
+          # Schedule the email notification at the shortlist start time
+          scheduler.at cohort.shortlist_start_time.in_time_zone.utc do
+            cohort.members.each do |member|
+              CohortMailer.shortlist_start_notification(member.user, cohort).deliver_later
+            end
+          end
+        end
+
         cohorts.each_with_index do |cohort, index|
           shortlist_end_date = cohort.shortlist_end_time.in_time_zone.utc
           scheduler.at shortlist_end_date do
             MatchesController.new.create_for_cohort(cohort)
+            unmatched_mentees = cohort.members.where(role: 'mentee').where.not(id: cohort.matches.pluck(:mentee_id))
+            
+            # if there are any unmatched mentees
+            if unmatched_mentees.any?
+              unmatched_mentees.each do |mentee|
+                # send them email
+                CohortMailer.unmatched_notification(mentee.user, cohort).deliver_later
+              end
+              # and update the shortlist time to add 3 more days 
+              cohort.update(shortlist_end_time: 3.days.from_now)
+            else
+              # send email to admin that matching is complete
+              CohortMailer.matching_complete_notification(cohort.creator.email, cohort).deliver_later
+            end
           end
+        end
+        
+        # send warning email to admin that cohort is ending in 2 weeks
+        scheduler.at end_date - 2.weeks do
+          CohortMailer.two_week_warning(creator.email, self).deliver_later
+          
+          # remind each cohort member about survey
+          matches.each do |match|
+            CohortMailer.survey_reminder(match.mentor, self).deliver_later
+            CohortMailer.survey_reminder(match.mentee, self).deliver_later
+          end
+
+          CohortMailer.survey_reminder(nil, self, creator.email).deliver_later
         end
       end
     end
