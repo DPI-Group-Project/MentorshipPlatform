@@ -13,4 +13,5 @@
 #
 class Survey < ApplicationRecord
 	validates :match_id, presence: true
+	belongs_to :match, required: true, class_name: "Match", foreign_key: "match_id"
 end

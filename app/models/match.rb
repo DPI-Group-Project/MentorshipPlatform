@@ -16,6 +16,7 @@ class Match < ApplicationRecord
   belongs_to :cohort, required: true, class_name: "Cohort", foreign_key: "cohort_id"
   has_many :meetings, class_name: "Meeting", foreign_key: "match_id", dependent: :destroy
   has_many :reviews, class_name: "Review", foreign_key: "match_id", dependent: :destroy
+  has_many :surveys, class_name: "Survey", foreign_key: "match_id", dependent: :destroy
   
   after_create :send_match_created_email
 

@@ -1,10 +1,7 @@
 class SurveyMailer < ApplicationMailer
-	def survey_created_notification(admin, survey)
-		@survey = survey
-		@admin = admin
-		mail(
-			to: @admin.email,
-			subject: "New Survey Created for #{survey.program.name}"
-		)
-	end
+	def notify_admin_of_survey_creation(survey)
+    @survey = survey
+    @admin = User.find_by(id: Cohort.find_by(id: survey.match.cohort_id).creator_id) # Assuming the creator is the admin
+    mail(to: @admin.email, subject: 'New Survey Created')
+  end
 end
