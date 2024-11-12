@@ -44,12 +44,16 @@
           <div class="w-[2rem] h-[2rem] rounded-[2rem] bg-[#F7F5F4] flex items-center justify-center">
             <img src="<%= asset_path("icon/2_user.svg") %>" alt="2_user" class="h-[1rem] w-[1rem]">
           </div>
-          <% if (@upcoming_meeting.date - Date.today).to_i == 0 %>
-            <p class="text-[#202020] font-medium text-[0.9rem]"> You have a meeting today!
-          <% else %>
-            <p class="text-[#202020] font-medium text-[0.9rem]">Upcoming meeting is
+          <% if @upcoming_meeting.present? %>
+            <% if (@upcoming_meeting.date - Date.today).to_i == 0 %>
+              <p class="text-[#202020] font-medium text-[0.9rem]"> You have a meeting today!
+            <% else %>
+              <p class="text-[#202020] font-medium text-[0.9rem]">Upcoming meeting is
               <span class="font-semibold"> <%= (@upcoming_meeting.date - Date.today).to_i %> </span> days away</p>
-          <% end %>
+            <% end %>
+          <% else %>
+            <p class="text-[#202020] font-medium text-[0.9rem]"> Let's schedule first meeting!
+        <% end %>
         </div>
         <%= link_to 'Take Action',  meetings_path, class:"text-[#898989] font-regular text-[0.85rem] underline"%>
       </div>
