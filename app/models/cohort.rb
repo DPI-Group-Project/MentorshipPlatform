@@ -56,10 +56,29 @@ class Cohort < ApplicationRecord
         cohorts = Cohort.where.not(shortlist_start_time: nil)
               .where.not(shortlist_end_time: nil)
 
+        # trigger email when the scheduler is reached
+        cohorts.each do |cohort|
+          # Schedule the email notification at the shortlist start time
+          scheduler.at cohort.shortlist_start_time.in_time_zone.utc do
+            cohort.members.each do |member|
+              CohortMailer.shortlist_start_notification(member.user, cohort).deliver_later
+            end
+          end
+        end
+
         cohorts.each_with_index do |cohort, index|
           shortlist_end_date = cohort.shortlist_end_time.in_time_zone.utc
           scheduler.at shortlist_end_date do
             MatchesController.new.create_for_cohort(cohort)
+            unmatched_mentees = cohort.members.where(role: 'mentee').where.not(id: cohort.matches.pluck(:mentee_id))
+            if unmatched_mentees.any?
+              unmatched_mentees.each do |mentee|
+                CohortMailer.unmatched_notification(mentee.user, cohort).deliver_later
+              end
+              cohort.update(shortlist_end_time: 3.days.from_now)
+            else
+              CohortMailer.matching_complete_notification(cohort.creator, cohort).deliver_later
+            end
           end
         end
       end
