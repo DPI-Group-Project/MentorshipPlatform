@@ -95,6 +95,9 @@
     const prevMonthBtn = document.getElementById('prev-month');
     const nextMonthBtn = document.getElementById('next-month');
 
+    const highlightedDates = <%= @meeting_dates.to_json.html_safe %>;
+
+
     let currentDate = new Date();
 
     function renderCalendar(date) {
@@ -103,7 +106,6 @@
 
         calendarTitle.textContent = new Intl.DateTimeFormat('en-US', {month: 'long', year: 'numeric'}).format(date);
 
-        // Clear the previous calendar
         calendarBody.innerHTML = '';
 
         const firstDayOfMonth = new Date(year, month, 1).getDay(); // Day of week (0-6)
@@ -130,7 +132,20 @@
                     cellDiv.innerHTML = '';
                 } else {
                     // Populate actual date
-                    cellDiv.innerHTML = `<p class="text-[0.95rem] text-[#202020]">${day}</p>`;
+                    const currentDay = day;
+                    const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${currentDay.toString().padStart(2, '0')}`;
+
+                    cellDiv.innerHTML = `<div class="px-1 py-1 flex w-full flex-col justify-start items-center">
+                                            <p class="text-[0.95rem] text-[#202020] hover:font-semibold">${day}</p>
+                                            <div class="w-[0.5rem] h-[0.5rem] rounded-full"></div>
+                                        </div>`;
+
+                    if (highlightedDates.includes(dateString)) {
+                        cellDiv.innerHTML = `<div class="px-1 py-1 flex w-full flex-col justify-start items-center">
+                                            <p class="text-[0.95rem] text-[#202020] hover:font-semibold">${day}</p>
+                                            <div class="w-[0.5rem] h-[0.5rem] rounded-full bg-[#F9837C]"></div>
+                                        </div>`;
+                    }
                     day++;
                 }
 
