@@ -14,12 +14,12 @@ class CohortMailer < ApplicationMailer
   def matching_complete_notification(admin, cohort)
     @admin = admin
     @cohort = cohort
-    mail(to: @admin.email, subject: 'Cohort Matching Complete')
+    mail(to: @admin.email, subject: "MentE Matching Complete for #{@cohort.cohort_name}!")
   end
 
   def two_week_warning(admin_email, cohort)
     @cohort = cohort
-    mail(to: admin_email, subject: "Two-Week Warning for #{@cohort.cohort_name}")
+    mail(to: admin_email, subject: "Two Weeks until #{@cohort.cohort_name} Ends!")
   end
 
   def survey_reminder(user, cohort, admin_email = nil)
