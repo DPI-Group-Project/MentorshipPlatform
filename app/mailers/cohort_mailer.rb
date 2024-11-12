@@ -1,9 +1,9 @@
 class CohortMailer < ApplicationMailer
 	def shortlist_start_notification(user, cohort)
-    @user = user
-    @cohort = cohort
-    mail(to: @user.email, subject: 'The Shortlist Period Has Started!')
-  end
+		@user = user
+		@cohort = cohort
+		mail(to: @user.email, subject: 'The Shortlist Period Has Started!')
+	end
 
 	def unmatched_notification(user, cohort)
 		@user = user
@@ -18,17 +18,17 @@ class CohortMailer < ApplicationMailer
 	end
 
 	def two_week_warning(admin_email, cohort)
-    @cohort = cohort
-    mail(to: admin_email, subject: "Two-Week Warning for #{@cohort.cohort_name}")
-  end
+		@cohort = cohort
+		mail(to: admin_email, subject: "Two-Week Warning for #{@cohort.cohort_name}")
+	end
 
 	def survey_reminder(user, cohort, admin_email = nil)
-    @user = user
-    @cohort = cohort
-    if admin_email
-      mail(to: admin_email, subject: "Survey Reminder for #{@cohort.cohort_name}")
-    else
-      mail(to: @user.email, subject: "Survey Reminder for #{@cohort.cohort_name}")
-    end
-  end
+		@user = user
+		@cohort = cohort
+		if admin_email
+			mail(to: admin_email, subject: "Survey Reminder for #{@cohort.cohort_name}")
+		else
+			mail(to: @user.email, subject: "Survey Reminder for #{@cohort.cohort_name}")
+		end
+	end
 end
