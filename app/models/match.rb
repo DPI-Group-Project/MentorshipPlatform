@@ -21,6 +21,7 @@ class Match < ApplicationRecord
   after_create :send_match_created_email
 
   def send_match_created_email
+     p "Emails sent matched users"
     MatchMailer.match_created(self).deliver_later
   end
 end

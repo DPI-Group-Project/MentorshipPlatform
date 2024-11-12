@@ -38,7 +38,7 @@ class MatchesController < ApplicationController
   private
   
   def create_matches_for_cohort(cohort_id)
-    sorted_shortlist = ShortList.where(cohort_id: cohort_id).order(:ranking, :created_at)
+    sorted_shortlist = ShortList.where(cohort_id: cohort_id).order(:created_at, :ranking)
     Rails.logger.info "Starting match creation for cohort ##{cohort_id} at #{Time.current}"
 
     sorted_shortlist.each do |shortlist|
@@ -75,6 +75,10 @@ class MatchesController < ApplicationController
     end
 
     Rails.logger.info "Finished match creation for cohort ##{cohort_id} at #{Time.current}"
+
+    #TODO: might need to be a background job
+    cohort = Cohort.find_by(id: cohort_id)
+    cohort.send_matching_results_emails
   end
 
   # PATCH/PUT /matches/1 or /matches/1.json
