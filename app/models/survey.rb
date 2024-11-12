@@ -12,10 +12,10 @@
 #  updated_at      :datetime         not null
 #
 class Survey < ApplicationRecord
-	validates :match_id, presence: true
-	belongs_to :match, required: true, class_name: "Match", foreign_key: "match_id"
+  validates :match_id, presence: true
+  belongs_to :match, required: true, class_name: "Match", foreign_key: "match_id"
 
-	after_create :send_creation_notification
+  after_create :send_creation_notification
 
   private
 
