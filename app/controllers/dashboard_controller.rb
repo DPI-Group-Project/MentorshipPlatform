@@ -17,6 +17,7 @@ class DashboardController < ApplicationController
       @required_meetings_count = current_user.cohort.required_meetings
       @past_meeting_count = @meetings.count { |meeting| meeting.date < Date.today }
       @progress = ((@past_meeting_count.to_f / @required_meetings_count) * 100).round(0)
+      @remaining_meetings = @required_meetings_count - @meetings.count
 
     elsif ['admin'].include? (@role) then
       @admin_data = ProgramAdmin.find_by(id: current_user.id)
