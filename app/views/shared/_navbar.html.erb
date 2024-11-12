@@ -1,4 +1,4 @@
-<nav class="flex flex-wrap items-center justify-between px-24 bg-[#FFFFFF] h-[4.5rem] mb-10 shadow-sm fixed top-0 w-full z-20 max-md:hidden">
+<nav class="flex flex-wrap items-center justify-between px-24 bg-white h-[4.5rem] mb-10 shadow-sm fixed top-0 w-full z-20 max-md:hidden">
   <div>
     <a href="/" class="flex items-center">
       <img src="<%= asset_path("icon/Logo.svg") %>" alt="DPI Logo" class="h-7">
@@ -15,7 +15,7 @@
       <li class="text-[#898989] inactive">Survey</li>
     </ul>
   </div>
-  <div class="flex items-center space-x-4">
+  <div class="flex items-center space-x-4 relative">
     <% if user_signed_in? %>
       <img src="<%= asset_path("icon/Notification.svg") %>" alt="Notifications" class="h-6 w-6">
       <img
@@ -23,13 +23,71 @@
         alt="User Image"
         class="h-8 w-8 rounded-full cursor-pointer"
         id="user-image"
-        onclick="toggleModal()"
+        onclick="toggleDropdown()"
       >
-    <% else %>
-      <%= link_to "Sign In", new_user_session_path, class: "hover:text-gray-600" %>
-    <% end %>
-  </div>
-</nav>
-<% if user_signed_in? %>
-  <%= render partial: "shared/user_modal" %>
-<% end %>
+        <!-- Dropdown Menu -->
+        <div id="user-dropdown" class="hidden absolute top-12 right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+          <ul class="py-2 text-gray-700">
+            <li>
+              <a href="/users/edit" class="block px-4 py-2 text-sm hover:bg-gray-100">Edit Profile</a>
+            </li>
+
+            <% if current_user.role == "mentee" || current_user.role == "mentor" %>
+             <p onclick="window.location.href='/profile/<%= current_user.id %>'" class="block px-4 py-2 text-sm hover:bg-gray-100">View Profile</p>
+
+            <% else %>
+      
+            <li>
+              <button onclick="showUserModal()" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">View Profile</button>
+            </li>
+
+            <% end %>
+            <% if current_user.role == "mentee" || current_user.role == "mentor" %>
+              <!-- Sign out -->
+              <li>
+                <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "text-left w-full px-4 py-2 text-sm hover:bg-gray-100" %>
+              </li>
+            <% else %>
+              <!-- Admin Dashboard shortcut -->
+              <li>
+                <p onclick="window.location.href='/dashboard/admin'" class="block px-4 py-2 text-sm hover:bg-gray-100">Admin Dashboard</p>
+              </li>
+              <!-- Sign out -->
+              <li>
+                <%= button_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "text-left w-full px-4 py-2 text-sm hover:bg-gray-100" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path, class: "hover:text-gray-600" %>
+      <% end %>
+    </div>
+  </nav>
+  <% if user_signed_in? %>
+    <%= render partial: "shared/user_modal" %>
+  <% end %>
+  <script>
+    // Toggle dropdown visibility
+    function toggleDropdown() {
+      const dropdown = document.getElementById('user-dropdown');
+      dropdown.classList.toggle('hidden');
+    }
+
+    // Show user modal
+    function showUserModal() {
+      // Close the dropdown before showing the modal
+      toggleDropdown();
+      toggleModal(); // Assumes toggleModal() function is used to show the modal
+    }
+
+    // Close dropdown if clicked outside
+    window.addEventListener('click', function(e) {
+      const userImage = document.getElementById('user-image');
+      const dropdown = document.getElementById('user-dropdown');
+
+      if (!userImage.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+  </script>
