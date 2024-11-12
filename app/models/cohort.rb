@@ -71,15 +71,33 @@ class Cohort < ApplicationRecord
           scheduler.at shortlist_end_date do
             MatchesController.new.create_for_cohort(cohort)
             unmatched_mentees = cohort.members.where(role: 'mentee').where.not(id: cohort.matches.pluck(:mentee_id))
+            
+            # if there are any unmatched mentees
             if unmatched_mentees.any?
               unmatched_mentees.each do |mentee|
+                # send them email
                 CohortMailer.unmatched_notification(mentee.user, cohort).deliver_later
               end
+              # and update the shortlist time to add 3 more days 
               cohort.update(shortlist_end_time: 3.days.from_now)
             else
-              CohortMailer.matching_complete_notification(cohort.creator, cohort).deliver_later
+              # send email to admin that matching is complete
+              CohortMailer.matching_complete_notification(cohort.creator.email, cohort).deliver_later
             end
           end
+        end
+        
+        # send warning email to admin that cohort is ending in 2 weeks
+        scheduler.at end_date - 2.weeks do
+          CohortMailer.two_week_warning(creator.email, self).deliver_later
+          
+          # remind each cohort member about survey
+          matches.each do |match|
+            CohortMailer.survey_reminder(match.mentor, self).deliver_later
+            CohortMailer.survey_reminder(match.mentee, self).deliver_later
+          end
+
+          CohortMailer.survey_reminder(nil, self, creator.email).deliver_later
         end
       end
     end
