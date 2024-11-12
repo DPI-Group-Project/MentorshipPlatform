@@ -35,7 +35,7 @@
             <span class="font-semibold"><%= @required_meetings_count - @meetings.count %></span> meetings are not
             scheduled yet</p>
         </div>
-        <a href="/" class="text-[#898989] font-regular text-[0.85rem] underline">Take Action</a>
+        <%= link_to 'Take Action',  meetings_path, class:"text-[#898989] font-regular text-[0.85rem] underline"%>
       </div>
     </div>
     <div class="flex flex-col">

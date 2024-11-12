@@ -5,10 +5,12 @@
   </div>
   <div id="menu" class="hidden transition-all flex flex-col items-center">
     <ul class="text-[1.5rem] font-normal text-center my-[8rem] flex flex-col gap-[3rem]">
-      <li><a href="/" class="hover:text-[#898989]">Home</a></li>
-      <li><a href="/dashboard/mentee" class="hover:text-[#898989]">Mentors</a></li>
-      <li class="text-[#898989] inactive">Meeting</li>
-      <li class="text-[#898989] inactive">Survey</li>
+      <% if current_user.present? %>
+        <li><%= link_to 'Home', dashboard_path(role: current_user.role), class: 'hover:text-[#898989]' %></li>
+      <% else %>
+        <li><%= link_to "Home", new_user_session_path, class: "hover:text-gray-600" %></li>
+      <% end %>
+      <li><%= link_to 'Meetings', meetings_path, class: 'hover:text-[#898989]' %></li>
     </ul>
     <div class="flex flex-col gap-4 mb-[2.7rem]">
       <div class="text-[1.2rem] text-center font-semibold bg-[#FFF] text-[#202020] border shadow-xs rounded-md w-[20rem] py-3 px-5 mr-auto hover:scale-105">
@@ -39,7 +41,7 @@
 
         menuToggle.addEventListener('click', function () {
             menu.classList.toggle('hidden');
-            menu.style.maxHeight = menu.classList.contains('hidden') ? '0' : `${menu.scrollHeight + 30 }px`;
+            menu.style.maxHeight = menu.classList.contains('hidden') ? '0' : `${menu.scrollHeight + 30}px`;
 
             if (menu.classList.contains('hidden')) {
                 menuToggle.src = openIconSrc;
