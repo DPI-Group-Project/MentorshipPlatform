@@ -6,9 +6,12 @@
   </div>
   <div>
     <ul class="flex space-x-14 text-[#202020] font-normal">
-      <li><a href="/" class="hover:text-[#898989]">Home</a></li>
-      <li><a href="/dashboard/mentee" class="hover:text-[#898989]">Mentors</a></li>
-      <li><a href="/meetings" class="hover:text-[#898989]">Meeting</a></li>
+      <% if current_user.present? %>
+        <li><%= link_to 'Home', dashboard_path(role: current_user.role ), class: 'hover:text-[#898989]' %></li>
+      <% else %>
+        <li><%= link_to "Home", new_user_session_path, class: "hover:text-gray-600" %></li>
+      <% end %>
+      <li><%= link_to 'Meetings', meetings_path, class: 'hover:text-[#898989]' %></li>
       <li class="text-[#898989] inactive">Survey</li>
     </ul>
   </div>

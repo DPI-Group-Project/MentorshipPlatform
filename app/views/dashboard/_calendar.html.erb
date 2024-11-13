@@ -69,21 +69,24 @@
           </tbody>
         </table>
       </div>
-      <h1 class="text-xl font-semibold text-[#202020] my-4"> Upcoming Meeting </h1>
-      <div class="md:p-4 p-4 bg-[#F7F7F7] rounded-[0.6rem]">
-        <div class="flex items-center justify-between">
-          <div class="flex gap-4">
-            <img src="<%= asset_path("sample_img/admin_user.png") %>" alt="User picture" class="w-12 h-12 rounded-full">
-            <div>
-              <h3 class="text-base font-normal text-[#202020]">Mentor Meeting 1</h3>
-              <p class="text-[0.7rem] text-[#898989] mt-1">5 Nov, 2024   |   04:00 PM</p>
+      <% if @upcoming_meeting %>
+        <h1 class="text-xl font-semibold text-[#202020] my-4"> Upcoming Meeting </h1>
+        <div class="md:p-4 p-4 bg-[#F7F7F7] rounded-[0.6rem]">
+          <div class="flex items-center justify-between">
+            <div class="flex gap-4">
+              <img src="<%= asset_path('sample_img/admin_user.png') %>" alt="User picture" class="w-12 h-12 rounded-full">
+              <div>
+                <h3 class="text-base font-normal text-[#202020]">Mentor Meeting <%= @meetings.count %></h3>
+                <p class="text-[0.7rem] text-[#898989] mt-1">
+                  <%= @upcoming_meeting.date.strftime('%d %b, %Y') %>
+                  | <%= @upcoming_meeting.time.strftime('%I:%M %p') %>
+                </p>
+              </div>
             </div>
+            <%= link_to 'View', meetings_path, class: "text-sm font-medium w-[4rem] h-[2rem] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:bg-transparent hover:text-[#202020] hover:border-[#202020] flex items-center justify-center" %>
           </div>
-          <button class="text-xs w-[4rem] h-[2rem] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:bg-transparent hover:text-[#202020] hover:border-[#202020]">
-            View
-          </button>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
@@ -95,6 +98,9 @@
     const prevMonthBtn = document.getElementById('prev-month');
     const nextMonthBtn = document.getElementById('next-month');
 
+    const highlightedDates = <%= @meeting_dates.to_json.html_safe %>;
+
+
     let currentDate = new Date();
 
     function renderCalendar(date) {
@@ -103,7 +109,6 @@
 
         calendarTitle.textContent = new Intl.DateTimeFormat('en-US', {month: 'long', year: 'numeric'}).format(date);
 
-        // Clear the previous calendar
         calendarBody.innerHTML = '';
 
         const firstDayOfMonth = new Date(year, month, 1).getDay(); // Day of week (0-6)
@@ -130,7 +135,20 @@
                     cellDiv.innerHTML = '';
                 } else {
                     // Populate actual date
-                    cellDiv.innerHTML = `<p class="text-[0.95rem] text-[#202020]">${day}</p>`;
+                    const currentDay = day;
+                    const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${currentDay.toString().padStart(2, '0')}`;
+
+                    cellDiv.innerHTML = `<div class="px-1 flex w-full flex-col justify-start items-center">
+                                            <p class="text-[0.95rem] text-[#202020] hover:font-semibold">${day}</p>
+                                            <div class="w-[0.5rem] h-[0.5rem] rounded-full"></div>
+                                        </div>`;
+
+                    if (highlightedDates.includes(dateString)) {
+                        cellDiv.innerHTML = `<div class="px-1 flex w-full flex-col justify-start items-center">
+                                            <p class="text-[0.95rem] text-[#202020] hover:font-semibold">${day}</p>
+                                            <div class="w-[0.5rem] h-[0.5rem] rounded-full bg-[#F9837C]"></div>
+                                        </div>`;
+                    }
                     day++;
                 }
 

@@ -1,0 +1,110 @@
+<div class="flex justify-between">
+  <h1 class="text-2xl font-semibold text-[#202020] mb-1">
+    Meeting with Your Mentor
+  </h1>
+  <a href="<%= dashboard_path(role: current_user.role) %>" class="flex gap-1 items-center">
+    <img class="h-[1.2rem]" src=<%= asset_path("icon/back-button.svg") %> alt="back-button"/>
+    <p class="text-xs text-[#676666]">Back To the Dashboard</p>
+  </a>
+</div>
+
+<p class="text-sm text-[#898989] mb-5">
+  Where conversations spark growth. Schedule your next meeting with your mentor today!
+</p>
+
+<table class="w-full text-[0.8rem] text-center rtl:text-right text-[#898989]">
+  <thead class="text-xs text-white bg-[#202020] rounded-t-lg">
+  <tr>
+    <th scope="col" class="px-6 py-2 rounded-tl-lg">No.</th>
+    <th scope="col" class="px-6 py-2">Mentor</th>
+    <th scope="col" class="px-6 py-2">Date</th>
+    <th scope="col" class="px-6 py-2">Time</th>
+    <th scope="col" class="px-6 py-2">Location</th>
+    <th scope="col" class="px-6 py-2">Note</th>
+    <th scope="col" class="px-6 py-2 rounded-tr-lg">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @meetings.each_with_index do |meeting, i| %>
+    <tr id="meeting-<%= meeting.id %>" class="text-[#202020] font-medium bg-white border-b dark:bg-[#202020] dark:border-[#676666] hover:bg-gray-50 dark:hover:bg-[#898989]">
+      <td class="px-6 py-2"><%= i + 1 %></td>
+      <td class="flex items-center px-6 py-4 text-[#202020] whitespace-nowrap dark:text-white">
+        <img src="<%= asset_path("sample_img/mentor_sample.png") %>" alt="User picture" class="w-8 h-8 rounded-full">
+        <div class="ps-3">
+          <div class="font-medium"><%= meeting.mentor.name %></div>
+        </div>
+      </td>
+      <td class="px-6 py-2"><%= meeting.date.strftime('%a, %b %d, %Y') %></td>
+      <td class="px-6 py-2"><%= meeting.time.strftime('%I:%M %p') %></td>
+      <td class="px-6 py-2">
+        <span class="text-[#202020] hover:text-[#F9837C]">
+          <!--TODO: location typing not store in database-->
+          <a href="<%= meeting.location %>">Online</a>
+        </span>
+      </td>
+      <td class="px-6 py-2">
+        <a href="#" type="button" data-modal-target="viewNoteModal" data-modal-show="viewNoteModal" data-meeting-id="<%= meeting.id %>" data-meeting-notes="<%= meeting.notes %>" class="font-medium text-[#898989] hover:underline">
+          <img src=<%= asset_path('icon/note.svg') %> alt="note" class="h-4">
+        </a>
+      </td>
+      <td class="px-6 py-2 font-medium text-[#898989]">
+        <%= link_to "Edit", edit_meeting_path(meeting.id) %>
+      </td>
+    </tr>
+  <% end %>
+
+  <% @remaining_meetings.times do |i| %>
+    <tr id="meeting-empty-<%= i + 1 %>" class="text-[#898989] font-medium bg-white border-b hover:bg-gray-50">
+      <td class="px-6 py-2">
+        <%= @meetings.count + i + 1 %>
+      </td>
+      <td class="flex items-center px-6 py-4 text-[#898989] whitespace-nowrap dark:text-white">
+        <img src="<%= asset_path("sample_img/mentor_sample.png") %>" alt="User picture" class="w-8 h-8 rounded-full">
+        <div class="ps-3">
+          <div class="font-medium"><%= @mentor.name %></div>
+        </div>
+      </td>
+      <td class="px-6 py-2"></td>
+      <td class="px-6 py-2">Not Scheduled Yet</td>
+      <td class="px-6 py-2"></td>
+      <td class="px-6 py-2"></td>
+      <td class="px-6 py-2 font-medium text-[#898989]">
+        <%= link_to "Add Meeting", new_meeting_path, data: { turbo_frame: 'modal' } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+<div id="viewNoteModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-[#676666]">
+      <!-- Modal header -->
+      <div class="flex items-center justify-between p-4 md:p-5 rounded-t dark:border-[#898989]">
+        <h3 class="text-xl font-semibold text-[#202020] dark:text-white">
+          Meeting Notes
+        </h3>
+        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-[#202020] rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-[#898989] dark:hover:text-white" data-modal-hide="viewNoteModal">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="p-4 md:p-5">
+        <p id="meeting-notes-content" class="text-[1rem] font-medium leading-relaxed text-[#898989] dark:text-gray-400">
+          No notes available.
+        </p>
+      </div>
+      <!-- Modal footer -->
+      <div class="flex justify-end items-center p-4 md:p-5 border-gray-200 rounded-b dark:border-[#898989]">
+        <button data-modal-hide="viewNoteModal" type="button" class="py-2.5 px-5 text-sm font-medium text-[#202020] bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-[#676666] focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-[#676666] dark:bg-[#202020] dark:text-gray-400 dark:border-[#898989] dark:hover:text-white dark:hover:bg-[#676666]">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
