@@ -75,22 +75,26 @@ class Cohort < ApplicationRecord
           # Schedule the email notification at the shortlist start time
           scheduler.at cohort.shortlist_start_time.in_time_zone.utc do
             cohort.members.each do |member|
-              CohortMailer.shortlist_start_notification(member.user, cohort).deliver_later
+              CohortMailer.shortlist_start_notification(member.user, cohort).deliver_later!
             end
           end
 
+          subtract_2_weeks = cohort.end_date - 14.days
+          pp subtract_2_weeks
+          
           # send warning email to admin that cohort is ending in 2 weeks
-          scheduler.at cohort.end_date - 2.weeks do
-            CohortMailer.two_week_warning(creator.email, cohort).deliver_later
+          scheduler.at subtract_2_weeks do
+            CohortMailer.two_week_warning(creator.email, cohort).deliver_later!
 
             cohort_members = CohortMember.where(cohort_id: cohort.id)
             # remind each cohort member about survey
             cohort_members.each do |member|
-              CohortMailer.survey_reminder(member.mentor, cohort).deliver_later
-              CohortMailer.survey_reminder(member.mentee, cohort).deliver_later
+              pp "#{member} POOP!"
+              CohortMailer.survey_reminder(member.mentor, cohort).deliver_later!
+              CohortMailer.survey_reminder(member.mentee, cohort).deliver_later!
             end
 
-            CohortMailer.survey_reminder(nil, cohort, cohort.creator.email).deliver_later
+            CohortMailer.survey_reminder(nil, cohort, cohort.creator.email).deliver_later!
           end
         end
       end

@@ -146,7 +146,8 @@ task({ sample_data: :environment }) do
 
     ProgramAdmin.create!(
       program_id: id,
-      email:
+      email: email,
+      role: "admin"
     )
   end
 

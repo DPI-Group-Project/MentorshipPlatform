@@ -1,19 +1,19 @@
 class CohortMemberMailer < ApplicationMailer
   def mentor_welcome_mail(cohort_member)
     @cohort_member = cohort_member
-    @user = User.find_by(email: @cohort_member.email)
+    #@user = User.find_by(email: @cohort_member.email)
     @cohort = @cohort_member.cohort
 
-    mail(to: @user.email,
+    mail(to: @cohort_member.email,
          subject: 'Welcome to MentE!')
   end
 
   def mentee_welcome_mail(cohort_member)
     @cohort_member = cohort_member
-    @user = User.find_by(email: @cohort_member.email)
+    #@user = User.find_by(email: @cohort_member.email)
     @cohort = @cohort_member.cohort
 
-    mail(to: @user.email,
+    mail(to: @cohort_member.email,
          subject: 'Welcome to MentE!')
   end
 end

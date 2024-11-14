@@ -77,7 +77,16 @@ class User < ApplicationRecord
   end
 
   def role
-    CohortMember.where(email:).pluck(:role).first
+    cohort_member_role = CohortMember.where(email: self.email).pluck(:role).first
+    program_admin_role = ProgramAdmin.where(email: self.email).pluck(:role).first
+  
+    if program_admin_role.present?
+      program_admin_role
+    elsif cohort_member_role.present?
+      cohort_member_role
+    else
+      nil
+    end
   end
 
   def capacity
