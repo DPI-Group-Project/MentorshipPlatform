@@ -7,6 +7,7 @@
 #  program_id :bigint           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  role       :string
 #
 class ProgramAdmin < ApplicationRecord
   belongs_to :program, required: true, class_name: 'Program', foreign_key: 'program_id'

@@ -88,10 +88,10 @@ class DashboardController < ApplicationController
   end
 
   def program_admin_params
-    params.require(:program_admin).permit(:email, :program_id)
+    params.require(:program_admin).permit(:email, :program_id, :role)
   end
 
   def create_admin(email, program_id)
-    ProgramAdmin.create(email:, program_id:)
+    ProgramAdmin.create(email: email, program_id: program_id, role: "admin")
   end
 end

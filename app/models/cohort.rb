@@ -89,6 +89,7 @@ class Cohort < ApplicationRecord
             cohort_members = CohortMember.where(cohort_id: cohort.id)
             # remind each cohort member about survey
             cohort_members.each do |member|
+              pp "#{member} POOP!"
               CohortMailer.survey_reminder(member.mentor, cohort).deliver_later!
               CohortMailer.survey_reminder(member.mentee, cohort).deliver_later!
             end

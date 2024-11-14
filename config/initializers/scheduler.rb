@@ -29,15 +29,19 @@ Rails.application.config.to_prepare do
         end
       end
 
+      subtract_2_weeks = cohort.end_date.in_time_zone.utc - 14.days
+      pp subtract_2_weeks
+
       # send warning email to admin that cohort is ending in 2 weeks
-      scheduler.at cohort.end_date - 2.weeks do
-        CohortMailer.two_week_warning(creator.email, cohort).deliver_later!
+      scheduler.at subtract_2_weeks do
+        CohortMailer.two_week_warning(cohort.creator.email, cohort).deliver_later!
 
         cohort_members = CohortMember.where(cohort_id: cohort.id)
         # remind each cohort member about survey
+        pp "POOP!1"
         cohort_members.each do |member|
-          CohortMailer.survey_reminder(member.mentor, cohort).deliver_later!
-          CohortMailer.survey_reminder(member.mentee, cohort).deliver_later!
+          pp "#{member} POOP!2"
+          CohortMailer.survey_reminder(member, cohort).deliver_later!
         end
 
         CohortMailer.survey_reminder(nil, cohort, cohort.creator.email).deliver_later!
