@@ -9,32 +9,32 @@ Rails.application.routes.draw do
   resources :reviews
   resources :matches do
     collection do
-      post 'create_with_cohort/:cohort_id', to: 'matches#create', as: 'create_with_cohort'
+      post "create_with_cohort/:cohort_id", to: "matches#create", as: "create_with_cohort"
     end
   end
   resources :cohorts do
     resources :cohort_members, only: [:index]
   end
   resources :programs
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+  devise_for :users, controllers: { registrations: "users/registrations" }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   devise_scope :user do
-    get 'signup', to: 'users/registrations#signup', as: :mentor_mentee_registration
-    post 'update_shortlist', to: 'users/registrations#update_shortlist', as: :update_shortlist
+    get "signup", to: "users/registrations#signup", as: :mentor_mentee_registration
+    post "update_shortlist", to: "users/registrations#update_shortlist", as: :update_shortlist
   end
 
   # Reveal health status on /up that returns 200 if the aboots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get 'up' => 'rails/health#show', as: :rails_health_check
+  get "up" => "rails/health#show", as: :rails_health_check
 
-  get '/dashboard/:role/:program_id', to: 'dashboard#show'
-  get '/dashboard/:role', to: 'dashboard#show', as: :dashboard
-  get '/profile/:id', to: 'profile#show', as: :profile
-  post '/dashboard/create_program_admin', to: 'dashboard#create_program_admin', as: :create_program_admin
+  get "/dashboard/:role/:program_id", to: "dashboard#show"
+  get "/dashboard/:role", to: "dashboard#show", as: :dashboard
+  get "/profile/:id", to: "profile#show", as: :profile
+  post "/dashboard/create_program_admin", to: "dashboard#create_program_admin", as: :create_program_admin
 
-  post '/profile/:id/create_request', to: 'profile#create', as: 'create_request_profile'
+  post "/profile/:id/create_request", to: "profile#create", as: "create_request_profile"
 
   # Defines the root path route ("/")
-  root 'home#index', as: :home
+  root "home#index", as: :home
 end

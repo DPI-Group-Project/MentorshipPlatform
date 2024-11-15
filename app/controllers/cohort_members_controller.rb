@@ -10,13 +10,9 @@ class CohortMembersController < ApplicationController
       @cohort_members = CohortMember.includes(:user).all
     end
 
-    @mentors = @cohort_members.select { |member| member.role == 'mentor' }
-    @mentees = @cohort_members.select { |member| member.role == 'mentee' }
+    @mentors = @cohort_members.select { |member| member.role == "mentor" }
+    @mentees = @cohort_members.select { |member| member.role == "mentee" }
   end
-
-  
-  
-   
 
   # GET /cohort_members/1 or /cohort_members/1.json
   def show; end
@@ -40,12 +36,12 @@ class CohortMembersController < ApplicationController
     mentee_emails = extract_emails(params[:cohort_member][:mentee_emails])
 
     # Create cohort members for mentors and mentees
-    mentor_emails.each { |email| create_cohort_member(email, cohort_id, 'mentor') }
-    mentee_emails.each { |email| create_cohort_member(email, cohort_id, 'mentee') }
+    mentor_emails.each { |email| create_cohort_member(email, cohort_id, "mentor") }
+    mentee_emails.each { |email| create_cohort_member(email, cohort_id, "mentee") }
 
     respond_to do |format|
-      format.html { redirect_to dashboard_path(role: 'admin'), notice: 'Mentors and mentees were successfully added.' }
-      format.json { render json: { message: 'Mentors and mentees were successfully added.' }, status: :created }
+      format.html { redirect_to dashboard_path(role: "admin"), notice: "Mentors and mentees were successfully added." }
+      format.json { render json: { message: "Mentors and mentees were successfully added." }, status: :created }
     end
   end
 
@@ -56,9 +52,9 @@ class CohortMembersController < ApplicationController
     role = params[:role]
 
     if create_cohort_member(email, cohort_id, role)
-      render json: { message: 'Email added successfully' }, status: :ok
+      render json: { message: "Email added successfully" }, status: :ok
     else
-      render json: { error: 'Failed to add email' }, status: :unprocessable_entity
+      render json: { error: "Failed to add email" }, status: :unprocessable_entity
     end
   end
 
@@ -73,9 +69,9 @@ class CohortMembersController < ApplicationController
                                 .find_by(cohort_id:, role:)
 
     if cohort_member&.destroy
-      render json: { message: 'Email deleted successfully' }, status: :ok
+      render json: { message: "Email deleted successfully" }, status: :ok
     else
-      render json: { error: 'Failed to delete email' }, status: :unprocessable_entity
+      render json: { error: "Failed to delete email" }, status: :unprocessable_entity
     end
   end
 
@@ -83,7 +79,7 @@ class CohortMembersController < ApplicationController
   def update
     respond_to do |format|
       if @cohort_member.update(cohort_member_params)
-        format.html { redirect_to cohort_member_url(@cohort_member), notice: 'Cohort member was successfully updated.' }
+        format.html { redirect_to cohort_member_url(@cohort_member), notice: "Cohort member was successfully updated." }
         format.json { render :show, status: :ok, location: @cohort_member }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -97,7 +93,7 @@ class CohortMembersController < ApplicationController
     @cohort_member.destroy!
 
     respond_to do |format|
-      format.html { redirect_to cohort_members_url, notice: 'Cohort member was successfully destroyed.' }
+      format.html { redirect_to cohort_members_url, notice: "Cohort member was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -122,11 +118,11 @@ class CohortMembersController < ApplicationController
 
     cm.save!
 
-    role == 'mentor' ? CohortMemberMailer.mentor_welcome_mail(cm).deliver_later! : CohortMemberMailer.mentee_welcome_mail(cm).deliver_later!
+    role == "mentor" ? CohortMemberMailer.mentor_welcome_mail(cm).deliver_later! : CohortMemberMailer.mentee_welcome_mail(cm).deliver_later!
   end
 
   # Helper method to split, clean, and format email strings
   def extract_emails(email_string)
-    email_string.to_s.split(',').map(&:strip).reject(&:empty?)
+    email_string.to_s.split(",").map(&:strip).reject(&:empty?)
   end
 end

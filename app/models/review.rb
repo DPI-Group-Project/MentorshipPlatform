@@ -12,7 +12,6 @@
 #  updated_at      :datetime         not null
 #
 class Review < ApplicationRecord
-  belongs_to :match, required: true, class_name: "Match", foreign_key: "match_id"
+  belongs_to :match, optional: false, class_name: "Match"
   # has_many :meetings, class_name: "Meeting", foreign_key: "review_id", dependent: :destroy
-
 end

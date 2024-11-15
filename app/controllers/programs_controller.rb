@@ -1,5 +1,5 @@
 class ProgramsController < ApplicationController
-  before_action :set_program, only: %i[ show edit update destroy ]
+  before_action :set_program, only: %i[show edit update destroy]
 
   # GET /programs or /programs.json
   def index
@@ -7,8 +7,7 @@ class ProgramsController < ApplicationController
   end
 
   # GET /programs/1 or /programs/1.json
-  def show
-  end
+  def show; end
 
   # GET /programs/new
   def new
@@ -16,8 +15,7 @@ class ProgramsController < ApplicationController
   end
 
   # GET /programs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /programs or /programs.json
   def create
@@ -58,13 +56,14 @@ class ProgramsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_program
-      @program = Program.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def program_params
-      params.require(:program).permit(:name, :description, :creator_id, :contact_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_program
+    @program = Program.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def program_params
+    params.require(:program).permit(:name, :description, :creator_id, :contact_id)
+  end
 end

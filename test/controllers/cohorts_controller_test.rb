@@ -17,7 +17,9 @@ class CohortsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create cohort" do
     assert_difference("Cohort.count") do
-      post cohorts_url, params: { cohort: { cohort_name: @cohort.cohort_name, contact_id: @cohort.contact_id, creator_id: @cohort.creator_id, description: @cohort.description, end_date: @cohort.end_date, program_id: @cohort.program_id, start_date: @cohort.start_date } }
+      post cohorts_url,
+           params: { cohort: { cohort_name: @cohort.cohort_name, contact_id: @cohort.contact_id, creator_id: @cohort.creator_id,
+                               description: @cohort.description, end_date: @cohort.end_date, program_id: @cohort.program_id, start_date: @cohort.start_date } }
     end
 
     assert_redirected_to cohort_url(Cohort.last)
@@ -34,7 +36,9 @@ class CohortsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update cohort" do
-    patch cohort_url(@cohort), params: { cohort: { cohort_name: @cohort.cohort_name, contact_id: @cohort.contact_id, creator_id: @cohort.creator_id, description: @cohort.description, end_date: @cohort.end_date, program_id: @cohort.program_id, start_date: @cohort.start_date } }
+    patch cohort_url(@cohort),
+          params: { cohort: { cohort_name: @cohort.cohort_name, contact_id: @cohort.contact_id, creator_id: @cohort.creator_id,
+                              description: @cohort.description, end_date: @cohort.end_date, program_id: @cohort.program_id, start_date: @cohort.start_date } }
     assert_redirected_to cohort_url(@cohort)
   end
 

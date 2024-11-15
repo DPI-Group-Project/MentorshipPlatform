@@ -1,9 +1,9 @@
 class MeetingsController < ApplicationController
-  before_action :set_meeting, only: %i[ show edit update destroy ]
+  before_action :set_meeting, only: %i[show edit update destroy]
 
   # GET /meetings or /meetings.json
   def index
-    @match = Match.where('mentee_id = :id OR mentor_id = :id', id: current_user.id).first
+    @match = Match.where("mentee_id = :id OR mentor_id = :id", id: current_user.id).first
     @meetings = @match.meetings.order(:date)
     @mentor = @match.mentor
     @required_meetings_count = @match.cohort.required_meetings
@@ -12,7 +12,7 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1 or /meetings/1.json
   def show
-    @match = Match.where('mentee_id = :id OR mentor_id = :id', id: current_user.id).first
+    @match = Match.where("mentee_id = :id OR mentor_id = :id", id: current_user.id).first
     @meetings = @match.meetings.order(:date)
     @mentor = @match.mentor
     @required_meetings_count = @match.cohort.required_meetings
@@ -25,8 +25,7 @@ class MeetingsController < ApplicationController
   end
 
   # GET /meetings/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /meetings or /meetings.json
   def create
@@ -69,14 +68,14 @@ class MeetingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_meeting
-      @meeting = Meeting.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def meeting_params
-      params.require(:meeting).permit(:date, :time, :notes, :location)
-    end
-    
+  # Use callbacks to share common setup or constraints between actions.
+  def set_meeting
+    @meeting = Meeting.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def meeting_params
+    params.require(:meeting).permit(:date, :time, :notes, :location)
+  end
 end

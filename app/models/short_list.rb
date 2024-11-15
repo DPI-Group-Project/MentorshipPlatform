@@ -12,7 +12,7 @@
 #
 
 class ShortList < ApplicationRecord
-  belongs_to :mentor, required: true, class_name: "User", foreign_key: "mentor_id"
-  belongs_to :mentee, required: true, class_name: "User", foreign_key: "mentee_id"
-  belongs_to :cohort, required: true, class_name: "Cohort", foreign_key: "cohort_id"
+  belongs_to :mentor, optional: false, class_name: "User"
+  belongs_to :mentee, optional: false, class_name: "User"
+  belongs_to :cohort, optional: false, class_name: "Cohort"
 end

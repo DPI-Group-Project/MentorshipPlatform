@@ -5,20 +5,20 @@ class DashboardController < ApplicationController
   def show
     @role = params[:role].downcase
 
-    #Loads up data when role is valid
-    if ['mentor', 'mentee'].include? (@role) then
+    # Loads up data when role is valid
+    if %w[mentor mentee].include?(@role)
       @shortlist_time = current_user.cohort.shortlist_creation_open?
       @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
-      @mentees_data = CohortMember.where(role: 'mentee')
+      @mentees_data = CohortMember.where(role: "mentee")
       @meetings = current_user.mentor ? current_user.mentor.meetings : current_user.mentees.map(&:meetings).flatten
-      @meeting_dates = @meetings.map { |meeting| meeting.date.strftime('%Y-%m-%d') }
+      @meeting_dates = @meetings.map { |meeting| meeting.date.strftime("%Y-%m-%d") }
       @upcoming_meeting = @meetings.select { |meeting| meeting.date >= Date.today }.min_by(&:date)
       @required_meetings_count = current_user.cohort.required_meetings
       @past_meeting_count = @meetings.count { |meeting| meeting.date < Date.today }
       @progress = ((@past_meeting_count.to_f / @required_meetings_count) * 100).round(0)
       @remaining_meetings = @required_meetings_count - @meetings.count
 
-    elsif ['admin'].include?(@role)
+    elsif ["admin"].include?(@role)
       @admin_data = ProgramAdmin.find_by(email: current_user.email)
       @programs_by_admin = current_user.assigned_programs
       @program_admin = ProgramAdmin.new
@@ -31,7 +31,7 @@ class DashboardController < ApplicationController
         @cohorts = Cohort.where(program_id: @current_program.id)
       end
     else
-      redirect_to root_path, alert: 'Invalid role specified.'
+      redirect_to root_path, alert: "Invalid role specified."
     end
   end
 
@@ -71,10 +71,10 @@ class DashboardController < ApplicationController
 
     respond_to do |format|
       if @program_admin.save
-        format.html { redirect_to dashboard_path(role: 'admin'), notice: 'Program admin was successfully created.' }
+        format.html { redirect_to dashboard_path(role: "admin"), notice: "Program admin was successfully created." }
         format.js   # Optional, if you want to handle JS responses (e.g., to close the modal via JS)
       else
-        format.html { render :show, alert: 'Failed to create program admin.' }
+        format.html { render :show, alert: "Failed to create program admin." }
         format.js   # Optional, for JS response on failure
       end
     end

@@ -17,7 +17,9 @@ class CohortMembersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create cohort_member" do
     assert_difference("CohortMember.count") do
-      post cohort_members_url, params: { cohort_member: { cohort_id_id: @cohort_member.cohort_id_id, role: @cohort_member.role, user_id_id: @cohort_member.user_id_id } }
+      post cohort_members_url,
+           params: { cohort_member: { cohort_id_id: @cohort_member.cohort_id_id, role: @cohort_member.role,
+                                      user_id_id: @cohort_member.user_id_id } }
     end
 
     assert_redirected_to cohort_member_url(CohortMember.last)
@@ -34,7 +36,9 @@ class CohortMembersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update cohort_member" do
-    patch cohort_member_url(@cohort_member), params: { cohort_member: { cohort_id_id: @cohort_member.cohort_id_id, role: @cohort_member.role, user_id_id: @cohort_member.user_id_id } }
+    patch cohort_member_url(@cohort_member),
+          params: { cohort_member: { cohort_id_id: @cohort_member.cohort_id_id, role: @cohort_member.role,
+                                     user_id_id: @cohort_member.user_id_id } }
     assert_redirected_to cohort_member_url(@cohort_member)
   end
 

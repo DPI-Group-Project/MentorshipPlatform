@@ -1,7 +1,7 @@
 class UpdateMeetingsTable < ActiveRecord::Migration[7.1]
   def change
     remove_column :meetings, :time, :datetime
-    
+
     # Adding date and time columns separately
     add_column :meetings, :date, :date
     add_column :meetings, :time, :time

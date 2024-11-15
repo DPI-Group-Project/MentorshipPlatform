@@ -29,14 +29,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  belongs_to :cohort_member, primary_key: 'email', foreign_key: 'email', optional: true, dependent: :destroy
-  has_many :program_admins, primary_key: 'email', foreign_key: 'email', dependent: :destroy
-  has_one :mentor, class_name: 'Match', foreign_key: 'mentor_id', dependent: :destroy
-  has_many :mentees, class_name: 'Match', foreign_key: 'mentee_id', dependent: :destroy
-  has_many :mentor_submissions, class_name: 'MatchSubmission', foreign_key: 'mentor_id', dependent: :destroy
-  has_many :mentee_submissions, class_name: 'MatchSubmission', foreign_key: 'mentee_id', dependent: :destroy
-  has_many :owned_cohorts, class_name: 'Cohort', foreign_key: 'creator_id', dependent: :destroy
-  has_many :owned_programs, class_name: 'Program', foreign_key: 'creator_id', dependent: :destroy
+  belongs_to :cohort_member, primary_key: "email", foreign_key: "email", optional: true, dependent: :destroy
+  has_many :program_admins, primary_key: "email", foreign_key: "email", dependent: :destroy
+  has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
+  has_many :mentees, class_name: "Match", foreign_key: "mentee_id", dependent: :destroy
+  has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
+  has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
+  has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
+  has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
 
   validates :email, uniqueness: true
 
@@ -45,17 +45,17 @@ class User < ApplicationRecord
   # Returns list of mentees that are in the same cohort as the provided mentor
   scope :mentors_in_cohort, lambda { |cohort|
                               joins(:cohort_member)
-                                .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentor')
+                                .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort, "mentor")
                             }
   scope :mentees_in_cohort, lambda { |cohort|
                               joins(:cohort_member)
-                                .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
+                                .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort, "mentee")
                             }
   scope :unpaired_mentees_in_cohort, lambda { |cohort|
                                        joins(:cohort_member)
-                                         .left_joins('LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true')
-                                         .where('cohort_members.cohort_id = ? AND cohort_members.role = ?', cohort, 'mentee')
-                                         .where('matches.id IS NULL')
+                                         .left_joins("LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true")
+                                         .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort, "mentee")
+                                         .where("matches.id IS NULL")
                                      }
 
   def name
@@ -63,29 +63,27 @@ class User < ApplicationRecord
   end
 
   def matched?
-    Match.where('mentee_id = :id OR mentor_id = :id', id:).exists?
+    Match.where("mentee_id = :id OR mentor_id = :id", id:).exists?
   end
 
   def current_user_mentor
-    match = Match.find_by(mentee_id: self.id)
+    match = Match.find_by(mentee_id: id)
     match ? User.find(match.mentor_id) : nil
   end
 
   def cohort
     cohort_id = CohortMember.where(email:).pluck(:cohort_id).first
-    cohort = Cohort.find_by(id: cohort_id)
+    Cohort.find_by(id: cohort_id)
   end
 
   def role
-    cohort_member_role = CohortMember.where(email: self.email).pluck(:role).first
-    program_admin_role = ProgramAdmin.where(email: self.email).pluck(:role).first
-  
+    cohort_member_role = CohortMember.where(email: email).pluck(:role).first
+    program_admin_role = ProgramAdmin.where(email: email).pluck(:role).first
+
     if program_admin_role.present?
       program_admin_role
     elsif cohort_member_role.present?
       cohort_member_role
-    else
-      nil
     end
   end
 
@@ -95,7 +93,7 @@ class User < ApplicationRecord
 
   # Return how many mentees a mentor currently has
   def mentee_capacity_count(cohort_id)
-    matches = Match.where('mentor_id = ? AND active = ? AND cohort_id = ?', id, 'true', cohort_id)
+    matches = Match.where("mentor_id = ? AND active = ? AND cohort_id = ?", id, "true", cohort_id)
     matches.size
   end
 
@@ -114,6 +112,6 @@ class User < ApplicationRecord
   private
 
   def set_default_active_status
-    self.status ||= 'Active'
+    self.status ||= "Active"
   end
 end

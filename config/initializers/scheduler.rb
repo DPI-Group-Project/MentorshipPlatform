@@ -1,17 +1,17 @@
-require 'rufus-scheduler'
+require "rufus-scheduler"
 
 Rails.application.config.to_prepare do
-  thread_to_kill = Thread.list.find { |t| t[:name] == 'rufus_scheduler_17900_scheduler' }
+  thread_to_kill = Thread.list.find { |t| t[:name] == "rufus_scheduler_17900_scheduler" }
   thread_to_kill.kill if thread_to_kill
   p "Initiating Matching Thread"
-  @scheduler_thread = Thread.new(name: 'MatchingThreadInSchedulerFile') do
-    require 'rufus-scheduler'
+  @scheduler_thread = Thread.new(name: "MatchingThreadInSchedulerFile") do
+    require "rufus-scheduler"
     # Initialize a new scheduler instance
     scheduler = Rufus::Scheduler.new
     cohorts = Cohort.where.not(start_date: nil)
-          .where.not(end_date: nil)
-          .where.not(shortlist_start_time: nil)
-          .where.not(shortlist_end_time: nil)
+                    .where.not(end_date: nil)
+                    .where.not(shortlist_start_time: nil)
+                    .where.not(shortlist_end_time: nil)
 
     cohorts.each do |cohort|
       shortlist_end_date = cohort.shortlist_end_time.in_time_zone.utc
@@ -20,7 +20,7 @@ Rails.application.config.to_prepare do
       scheduler.at shortlist_end_date do
         MatchesController.new.create_for_cohort(cohort)
       end
-    
+
       # Schedule the email notification at the shortlist start time
       scheduler.at cohort.shortlist_start_time.in_time_zone.utc do
         p "Shortlist Open Email sent for cohort ##{cohort.id}"

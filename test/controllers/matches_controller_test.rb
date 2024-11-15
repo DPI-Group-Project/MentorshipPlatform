@@ -17,7 +17,9 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create match" do
     assert_difference("Match.count") do
-      post matches_url, params: { match: { active: @match.active, cohort_id_id: @match.cohort_id_id, matches: @match.matches, mentee_id_id: @match.mentee_id_id, mentor_id_id: @match.mentor_id_id } }
+      post matches_url,
+           params: { match: { active: @match.active, cohort_id_id: @match.cohort_id_id, matches: @match.matches,
+                              mentee_id_id: @match.mentee_id_id, mentor_id_id: @match.mentor_id_id } }
     end
 
     assert_redirected_to match_url(Match.last)
@@ -34,7 +36,9 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update match" do
-    patch match_url(@match), params: { match: { active: @match.active, cohort_id_id: @match.cohort_id_id, matches: @match.matches, mentee_id_id: @match.mentee_id_id, mentor_id_id: @match.mentor_id_id } }
+    patch match_url(@match),
+          params: { match: { active: @match.active, cohort_id_id: @match.cohort_id_id, matches: @match.matches,
+                             mentee_id_id: @match.mentee_id_id, mentor_id_id: @match.mentor_id_id } }
     assert_redirected_to match_url(@match)
   end
 
