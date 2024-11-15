@@ -1,6 +1,6 @@
 desc "Fill the database tables with some sample data"
 task({ sample_data: :environment }) do
-  starting = Time.now
+  starting = Time.zone.now
   p "Creating sample data..."
 
   Match.delete_all
@@ -56,11 +56,12 @@ task({ sample_data: :environment }) do
       phone_number: Faker::PhoneNumber.phone_number,
       bio: "#{Faker::Quotes::Shakespeare.hamlet_quote} #{Faker::Quotes::Shakespeare.hamlet_quote}",
       timezone:,
-      title: if role == "admin"
+      title: case role
+             when "admin"
                "Program Organizer"
-             elsif role == "observer"
+             when "observer"
                "Observer"
-             elsif role == "mentee"
+             when "mentee"
                "Trainee"
              else
                role == "mentor" ? mentor_title : nil
@@ -109,7 +110,7 @@ task({ sample_data: :environment }) do
   end
 
   # Creating Cohorts
-  Program.all.each do |program|
+  Program.all.find_each do |program|
     cohort_random_number = rand(1..2)
     count = 1
     cohort_random_number.times do
@@ -197,7 +198,7 @@ task({ sample_data: :environment }) do
     )
   end
 
-  ending = Time.now
+  ending = Time.zone.now
   p "There are now #{User.count} users."
   p "There are now #{Program.count} programs."
   p "There are now #{Cohort.count} cohorts."

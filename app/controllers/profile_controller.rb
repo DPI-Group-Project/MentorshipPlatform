@@ -8,7 +8,7 @@ class ProfileController < ApplicationController
   end
 
   def create
-    p "IN CREATE ACTION"
+    Rails.logger.debug "IN CREATE ACTION"
 
     respond_to do |format|
       if @current_mentee_count < @capacity_cap && current_user.matched? == false

@@ -2,8 +2,8 @@ require "rufus-scheduler"
 
 Rails.application.config.to_prepare do
   thread_to_kill = Thread.list.find { |t| t[:name] == "rufus_scheduler_17900_scheduler" }
-  thread_to_kill.kill if thread_to_kill
-  p "Initiating Matching Thread"
+  thread_to_kill&.kill
+  Rails.logger.debug "Initiating Matching Thread"
   @scheduler_thread = Thread.new(name: "MatchingThreadInSchedulerFile") do
     require "rufus-scheduler"
     # Initialize a new scheduler instance
@@ -23,14 +23,14 @@ Rails.application.config.to_prepare do
 
       # Schedule the email notification at the shortlist start time
       scheduler.at cohort.shortlist_start_time.in_time_zone.utc do
-        p "Shortlist Open Email sent for cohort ##{cohort.id}"
+        Rails.logger.debug "Shortlist Open Email sent for cohort ##{cohort.id}"
         cohort.members.each do |member|
           CohortMailer.shortlist_start_notification(member.user, cohort).deliver_later!
         end
       end
 
       subtract_2_weeks = cohort.end_date.in_time_zone.utc - 14.days
-      pp subtract_2_weeks
+      Rails.logger.debug subtract_2_weeks
 
       # send warning email to admin that cohort is ending in 2 weeks
       scheduler.at subtract_2_weeks do
@@ -38,9 +38,9 @@ Rails.application.config.to_prepare do
 
         cohort_members = CohortMember.where(cohort_id: cohort.id)
         # remind each cohort member about survey
-        pp "POOP!1"
+        Rails.logger.debug "POOP!1"
         cohort_members.each do |member|
-          pp "#{member} POOP!2"
+          Rails.logger.debug "#{member} POOP!2"
           CohortMailer.survey_reminder(member, cohort).deliver_later!
         end
 

@@ -12,9 +12,9 @@ class DashboardController < ApplicationController
       @mentees_data = CohortMember.where(role: "mentee")
       @meetings = current_user.mentor ? current_user.mentor.meetings : current_user.mentees.map(&:meetings).flatten
       @meeting_dates = @meetings.map { |meeting| meeting.date.strftime("%Y-%m-%d") }
-      @upcoming_meeting = @meetings.select { |meeting| meeting.date >= Date.today }.min_by(&:date)
+      @upcoming_meeting = @meetings.select { |meeting| meeting.date >= Time.zone.today }.min_by(&:date)
       @required_meetings_count = current_user.cohort.required_meetings
-      @past_meeting_count = @meetings.count { |meeting| meeting.date < Date.today }
+      @past_meeting_count = @meetings.count { |meeting| meeting.date < Time.zone.today }
       @progress = ((@past_meeting_count.to_f / @required_meetings_count) * 100).round(0)
       @remaining_meetings = @required_meetings_count - @meetings.count
 
@@ -72,11 +72,10 @@ class DashboardController < ApplicationController
     respond_to do |format|
       if @program_admin.save
         format.html { redirect_to dashboard_path(role: "admin"), notice: "Program admin was successfully created." }
-        format.js   # Optional, if you want to handle JS responses (e.g., to close the modal via JS)
       else
         format.html { render :show, alert: "Failed to create program admin." }
-        format.js   # Optional, for JS response on failure
       end
+      format.js
     end
   end
 

@@ -72,13 +72,13 @@ class User < ApplicationRecord
   end
 
   def cohort
-    cohort_id = CohortMember.where(email:).pluck(:cohort_id).first
+    cohort_id = CohortMember.where(email:).pick(:cohort_id)
     Cohort.find_by(id: cohort_id)
   end
 
   def role
-    cohort_member_role = CohortMember.where(email: email).pluck(:role).first
-    program_admin_role = ProgramAdmin.where(email: email).pluck(:role).first
+    cohort_member_role = CohortMember.where(email: email).pick(:role)
+    program_admin_role = ProgramAdmin.where(email: email).pick(:role)
 
     if program_admin_role.present?
       program_admin_role
@@ -88,7 +88,7 @@ class User < ApplicationRecord
   end
 
   def capacity
-    CohortMember.where(email:).pluck(:capacity).first
+    CohortMember.where(email:).pick(:capacity)
   end
 
   # Return how many mentees a mentor currently has

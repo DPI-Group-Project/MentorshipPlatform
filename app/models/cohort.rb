@@ -31,7 +31,7 @@ class Cohort < ApplicationRecord
   after_commit :start_scheduler_thread, on: %i[create update destroy]
 
   def running?
-    end_date > Date.today
+    end_date > Time.zone.today
   end
 
   def shortlist_creation_open?
@@ -79,7 +79,7 @@ class Cohort < ApplicationRecord
         end
 
         subtract_2_weeks = cohort.end_date - 14.days
-        pp subtract_2_weeks
+        Rails.logger.debug subtract_2_weeks
 
         # send warning email to admin that cohort is ending in 2 weeks
         scheduler.at subtract_2_weeks do
@@ -88,7 +88,7 @@ class Cohort < ApplicationRecord
           cohort_members = CohortMember.where(cohort_id: cohort.id)
           # remind each cohort member about survey
           cohort_members.each do |member|
-            pp "#{member} POOP!"
+            Rails.logger.debug "#{member} POOP!"
             CohortMailer.survey_reminder(member.mentor, cohort).deliver_later!
             CohortMailer.survey_reminder(member.mentee, cohort).deliver_later!
           end
@@ -114,8 +114,8 @@ class Cohort < ApplicationRecord
         unmatched_users << user
       end
     end
-    p "matched emails #{matched_users}"
-    p "unmatched emails #{unmatched_users}"
+    Rails.logger.debug "matched emails #{matched_users}"
+    Rails.logger.debug "unmatched emails #{unmatched_users}"
 
     # if there are any unmatched mentees
     if unmatched_users.any?
@@ -128,6 +128,6 @@ class Cohort < ApplicationRecord
       # send email to admin that matching is complete (if all mentees are matched)
       CohortMailer.matching_complete_notification(creator.email, self).deliver_later
     end
-    p "Emails sent for unmactched users"
+    Rails.logger.debug "Emails sent for unmactched users"
   end
 end

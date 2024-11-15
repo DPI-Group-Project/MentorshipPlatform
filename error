@@ -1,0 +1,546 @@
+Inspecting 128 files
+.....CCCCCCCCCWCCCCCCCC.CCCCCCCCC...C.C.C..........C..CC....C....CCCCCCCCCCCCCCCCCCCCCCCCCCC.C...C..............................
+
+Offenses:
+
+app/controllers/cohort_members_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CohortMembersController.
+class CohortMembersController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/cohort_members_controller.rb:31:3: C: Metrics/AbcSize: Assignment Branch Condition size for create is too high. [<6, 21, 2> 21.93/17]
+  def create ...
+  ^^^^^^^^^^
+app/controllers/cohort_members_controller.rb:62:3: C: Metrics/MethodLength: Method has too many lines. [11/10]
+  def delete_email ...
+  ^^^^^^^^^^^^^^^^
+app/controllers/cohort_members_controller.rb:121:121: C: Layout/LineLength: Line is too long. [140/120]
+    role == "mentor" ? CohortMemberMailer.mentor_welcome_mail(cm).deliver_later! : CohortMemberMailer.mentee_welcome_mail(cm).deliver_later!
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^
+app/controllers/cohorts_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CohortsController.
+class CohortsController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dashboard_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class DashboardController.
+class DashboardController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dashboard_controller.rb:5:3: C: Metrics/AbcSize: Assignment Branch Condition size for show is too high. [<21, 65, 13> 69.53/17]
+  def show ...
+  ^^^^^^^^
+app/controllers/dashboard_controller.rb:5:3: C: Metrics/CyclomaticComplexity: Cyclomatic complexity for show is too high. [10/7]
+  def show ...
+  ^^^^^^^^
+app/controllers/dashboard_controller.rb:5:3: C: Metrics/MethodLength: Method has too many lines. [26/10]
+  def show ...
+  ^^^^^^^^
+app/controllers/dashboard_controller.rb:5:3: C: Metrics/PerceivedComplexity: Perceived complexity for show is too high. [12/8]
+  def show ...
+  ^^^^^^^^
+app/controllers/dashboard_controller.rb:15:77: C: [Corrected] Rails/Date: Do not use Date.today without zone. Use Time.zone.today instead.
+      @upcoming_meeting = @meetings.select { |meeting| meeting.date >= Date.today }.min_by(&:date)
+                                                                            ^^^^^
+app/controllers/dashboard_controller.rb:17:77: C: [Corrected] Rails/Date: Do not use Date.today without zone. Use Time.zone.today instead.
+      @past_meeting_count = @meetings.count { |meeting| meeting.date < Date.today }
+                                                                            ^^^^^
+app/controllers/dashboard_controller.rb:38:3: C: Metrics/CyclomaticComplexity: Cyclomatic complexity for progress_message is too high. [9/7]
+  def progress_message(progress) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dashboard_controller.rb:38:3: C: Metrics/MethodLength: Method has too many lines. [20/10]
+  def progress_message(progress) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dashboard_controller.rb:61:3: C: Metrics/AbcSize: Assignment Branch Condition size for create_program_admin is too high. [<6, 26, 4> 26.98/17]
+  def create_program_admin ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dashboard_controller.rb:61:3: C: Metrics/MethodLength: Method has too many lines. [16/10]
+  def create_program_admin ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/dashboard_controller.rb:75:9: C: [Corrected] Style/IdenticalConditionalBranches: Move format.js out of the conditional.
+        format.js   # Optional, if you want to handle JS responses (e.g., to close the modal via JS)
+        ^^^^^^^^^
+app/controllers/dashboard_controller.rb:78:1: C: [Corrected] Layout/IndentationConsistency: Inconsistent indentation detected.
+format.js
+^^^^^^^^^
+app/controllers/dashboard_controller.rb:78:9: C: [Corrected] Style/IdenticalConditionalBranches: Move format.js out of the conditional.
+        format.js   # Optional, for JS response on failure
+        ^^^^^^^^^
+app/controllers/home_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class HomeController.
+class HomeController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^
+app/controllers/matches_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class MatchesController.
+class MatchesController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/matches_controller.rb:38:3: C: Metrics/AbcSize: Assignment Branch Condition size for create_matches_for_cohort is too high. [<8, 52, 9> 53.38/17]
+  def create_matches_for_cohort(cohort_id) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/matches_controller.rb:38:3: C: Metrics/CyclomaticComplexity: Cyclomatic complexity for create_matches_for_cohort is too high. [9/7]
+  def create_matches_for_cohort(cohort_id) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/matches_controller.rb:38:3: C: Metrics/MethodLength: Method has too many lines. [29/10]
+  def create_matches_for_cohort(cohort_id) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/matches_controller.rb:38:3: C: Metrics/PerceivedComplexity: Perceived complexity for create_matches_for_cohort is too high. [9/8]
+  def create_matches_for_cohort(cohort_id) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/matches_controller.rb:56:121: C: Layout/LineLength: Line is too long. [127/120]
+      if cohort_member.nil? || cohort_member.capacity.nil? || mentor.mentee_capacity_count(cohort.id) >= cohort_member.capacity
+                                                                                                                        ^^^^^^^
+app/controllers/matches_controller.rb:57:121: C: Layout/LineLength: Line is too long. [163/120]
+        Rails.logger.warn "Skipping match creation for cohort #{cohort.id}, mentor #{mentor.email} due to invalid cohort member, no capacity, or reached capacity."
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/meetings_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class MeetingsController.
+class MeetingsController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/meetings_controller.rb:31:3: C: Metrics/AbcSize: Assignment Branch Condition size for create is too high. [<4, 20, 3> 20.62/17]
+  def create ...
+  ^^^^^^^^^^
+app/controllers/meetings_controller.rb:31:3: C: Metrics/MethodLength: Method has too many lines. [12/10]
+  def create ...
+  ^^^^^^^^^^
+app/controllers/profile_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class ProfileController.
+class ProfileController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/profile_controller.rb:10:3: C: Metrics/AbcSize: Assignment Branch Condition size for create is too high. [<2, 29, 7> 29.9/17]
+  def create ...
+  ^^^^^^^^^^
+app/controllers/profile_controller.rb:10:3: C: Metrics/MethodLength: Method has too many lines. [21/10]
+  def create ...
+  ^^^^^^^^^^
+app/controllers/profile_controller.rb:11:5: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+    p "IN CREATE ACTION"
+    ^
+app/controllers/programs_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class ProgramsController.
+class ProgramsController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/reviews_controller.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class ReviewsController.
+class ReviewsController < ApplicationController
+^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:3:7: C: [Corrected] Style/ClassAndModuleChildren: Use nested module/class definitions instead of compact style.
+class Users::RegistrationsController < Devise::RegistrationsController
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:4:3: C: Style/Documentation: Missing top-level documentation comment for class Users::RegistrationsController.
+  class RegistrationsController < Devise::RegistrationsController
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:5:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  before_action :configure_sign_up_params, only: [:create]
+  
+app/controllers/users/registrations_controller.rb:6:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  after_action :set_csrf_headers, only: :create
+  
+app/controllers/users/registrations_controller.rb:7:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  before_action :configure_account_update_params, only: [:update]
+  
+app/controllers/users/registrations_controller.rb:7:5: C: Rails/LexicallyScopedActionFilter: update is not explicitly defined on the class.
+    before_action :configure_account_update_params, only: [:update]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:9:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # GET /resource/sign_up
+  ^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:9:3: W: [Corrected] Lint/UselessMethodDefinition: Useless method definition detected.
+  def new ...
+  ^^^^^^^
+app/controllers/users/registrations_controller.rb:10:1: C: [Corrected] Layout/TrailingWhitespace: Trailing whitespace detected.
+app/controllers/users/registrations_controller.rb:11:1: C: [Corrected] Layout/EmptyLines: Extra blank line detected.
+app/controllers/users/registrations_controller.rb:12:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # POST /resource
+  ^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:13:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  def create
+  
+app/controllers/users/registrations_controller.rb:26:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  def signup
+  
+app/controllers/users/registrations_controller.rb:31:5: C: Metrics/AbcSize: Assignment Branch Condition size for update_shortlist is too high. [<8, 23, 2> 24.43/17]
+    def update_shortlist ...
+    ^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:31:5: C: Metrics/MethodLength: Method has too many lines. [17/10]
+    def update_shortlist ...
+    ^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:32:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  def update_shortlist
+  
+app/controllers/users/registrations_controller.rb:59:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # end
+  ^^^^^
+app/controllers/users/registrations_controller.rb:64:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # end
+  ^^^^^
+app/controllers/users/registrations_controller.rb:69:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # end
+  ^^^^^
+app/controllers/users/registrations_controller.rb:79:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # end
+  ^^^^^
+app/controllers/users/registrations_controller.rb:81:3: C: [Corrected] Layout/AccessModifierIndentation: Indent access modifiers like protected.
+  protected
+  ^^^^^^^^^
+app/controllers/users/registrations_controller.rb:83:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # If you have extra params to permit, append them to the sanitizer.
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:84:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  def configure_sign_up_params
+  
+app/controllers/users/registrations_controller.rb:92:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  def configure_account_update_params
+  
+app/controllers/users/registrations_controller.rb:93:121: C: Layout/LineLength: Line is too long. [154/120]
+                                        keys: %i[first_name last_name status inactive_reason phone_number bio timezone title linkedin_link profile_picture
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:98:3: C: [Corrected] Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
+  def set_csrf_headers
+  
+app/controllers/users/registrations_controller.rb:102:40: C: [Corrected] Style/RedundantInterpolation: Prefer to_s over string interpolation.
+    response.headers["X-CSRF-Token"] = "#{form_authenticity_token}"
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:103:40: C: [Corrected] Style/RedundantInterpolation: Prefer to_s over string interpolation.
+    response.headers["X-CSRF-Param"] = "#{request_forgery_protection_token}"
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/controllers/users/registrations_controller.rb:107:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # end
+  ^^^^^
+app/controllers/users/registrations_controller.rb:113:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # end
+  ^^^^^
+app/controllers/users/registrations_controller.rb:118:3: C: [Corrected] Layout/CommentIndentation: Incorrect indentation detected (column 2 instead of 4).
+  # end
+  ^^^^^
+app/helpers/application_helper.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for module ApplicationHelper.
+module ApplicationHelper
+^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/cohort_members_helper.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for module CohortMembersHelper.
+module CohortMembersHelper
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/cohorts_helper.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for module CohortsHelper.
+module CohortsHelper
+^^^^^^^^^^^^^^^^^^^^
+app/helpers/dashboard_helper.rb:3:3: C: Metrics/CyclomaticComplexity: Cyclomatic complexity for progress_message is too high. [9/7]
+  def progress_message(progress) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/dashboard_helper.rb:3:3: C: Metrics/MethodLength: Method has too many lines. [20/10]
+  def progress_message(progress) ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/matches_helper.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for module MatchesHelper.
+module MatchesHelper
+^^^^^^^^^^^^^^^^^^^^
+app/helpers/organizations_helper.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for module OrganizationsHelper.
+module OrganizationsHelper
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/programs_helper.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for module ProgramsHelper.
+module ProgramsHelper
+^^^^^^^^^^^^^^^^^^^^^
+app/helpers/reviews_helper.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for module ReviewsHelper.
+module ReviewsHelper
+^^^^^^^^^^^^^^^^^^^^
+app/mailers/application_mailer.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class ApplicationMailer.
+class ApplicationMailer < ActionMailer::Base
+^^^^^^^^^^^^^^^^^^^^^^^
+app/mailers/cohort_mailer.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CohortMailer.
+class CohortMailer < ApplicationMailer
+^^^^^^^^^^^^^^^^^^
+app/mailers/cohort_member_mailer.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CohortMemberMailer.
+class CohortMemberMailer < ApplicationMailer
+^^^^^^^^^^^^^^^^^^^^^^^^
+app/mailers/match_mailer.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class MatchMailer.
+class MatchMailer < ApplicationMailer
+^^^^^^^^^^^^^^^^^
+app/mailers/survey_mailer.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class SurveyMailer.
+class SurveyMailer < ApplicationMailer
+^^^^^^^^^^^^^^^^^^
+app/models/application_record.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class ApplicationRecord.
+class ApplicationRecord < ActiveRecord::Base
+^^^^^^^^^^^^^^^^^^^^^^^
+app/models/cohort.rb:34:21: C: [Corrected] Rails/Date: Do not use Date.today without zone. Use Time.zone.today instead.
+    end_date > Date.today
+                    ^^^^^
+app/models/cohort.rb:53:3: C: Metrics/AbcSize: Assignment Branch Condition size for start_scheduler_thread is too high. [<9, 55, 5> 55.96/17]
+  def start_scheduler_thread ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/cohort.rb:53:3: C: Metrics/MethodLength: Method has too many lines. [33/10]
+  def start_scheduler_thread ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/cohort.rb:57:25: C: Metrics/BlockLength: Block has too many lines. [29/25]
+    @scheduler_thread = Thread.new(name: "MatchingThreadInCohortModel") do ...
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/cohort.rb:82:9: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+        pp subtract_2_weeks
+        ^^
+app/models/cohort.rb:91:13: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+            pp "#{member} POOP!"
+            ^^
+app/models/cohort.rb:102:3: C: Metrics/AbcSize: Assignment Branch Condition size for send_matching_results_emails is too high. [<6, 29, 6> 30.22/17]
+  def send_matching_results_emails ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/cohort.rb:102:3: C: Metrics/MethodLength: Method has too many lines. [23/10]
+  def send_matching_results_emails ...
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/cohort.rb:117:5: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+    p "matched emails #{matched_users}"
+    ^
+app/models/cohort.rb:118:5: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+    p "unmatched emails #{unmatched_users}"
+    ^
+app/models/cohort.rb:131:5: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+    p "Emails sent for unmactched users"
+    ^
+app/models/cohort_member.rb:14:3: C: Rails/HasManyOrHasOneDependent: Specify a :dependent option.
+  has_one :user, primary_key: "email", foreign_key: "email"
+  ^^^^^^^
+app/models/cohort_member.rb:14:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  has_one :user, primary_key: "email", foreign_key: "email"
+  ^^^^^^^
+app/models/cohort_member.rb:16:3: C: Rails/UniqueValidationWithoutIndex: Uniqueness validation should have a unique index on the database column.
+  validates :email, uniqueness: true
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/models/match.rb:24:5: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+    p "Emails sent matched users"
+    ^
+app/models/program_admin.rb:14:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  belongs_to :admin, class_name: "User", foreign_key: "email", primary_key: "email", optional: true
+  ^^^^^^^^^^
+app/models/short_list.rb:14:1: C: Style/Documentation: Missing top-level documentation comment for class ShortList.
+class ShortList < ApplicationRecord
+^^^^^^^^^^^^^^^
+app/models/user.rb:32:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  belongs_to :cohort_member, primary_key: "email", foreign_key: "email", optional: true, dependent: :destroy
+  ^^^^^^^^^^
+app/models/user.rb:33:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  has_many :program_admins, primary_key: "email", foreign_key: "email", dependent: :destroy
+  ^^^^^^^^
+app/models/user.rb:34:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
+  ^^^^^^^
+app/models/user.rb:35:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  has_many :mentees, class_name: "Match", foreign_key: "mentee_id", dependent: :destroy
+  ^^^^^^^^
+app/models/user.rb:36:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
+  ^^^^^^^^
+app/models/user.rb:37:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
+  ^^^^^^^^
+app/models/user.rb:38:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
+  ^^^^^^^^
+app/models/user.rb:39:3: C: Rails/InverseOf: Specify an :inverse_of option.
+  has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
+  ^^^^^^^^
+app/models/user.rb:56:121: C: Layout/LineLength: Line is too long. [131/120]
+                                         .left_joins("LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true")
+                                                                                                                        ^^^^^^^^^^^
+app/models/user.rb:57:121: C: Layout/LineLength: Line is too long. [125/120]
+                                         .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort, "mentee")
+                                                                                                                        ^^^^^
+app/models/user.rb:75:44: C: [Corrected] Rails/Pick: Prefer pick(:cohort_id) over pluck(:cohort_id).first.
+    cohort_id = CohortMember.where(email:).pluck(:cohort_id).first
+                                           ^^^^^^^^^^^^^^^^^^^^^^^
+app/models/user.rb:80:59: C: [Corrected] Rails/Pick: Prefer pick(:role) over pluck(:role).first.
+    cohort_member_role = CohortMember.where(email: email).pluck(:role).first
+                                                          ^^^^^^^^^^^^^^^^^^
+app/models/user.rb:81:59: C: [Corrected] Rails/Pick: Prefer pick(:role) over pluck(:role).first.
+    program_admin_role = ProgramAdmin.where(email: email).pluck(:role).first
+                                                          ^^^^^^^^^^^^^^^^^^
+app/models/user.rb:91:32: C: [Corrected] Rails/Pick: Prefer pick(:capacity) over pluck(:capacity).first.
+    CohortMember.where(email:).pluck(:capacity).first
+                               ^^^^^^^^^^^^^^^^^^^^^^
+config/application.rb:10:3: C: Style/Documentation: Missing top-level documentation comment for class Mentorship::Application.
+  class Application < Rails::Application
+  ^^^^^^^^^^^^^^^^^
+config/environments/development.rb:3:1: C: Metrics/BlockLength: Block has too many lines. [27/25]
+Rails.application.configure do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/environments/production.rb:55:45: C: [Corrected] Style/GlobalStdStream: Use $stdout instead of STDOUT.
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+                                            ^^^^^^
+config/initializers/devise.rb:17:121: C: Layout/LineLength: Line is too long. [154/120]
+  # config.secret_key = '86bdc20e34c3a97d6bacc7faed4d753cd9a61054e21588d9a6c13f8ded410fd7945c08a869c187cf22bb7ff2e2fc0006f521110e65e96b139c48e57e5bc76e0d'
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/devise.rb:129:121: C: Layout/LineLength: Line is too long. [150/120]
+  # config.pepper = 'aeac0b13716c1c9850d8563679f944267b29a2ea65516aa00d92a0139354408ebf54c009f06e63ea277870ccb3443378d81fcfac7c09f0764d870017c5135c9e'
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/scheduler.rb:3:1: C: Metrics/BlockLength: Block has too many lines. [35/25]
+Rails.application.config.to_prepare do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/scheduler.rb:5:3: C: [Corrected] Style/SafeNavigation: Use safe navigation (&.) instead of checking if an object exists before calling the method.
+  thread_to_kill.kill if thread_to_kill
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/scheduler.rb:6:3: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+  p "Initiating Matching Thread"
+  ^
+config/initializers/scheduler.rb:7:23: C: Metrics/BlockLength: Block has too many lines. [30/25]
+  @scheduler_thread = Thread.new(name: "MatchingThreadInSchedulerFile") do ...
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/initializers/scheduler.rb:26:9: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+        p "Shortlist Open Email sent for cohort ##{cohort.id}"
+        ^
+config/initializers/scheduler.rb:33:7: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+      pp subtract_2_weeks
+      ^^
+config/initializers/scheduler.rb:41:9: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+        pp "POOP!1"
+        ^^
+config/initializers/scheduler.rb:43:11: C: [Corrected] Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+          pp "#{member} POOP!2"
+          ^^
+config/puma.rb:10:25: C: [Corrected] Style/RedundantFetchBlock: Use fetch("RAILS_MAX_THREADS", 5) instead of fetch("RAILS_MAX_THREADS") { 5 }.
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/puma.rb:23:30: C: [Corrected] Style/RedundantFetchBlock: Use fetch("WEB_CONCURRENCY", 1) instead of fetch("WEB_CONCURRENCY") { 1 }.
+  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY") { 1 })
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+config/puma.rb:35:10: C: [Corrected] Style/RedundantFetchBlock: Use fetch("PORT", 3000) instead of fetch("PORT") { 3000 }.
+port ENV.fetch("PORT") { 3000 }
+         ^^^^^^^^^^^^^^^^^^^^^^
+config/routes.rb:1:1: C: Metrics/BlockLength: Block has too many lines. [28/25]
+Rails.application.routes.draw do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/1_create_user.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateUser.
+class CreateUser < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^
+db/migrate/1_create_user.rb:3:25: C: [Corrected] Style/SymbolProc: Pass &:timestamps as an argument to create_table instead of a block.
+    create_table :users do |t| ...
+                        ^^^^^^
+db/migrate/20240919224957_add_devise_to_users.rb:3:1: C: Style/Documentation: Missing top-level documentation comment for class AddDeviseToUsers.
+class AddDeviseToUsers < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919224957_add_devise_to_users.rb:4:3: C: Metrics/AbcSize: Assignment Branch Condition size for up is too high. [<1, 19, 0> 19.03/17]
+  def self.up ...
+  ^^^^^^^^^^^
+db/migrate/20240919224957_add_devise_to_users.rb:4:3: C: Metrics/MethodLength: Method has too many lines. [20/10]
+  def self.up ...
+  ^^^^^^^^^^^
+db/migrate/20240919224957_add_devise_to_users.rb:5:5: C: Rails/BulkChangeTable: You can combine alter queries using bulk: true options.
+    change_table :users do |t|
+    ^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919225146_create_programs.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreatePrograms.
+class CreatePrograms < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919225608_create_cohorts.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateCohorts.
+class CreateCohorts < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919225754_create_cohort_members.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateCohortMembers.
+class CreateCohortMembers < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919230224_create_program_admins.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateProgramAdmins.
+class CreateProgramAdmins < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919230550_create_match_submissions.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateMatchSubmissions.
+class CreateMatchSubmissions < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919230841_create_matches.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateMatches.
+class CreateMatches < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919231509_create_reviews.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateReviews.
+class CreateReviews < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919231710_create_meetings.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateMeetings.
+class CreateMeetings < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919233715_remove_matches_from_match.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class RemoveMatchesFromMatch.
+class RemoveMatchesFromMatch < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240919233715_remove_matches_from_match.rb:3:5: C: Rails/ReversibleMigration: remove_column(without type) is not reversible.
+    remove_column :matches, :matches
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240921185754_add_required_meetings_to_cohorts.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class AddRequiredMeetingsToCohorts.
+class AddRequiredMeetingsToCohorts < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20240921190621_add_capacity_to_cohort_members.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class AddCapacityToCohortMembers.
+class AddCapacityToCohortMembers < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241022154947_change_user_id_to_email_in_cohort_member.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class ChangeUserIdToEmailInCohortMember.
+class ChangeUserIdToEmailInCohortMember < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241022154947_change_user_id_to_email_in_cohort_member.rb:4:5: C: Rails/ReversibleMigration: remove_foreign_key(without table) is not reversible.
+    remove_foreign_key(:cohort_members, column: :email)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241022154947_change_user_id_to_email_in_cohort_member.rb:5:5: C: Rails/ReversibleMigration: change_column is not reversible.
+    change_column(:cohort_members, :email, :string)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241023201231_add_shortlist_to_users.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class AddShortlistToUsers.
+class AddShortlistToUsers < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241027210603_add_shortlist_start_and_end_time_to_cohort.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class AddShortlistStartAndEndTimeToCohort.
+class AddShortlistStartAndEndTimeToCohort < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241027210603_add_shortlist_start_and_end_time_to_cohort.rb:3:5: C: Rails/BulkChangeTable: You can use change_table :cohorts, bulk: true to combine alter queries.
+    add_column :cohorts, :shortlist_start_time, :datetime
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241101193754_remove_user_foreign_key_from_cohort_members.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class RemoveUserForeignKeyFromCohortMembers.
+class RemoveUserForeignKeyFromCohortMembers < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241101210030_add_role_to_program_admins.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class AddRoleToProgramAdmins.
+class AddRoleToProgramAdmins < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241104081912_create_short_lists.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateShortLists.
+class CreateShortLists < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241105192913_change_user_id_to_email_in_program_admin.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class ChangeUserIdToEmailInProgramAdmin.
+class ChangeUserIdToEmailInProgramAdmin < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241105192913_change_user_id_to_email_in_program_admin.rb:4:5: C: Rails/ReversibleMigration: remove_foreign_key(without table) is not reversible.
+    remove_foreign_key(:program_admins, column: :email)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241105192913_change_user_id_to_email_in_program_admin.rb:5:5: C: Rails/ReversibleMigration: change_column is not reversible.
+    change_column(:program_admins, :email, :string)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241105225311_create_surveys.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class CreateSurveys.
+class CreateSurveys < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^
+db/migrate/20241107171936_remove_foreign_key_from_program_admins.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class RemoveForeignKeyFromProgramAdmins.
+class RemoveForeignKeyFromProgramAdmins < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241107171936_remove_foreign_key_from_program_admins.rb:3:5: C: Rails/ReversibleMigration: remove_foreign_key(without table) is not reversible.
+    remove_foreign_key :program_admins, column: :email
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241107213142_update_meetings_table.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class UpdateMeetingsTable.
+class UpdateMeetingsTable < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241107213142_update_meetings_table.rb:3:5: C: Rails/BulkChangeTable: You can use change_table :meetings, bulk: true to combine alter queries.
+    remove_column :meetings, :time, :datetime
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241111231410_remove_complete_and_add_location_type_to_meetings.rb:1:1: C: Style/Documentation: Missing top-level documentation comment for class RemoveCompleteAndAddLocationTypeToMeetings.
+class RemoveCompleteAndAddLocationTypeToMeetings < ActiveRecord::Migration[7.1]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+db/migrate/20241111231410_remove_complete_and_add_location_type_to_meetings.rb:3:5: C: Rails/BulkChangeTable: You can use change_table :meetings, bulk: true to combine alter queries.
+    remove_column :meetings, :complete, :boolean
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/tasks/dev.rake:2:1: C: Metrics/BlockLength: Block has too many lines. [176/25]
+task({ sample_data: :environment }) do ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/tasks/dev.rake:3:19: C: [Corrected] Rails/TimeZone: Do not use Time.now without zone. Use one of Time.zone.now, Time.current, Time.now.in_time_zone, Time.now.utc, Time.now.getlocal, Time.now.xmlschema, Time.now.iso8601, Time.now.jisx0301, Time.now.rfc3339, Time.now.httpdate, Time.now.to_i, Time.now.to_f instead.
+  starting = Time.now
+                  ^^^
+lib/tasks/dev.rake:33:3: C: Metrics/BlockLength: Block has too many lines. [53/25]
+  people.each do |person| ...
+  ^^^^^^^^^^^^^^^^^^^^^^^
+lib/tasks/dev.rake:45:121: C: Layout/LineLength: Line is too long. [146/120]
+                  saturn,electric&bodyIconProbability=10&gesture=hand,handPhone,ok,okLongArm,point,pointLongArm,waveLongArm&gestureProbability=20&
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/tasks/dev.rake:46:121: C: Layout/LineLength: Line is too long. [133/120]
+                  lips=variant01,variant02,variant03,variant04,variant05,variant06,variant07,variant08,variant10,variant11,variant13,
+                                                                                                                        ^^^^^^^^^^^^^
+lib/tasks/dev.rake:47:121: C: Layout/LineLength: Line is too long. [138/120]
+                  variant14,variant15,variant16,variant17,variant18,variant19,variant20,variant21,variant22,variant23,variant24,variant25,
+                                                                                                                        ^^^^^^^^^^^^^^^^^^
+lib/tasks/dev.rake:59:14: C: [Corrected] Style/CaseLikeIf: Convert if-elsif to case-when.
+      title: if role == "admin" ...
+             ^^^^^^^^^^^^^^^^^^
+lib/tasks/dev.rake:69:148: C: Layout/LineLength: Line is too long. [154/120]
+      linkedin_link: "https://www.linkedin.com/in/#{(person[:first_name]).downcase}-#{(person[:last_name]).downcase}-#{Faker::Number.number(digits: 5)}/",
+                                                                                                                                                   ^^^^^^^
+lib/tasks/dev.rake:112:15: C: [Corrected] Rails/FindEach: Use find_each instead of each.
+  Program.all.each do |program|
+              ^^^^
+lib/tasks/dev.rake:200:17: C: [Corrected] Rails/TimeZone: Do not use Time.now without zone. Use one of Time.zone.now, Time.current, Time.now.in_time_zone, Time.now.utc, Time.now.getlocal, Time.now.xmlschema, Time.now.iso8601, Time.now.jisx0301, Time.now.rfc3339, Time.now.httpdate, Time.now.to_i, Time.now.to_f instead.
+  ending = Time.now
+                ^^^
+test/controllers/cohorts_controller_test.rb:21:121: C: Layout/LineLength: Line is too long. [128/120]
+           params: { cohort: { cohort_name: @cohort.cohort_name, contact_id: @cohort.contact_id, creator_id: @cohort.creator_id,
+                                                                                                                        ^^^^^^^^
+test/controllers/cohorts_controller_test.rb:22:121: C: Layout/LineLength: Line is too long. [159/120]
+                               description: @cohort.description, end_date: @cohort.end_date, program_id: @cohort.program_id, start_date: @cohort.start_date } }
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test/controllers/cohorts_controller_test.rb:40:121: C: Layout/LineLength: Line is too long. [127/120]
+          params: { cohort: { cohort_name: @cohort.cohort_name, contact_id: @cohort.contact_id, creator_id: @cohort.creator_id,
+                                                                                                                        ^^^^^^^
+test/controllers/cohorts_controller_test.rb:41:121: C: Layout/LineLength: Line is too long. [158/120]
+                              description: @cohort.description, end_date: @cohort.end_date, program_id: @cohort.program_id, start_date: @cohort.start_date } }
+                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+128 files inspected, 181 offenses detected, 58 offenses corrected
