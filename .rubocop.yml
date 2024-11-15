@@ -7,7 +7,8 @@ Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Style/Documentation:
+  Enabled: false
 
 AllCops:
-    TargetRailsVersion: 7.1
     SuggestExtensions: false
