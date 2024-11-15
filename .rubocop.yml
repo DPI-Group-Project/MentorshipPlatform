@@ -9,6 +9,9 @@ Style/StringLiterals:
 
 Style/Documentation:
   Enabled: false
+  
+Layout/LineLength:
+  Enabled: false
 
 AllCops:
     SuggestExtensions: false
