@@ -7,8 +7,7 @@ class MatchesController < ApplicationController
   end
 
   # GET /matches/1 or /matches/1.json
-  def show
-  end
+  def show; end
 
   # GET /matches/new
   def new
@@ -16,13 +15,12 @@ class MatchesController < ApplicationController
   end
 
   # GET /matches/1/edit
-  def edit
-  end
+  def edit; end
 
   def create
-    cohort_id = current_user.cohort.id 
+    cohort_id = current_user.cohort.id
     create_matches_for_cohort(cohort_id)
-    
+
     flash[:notice] = "Matches created successfully."
     redirect_to matches_path
   rescue ActiveRecord::RecordInvalid => e
@@ -36,7 +34,7 @@ class MatchesController < ApplicationController
   end
 
   private
-  
+
   def create_matches_for_cohort(cohort_id)
     sorted_shortlist = ShortList.where(cohort_id: cohort_id).order(:created_at, :ranking)
     Rails.logger.info "Starting match creation for cohort ##{cohort_id} at #{Time.current}"
@@ -62,7 +60,7 @@ class MatchesController < ApplicationController
 
       # Try to create the match and log any exceptions
       begin
-        match = Match.create!(
+        Match.create!(
           mentor_id: mentor.id,
           mentee_id: mentee.id,
           cohort_id: cohort.id,
@@ -76,7 +74,7 @@ class MatchesController < ApplicationController
 
     Rails.logger.info "Finished match creation for cohort ##{cohort_id} at #{Time.current}"
 
-    #TODO: might need to be a background job
+    # TODO: might need to be a background job
     cohort = Cohort.find_by(id: cohort_id)
     cohort.send_matching_results_emails
   end
@@ -85,7 +83,7 @@ class MatchesController < ApplicationController
   def update
     respond_to do |format|
       if @match.update(match_params)
-        format.html { redirect_to match_url(@match), notice: 'Match was successfully updated.' }
+        format.html { redirect_to match_url(@match), notice: "Match was successfully updated." }
         format.json { render :show, status: :ok, location: @match }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -99,12 +97,10 @@ class MatchesController < ApplicationController
     @match.destroy!
 
     respond_to do |format|
-      format.html { redirect_to matches_url, notice: 'Match was successfully destroyed.' }
+      format.html { redirect_to matches_url, notice: "Match was successfully destroyed." }
       format.json { head :no_content }
     end
   end
-
-  private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_match

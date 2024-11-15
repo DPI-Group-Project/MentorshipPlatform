@@ -1,7 +1,7 @@
-desc 'Fill the database tables with some sample data'
+desc "Fill the database tables with some sample data"
 task({ sample_data: :environment }) do
-  starting = Time.now
-  p 'Creating sample data...'
+  starting = Time.zone.now
+  p "Creating sample data..."
 
   Match.delete_all
   ShortList.delete_all
@@ -17,8 +17,8 @@ task({ sample_data: :environment }) do
       last_name: Faker::Name.last_name
     }
   end
-  people << { first_name: 'Alice', last_name: 'Smith' }
-  people << { first_name: 'Bob', last_name: 'James' }
+  people << { first_name: "Alice", last_name: "Smith" }
+  people << { first_name: "Bob", last_name: "James" }
 
   image_name = %w[Buddy Mimi Abby Jack Lily Lucy Jasmine Bear Loki Dusty Maggie Milo Lucky
                   Pepper Baby Boo Sammy Coco Mittens Socks]
@@ -31,14 +31,14 @@ task({ sample_data: :environment }) do
 
   # Creating Users
   people.each do |person|
-    status = { 'Archived' => 10, 'Inactive' => 40, 'Active' => 100 }.find { |_key, value| rand * 100 <= value }.first
-    timezone = ['Eastern Standard Time (EST) - UTC-5', 'Central Standard Time (CST) - UTC-6',
-                'Pacific Standard Time (PST) - UTC-8', 'Mountain Standard Time (MST) - UTC-7'].sample
-    mentor_title = ['Software Engineer', 'Consultant', 'Technical Support', 'IT Technician', 'Project Manager',
-                    'Product Manager', 'UI/UX Designer', 'Sales Coordinator'].sample
-    inactive_reason = ['Did not like the platform.', 'Did not have a good experience.', 'I will be back!',
-                       'Other'].sample
-    role = { 'admin' => 5, 'observer' => 7, 'mentor' => 25, 'mentee' => 100 }.find do |_key, value|
+    status = { "Archived" => 10, "Inactive" => 40, "Active" => 100 }.find { |_key, value| rand * 100 <= value }.first
+    timezone = ["Eastern Standard Time (EST) - UTC-5", "Central Standard Time (CST) - UTC-6",
+                "Pacific Standard Time (PST) - UTC-8", "Mountain Standard Time (MST) - UTC-7"].sample
+    mentor_title = ["Software Engineer", "Consultant", "Technical Support", "IT Technician", "Project Manager",
+                    "Product Manager", "UI/UX Designer", "Sales Coordinator"].sample
+    inactive_reason = ["Did not like the platform.", "Did not have a good experience.", "I will be back!",
+                       "Other"].sample
+    role = { "admin" => 5, "observer" => 7, "mentor" => 25, "mentee" => 100 }.find do |_key, value|
       rand * 100 <= value
     end.first
     image_link = "https://api.dicebear.com/9.x/notionists/svg?seed=#{image_name.sample}&radius=50&backgroundColor=D2042D&bodyIcon=galaxy,
@@ -50,38 +50,39 @@ task({ sample_data: :environment }) do
 
     user = User.create(
       email: "#{(person[:first_name]).downcase}@example.com",
-      password: 'password',
+      password: "password",
       first_name: (person[:first_name]).capitalize,
       last_name: (person[:last_name]).capitalize,
       phone_number: Faker::PhoneNumber.phone_number,
       bio: "#{Faker::Quotes::Shakespeare.hamlet_quote} #{Faker::Quotes::Shakespeare.hamlet_quote}",
       timezone:,
-      title: if role == 'admin'
-               'Program Organizer'
-             elsif role == 'observer'
-               'Observer'
-             elsif role == 'mentee'
-               'Trainee'
+      title: case role
+             when "admin"
+               "Program Organizer"
+             when "observer"
+               "Observer"
+             when "mentee"
+               "Trainee"
              else
-               role == 'mentor' ? mentor_title : nil
+               role == "mentor" ? mentor_title : nil
              end,
       linkedin_link: "https://www.linkedin.com/in/#{(person[:first_name]).downcase}-#{(person[:last_name]).downcase}-#{Faker::Number.number(digits: 5)}/",
       profile_picture: image_link,
       status:,
-      inactive_reason: status == 'Inactive' ? inactive_reason : nil,
+      inactive_reason: status == "Inactive" ? inactive_reason : nil,
       skills_array: [skills.sample, skills.sample]
     )
 
     case role
-    when 'admin'
+    when "admin"
       admins << user
-    when 'mentor'
+    when "mentor"
       mentors << user
       mentors_and_mentees << user
-    when 'mentee'
+    when "mentee"
       mentees << user
       mentors_and_mentees << user
-    when 'observer'
+    when "observer"
       observers << user
     end
 
@@ -89,8 +90,8 @@ task({ sample_data: :environment }) do
   end
 
   # Creating Programs
-  program_names = ['Full-Stack Software Development', 'High School Coding Training', 'Apprenticeship',
-                   'Career Readiness', 'TBD']
+  program_names = ["Full-Stack Software Development", "High School Coding Training", "Apprenticeship",
+                   "Career Readiness", "TBD"]
   program_index = 0
 
   admins.each do |admin|
@@ -109,13 +110,13 @@ task({ sample_data: :environment }) do
   end
 
   # Creating Cohorts
-  Program.all.each do |program|
+  Program.all.find_each do |program|
     cohort_random_number = rand(1..2)
     count = 1
     cohort_random_number.times do
-      start_date = Faker::Date.between(from: '2023-01-1', to: '2023-12-30')
-      end_date = Faker::Date.between(from: '2024-1-30', to: '2025-12-30')
-      shortlist_start_time = Faker::Date.between(from: start_date + 2.day, to: start_date + 3.days)
+      start_date = Faker::Date.between(from: "2023-01-1", to: "2023-12-30")
+      end_date = Faker::Date.between(from: "2024-1-30", to: "2025-12-30")
+      shortlist_start_time = Faker::Date.between(from: start_date + 2.days, to: start_date + 3.days)
       shortlist_end_time = Faker::Date.between(from: shortlist_start_time + 1.day, to: shortlist_start_time + 3.days)
 
       Cohort.create(
@@ -161,12 +162,12 @@ task({ sample_data: :environment }) do
     end
 
     role = role_hash[user]
-    capacity = ''
-    if role_hash[user] == 'mentor'
-      role = 'mentor'
+    capacity = ""
+    if role_hash[user] == "mentor"
+      role = "mentor"
       capacity = rand(2..4)
-    elsif role_hash[user] == 'mentee'
-      role = 'mentee'
+    elsif role_hash[user] == "mentee"
+      role = "mentee"
     end
 
     CohortMember.create(
@@ -184,7 +185,7 @@ task({ sample_data: :environment }) do
       puts "No cohort member found for mentee with email: #{mentee.email}"
       next # Skip to the next mentee
     end
-    mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: 'mentor').sample
+    mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: "mentor").sample
     next unless mentor_cohort_member_object
 
     shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
@@ -197,7 +198,7 @@ task({ sample_data: :environment }) do
     )
   end
 
-  ending = Time.now
+  ending = Time.zone.now
   p "There are now #{User.count} users."
   p "There are now #{Program.count} programs."
   p "There are now #{Cohort.count} cohorts."

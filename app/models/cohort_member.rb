@@ -11,9 +11,7 @@
 #  capacity   :integer
 #
 class CohortMember < ApplicationRecord
-  has_one :user, primary_key: 'email', foreign_key: 'email'
-  belongs_to :cohort, required: true, class_name: 'Cohort', foreign_key: 'cohort_id'
+  has_one :user, primary_key: "email", foreign_key: "email"
+  belongs_to :cohort, optional: false, class_name: "Cohort"
   validates :email, uniqueness: true
 end
-
-

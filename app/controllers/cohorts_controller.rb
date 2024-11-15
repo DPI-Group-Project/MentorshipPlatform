@@ -7,8 +7,7 @@ class CohortsController < ApplicationController
   end
 
   # GET /cohorts/1 or /cohorts/1.json
-  def show
-  end
+  def show; end
 
   # GET /cohorts/new
   def new
@@ -16,8 +15,7 @@ class CohortsController < ApplicationController
   end
 
   # GET /cohorts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /cohorts or /cohorts.json
   def create
@@ -25,7 +23,7 @@ class CohortsController < ApplicationController
 
     respond_to do |format|
       if @cohort.save
-        format.html { redirect_to "/dashboard/admin/#{@cohort.program_id}", notice: 'Cohort was successfully created.' }
+        format.html { redirect_to "/dashboard/admin/#{@cohort.program_id}", notice: "Cohort was successfully created." }
         format.json { render :show, status: :created, location: @cohort }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +36,7 @@ class CohortsController < ApplicationController
   def update
     respond_to do |format|
       if @cohort.update(cohort_params)
-        format.html { redirect_to cohort_url(@cohort), notice: 'Cohort was successfully updated.' }
+        format.html { redirect_to cohort_url(@cohort), notice: "Cohort was successfully updated." }
         format.json { render :show, status: :ok, location: @cohort }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +50,7 @@ class CohortsController < ApplicationController
     @cohort.destroy!
 
     respond_to do |format|
-      format.html { redirect_to cohorts_url, notice: 'Cohort was successfully destroyed.' }
+      format.html { redirect_to cohorts_url, notice: "Cohort was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -13,9 +13,7 @@
 #  location_type :string
 #
 class Meeting < ApplicationRecord
-  belongs_to :match, required: true, class_name: "Match", foreign_key: "match_id"
+  belongs_to :match, optional: false, class_name: "Match"
 
-  def mentor
-    match.mentor
-  end
+  delegate :mentor, to: :match
 end

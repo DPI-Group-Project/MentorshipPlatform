@@ -13,7 +13,7 @@
 #
 class Survey < ApplicationRecord
   validates :match_id, presence: true
-  belongs_to :match, required: true, class_name: "Match", foreign_key: "match_id"
+  belongs_to :match, optional: false, class_name: "Match"
 
   after_create :send_creation_notification
 
