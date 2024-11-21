@@ -3,8 +3,14 @@ class CohortsController < ApplicationController
 
   # GET /cohorts or /cohorts.json
   def index
-    @cohorts = Cohort.all
+    if params[:program_id].present?
+      @program = Program.find(params[:program_id])
+      @cohorts = @program.cohorts
+    else
+      @cohorts = Cohort.all
+    end
   end
+  
 
   # GET /cohorts/1 or /cohorts/1.json
   def show; end

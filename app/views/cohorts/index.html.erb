@@ -1,14 +1,49 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Cohorts</h1>
-
-<div id="cohorts">
-  <% @cohorts.each do |cohort| %>
-    <%= render cohort %>
-    <p>
-      <%= link_to "Show this cohort", cohort %>
-    </p>
-  <% end %>
+<div class="bg-gray-50">
+  <div class="container mx-auto mt-20 px-4">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-left"><%= @program.name %> - Cohorts</h1>
+    <div class="overflow-x-auto rounded-lg shadow-lg">
+      <table class="min-w-full bg-white border border-gray-300 divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Cohort Name</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Description</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Start Date</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">End Date</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Required Meetings</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Shortlist Status</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Creator</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Contact</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% @cohorts.each do |cohort| %>
+            <tr class="hover:bg-gray-50">
+              <td class="py-4 px-6 text-sm text-gray-800"><%= cohort.cohort_name %></td>
+              <td class="py-4 px-6 text-sm text-gray-800"><%= cohort.description %></td>
+              <td class="py-4 px-6 text-sm text-gray-800"><%= cohort.start_date.strftime("%B %d, %Y") if cohort.start_date %></td>
+              <td class="py-4 px-6 text-sm text-gray-800"><%= cohort.end_date.strftime("%B %d, %Y") if cohort.end_date %></td>
+              <td class="py-4 px-6 text-sm text-gray-800"><%= cohort.required_meetings || "N/A" %></td>
+              <td class="py-4 px-6 text-sm text-gray-800"><%= cohort.shortlist_creation_open? %></td>
+              <td class="py-4 px-6 text-sm text-gray-800">
+                <%= cohort.creator.name %> (<%= cohort.creator.email %>)
+              </td>
+              <td class="py-4 px-6 text-sm text-gray-800">
+                <% contact = User.find_by(id: cohort.contact_id) %>
+                <%= contact&.name || "N/A" %> (<%= contact&.email || "N/A" %>)
+              </td>
+              <td class="py-4 px-6 text-sm text-gray-800">
+                <div class="flex space-x-4">
+                  <%= link_to "View", cohort_members_path(cohort_id: cohort.id), class: "text-blue-600 hover:text-blue-800 font-medium px-3 py-1 bg-blue-50 rounded-md shadow-sm hover:bg-blue-100" %>
+                  <%= link_to "Edit", edit_cohort_path(cohort), class: "text-yellow-600 hover:text-yellow-800 font-medium px-3 py-1 bg-yellow-50 rounded-md shadow-sm hover:bg-yellow-100" %>
+                  <%= link_to "Delete", @cohort, method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800 font-medium px-3 py-1 bg-red-50 rounded-md shadow-sm hover:bg-red-100" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New cohort", new_cohort_path %>
+<!-- <%= link_to "New cohort", new_cohort_path %> -->
