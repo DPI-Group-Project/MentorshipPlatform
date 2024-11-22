@@ -26,16 +26,18 @@
               <td class="py-4 px-6 text-sm text-gray-800"><%= cohort.required_meetings || "N/A" %></td>
               <td class="py-4 px-6 text-sm text-gray-800"><%= cohort.shortlist_creation_open? %></td>
               <td class="py-4 px-6 text-sm text-gray-800">
-                <%= cohort.creator.name %> (<%= cohort.creator.email %>)
+                <%= cohort.creator.name %> 
               </td>
               <td class="py-4 px-6 text-sm text-gray-800">
                 <% contact = User.find_by(id: cohort.contact_id) %>
-                <%= contact&.name || "N/A" %> (<%= contact&.email || "N/A" %>)
+               <%= contact&.email || "N/A" %>
               </td>
               <td class="py-4 px-6 text-sm text-gray-800">
                 <div class="flex space-x-4">
                   <%= link_to "View", cohort_members_path(cohort_id: cohort.id), class: "text-blue-600 hover:text-blue-800 font-medium px-3 py-1 bg-blue-50 rounded-md shadow-sm hover:bg-blue-100" %>
-                  <%= link_to "Edit", edit_cohort_path(cohort), class: "text-yellow-600 hover:text-yellow-800 font-medium px-3 py-1 bg-yellow-50 rounded-md shadow-sm hover:bg-yellow-100" %>
+                  <button type="button" class="text-yellow-600 hover:text-yellow-800 font-medium px-3 py-1 bg-yellow-50 rounded-md shadow-sm hover:bg-yellow-100 edit-button" data-cohort-id="<%= cohort.id %>">
+                    Edit
+                  </button>
                   <%= button_to "Delete", cohort, method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:text-red-800 font-medium px-3 py-1 bg-red-50 rounded-md shadow-sm hover:bg-red-100" %>
                 </div>
               </td>
@@ -46,4 +48,53 @@
     </div>
   </div>
 </div>
-<!-- <%= link_to "New cohort", new_cohort_path %> -->
+
+<!-- Modal Container -->
+<div id="edit-modal" class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white w-full max-w-2xl rounded-lg p-4 relative">
+    <button id="close-modal" type="button" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times"></i>
+    </button>
+    <div id="modal-content">
+      <!-- Content will be dynamically loaded here -->
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("edit-modal");
+    const modalContent = document.getElementById("modal-content");
+    const closeModal = document.getElementById("close-modal");
+
+    // Function to open the modal and load the form
+    document.querySelectorAll(".edit-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const cohortId = button.dataset.cohortId;
+
+        // Fetch the form content via AJAX
+        fetch(`/cohorts/${cohortId}/edit`)
+          .then((response) => response.text())
+          .then((html) => {
+            modalContent.innerHTML = html; // Load the form into the modal
+            modal.classList.remove("hidden"); // Show the modal
+          })
+          .catch((error) => console.error("Error loading modal content:", error));
+      });
+    });
+
+    // Close the modal
+    closeModal.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      modalContent.innerHTML = ""; // Clear modal content
+    });
+
+    // Close modal on outside click
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.classList.add("hidden");
+        modalContent.innerHTML = ""; // Clear modal content
+      }
+    });
+  });
+</script>

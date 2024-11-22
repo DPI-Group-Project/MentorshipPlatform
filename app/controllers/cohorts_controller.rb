@@ -21,7 +21,10 @@ class CohortsController < ApplicationController
   end
 
   # GET /cohorts/1/edit
-  def edit; end
+  def edit
+    @current_program = @cohort.program # Assuming a `program` association exists for `Cohort`
+    render partial: "form", locals: { cohort: @cohort }
+  end
 
   # POST /cohorts or /cohorts.json
   def create
