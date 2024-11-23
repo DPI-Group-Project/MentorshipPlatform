@@ -1,19 +1,19 @@
-<div class="bg-gray-50">
+<div class="bg-gray-50 mt-20">
   <div class="container mx-auto mt-20 px-4">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-left"><%= @program.name %> - Cohorts</h1>
+    <h1 class="text-2xl font-bold text-black mb-6 text-left"><%= @program.name %> - Cohorts</h1>
     <div class="overflow-x-auto rounded-lg shadow-lg">
       <table class="min-w-full bg-white border border-gray-300 divide-y divide-gray-200">
-        <thead class="bg-gray-100">
+        <thead class="bg-[#202020]">
           <tr>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Cohort Name</th>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Description</th>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Start Date</th>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">End Date</th>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Required Meetings</th>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Shortlist Status</th>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Creator</th>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Contact</th>
-            <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Start Date</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Cohort Name</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">End Date</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Required Meetings</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Description</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Shortlist Status</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Creator</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Contact</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
@@ -33,8 +33,8 @@
                <%= contact&.email || "N/A" %>
               </td>
               <td class="py-4 px-6 text-sm text-gray-800">
-                <div class="flex space-x-4">
-                  <%= link_to "View", cohort_members_path(cohort_id: cohort.id), class: "text-blue-600 hover:text-blue-800 font-medium px-3 py-1 bg-blue-50 rounded-md shadow-sm hover:bg-blue-100" %>
+                <div class="flex flex-col space-y-2">
+                  <%= link_to "View", cohort_members_path(cohort_id: cohort.id), class: "text-center text-blue-600 hover:text-blue-800 font-medium px-3 py-1 bg-blue-50 rounded-md shadow-sm hover:bg-blue-100" %>
                   <button type="button" class="text-yellow-600 hover:text-yellow-800 font-medium px-3 py-1 bg-yellow-50 rounded-md shadow-sm hover:bg-yellow-100 edit-button" data-cohort-id="<%= cohort.id %>">
                     Edit
                   </button>
@@ -98,3 +98,4 @@
     });
   });
 </script>
+
