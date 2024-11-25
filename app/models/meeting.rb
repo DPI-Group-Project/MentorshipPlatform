@@ -16,4 +16,5 @@ class Meeting < ApplicationRecord
   belongs_to :match, optional: false, class_name: "Match"
 
   delegate :mentor, to: :match
+  delegate :mentee, to: :match
 end

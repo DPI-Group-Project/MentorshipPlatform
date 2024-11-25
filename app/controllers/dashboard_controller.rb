@@ -10,7 +10,17 @@ class DashboardController < ApplicationController
       @shortlist_time = current_user.cohort.shortlist_creation_open?
       @mentors_data = User.mentors_in_cohort(current_user.cohort.id)
       @mentees_data = CohortMember.where(role: "mentee")
-      @meetings = current_user.mentor ? current_user.mentor.meetings : current_user.mentees.map(&:meetings).flatten
+      if params[:mentee_id].present?
+        mentee = current_user.mentees.find_by(id: params[:mentee_id])
+        @meetings = mentee ? mentee.meetings.where(mentor: current_user) : []
+      else
+        # Default behavior
+        if @role == 'mentor'
+          @meetings = current_user.mentees.map { |mentee| mentee.meetings.where(mentor: current_user) }.flatten
+        elsif @role == 'mentee'
+          @meetings = current_user.mentor&.meetings || []
+        end
+      end
       @meeting_dates = @meetings.map { |meeting| meeting.date.strftime("%Y-%m-%d") }
       @upcoming_meeting = @meetings.select { |meeting| meeting.date >= Time.zone.today }.min_by(&:date)
       @required_meetings_count = current_user.cohort.required_meetings

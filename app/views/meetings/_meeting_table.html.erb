@@ -1,6 +1,6 @@
 <div class="flex justify-between">
   <h1 class="text-2xl font-semibold text-[#202020] mb-1">
-    Meeting with Your Mentor
+    Meeting with Your <%= current_user.role == 'mentee' ? 'Mentor' : 'Mentee' %>
   </h1>
   <a href="<%= dashboard_path(role: current_user.role) %>" class="flex gap-1 items-center">
     <img class="h-[1.2rem]" src=<%= asset_path("icon/back-button.svg") %> alt="back-button"/>
@@ -16,7 +16,7 @@
   <thead class="text-xs text-white bg-[#202020] rounded-t-lg">
   <tr>
     <th scope="col" class="px-6 py-2 rounded-tl-lg">No.</th>
-    <th scope="col" class="px-6 py-2">Mentor</th>
+    <th scope="col" class="px-6 py-2"><%= current_user.role == 'mentee' ? 'Mentor' : 'Mentee' %></th>
     <th scope="col" class="px-6 py-2">Date</th>
     <th scope="col" class="px-6 py-2">Time</th>
     <th scope="col" class="px-6 py-2">Location</th>
@@ -31,7 +31,7 @@
       <td class="flex items-center px-6 py-4 text-[#202020] whitespace-nowrap dark:text-white">
         <img src="<%= asset_path("sample_img/mentor_sample.png") %>" alt="User picture" class="w-8 h-8 rounded-full">
         <div class="ps-3">
-          <div class="font-medium"><%= meeting.mentor.name %></div>
+          <div class="font-medium"><%= current_user.role == 'mentee' ? meeting.mentor.name : meeting.mentee.name %></div>
         </div>
       </td>
       <td class="px-6 py-2"><%= meeting.date.strftime('%a, %b %d, %Y') %></td>
