@@ -67,6 +67,7 @@ group :development do
   gem "annotate"
   gem "faker"
   gem "rails_db"
+  gem "rails-erd"
   gem "web-console"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
