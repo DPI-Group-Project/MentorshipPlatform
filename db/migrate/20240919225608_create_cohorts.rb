@@ -6,6 +6,9 @@ class CreateCohorts < ActiveRecord::Migration[7.1]
       t.text :description
       t.datetime :start_date
       t.datetime :end_date
+      t.integer :required_meetings
+      t.datetime :shortlist_start_time
+      t.datetime :shortlist_end_time
       t.references :creator, null: false, foreign_key: { to_table: :users }
       t.references :contact, null: false, foreign_key: { to_table: :users }
 
