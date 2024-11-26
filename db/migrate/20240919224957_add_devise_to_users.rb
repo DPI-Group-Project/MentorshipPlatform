@@ -43,6 +43,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[7.1]
       t.string :linkedin_link
       t.string :profile_picture
       t.text :skills_array, array: true, default: []
+      t.jsonb :shortlist, array: true, default: []
 
       # Uncomment below if timestamps were not included in your original model.
       # t.timestamps null: false
