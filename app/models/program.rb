@@ -12,7 +12,6 @@
 #  updated_at  :datetime         not null
 #
 class Program < ApplicationRecord
-  belongs_to :creator, optional: false, class_name: "User"
   belongs_to :contact, optional: false, class_name: "User"
   has_many :cohorts, class_name: "Cohort", dependent: :destroy
   has_many :admins, class_name: "ProgramAdmin", dependent: :destroy
