@@ -5,11 +5,10 @@ class CreateCohortMembers < ActiveRecord::Migration[7.1]
     create_table :cohort_members, id: false, primary_key: :email do |t|
       t.references :cohort, null: false, foreign_key: true
       t.string :email, null: false
-      t.enum :role
+      t.enum :role, enum_type: :role
       t.integer :capacity
       t.timestamps
 
-      t.index ["cohort_id"]
       t.index ["email"], unique: true
     end
   end
