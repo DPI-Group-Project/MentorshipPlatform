@@ -1,11 +1,16 @@
 class CreateCohortMembers < ActiveRecord::Migration[7.1]
   def change
+    create_enum :role, %w[mentor mentee]
+
     create_table :cohort_members do |t|
       t.references :user, null: false, foreign_key: true
       t.references :cohort, null: false, foreign_key: true
-      t.string :role
-
+      t.enum :role
+      t.integer :capacity
       t.timestamps
+
+      t.index ["cohort_id"]
+      t.index ["email"], unique: true
     end
   end
 end
