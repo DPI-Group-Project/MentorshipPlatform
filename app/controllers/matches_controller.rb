@@ -5,7 +5,9 @@ class MatchesController < ApplicationController
   def index
     @matches = Match.all
   end
-
+  def get_with_cohort(cohort_id)
+    @matches = Match.where(cohort_id: cohort_id )
+  end
   # GET /matches/1 or /matches/1.json
   def show; end
 
