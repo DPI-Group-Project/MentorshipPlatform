@@ -6,8 +6,10 @@ class MatchesController < ApplicationController
     cohort_id = params[:cohort_id]
     @cohort = Cohort.find_by(id: cohort_id)
     @matches = Match.where(cohort_id: cohort_id)
+    current_time = Time.current.utc
+    @current_time_in_user_zone = current_time.strftime("%Y-%m-%d %H:%M:%S UTC") 
   end
-  
+
   # GET /matches/1 or /matches/1.json
   def show; end
 
