@@ -37,6 +37,19 @@ class MatchesController < ApplicationController
     create_matches_for_cohort(cohort.id)
   end
 
+  # PATCH/PUT /matches/1 or /matches/1.json
+  def update
+    respond_to do |format|
+      if @match.update(match_params)
+        format.html { redirect_to match_url(@match), notice: "Match was successfully updated." }
+        format.json { render :show, status: :ok, location: @match }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @match.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
   private
 
   def create_matches_for_cohort(cohort_id)
@@ -81,19 +94,6 @@ class MatchesController < ApplicationController
     # TODO: might need to be a background job
     cohort = Cohort.find_by(id: cohort_id)
     cohort.send_matching_results_emails
-  end
-
-  # PATCH/PUT /matches/1 or /matches/1.json
-  def update
-    respond_to do |format|
-      if @match.update(match_params)
-        format.html { redirect_to match_url(@match), notice: "Match was successfully updated." }
-        format.json { render :show, status: :ok, location: @match }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @match.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /matches/1 or /matches/1.json
