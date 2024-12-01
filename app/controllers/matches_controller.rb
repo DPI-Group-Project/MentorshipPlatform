@@ -3,11 +3,11 @@ class MatchesController < ApplicationController
 
   # GET /matches or /matches.json
   def index
-    @matches = Match.all
+    cohort_id = params[:cohort_id]
+    @cohort = Cohort.find_by(id: cohort_id)
+    @matches = Match.where(cohort_id: cohort_id)
   end
-  def get_with_cohort(cohort_id)
-    @matches = Match.where(cohort_id: cohort_id )
-  end
+  
   # GET /matches/1 or /matches/1.json
   def show; end
 
@@ -20,7 +20,7 @@ class MatchesController < ApplicationController
   def edit; end
 
   def create
-    cohort_id = current_user.cohort.id
+    cohort_id = params[:cohort_id]
     create_matches_for_cohort(cohort_id)
 
     flash[:notice] = "Matches created successfully."

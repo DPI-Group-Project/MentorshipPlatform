@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   resources :matches do
     collection do
       post "create_with_cohort/:cohort_id", to: "matches#create", as: "create_with_cohort"
-      get "get_with_cohort/:cohort_id", to: "matches#index", as: "get_with_cohort"
     end
   end
   resources :cohorts do
