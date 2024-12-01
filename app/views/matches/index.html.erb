@@ -1,4 +1,4 @@
-<div class="mt-[5rem] mx-[5rem]">
+<div class="mt-[7rem] mx-[5rem]">
   <p style="color: green"><%= notice %></p>
 
   <h1 class="text-2xl font-bold text-black mb-6 text-left">
@@ -11,28 +11,36 @@
       <table class="min-w-full bg-white border border-gray-300 divide-y divide-gray-200">
         <thead class="bg-[#202020]">
           <tr>
-            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Count</th>
-            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Mentor</th>
-            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Mentee</th>
-            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Matched Date</th>
-            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Active</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">No.</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Mentor</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Mentee</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Matched Date</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Active</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Action</th>
           </tr>
         </thead>
         <% @matches.each do |match| %>
-          <tbody class="divide-y divide-gray-200" id="members-container">
-            <tr class="member-item hover:bg-gray-50">
+          <tbody class="divide-y divide-gray-200 text-align-center" id="members-container">
+            <tr class="member-item hover:bg-gray-50 text-center">
               <td class="py-4 px-6 text-sm"><%= count %></td>
               <td class="py-4 px-6 text-sm">
-                <%= match.mentor.name %> (<%= match.mentor_id %>)
+                <%= match.mentor.name %>
               </td>
               <td class="py-4 px-6 text-sm">
-                <%= match.mentee.name %> (<%= match.mentee_id %>)
+                <%= match.mentee.name %>
               </td>
               <td class="py-4 px-6 text-sm">
                 <% date = match.created_at %>
                 <%= date.strftime("%Y-%m-%d") %>
               </td>
               <td class="py-4 px-6 text-sm"><%= match.active ? "Yes" : "No" %></td>
+              <td class="py-4 px-6 text-sm text-gray-800">
+                <div class="flex flex-col space-y-2">
+                  <button type="button" class="text-yellow-600 hover:text-yellow-800 font-medium px-3 py-1 bg-yellow-50 rounded-md shadow-sm hover:bg-yellow-100 edit-button" >
+                    Edit
+                  </button>
+                </div>
+              </td>
             </tr>
           </tbody>
           <% count += 1%>
