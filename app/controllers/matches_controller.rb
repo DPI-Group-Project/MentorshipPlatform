@@ -1,11 +1,11 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[show edit update destroy]
+  before_action :set_cohort, only: %i[index create update]
 
   # GET /matches or /matches.json
   def index
-    cohort_id = params[:cohort_id]
-    @cohort = Cohort.find_by(id: cohort_id)
-    @matches = Match.where(cohort_id: cohort_id)
+    @cohort = Cohort.find_by(id: @cohort_id)
+    @matches = Match.where(cohort_id: @cohort_id)
     current_time = Time.current.utc
     @current_time_in_user_zone = current_time.strftime("%Y-%m-%d %H:%M:%S UTC") 
   end
@@ -22,8 +22,7 @@ class MatchesController < ApplicationController
   def edit; end
 
   def create
-    cohort_id = params[:cohort_id]
-    create_matches_for_cohort(cohort_id)
+    create_matches_for_cohort(@cohort_id)
 
     flash[:notice] = "Matches created successfully."
     redirect_to matches_path
@@ -41,7 +40,7 @@ class MatchesController < ApplicationController
   def update
     respond_to do |format|
       if @match.update(match_params)
-        format.html { redirect_to match_url(@match), notice: "Match was successfully updated." }
+        format.html { redirect_to matches_path(cohort_id: @match.cohort_id), notice: "Match was successfully updated." }
         format.json { render :show, status: :ok, location: @match }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,7 +48,7 @@ class MatchesController < ApplicationController
       end
     end
   end
-  
+
   private
 
   def create_matches_for_cohort(cohort_id)
@@ -109,6 +108,10 @@ class MatchesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_match
     @match = Match.find(params[:id])
+  end
+  
+  def set_cohort
+    @cohort_id = params[:cohort_id]
   end
 
   # Only allow a list of trusted parameters through.
