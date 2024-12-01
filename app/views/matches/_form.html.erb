@@ -18,14 +18,14 @@
 
   <div class="flex flex-col mb-4">
     <%= form.label :mentor_id, class: "font-medium mb-1"%>
-    <%= form.text_field :mentor_id_id, value: match.mentor.id,
-                       class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"  %>
+    <%= form.collection_select :mentor_id, User.mentors_in_cohort(cohort.id), :id, :name, { prompt: "Select a user" }, 
+    { class: "form-select border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"  } %>
   </div>
 
   <div class="flex flex-col mb-4">
     <%= form.label :mentee_id, class: "font-medium mb-1" %>
-    <%= form.text_field :mentee_id_id, value: match.mentee.id,
-                       class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"  %>
+    <%= form.collection_select :mentee_id, User.mentees_in_cohort(cohort.id), :id, :name, { prompt: "Select a user" }, 
+    { class: "form-select border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
   </div>
 
   <div class="flex justify-end">
