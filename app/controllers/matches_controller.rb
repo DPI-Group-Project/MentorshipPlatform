@@ -8,28 +8,47 @@ class MatchesController < ApplicationController
     @matches = Match.where(cohort_id: @cohort_id)
     current_time = Time.current.utc
     @current_time_in_user_zone = current_time.strftime("%Y-%m-%d %H:%M:%S UTC") 
+    @match = Match.new
   end
 
   # GET /matches/1 or /matches/1.json
   def show; end
 
-  # GET /matches/new
   def new
     @match = Match.new
+    @cohort = Cohort.find(params[:cohort_id])
   end
 
   # GET /matches/1/edit
   def edit; end
 
   def create
-    create_matches_for_cohort(@cohort_id)
-
-    flash[:notice] = "Matches created successfully."
-    redirect_to matches_path
-  rescue ActiveRecord::RecordInvalid => e
-    flash[:alert] = "Failed to create matches: #{e.message}"
-    redirect_to matches_path
+    @match = Match.new(match_params)
+  
+    if @match.save
+      # Respond with JS (AJAX)
+      respond_to do |format|
+        format.html { redirect_to matches_path(cohort_id: @cohort_id), notice: "Match created successfully!" }
+        format.js   # This will call create.js.erb
+      end
+    else
+      # If validation fails, respond with JS to show errors
+      respond_to do |format|
+        format.html { redirect_to matches_path(cohort_id: @cohort_id), alert: "Match was not created, try again" }
+        format.js   # This will trigger create.js.erb to handle errors
+      end
+    end
   end
+  
+  # def create
+  #   create_matches_for_cohort(@cohort_id)
+
+  #   flash[:notice] = "Matches created successfully."
+  #   redirect_to matches_path
+  # rescue ActiveRecord::RecordInvalid => e
+  #   flash[:alert] = "Failed to create matches: #{e.message}"
+  #   redirect_to matches_path
+  # end
 
   # Method triggered by the scheduler (Programmatically Triggered)
   def create_for_cohort(cohort)
@@ -46,6 +65,16 @@ class MatchesController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @match.errors, status: :unprocessable_entity }
       end
+    end
+  end
+  
+  # DELETE /matches/1 or /matches/1.json
+  def destroy
+    @match.destroy!
+
+    respond_to do |format|
+      format.html { redirect_to matches_path(cohort_id: @match.cohort_id), notice: "Match was successfully destroyed." }
+      format.json { head :no_content }
     end
   end
 
@@ -95,15 +124,6 @@ class MatchesController < ApplicationController
     cohort.send_matching_results_emails
   end
 
-  # DELETE /matches/1 or /matches/1.json
-  def destroy
-    @match.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to matches_url, notice: "Match was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_match

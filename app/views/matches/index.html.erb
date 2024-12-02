@@ -1,67 +1,117 @@
 <div class="mt-[7rem] mx-[5rem]">
-  <p style="color: green"><%= notice %></p>
+  <div class="flex justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-black mb-6 text-left">
+        Matches for <%=@cohort.cohort_name%>
+      </h1>
+    </div>
+    <div>
+      <button class="text-xs w-[8rem] h-[2rem] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:scale-105"
+        onclick="openModal('create_match_modal')">
+        <span class="icon transition duration-500">+</span>
+        Add New
+      </button>
+    </div>
+  </div>
 
-  <h1 class="text-2xl font-bold text-black mb-6 text-left">
-    Matches for <%=@cohort.cohort_name%>
-  </h1>
+  <% if @matches.any?%>
+    <% if @cohort.unmatched_mentees.any? || @cohort.unmatched_mentors.any?%>
+      <div class="opacity-100 flex justify-center">
+        <div class="bg-[#FFFFFF] flex justify-between border-slate-300 rounded-lg min-w-[100%] mb-5 p-4 items-center">
+          <div class="flex gap-3 items-center">
+            <img src=<%= asset_path('icon/info.svg') %> alt="notice" class="size-5">
+            <div class="flex flex-col">
+              <div class="text-sm font-bold">
+                Unmatched User/s Found
+              </div>
+              <% if @cohort.unmatched_mentees.any? %>
+                <div class="text-sm max-w-[25rem] pr-2">
+                  Mentee: <%= @cohort.unmatched_mentees%>
+                </div>
+              <% end %>
+              <% if @cohort.unmatched_mentors.any? %>
+                <div class="text-sm max-w-[25rem]">
+                  Mentor: <%= @cohort.unmatched_mentors%>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
-    <% if @matches.any?%>
-      <% count = 1 %>
-      <div class="overflow-x-auto rounded-lg shadow-lg"id="matches">
-        <table class="min-w-full bg-white border border-gray-300 divide-y divide-gray-200">
-          <thead class="bg-[#202020]">
-            <tr>
-              <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">No.</th>
-              <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Mentor</th>
-              <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Mentee</th>
-              <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Matched Date</th>
-              <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Action</th>
-            </tr>
-          </thead>
-          <% @matches.each do |match| %>
-            <tbody class="divide-y divide-gray-200 text-align-center" id="members-container">
-              <tr class="member-item hover:bg-gray-50 text-center">
-                <td class="py-4 px-6 text-sm"><%= count %></td>
-                <td class="py-4 px-6 text-sm">
-                  <%= match.mentor.name %>
-                </td>
-                <td class="py-4 px-6 text-sm">
-                  <%= match.mentee.name %>
-                </td>
-                <td class="py-4 px-6 text-sm">
-                  <% date = match.updated_at %>
-                  <%= date.strftime("%Y-%m-%d") %>
-                </td>
-                <td class="py-4 text-sm text-gray-800">
-                  <button id="openModalBtn" class="text-yellow-600 hover:text-yellow-800 font-medium px-14 py-1 bg-yellow-50 rounded-md shadow-sm hover:bg-yellow-100 edit-button" 
+    <% count = 1 %>
+    <div class="overflow-x-auto rounded-lg shadow-lg mb-5" id="matches">
+      <table class="min-w-full bg-white border border-gray-300 divide-y divide-gray-200">
+        <thead class="bg-[#202020]">
+          <tr>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">No.</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Mentor</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Mentee</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Matched Date</th>
+            <th class="py-3 px-6 text-left text-md font-semibold text-white tracking-wider text-center">Actions</th>
+          </tr>
+        </thead>
+        <% @matches.each do |match| %>
+          <tbody class="divide-y divide-gray-200 text-align-center" id="members-container">
+            <tr class="member-item hover:bg-gray-50 text-center">
+              <td class="py-4 px-6 text-sm"><%= count %></td>
+              <td class="py-4 px-6 text-sm">
+                <%= match.mentor.name %>
+              </td>
+              <td class="py-4 px-6 text-sm">
+                <%= match.mentee.name %>
+              </td>
+              <td class="py-4 px-6 text-sm">
+                <% date = match.updated_at %>
+                <%= date.strftime("%Y-%m-%d") %>
+              </td>
+              <td class="py-4 text-sm text-gray-800">
+                <div>
+                  <button id="openModalBtn" class="text-yellow-600 hover:text-yellow-800 font-medium px-14 py-1 mb-2 bg-yellow-50 rounded-md shadow-sm hover:bg-yellow-100 edit-button" 
                     onclick="openModal('<%=match.id%>_edit_match_modal')">
                     Edit
                   </button>
-                </td>
-              </tr>
-            </tbody>
-            
-            <% count += 1%>
-
-            <!-- Modal Popups -->
-            <div id="<%=match.id%>_edit_match_modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
-              <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
-                <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeModal('<%=match.id%>_edit_match_modal')">
-                  <i class="fas fa-times"></i>
-                </button>
-                <%= render partial: "matches/form", locals: { match: match, cohort: @cohort, current_time_in_user_zone: @current_time_in_user_zone } %>
+                </div>
+                  <%= button_to "Delete", match, method: :delete, 
+                    class: "text-red-600 hover:text-red-800 font-medium px-12 py-1 bg-red-50 rounded-md shadow-sm hover:bg-red-100 delete-button" %> 
+                <div>
               </div>
+              </td>
+            </tr>
+          </tbody>
+          
+          <% count += 1%>
+
+          <!-- Edit Match Modal -->
+          <div id="<%=match.id%>_edit_match_modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+            <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
+              <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeModal('<%=match.id%>_edit_match_modal')">
+                <i class="fas fa-times"></i>
+              </button>
+              <%= render partial: "matches/form", locals: { match: match, cohort: @cohort, current_time_in_user_zone: @current_time_in_user_zone } %>
             </div>
-          <% end %>
-        </table>
-      </div>
-    <% else %>
-      <div class="overflow-x-auto rounded-lg">
-        <h1 class="py-3 px-6 text-left text-md font-semibold tracking-wider text-center">
-          No Matches for <%=@cohort.cohort_name %> yet!
-        </h1>
-      </div>
-    <% end %>
+          </div>
+        <% end %>
+      </table>
+    </div>
+  <% else %>
+    <div class="overflow-x-auto rounded-lg">
+      <h1 class="py-3 px-6 text-left text-md font-semibold tracking-wider text-center">
+        No Matches for <%=@cohort.cohort_name %> yet!
+      </h1>
+    </div>
+  <% end %>
+</div>
+
+<!-- New Match Modal -->
+<div id="create_match_modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeModal('create_match_modal')">
+      <i class="fas fa-times"></i>
+    </button>
+    <%= render partial: "matches/form_new", locals: { match: @match, cohort: @cohort, current_time_in_user_zone: @current_time_in_user_zone } %>
+  </div>
 </div>
 
 <script>
