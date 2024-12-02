@@ -1,0 +1,28 @@
+<div class="opacity-100 flex justify-center">
+    <div class="bg-[#FFFFFF] flex justify-between border-slate-300 rounded-lg min-w-[100%] mb-5 p-4 items-center">
+        <div class="flex gap-3 items-center">
+            <img src=<%= asset_path('icon/info.svg') %> alt="notice" class="size-5">
+            <div class="flex flex-col">
+                <div class="text-sm font-bold">
+                Unmatched User/s Found
+                </div>
+                <% if @cohort.unmatched_mentees.any? %>
+                <div class="text-sm pr-2">
+                    Mentee:
+                    <% @cohort.unmatched_mentees.each_with_index do |mentee, index|%>
+                    <%= mentee %><%= "," unless index == @cohort.unmatched_mentees.length - 1 %>
+                    <% end %>
+                </div>
+                <% end %>
+                <% if @cohort.unmatched_mentors.any? %>
+                <div class="text-sm pr-2">
+                    Mentor:
+                    <% @cohort.unmatched_mentors.each_with_index do |mentor, index|%>
+                    <%= mentor %><%= "," unless index == @cohort.unmatched_mentors.length - 1 %>
+                    <% end %>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
