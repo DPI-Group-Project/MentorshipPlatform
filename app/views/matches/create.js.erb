@@ -1,0 +1,14 @@
+// create.js.erb
+
+// Close the modal after successful form submission
+$('#create_match_modal').addClass('hidden');
+$('#create_match_modal').removeClass('flex');
+
+// Optionally reset the form fields after submission
+$('#create-match-form')[0].reset();
+
+// Optionally, add the newly created match to the table dynamically
+$('#matches').append('<%= j render @match %>');
+
+// Optionally, show a success flash message or notification
+$('#flash-message').html('<div class="alert alert-success">Match created successfully!</div>');
