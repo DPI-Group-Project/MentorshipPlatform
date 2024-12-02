@@ -8,6 +8,34 @@ class MeetingsController < ApplicationController
     @mentor = @match.mentor
     @required_meetings_count = @match.cohort.required_meetings
     @remaining_meetings = @required_meetings_count - @meetings.count
+
+    # Fetch all mentees associated with the mentor
+    @mentees = Match.where(mentor_id: current_user.id).map(&:mentee)
+
+    # Fetch meetings and related data for each mentee
+    @mentee_meetings = @mentees.each_with_object({}) do |mentee, hash|
+      # Find the match between the current mentor and mentee
+      match = Match.find_by(mentor_id: current_user.id, mentee_id: mentee.id)
+
+      if match
+        meetings = match.meetings.order(:date)
+        required_meetings_count = match.cohort.required_meetings
+        remaining_meetings = required_meetings_count - meetings.count
+
+        hash[mentee.id] = {
+          meetings: meetings,
+          remaining_meetings: remaining_meetings,
+          required_meetings_count: required_meetings_count
+        }
+      else
+        hash[mentee.id] = {
+          meetings: [],
+          remaining_meetings: 0,
+          required_meetings_count: 0
+        }
+      end
+    end
+
   end
 
   # GET /meetings/1 or /meetings/1.json
@@ -17,6 +45,34 @@ class MeetingsController < ApplicationController
     @mentor = @match.mentor
     @required_meetings_count = @match.cohort.required_meetings
     @remaining_meetings = @required_meetings_count - @meetings.count
+
+    # Fetch all mentees associated with the mentor
+    @mentees = Match.where(mentor_id: current_user.id).map(&:mentee)
+
+    # Fetch meetings and related data for each mentee
+    @mentee_meetings = @mentees.each_with_object({}) do |mentee, hash|
+      # Find the match between the current mentor and mentee
+      match = Match.find_by(mentor_id: current_user.id, mentee_id: mentee.id)
+
+      if match
+        meetings = match.meetings.order(:date)
+        required_meetings_count = match.cohort.required_meetings
+        remaining_meetings = required_meetings_count - meetings.count
+
+        hash[mentee.id] = {
+          meetings: meetings,
+          remaining_meetings: remaining_meetings,
+          required_meetings_count: required_meetings_count
+        }
+      else
+        hash[mentee.id] = {
+          meetings: [],
+          remaining_meetings: 0,
+          required_meetings_count: 0
+        }
+      end
+    end
+
   end
 
   # GET /meetings/new
@@ -29,7 +85,10 @@ class MeetingsController < ApplicationController
 
   # POST /meetings or /meetings.json
   def create
-    @match = Match.find_by(mentee_id: current_user.id)
+    # 현재 사용자가 멘토인지 멘티인지 확인하고 match를 찾습니다.
+    @match = Match.find_by("mentee_id = :id OR mentor_id = :id", id: current_user.id)
+
+    # 새로운 미팅 객체를 생성하고 match_id를 설정합니다.
     @meeting = Meeting.new(meeting_params)
     @meeting.match_id = @match.id if @match.present?
 
@@ -43,6 +102,7 @@ class MeetingsController < ApplicationController
       end
     end
   end
+
 
   # PATCH/PUT /meetings/1 or /meetings/1.json
   def update
@@ -76,6 +136,6 @@ class MeetingsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def meeting_params
-    params.require(:meeting).permit(:date, :time, :notes, :location)
+    params.require(:meeting).permit(:date, :time, :notes, :location, :location_type)
   end
 end
