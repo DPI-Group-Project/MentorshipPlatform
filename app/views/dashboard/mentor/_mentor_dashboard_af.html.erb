@@ -1,0 +1,46 @@
+<div class="flex justify-center p-6 lg:px-24 lg:py-10 gap-[1.3rem]">
+  <!-- Left Section: Stack the two cards -->
+  <div class="desktop-view">
+    <div class="flex flex-col space-y-5 col-span-1 w-[17rem]">
+      <%= render 'user_card' %>
+      <%= render 'program_card' %>
+    </div>
+  </div>
+  <!-- Right Section: Main Content -->
+  <div class="grid md:grid-cols-2 sm:grid-cols-1">
+    <div class="flex flex-col gap-3">
+      <h1 class="text-2xl font-semibold text-[#202020] mb-1">
+        Your Mentee
+      </h1>
+      <div class="bg-[#FFFFFF] flex flex-col gap-2 border-slate-300 rounded-lg p-5 max-h-[12rem] overflow-y-scroll">
+        <% current_user.current_user_mentees.each_with_index do |mentee, index| %>
+          <div class="flex justify-between">
+            <div class="flex gap-2">
+              <img src=<%= asset_path('sample_img/mentor_sample.png') %> alt="mentee_profile_picture" class="size-12 object-cover rounded-[0.5rem] border">
+              <div class="flex flex-col">
+                <p class="text-[1rem] text-[#202020] font-semibold"><%= mentee.name %></p>
+                <p class="text-[0.8rem] text-[#202020]"><%= mentee.title %></p>
+              </div>
+            </div>
+            <div>
+              <div class="flex text-[0.8rem] items-center gap-1">
+                <p class="text-[#202020] font-medium bg-[#EEF6F8] rounded-md py-0.5 px-1"><%= @meeting_counts_with_mentee[mentee.id] %>/ <%= @required_meetings_count %></p>
+                Done
+              </div>
+              <div>
+                <a href="/profile/<%= mentee.id %>" class="text-[0.8rem] text-[#A19791]">View Profile</a>
+              </div>
+            </div>
+          </div>
+          <% if index < current_user.current_user_mentees.size - 1 %>
+            <div class="w-full border-t border-[#DCDCDC] my-1"></div>
+          <% end %>
+        <% end %>
+      </div>
+      <%= render 'meeting_summary' %>
+    </div>
+    <div class="md:my-5">
+      <%= render 'calendar' %>
+    </div>
+  </div>
+</div>
