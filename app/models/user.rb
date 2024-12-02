@@ -71,6 +71,15 @@ class User < ApplicationRecord
     match ? User.find(match.mentor_id) : nil
   end
 
+  def current_user_mentees
+    matches = Match.where(mentor_id: id)
+    matches.map { |match| User.find(match.mentee_id) }
+  end
+
+  def mentee_count
+    current_user_mentees.size
+  end
+
   def cohort
     cohort_id = CohortMember.where(email:).pick(:cohort_id)
     Cohort.find_by(id: cohort_id)
