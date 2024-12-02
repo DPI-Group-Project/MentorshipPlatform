@@ -17,7 +17,7 @@
   <%= form.hidden_field :contact_id, value: current_user.id %>
 
   <div class="flex flex-col">
-    <%= form.label :cohort_name, class: "font-medium mb-1" %>
+    <%= form.label :cohort_name, "Cohort Name", class: "font-medium mb-1" %>
     <%= form.text_field :cohort_name,
                         class: "border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
