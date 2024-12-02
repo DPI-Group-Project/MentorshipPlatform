@@ -3,8 +3,14 @@ class CohortsController < ApplicationController
 
   # GET /cohorts or /cohorts.json
   def index
-    @cohorts = Cohort.all
+    if params[:program_id].present?
+      @program = Program.find(params[:program_id])
+      @cohorts = @program.cohorts
+    else
+      @cohorts = Cohort.all
+    end
   end
+  
 
   # GET /cohorts/1 or /cohorts/1.json
   def show; end
@@ -15,7 +21,10 @@ class CohortsController < ApplicationController
   end
 
   # GET /cohorts/1/edit
-  def edit; end
+  def edit
+    @current_program = @cohort.program 
+    render partial: "form", locals: { cohort: @cohort }
+  end
 
   # POST /cohorts or /cohorts.json
   def create
@@ -36,7 +45,7 @@ class CohortsController < ApplicationController
   def update
     respond_to do |format|
       if @cohort.update(cohort_params)
-        format.html { redirect_to cohort_url(@cohort), notice: "Cohort was successfully updated." }
+        format.html { redirect_to program_cohorts_path(@cohort.program), notice: "Cohort was successfully updated." }
         format.json { render :show, status: :ok, location: @cohort }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,7 +59,7 @@ class CohortsController < ApplicationController
     @cohort.destroy!
 
     respond_to do |format|
-      format.html { redirect_to cohorts_url, notice: "Cohort was successfully destroyed." }
+      format.html { redirect_to program_cohorts_path(@cohort.program), notice: "Cohort was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -68,3 +77,4 @@ class CohortsController < ApplicationController
                                    :contact_id, :required_meetings, :shortlist_start_time, :shortlist_end_time)
   end
 end
+
