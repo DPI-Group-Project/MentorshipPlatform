@@ -1,6 +1,12 @@
 <div class="pt-6 px-6 bg-white rounded-[0.75rem] shadow-sm">
     <h1 class="text-[2rem] font-semibold text-[#202020]"> Hi <%= current_user.first_name %>,</h1>
-    <p class="text-sm text-[#898989] mt-2">What would you like to learn today?</p>
+    <p class="text-sm text-[#898989] mt-2">
+      <% if current_user.role === 'mentee' %>
+        What would you like to learn today?
+      <% else %>
+        What would you like to share today?
+      <% end %>
+    </p>
     <div class="flex items-center mt-5">
         <img src="<%= asset_path("sample_img/admin_user.png") %>" alt="User picture" class="w-12 h-12 rounded-full">
         <div class="ml-4">
