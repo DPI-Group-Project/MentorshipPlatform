@@ -2,7 +2,7 @@
   <div class="flex justify-between">
     <div>
       <h1 class="text-2xl font-bold text-black mb-6 text-left">
-        Matches for <%=@cohort.cohort_name%>
+        Matches for <%= @cohort.cohort_name %>
       </h1>
     </div>
     <div>
@@ -15,28 +15,20 @@
   </div>
 
   <% if @matches.any?%>
-    <% if @cohort.unmatched_mentees.any? || @cohort.unmatched_mentors.any?%>
+    <% if @cohort.unmatched_mentees.any? || @cohort.unmatched_mentors.any? %>
       <%= render "matches/unmatched_card" %>
     <% end %>
     <%= render "matches/table"%>
   <% else %>
     <div class="overflow-x-auto rounded-lg">
       <h1 class="py-3 px-6 text-left text-md font-semibold tracking-wider text-center">
-        No Matches for <%=@cohort.cohort_name %> yet!
+        No Matches for <%= @cohort.cohort_name %> yet!
       </h1>
     </div>
   <% end %>
 </div>
 
-<!-- New Match Modal -->
-<div id="create_match_modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 modal">
-  <div class="bg-white p-8 rounded-lg shadow-lg w-[30rem] relative">
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" onclick="closeModal('create_match_modal')">
-      <i class="fas fa-times"></i>
-    </button>
-    <%= render partial: "matches/form_new", locals: { match: @match, cohort: @cohort, current_time_in_user_zone: @current_time_in_user_zone } %>
-  </div>
-</div>
+<%= render "matches/new_match_modal" %>
 
 <script>
   function openModal(modalId) {
