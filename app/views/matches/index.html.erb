@@ -25,13 +25,19 @@
                 Unmatched User/s Found
               </div>
               <% if @cohort.unmatched_mentees.any? %>
-                <div class="text-sm max-w-[25rem] pr-2">
-                  Mentee: <%= @cohort.unmatched_mentees%>
+                <div class="text-sm pr-2">
+                  Mentee:
+                  <% @cohort.unmatched_mentees.each_with_index do |mentee, index|%>
+                    <%= mentee %><%= "," unless index == @cohort.unmatched_mentees.length - 1 %>
+                  <% end %>
                 </div>
               <% end %>
               <% if @cohort.unmatched_mentors.any? %>
-                <div class="text-sm max-w-[25rem]">
-                  Mentor: <%= @cohort.unmatched_mentors%>
+                <div class="text-sm pr-2">
+                  Mentor:
+                  <% @cohort.unmatched_mentors.each_with_index do |mentor, index|%>
+                    <%= mentor %><%= "," unless index == @cohort.unmatched_mentors.length - 1 %>
+                  <% end %>
                 </div>
               <% end %>
             </div>
