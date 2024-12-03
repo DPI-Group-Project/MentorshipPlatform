@@ -59,7 +59,11 @@ class DashboardController < ApplicationController
   end
 
   def create_program_admin
-    @current_program = Program.find_by(creator_id: current_user.id)
+    @current_program = if params[:program_id].present?
+                         Program.find_by(id: params[:program_id])
+                       else
+                         Program.find_by(creator_id: current_user.id)
+                       end
     @admin_user = User.create(email: program_admin_params[:email], password: "password")
     @program_admin = ProgramAdmin.create(user_id: @admin_user.id, program_id: @current_program.id)
 
