@@ -59,15 +59,9 @@ class DashboardController < ApplicationController
   end
 
   def create_program_admin
-    if params[:program_id].present?
-      @current_program = Program.find_by(id: params[:program_id])
-      @cohorts = Cohort.where(program_id: params[:program_id])
-    else
-      @current_program = Program.find_by(creator_id: current_user.id)
-      @cohorts = Cohort.where(program_id: @current_program.id)
-    end
-
-    @program_admin = create_admin(program_admin_params[:email], @current_program.id)
+    @current_program = Program.find_by(creator_id: current_user.id)
+    @admin_user = User.create(email: program_admin_params[:email], password: "password")
+    @program_admin = ProgramAdmin.create(user_id: @admin_user.id, program_id: @current_program.id)
 
     respond_to do |format|
       if @program_admin.save
@@ -88,9 +82,5 @@ class DashboardController < ApplicationController
 
   def program_admin_params
     params.require(:program_admin).permit(:email, :program_id, :role)
-  end
-
-  def create_admin(email, program_id)
-    ProgramAdmin.create(email: email, program_id: program_id, role: "admin")
   end
 end
