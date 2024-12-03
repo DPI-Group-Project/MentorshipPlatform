@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_191513) do
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "role", ["mentor", "mentee"]
+  create_enum "status", ["active", "inactive", "archived"]
 
   create_table "cohort_members", id: false, force: :cascade do |t|
     t.bigint "cohort_id", null: false
@@ -76,7 +77,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_191513) do
     t.bigint "program_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "role"
     t.index ["program_id"], name: "index_program_admins_on_program_id"
     t.index ["user_id"], name: "index_program_admins_on_user_id"
   end
@@ -122,7 +122,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_191513) do
     t.datetime "remember_created_at"
     t.string "first_name"
     t.string "last_name"
-    t.string "status"
+    t.enum "status", default: "active", enum_type: "status"
     t.text "inactive_reason"
     t.string "phone_number"
     t.text "bio"

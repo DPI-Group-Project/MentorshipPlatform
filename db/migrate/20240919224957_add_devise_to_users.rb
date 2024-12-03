@@ -2,6 +2,7 @@
 
 class AddDeviseToUsers < ActiveRecord::Migration[7.1]
   def self.up
+    create_enum :status, %w[active inactive archived]
     change_table :users do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
@@ -34,7 +35,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[7.1]
 
       t.string :first_name
       t.string :last_name
-      t.string :status
+      t.enum :status, enum_type: :status, default: "active"
       t.text :inactive_reason
       t.string :phone_number
       t.text :bio
