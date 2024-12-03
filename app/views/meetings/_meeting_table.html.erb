@@ -61,7 +61,7 @@
       <td class="flex items-center px-6 py-4 text-[#898989] whitespace-nowrap dark:text-white">
         <img src="<%= asset_path("sample_img/mentor_sample.png") %>" alt="User picture" class="w-8 h-8 rounded-full">
         <div class="ps-3">
-          <div class="font-medium"><%= @mentor.name %></div>
+          <div class="font-medium"><%= current_user.role == 'mentee' ? @match.mentor.name : @match.mentee.name %></div>
         </div>
       </td>
       <td class="px-6 py-2"></td>
@@ -69,7 +69,7 @@
       <td class="px-6 py-2"></td>
       <td class="px-6 py-2"></td>
       <td class="px-6 py-2 font-medium text-[#898989]">
-        <%= link_to "Add Meeting", new_meeting_path, data: { turbo_frame: 'modal' } %>
+        <%= link_to "Add Meeting", current_user.role == 'mentor' ? new_meeting_path(mentee_id: @match.mentee.id) : new_meeting_path(mentor_id: @match.mentor.id), data: { turbo_frame: 'modal' } %>
       </td>
     </tr>
   <% end %>

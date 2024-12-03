@@ -35,7 +35,7 @@
             <span class="font-semibold"><%= @required_meetings_count - @meetings.count %></span> meetings are not
             scheduled yet</p>
         </div>
-        <%= link_to 'Take Action',  meetings_path(mentee_id: record.id), class:"text-[#898989] font-regular text-[0.85rem] underline"%>
+        <%= link_to 'Take Action', current_user.role == 'mentee' ? meetings_path(mentor_id: record.id) : meetings_path(mentee_id: record.id), class:"text-[#898989] font-regular text-[0.85rem] underline"%>
       </div>
     </div>
     <div class="flex flex-col">
@@ -55,7 +55,7 @@
             <p class="text-[#202020] font-medium text-[0.9rem]"> Let's schedule first meeting!
         <% end %>
         </div>
-        <%= link_to 'Take Action',  meetings_path(mentee_id: record.id), class:"text-[#898989] font-regular text-[0.85rem] underline"%>
+        <%= link_to 'Take Action',  current_user.role == 'mentee' ? meetings_path(mentor_id: record.id) : meetings_path(mentee_id: record.id), class:"text-[#898989] font-regular text-[0.85rem] underline"%>
       </div>
     </div>
   </div>
