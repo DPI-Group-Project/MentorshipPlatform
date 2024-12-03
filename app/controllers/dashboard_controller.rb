@@ -20,7 +20,14 @@ class DashboardController < ApplicationController
       @meeting_counts_with_mentee = current_user.current_user_mentees.each_with_object({}) do |mentee, counts|
         counts[mentee.id] = Meeting.joins(:match).where(matches: { mentor_id: current_user.id, mentee_id: mentee.id }).count
       end
+      @past_meeting_counts_with_mentee = current_user.current_user_mentees.each_with_object({}) do |mentee, counts|
+        counts[mentee.id] = Meeting.joins(:match)
+                                   .where(matches: { mentor_id: current_user.id, mentee_id: mentee.id })
+                                   .where("meetings.date < ?", Date.today)
+                                   .count
+      end
       @total_meetings_count = @meeting_counts_with_mentee.values.sum
+      @total_past_meeting_count = @past_meeting_counts_with_mentee.values.sum
 
 
     elsif ["admin"].include?(@role)

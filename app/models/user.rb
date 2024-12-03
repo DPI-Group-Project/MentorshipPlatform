@@ -37,6 +37,8 @@ class User < ApplicationRecord
   has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
   has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
   has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
+  has_many :matches, foreign_key: :mentor_id, class_name: 'Match'
+  has_many :meetings, through: :matches
 
   validates :email, uniqueness: true
 

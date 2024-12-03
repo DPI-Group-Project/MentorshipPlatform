@@ -6,10 +6,11 @@
     <p class="text-[#202020] text-[0.9rem] font-[550]">Meeting Progress</p>
     <div class="flex items-center gap-2">
       <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-        <div class="bg-[#F9837C] h-2.5 rounded-full" style="width: <%= @total_meetings_count.to_f / (@required_meetings_count * current_user.mentee_count) * 100 %>%"></div>
+        <div class="bg-[#F9837C] h-2.5 rounded-full" style="width: <%= @total_past_meeting_count.to_f / (@required_meetings_count * current_user.mentee_count) * 100 %>%"></div>
       </div>
       <div class="text-[#202020] text-[0.8rem] flex items-center gap-1">
-        <p class="font-medium"><%= (@total_meetings_count.to_f / (@required_meetings_count * current_user.mentee_count) * 100).to_i %>%</p>
+        <p class="font-medium text-nowrap"><%= (@total_past_meeting_count.to_f / (@required_meetings_count * current_user.mentee_count) * 100).to_i %>
+          %</p>
         <p>Done</p>
       </div>
     </div>
@@ -22,23 +23,37 @@
       <div class="flex justify-between items-center">
         <div class="flex gap-2 items-center">
           <div class="w-[2rem] h-[2rem] rounded-[2rem] bg-[#F7F5F4] flex items-center justify-center">
-            <img src="<%= asset_path("icon/calendar_outline.svg") %>" alt="calender" class="h-[1rem] w-[1rem]">
+            <img src="<%= asset_path("icon/2_user.svg") %>" alt="calender" class="h-[1rem] w-[1rem]">
           </div>
           <p class="text-[#202020] font-medium text-[0.9rem]">
-              <span class="font-semibold"><%= @total_meetings_count %></span>
-              out of
-              <span class="font-semibold"><%= @required_meetings_count*current_user.mentee_count %></span>
-              meetings are done!
+            <span class="font-semibold"><%= @total_past_meeting_count %></span>
+            out of
+            <span class="font-semibold"><%= @required_meetings_count * current_user.mentee_count %></span>
+            meetings are done!
           </p>
         </div>
-        <%= link_to 'Take Action',  meetings_path, class:"text-[#898989] font-regular text-[0.85rem] underline"%>
+        <%= link_to 'Take Action', meetings_path, class: "text-[#898989] font-regular text-[0.85rem] underline" %>
       </div>
     </div>
     <div class="flex flex-col">
       <div class="flex justify-between items-center">
         <div class="flex gap-2 items-center">
           <div class="w-[2rem] h-[2rem] rounded-[2rem] bg-[#F7F5F4] flex items-center justify-center">
-            <img src="<%= asset_path("icon/2_user.svg") %>" alt="2_user" class="h-[1rem] w-[1rem]">
+            <img src="<%= asset_path("icon/info_square.svg") %>" alt="calender" class="h-[1rem] w-[1rem]">
+          </div>
+          <p class="text-[#202020] font-medium text-[0.9rem]">
+            <span class="font-semibold"><%= @required_meetings_count * current_user.mentee_count - @total_meetings_count %></span>
+            meetings need to be scheduled
+          </p>
+        </div>
+        <%= link_to 'Take Action', meetings_path, class: "text-[#898989] font-regular text-[0.85rem] underline" %>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <div class="flex justify-between items-center">
+        <div class="flex gap-2 items-center">
+          <div class="w-[2rem] h-[2rem] rounded-[2rem] bg-[#F7F5F4] flex items-center justify-center">
+            <img src="<%= asset_path("icon/calendar_outline.svg") %>" alt="2_user" class="h-[1rem] w-[1rem]">
           </div>
           <% if @upcoming_meeting.present? %>
             <% if (@upcoming_meeting.date - Date.today).to_i == 0 %>
@@ -51,7 +66,7 @@
             <p class="text-[#202020] font-medium text-[0.9rem]"> Let's schedule the meeting!
           <% end %>
         </div>
-        <%= link_to 'Take Action',  meetings_path, class:"text-[#898989] font-regular text-[0.85rem] underline"%>
+        <%= link_to 'Take Action', meetings_path, class: "text-[#898989] font-regular text-[0.85rem] underline" %>
       </div>
     </div>
   </div>
