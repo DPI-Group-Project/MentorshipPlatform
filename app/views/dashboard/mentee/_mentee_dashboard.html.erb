@@ -1,15 +1,15 @@
 <% if @shortlist_time == 'open' && !ShortList.exists?(mentee_id: current_user.id) && !current_user.matched? %>
   <div class="desktop-view">
-    <%= render 'mentee_shortlist_desktop', mentors_data: mentors_data %>
+    <%= render 'dashboard/mentee/mentee_shortlist_desktop', mentors_data: mentors_data %>
   </div>
   <div class="mobile-view">
-    <%= render 'mentee_shortlist_mobile', mentors_data: mentors_data %>
+    <%= render 'dashboard/mentee/mentee_shortlist_mobile', mentors_data: mentors_data %>
   </div>
 <% else %>
   <% if current_user.matched? %>
-    <%= render 'mentee_dashboard_af', mentors_data: mentors_data %>
+    <%= render 'dashboard/mentee/mentee_dashboard_af', mentors_data: mentors_data %>
   <% else %>
-    <%= render 'mentee_dashboard_bf', mentors_data: mentors_data %>
+    <%= render 'dashboard/mentee/mentee_dashboard_bf', mentors_data: mentors_data %>
   <% end %>
 <% end %>
 

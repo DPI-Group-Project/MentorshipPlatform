@@ -98,6 +98,14 @@ class User < ApplicationRecord
     end
   end
 
+  def mentor?
+    Match.exists?(mentor_id: id)
+  end
+
+  def mentee?
+    Match.exists?(mentee_id: id)
+  end
+
   def capacity
     CohortMember.where(email:).pick(:capacity)
   end

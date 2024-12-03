@@ -13,6 +13,8 @@
 </p>
 
 <% @mentees.each_with_index do |mentee, i| %>
+  <% match = Match.find_by(mentor_id: current_user.id, mentee_id: mentee.id) %>
+
   <h2 class="text-xl font-semibold text-[#202020] mt-6">
     <%= i +1 %>. <%= mentee.name %>
   </h2>
@@ -70,7 +72,7 @@
         <td class="px-6 py-2"></td>
         <td class="px-6 py-2"></td>
         <td class="px-6 py-2">
-          <%= link_to "Add Meeting", new_meeting_path, class: "text-[#202020] hover:underline" %>
+          <%= link_to "Add Meeting", new_meeting_path(match_id: match.id), class: "text-[#202020] hover:underline" %>
         </td>
       </tr>
     <% end %>
