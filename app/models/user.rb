@@ -30,17 +30,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :cohort_member, primary_key: "email", foreign_key: "email", optional: true, dependent: :destroy
-  has_many :program_admins, primary_key: "email", foreign_key: "email", dependent: :destroy
+  has_one :program_admins, primary_key: "id", dependent: :destroy
   has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
   has_many :mentees, class_name: "Match", foreign_key: "mentee_id", dependent: :destroy
   has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
   has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
   has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
-  has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
 
   validates :email, uniqueness: true
-
-  before_create :set_default_active_status
 
   # Returns list of mentees that are in the same cohort as the provided mentor
   scope :mentors_in_cohort, lambda { |cohort|
@@ -78,13 +75,8 @@ class User < ApplicationRecord
 
   def role
     cohort_member_role = CohortMember.where(email: email).pick(:role)
-    program_admin_role = ProgramAdmin.where(email: email).pick(:role)
 
-    if program_admin_role.present?
-      program_admin_role
-    elsif cohort_member_role.present?
-      cohort_member_role
-    end
+    cohort_member_role.presence || "admin"
   end
 
   def capacity
@@ -96,22 +88,16 @@ class User < ApplicationRecord
     matches = Match.where("mentor_id = ? AND active = ? AND cohort_id = ?", id, "true", cohort_id)
     matches.size
   end
+  # REMOVED: currently admin only has one program and this thing broke the admin dashboard
+  # def assigned_programs
+  #   admins = ProgramAdmin.find_by(user_id: id)
+  #   programs = []
 
-  def assigned_programs
-    admins = ProgramAdmin.where(email:)
-    programs = []
+  #   admins.each do |admin|
+  #     program_id = admin.program_id
+  #     programs << Program.find_by(id: program_id)
+  #   end
 
-    admins.each do |admin|
-      program_id = admin.program_id
-      programs << Program.find_by(id: program_id)
-    end
-
-    programs
-  end
-
-  private
-
-  def set_default_active_status
-    self.status ||= "Active"
-  end
+  #   programs
+  # end
 end

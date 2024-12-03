@@ -31,7 +31,7 @@ task({ sample_data: :environment }) do
 
   # Creating Users
   people.each do |person|
-    status = { "Archived" => 10, "Inactive" => 40, "Active" => 100 }.find { |_key, value| rand * 100 <= value }.first
+    status = { "archived" => 10, "inactive" => 40, "active" => 100 }.find { |_key, value| rand * 100 <= value }.first
     timezone = ["Eastern Standard Time (EST) - UTC-5", "Central Standard Time (CST) - UTC-6",
                 "Pacific Standard Time (PST) - UTC-8", "Mountain Standard Time (MST) - UTC-7"].sample
     mentor_title = ["Software Engineer", "Consultant", "Technical Support", "IT Technician", "Project Manager",
@@ -95,15 +95,11 @@ task({ sample_data: :environment }) do
   program_index = 0
 
   admins.each do |admin|
-    program_passcode = Faker::Number.number(digits: 8).to_s
-
     if program_index < program_names.length
       Program.create(
         name: program_names[program_index],
         description: "This program is for the #{program_names[program_index]} DPI program",
-        creator_id: admin.id,
-        contact_id: admin.id,
-        passcode: program_passcode
+        contact_id: admin.id
       )
     end
     program_index += 1
@@ -123,8 +119,8 @@ task({ sample_data: :environment }) do
         cohort_name: "Cohort #{count}",
         description: "This cohort is part of the #{program.name} program",
         program_id: program.id,
-        creator_id: program.creator_id,
-        contact_id: program.creator_id,
+        creator_id: program.contact_id,
+        contact_id: program.contact_id,
         start_date:,
         end_date:,
         shortlist_start_time:,
@@ -147,8 +143,7 @@ task({ sample_data: :environment }) do
 
     ProgramAdmin.create!(
       program_id: id,
-      email: email,
-      role: "admin"
+      user_id: admin.id
     )
   end
 
