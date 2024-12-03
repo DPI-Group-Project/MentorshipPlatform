@@ -144,8 +144,7 @@ class Cohort < ApplicationRecord
   private
     def find_unmatched_users(cohort_id)
       emails_of_cohort_members = CohortMember.where(cohort_id: cohort_id)
-      p cohort_id
-      p "poop #{emails_of_cohort_members.size}"
+
       unmatched_mentees = []
       unmatched_mentors = []
 
@@ -162,9 +161,7 @@ class Cohort < ApplicationRecord
           next
         end
       end
-      
-      p "pee1 #{unmatched_mentees}"
-      p "pee2 #{unmatched_mentors}"
+
       return unmatched_mentees, unmatched_mentors
     end  
 end
