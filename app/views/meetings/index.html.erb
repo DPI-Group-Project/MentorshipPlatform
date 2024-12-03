@@ -9,7 +9,7 @@
     </div>
     <!-- Right Section: Main Content -->
     <div class="col-span-3">
-      <% if @role == "mentee" %>
+      <% if current_user.mentee? %>
         <%= render 'mentee_meeting_table' %>
       <% else %>
         <%= render 'mentor_meeting_table' %>
