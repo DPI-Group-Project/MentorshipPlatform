@@ -78,15 +78,13 @@
     </button>
     <h1 class="font-medium mb-1">Cohorts:</h1>
     <ul class="mt-2 space-y-2">
-      <% @programs_by_admin.each do |program| %>
-        <% program.cohorts.each do |cohort| %>
-          <li>
-            <%= cohort.cohort_name %>
-            <%= cohort.description %>
-            <%= cohort.start_date %>
-            <%= cohort.end_date %>
-          </li>
-        <% end %>
+      <% @cohorts.each do |cohort| %>
+        <li>
+          <%= cohort.cohort_name %>
+          <%= cohort.description %>
+          <%= cohort.start_date %>
+          <%= cohort.end_date %>
+        </li>
       <% end %>
     </ul>
   </div>
