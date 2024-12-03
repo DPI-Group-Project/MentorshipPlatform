@@ -39,8 +39,6 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
 
-  before_create :set_default_active_status
-
   # Returns list of mentees that are in the same cohort as the provided mentor
   scope :mentors_in_cohort, lambda { |cohort|
                               joins(:cohort_member)
@@ -106,11 +104,5 @@ class User < ApplicationRecord
     end
 
     programs
-  end
-
-  private
-
-  def set_default_active_status
-    self.status ||= "Active"
   end
 end
