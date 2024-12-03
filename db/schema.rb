@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_191513) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_05_225311) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -150,5 +150,4 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_191513) do
   add_foreign_key "short_lists", "cohorts"
   add_foreign_key "short_lists", "users", column: "mentee_id"
   add_foreign_key "short_lists", "users", column: "mentor_id"
-  add_foreign_key "users", "cohort_members", column: "email", primary_key: "email"
 end
