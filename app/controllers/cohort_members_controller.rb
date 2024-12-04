@@ -118,7 +118,7 @@ class CohortMembersController < ApplicationController
 
     cm.save!
 
-    role == "mentor" ? CohortMemberMailer.mentor_welcome_mail(cm).deliver_later! : CohortMemberMailer.mentee_welcome_mail(cm).deliver_later!
+    CohortMemberMailer.welcome_mail(cm).deliver_later!
   end
 
   # Helper method to split, clean, and format email strings
