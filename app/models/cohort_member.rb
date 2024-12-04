@@ -11,6 +11,8 @@
 #  capacity   :integer
 #
 class CohortMember < ApplicationRecord
+  enum role: { mentor: "mentor", mentee: "mentee" }
+
   has_one :user, primary_key: "email", foreign_key: "email"
   belongs_to :cohort, optional: false, class_name: "Cohort"
   validates :email, uniqueness: true

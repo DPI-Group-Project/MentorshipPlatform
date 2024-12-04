@@ -1,25 +1,81 @@
-<div class="flex flex-col items-center justify-center min-h-screen p-6">
-  <h2 class="text-center text-3xl font-bold mb-8">Members of <%= @cohort.cohort_name if @cohort %></h2>
-  
-  <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-8 w-full md:w-auto">
-    <!-- Mentor Card -->
-    <div class="w-full max-w-2xl h-[500px] bg-white p-8 rounded-xl shadow-lg border border-gray-200 space-y-4 flex flex-col">
-      <h3 class="text-2xl font-bold text-gray-800 text-center mb-4">Mentors</h3>
-      <div class="flex-1 max-h-full overflow-y-auto space-y-4">
-        <% @mentors.each do |mentor| %>
-          <%= render partial: "cohort_member", locals: { cohort_member: mentor } %>
-        <% end %>
-      </div>
-    </div>
-
-    <!-- Mentee Card -->
-    <div class="w-full max-w-2xl h-[500px] bg-white p-8 rounded-xl shadow-lg border border-gray-200 space-y-4 flex flex-col">
-      <h3 class="text-2xl font-bold text-gray-800 text-center mb-4">Mentees</h3>
-      <div class="flex-1 max-h-full overflow-y-auto space-y-4">
-        <% @mentees.each do |mentee| %>
-          <%= render partial: "cohort_member", locals: { cohort_member: mentee } %>
-        <% end %>
-      </div>
+<div class="bg-gray-50 mt-20 mb-20">
+  <div class="container mx-auto mt-20 px-4">
+    <h1 class="text-2xl font-bold text-black mb-6 text-left">Members of <%= @cohort.cohort_name if @cohort %></h1>
+    <div class="overflow-x-auto rounded-lg shadow-lg">
+      <table class="min-w-full bg-white border border-gray-300 divide-y divide-gray-200">
+        <thead class="bg-[#202020]">
+          <tr>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Profile Picture</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Email</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Program</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider">Cohort</th>
+            <th class="py-3 px-6 text-left text-xs font-semibold text-white uppercase tracking-wider relative">
+              <button id="filter-toggle" data-filter="all" class="flex items-center">
+                All Members
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div id="filter-options" class="absolute left-0 mt-2 w-32 rounded-md shadow-lg hidden">
+                <button class="block w-full bg-[#202020] text-left px-4 py-2 hover:bg-white hover:text-black" data-filter="all">All Members</button>
+                <button class="block w-full bg-[#202020] text-left px-4 py-2 hover:bg-white hover:text-black" data-filter="mentor">Mentors</button>
+                <button class="block w-full  bg-[#202020] text-left px-4 py-2 hover:bg-white hover:text-black" data-filter="mentee">Mentees</button>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200" id="members-container">
+          <% (@mentors + @mentees).each do |member| %>
+            <tr id="<%= dom_id(member) %>" class="member-item hover:bg-gray-50" data-role="<%= member.role %>">
+              <td class="py-4 px-6 text-sm">
+                <div class="w-16 h-16 rounded-full overflow-hidden">
+                  <img src="https://api.dicebear.com/9.x/notionists/svg?seed=Default&radius=50" 
+                       alt="Profile Picture" class="w-full h-full object-cover">
+                </div>
+              </td>
+              <td class="py-4 px-6 text-sm text-gray-800"><%= member.user.email %></td>
+              <td class="py-4 px-6 text-sm text-gray-800">
+                <%= member.cohort.program.name if member.cohort.program %>
+              </td>
+              <td class="py-4 px-6 text-sm text-gray-800"><%= member.cohort.cohort_name %></td>
+              <td class="py-4 px-6 text-sm text-gray-800">
+                <%= member.role.capitalize %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("filter-toggle");
+    const filterOptions = document.getElementById("filter-options");
+    const membersContainer = document.getElementById("members-container");
+    const allMembers = Array.from(document.querySelectorAll(".member-item"));
+
+    // Toggle filter dropdown visibility
+    toggleButton.addEventListener("click", () => {
+      filterOptions.classList.toggle("hidden");
+    });
+
+    // Filter members by role
+    filterOptions.addEventListener("click", (event) => {
+      if (event.target.dataset.filter) {
+        const filter = event.target.dataset.filter;
+        toggleButton.textContent = event.target.textContent;
+        filterOptions.classList.add("hidden");
+
+        allMembers.forEach(member => {
+          if (filter === "all" || member.dataset.role === filter) {
+            member.style.display = "table-row";
+          } else {
+            member.style.display = "none";
+          }
+        });
+      }
+    });
+  });
+</script>

@@ -49,6 +49,15 @@ class Cohort < ApplicationRecord
     matches.size
   end
 
+  def unmatched_mentees
+    unmatched_mentees, unmatched_mentors = find_unmatched_users(id)
+    return unmatched_mentees
+  end
+  def unmatched_mentors
+    unmatched_mentees, unmatched_mentors = find_unmatched_users(id)
+    return unmatched_mentors
+  end
+
   # Creates thread that runs matching code in matches controller
   def start_scheduler_thread
     return if @scheduler_thread&.alive?
@@ -130,4 +139,29 @@ class Cohort < ApplicationRecord
     end
     Rails.logger.debug "Emails sent for unmactched users"
   end
+
+
+  private
+    def find_unmatched_users(cohort_id)
+      emails_of_cohort_members = CohortMember.where(cohort_id: cohort_id)
+
+      unmatched_mentees = []
+      unmatched_mentors = []
+
+      emails_of_cohort_members.each do |cohort_member|
+        user = User.find_by(email: cohort_member.email)
+
+        if user
+          if !user.matched? && user.role == "mentee"
+            unmatched_mentees << user.name
+          elsif !user.matched? && user.role == "mentor"
+            unmatched_mentors << user.name
+          end
+        else
+          next
+        end
+      end
+
+      return unmatched_mentees, unmatched_mentors
+    end  
 end

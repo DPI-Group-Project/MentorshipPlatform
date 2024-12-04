@@ -1,17 +1,44 @@
-<div class="mt-[10rem]">
-  <p style="color: green"><%= notice %></p>
-
-  <h1>Matches</h1>
-
-  <div id="matches">
-    <% @matches.each do |match| %>
-      <%= render match %>
-      <p>
-        <%= link_to "Show this match", match %>
-      </p>
-    <% end %>
+<div class="mt-[7rem] mx-[5rem]">
+  <div class="flex justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-black mb-6 text-left">
+        Matches for <%= @cohort.cohort_name %>
+      </h1>
+    </div>
+    <div>
+      <button class="text-xs w-[8rem] h-[2rem] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:scale-105"
+        onclick="openModal('create_match_modal')">
+        <span class="icon transition duration-500">+</span>
+        Add New
+      </button>
+    </div>
   </div>
 
-  <%= link_to "New match", new_match_path %>
-
+  <% if @matches.any?%>
+    <% if @cohort.unmatched_mentees.any? || @cohort.unmatched_mentors.any? %>
+      <%= render "matches/unmatched_card" %>
+    <% end %>
+    <%= render "matches/table"%>
+  <% else %>
+    <div class="overflow-x-auto rounded-lg">
+      <h1 class="py-3 px-6 text-left text-md font-semibold tracking-wider text-center">
+        No Matches for <%= @cohort.cohort_name %> yet!
+      </h1>
+    </div>
+  <% end %>
 </div>
+
+<%= render "matches/new_match_modal" %>
+
+<script>
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+</script>

@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   resources :cohorts do
     resources :cohort_members, only: [:index]
   end
-  resources :programs
+  
+  resources :programs do
+    resources :cohorts, only: [:index]
+  end
+  
   devise_for :users, controllers: { registrations: "users/registrations" }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
