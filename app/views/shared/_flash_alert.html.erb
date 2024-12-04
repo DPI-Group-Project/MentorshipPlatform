@@ -1,4 +1,4 @@
-<div id="notice" class="transition-opacity duration-500 ease-in-out opacity-100 flex justify-center px-8 sm:px-24">
+<div id="notice" class="transition-opacity duration-500 ease-in-out opacity-100 flex justify-start px-8 sm:px-24 fixed top-4 left-4 z-50">
   <div class="bg-[#FFFFFF] flex justify-between border-slate-300 rounded-lg min-w-[100%] mt-3 p-4 items-center">
     <div class="flex gap-3 items-center">
       <img src=<%= asset_path('icon/alert.svg') %> alt="alert" class="size-5">
@@ -16,16 +16,15 @@
   </div>
 </div>
 
-
 <script>
     function fadeOut(element) {
         element.style.opacity = 0;
         setTimeout(function() {
             element.style.display = 'none';
-        }, 1000);
+        }, 3500);
     }
 
     setTimeout(function() {
         fadeOut(document.getElementById('notice'));
-    }, 2000);
+    }, 3500);
 </script>
