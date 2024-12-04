@@ -1,5 +1,3 @@
-<h1>Hi Admin</h1>
-
-<p>Cohort <%= @cohort.cohort_name %> is ending in 2 weeks!</p>
-
-<p>MentE</p>
+<% title = "Matching Complete" %>
+<% message = "All of the mentees have matched with their mentors! Click through to view the matches." %>
+<%= render "shared/general_email_template", user: @user, title:, message: %>
