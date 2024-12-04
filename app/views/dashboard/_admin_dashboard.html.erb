@@ -1,7 +1,5 @@
 <div class="flex justify-center p-8">
-  <!-- Sidebar -->
     <%= render partial: "admin_sidebar" %>
-  <!-- Main Content -->
   <main class="w-[calc(100%-22rem)] p-6">
     <h1 class="text-2xl font-bold">Hi <%= current_user.first_name %>!</h1>
     <p class="text-gray-500">Welcome back to the Mentorship dashboard</p>
@@ -13,11 +11,13 @@
      
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Cohort Name</p>
-        <h3 id="cohort_name" class="text-lg font-semibold"><%= @cohorts.first.cohort_name %></h3>
+         <h3 id="cohort_name" class="text-lg font-semibold">
+          <%= @cohorts.first&.cohort_name || 'No Cohorts' %>
+        </h3>
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Number of Pairing</p>
-        <h3 id="nunber_of_pairings" class="text-lg font-semibold"><%= @cohorts.first.pairing_number %> Pairs</h3>
+        <h3 id="nunber_of_pairings" class="text-lg font-semibold"> <%= @cohorts.first&.pairing_number || '0' %> Pairs</h3>
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Scheduled Meetings</p>
@@ -113,7 +113,6 @@
     </button>
     <h3 class="text-lg font-bold ml-4 text-gray-80">Add New Admin</h3>
     <div>
-      <!-- form goes here -->
       <%= render "program_admins/form", program_admin: @program_admin %>
     </div>
   </div>
@@ -129,9 +128,7 @@
       const chevron = dropdown.querySelector('.chevron');
 
       toggle.addEventListener('click', function () {
-        // Toggle hidden class to show/hide the dropdown menu
         menu.classList.toggle('hidden');
-        // Toggle the rotation of the chevron icon
         chevron.classList.toggle('rotate-180');
       });
     });
