@@ -52,65 +52,17 @@
       <div class="form-actions mt-6 flex justify-between items-center">
         <!-- Update Button -->
         <%= f.submit "Update", class: "text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center", id: "update-button" %>
-        <!-- Cancel My Account Button -->
-        <%= button_to "Cancel my account", registration_path(resource_name), method: :delete, id: "cancel-button", class: "text-white bg-red-700 hover:bg-red-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center ml-4" %>
+      </div>
+    <% end %>
+    <!-- Cancel My Account Form -->
+    <%= form_for(resource, url: registration_path(resource_name), html: { method: :delete, id: "cancel-account-form" }) do |f| %>
+      <div class="form-actions mt-6 flex justify-end">
+        <%= f.submit "Cancel my account", class: "text-white bg-red-700 hover:bg-red-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center ml-4", data: { confirm: "Are you sure you want to cancel your account?" } %>
       </div>
     <% end %>
     <!-- Back Button -->
     <div class="text-left mt-8">
       <%= link_to "Back", :back, class: "w-full p-3 rounded-md text-white bg-black hover:bg-gray-700 transition duration-200" %>
-    </div>
-  </div>
-</div>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const cancelButton = document.getElementById("cancel-button");
-    const modal = document.getElementById("confirmation-modal");
-    const confirmYes = document.getElementById("confirm-yes");
-    const confirmNo = document.getElementById("confirm-no");
-    const confirmationMessage = document.getElementById("confirmation-message");
-
-    let currentAction = null;
-
-    // Show modal with custom message
-    function showModal(message, action) {
-      confirmationMessage.textContent = message;
-      modal.classList.remove("hidden");
-      currentAction = action;
-    }
-
-    // Hide modal
-    function hideModal() {
-      modal.classList.add("hidden");
-      currentAction = null;
-    }
-
-    // Cancel button listener (now outside the form)
-    cancelButton.addEventListener("click", function (event) {
-      event.preventDefault();
-      showModal("Are you sure you want to cancel your account? This action cannot be undone.", function () {
-        document.getElementById("cancel-button").closest("form").submit();
-      });
-    });
-
-    // Modal actions
-    confirmYes.addEventListener("click", function () {
-      if (currentAction) currentAction();
-      hideModal();
-    });
-
-    confirmNo.addEventListener("click", function () {
-      hideModal();
-    });
-  });
-</script>
-<!-- Confirmation Modal -->
-<div id="confirmation-modal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-  <div class="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
-    <p id="confirmation-message" class="text-lg text-center mb-4"></p>
-    <div class="flex justify-center space-x-4">
-      <button id="confirm-yes" class="bg-gray-900 text-white px-4 py-2 rounded border-2 border-transparent hover:border-green-500">Yes</button>
-      <button id="confirm-no" class="bg-gray-900 text-white px-4 py-2 rounded border-2 border-transparent hover:border-red-500">No</button>
     </div>
   </div>
 </div>
