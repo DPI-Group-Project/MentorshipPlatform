@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
   before_action :dashboard_params, only: [:show]
-  helper_method :progress_message
+  helper_method :progress_message, :progress_message_mentor
 
   def show
     @role = params[:role].downcase
@@ -17,6 +17,18 @@ class DashboardController < ApplicationController
       @past_meeting_count = @meetings.count { |meeting| meeting.date < Time.zone.today }
       @progress = ((@past_meeting_count.to_f / @required_meetings_count) * 100).round(0)
       @remaining_meetings = @required_meetings_count - @meetings.count
+      @meeting_counts_with_mentee = current_user.current_user_mentees.each_with_object({}) do |mentee, counts|
+        counts[mentee.id] = Meeting.joins(:match).where(matches: { mentor_id: current_user.id, mentee_id: mentee.id }).count
+      end
+      @past_meeting_counts_with_mentee = current_user.current_user_mentees.each_with_object({}) do |mentee, counts|
+        counts[mentee.id] = Meeting.joins(:match)
+                                   .where(matches: { mentor_id: current_user.id, mentee_id: mentee.id })
+                                   .where("meetings.date < ?", Date.today)
+                                   .count
+      end
+      @total_meetings_count = @meeting_counts_with_mentee.values.sum
+      @total_past_meeting_count = @past_meeting_counts_with_mentee.values.sum
+
 
     elsif ["admin"].include?(@role)
       @admin_data = ProgramAdmin.find_by(user_id: current_user.id)
@@ -34,6 +46,36 @@ class DashboardController < ApplicationController
       redirect_to root_path, alert: "Invalid role specified."
     end
   end
+
+  def progress_message_mentor(progress)
+    case progress
+    when 0
+      "Your guidance starts here—let’s make a difference together! 🌟"
+    when 1..9
+      "You’ve helped your mentee start strong—great work! 🙌"
+    when 10..19
+      "Your support is driving progress—keep it up! 🛤️"
+    when 20..29
+      "A third of the way there—your impact is showing! 🚀"
+    when 30..39
+      "Your mentorship is guiding the way—amazing effort! ✨"
+    when 40..49
+      "Halfway through—your dedication is making this possible! 💪"
+    when 50..59
+      "Your mentee is thriving, thanks to your support—fantastic work! 🤝"
+    when 60..69
+      "You’re empowering success—almost there! 🏆"
+    when 70..79
+      "Your mentorship is fueling incredible progress—keep going! 🔑"
+    when 80..89
+      "The finish line is near—your guidance has been invaluable! 🌈"
+    when 90..99
+      "You’ve helped your mentee achieve greatness—congratulations! 🎉👏"
+    else
+      "Let’s keep pushing forward! Every step counts. 🌈"
+    end
+  end
+
 
   def progress_message(progress)
     case progress

@@ -36,6 +36,9 @@ class User < ApplicationRecord
   has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
   has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
   has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
+  has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
+  has_many :matches, foreign_key: :mentor_id, class_name: 'Match'
+  has_many :meetings, through: :matches
 
   validates :email, uniqueness: true
 
@@ -68,6 +71,15 @@ class User < ApplicationRecord
     match ? User.find(match.mentor_id) : nil
   end
 
+  def current_user_mentees
+    matches = Match.where(mentor_id: id)
+    matches.map { |match| User.find(match.mentee_id) }
+  end
+
+  def mentee_count
+    current_user_mentees.size
+  end
+
   def cohort
     cohort_id = CohortMember.where(email:).pick(:cohort_id)
     Cohort.find_by(id: cohort_id)
@@ -77,6 +89,14 @@ class User < ApplicationRecord
     cohort_member_role = CohortMember.where(email: email).pick(:role)
 
     cohort_member_role.presence || "admin"
+  end
+
+  def mentor?
+    Match.exists?(mentor_id: id)
+  end
+
+  def mentee?
+    Match.exists?(mentee_id: id)
   end
 
   def capacity

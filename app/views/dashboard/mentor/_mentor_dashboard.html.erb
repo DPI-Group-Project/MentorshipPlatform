@@ -1,0 +1,5 @@
+<% if current_user.matched? %>
+  <%= render 'dashboard/mentor/mentor_dashboard_af' %>
+<% else %>
+  <%= render 'dashboard/mentee/mentee_dashboard_bf' %>
+<% end %>
