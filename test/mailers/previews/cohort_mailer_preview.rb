@@ -29,7 +29,6 @@ class CohortMailerPreview < ActionMailer::Preview
     cohort = Cohort.first
     admin = ProgramAdmin.first.admin.email
     admin_email = [nil, admin].sample
-    pp admin_email
     CohortMailer.with(user: user, cohort: cohort, admin_email: admin_email).survey_reminder
   end
 end
