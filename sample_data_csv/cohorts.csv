@@ -1,0 +1,5 @@
+id,program_id,cohort_name,description,start_date,end_date,required_meetings,shortlist_start_time,shortlist_end_time,creator_id,contact_id,created_at,updated_at
+42,28,Cohort 1,This cohort is part of the Full-Stack Software Development program,2023-12-25 06:00:00,2024-08-03 05:00:00,10,2023-12-28 06:00:00,2023-12-29 06:00:00,528,528,2024-12-05 18:43:38.641665,2024-12-05 18:43:38.641665
+43,29,Cohort 1,This cohort is part of the High School Coding Training program,2023-12-22 06:00:00,2025-02-01 06:00:00,10,2023-12-24 06:00:00,2023-12-25 06:00:00,542,542,2024-12-05 18:43:38.646735,2024-12-05 18:43:38.646735
+44,29,Cohort 2,This cohort is part of the High School Coding Training program,2023-03-19 05:00:00,2024-07-16 05:00:00,6,2023-03-22 05:00:00,2023-03-25 05:00:00,542,542,2024-12-05 18:43:38.652517,2024-12-05 18:43:38.652517
+45,30,Cohort 1,This cohort is part of the Apprenticeship program,2023-08-30 05:00:00,2024-09-18 05:00:00,10,2023-09-02 05:00:00,2023-09-04 05:00:00,543,543,2024-12-05 18:43:38.666792,2024-12-05 18:43:38.666792
