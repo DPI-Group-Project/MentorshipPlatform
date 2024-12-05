@@ -135,7 +135,10 @@ task({ sample_data: :environment }) do
 
   # Creating Program Admins
   admins.each do |admin|
-    email = admin.email
+    pp admin
+    next unless admin
+
+    admin.email
 
     program = Program.all.sample
 

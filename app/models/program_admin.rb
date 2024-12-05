@@ -11,5 +11,5 @@
 #
 class ProgramAdmin < ApplicationRecord
   belongs_to :program, optional: false, class_name: "Program"
-  belongs_to :admin, class_name: "User", optional: false
+  belongs_to :admin, class_name: "User", optional: true
 end
