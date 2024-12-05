@@ -10,6 +10,7 @@ task({ sample_data: :environment }) do
   Cohort.delete_all
   Program.delete_all
   User.delete_all
+  Survey.delete_all
 
   people = Array.new(38) do
     {
@@ -28,6 +29,7 @@ task({ sample_data: :environment }) do
   mentees = []
   mentors_and_mentees = []
   role_hash = {}
+  matches = []
 
   # Creating Users
   people.each do |person|
@@ -185,11 +187,28 @@ task({ sample_data: :environment }) do
 
     shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
     this_mentor = User.find_by(email: mentor_cohort_member_object.email)
-    Match.create(
+    m = Match.create(
       mentor_id: this_mentor.id,
       mentee_id: mentee.id,
       cohort_id: cohort_member_mentee.cohort_id,
       active: shared_cohort.running?
+    )
+
+    matches.push(m)
+  end
+
+  #Creating surveys
+  matches.each do |match|
+    responsive = [true, false].sample
+    rating = [1, 2, 3, 4, 5].sample
+    match_id = match.id
+    body = Faker::TvShows::Simpsons.quote
+
+    Survey.create!(
+      match_id:,
+      responsive:,
+      rating:,
+      body:
     )
   end
 
@@ -200,5 +219,6 @@ task({ sample_data: :environment }) do
   p "There are now #{ProgramAdmin.count} program admins."
   p "There are now #{CohortMember.count} cohort members."
   p "There are now #{Match.count} matches."
+  p "There are now #{Survey.count} surveys."
   p "Done! It took #{(ending - starting).to_i} seconds to create sample data."
 end
