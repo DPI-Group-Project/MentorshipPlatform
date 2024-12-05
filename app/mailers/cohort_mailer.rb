@@ -14,7 +14,6 @@ class CohortMailer < ApplicationMailer
   def matching_complete_notification
     @admin = params[:admin]
     @cohort = params[:cohort]
-    pp @admin
     mail(to: @admin.admin.email, subject: "MentE Matching Complete for #{@cohort.cohort_name}!")
   end
 
