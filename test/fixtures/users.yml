@@ -12,7 +12,7 @@
 #  remember_created_at    :datetime
 #  first_name             :string
 #  last_name              :string
-#  status                 :string
+#  status                 :enum             default("active")
 #  inactive_reason        :text
 #  phone_number           :string
 #  bio                    :text
