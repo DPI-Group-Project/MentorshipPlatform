@@ -20,14 +20,16 @@ class CohortMailerPreview < ActionMailer::Preview
 
   def two_week_warning
     cohort = Cohort.first
-    admin_email = ProgramAdmin.first.email
+    admin_email = ProgramAdmin.first.admin.email
     CohortMailer.with(admin_email: admin_email, cohort: cohort).two_week_warning
   end
 
   def survey_reminder
     user = User.first
     cohort = Cohort.first
-    admin_email = [nil, ProgramAdmin.first.email].sample
+    admin = ProgramAdmin.first.admin.email
+    admin_email = [nil, admin].sample
+    pp admin_email
     CohortMailer.with(user: user, cohort: cohort, admin_email: admin_email).survey_reminder
   end
 end
