@@ -6,6 +6,7 @@ class MatchesController < ApplicationController
   def index
     @cohort = Cohort.find_by(id: @cohort_id)
     @matches = Match.where(cohort_id: @cohort_id)
+    @available_mentors = User.mentors_with_capacity(@cohort.id)
     current_time = Time.current.utc
     @current_time_in_user_zone = current_time.strftime("%Y-%m-%d %H:%M:%S UTC") 
     @match = Match.new
