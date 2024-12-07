@@ -52,11 +52,11 @@ class User < ApplicationRecord
                                 .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentee")
                             }
   scope :unpaired_mentees_in_cohort, lambda { |cohort_id|
-                                       joins(:cohort_member)
-                                         .left_joins("LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true")
-                                         .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentee")
-                                         .where("matches.id IS NULL")
-                                     }
+                            joins(:cohort_member)
+                              .left_joins(:matches)
+                              .where(cohort_members: { cohort_id: cohort_id, role: "mentee" })
+                              .where(matches: { id: nil })
+                          }
   scope :mentors_with_capacity, lambda { |cohort_id|
                                      joins(:cohort_member)
                                        .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentor")

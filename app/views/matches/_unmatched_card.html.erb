@@ -14,7 +14,7 @@
                         <% end %>
                     </div>
                 <% end %>
-                <% if @cohort.unmatched_mentors.any? %>
+                <% if @available_mentors.any? %>
                     <div class="text-sm pr-2">
                         Available Mentors:
                         <% @available_mentors.each_with_index do |mentor, index|%>
