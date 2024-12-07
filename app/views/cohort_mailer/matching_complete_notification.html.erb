@@ -1,3 +1,3 @@
 <% title = "Matching Complete" %>
-<% message = "All of the mentees have matched with their mentors! Click through to view the matches." %>
+<% message = "All of the mentees for <%= @cohort.name %> have matched with their mentors! Click through to view the matches." %>
 <%= render "email_templates/general_email_template", user: @user, title:, message: %>
