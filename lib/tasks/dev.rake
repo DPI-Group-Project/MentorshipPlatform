@@ -3,6 +3,7 @@ task({ sample_data: :environment }) do
   starting = Time.zone.now
   p "Creating sample data..."
 
+  Survey.delete_all
   Match.delete_all
   ShortList.delete_all
   CohortMember.delete_all
@@ -10,7 +11,7 @@ task({ sample_data: :environment }) do
   Cohort.delete_all
   Program.delete_all
   User.delete_all
-  Survey.delete_all
+  
 
   people = Array.new(38) do
     {
