@@ -153,9 +153,9 @@ class Cohort < ApplicationRecord
 
         if user
           if !user.matched? && user.role == "mentee"
-            unmatched_mentees << user.name
+            unmatched_mentees << user
           elsif !user.matched? && user.role == "mentor"
-            unmatched_mentors << user.name
+            unmatched_mentors << user
           end
         else
           next

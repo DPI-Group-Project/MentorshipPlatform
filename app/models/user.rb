@@ -43,20 +43,25 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   # Returns list of mentees that are in the same cohort as the provided mentor
-  scope :mentors_in_cohort, lambda { |cohort|
+  scope :mentors_in_cohort, lambda { |cohort_id|
                               joins(:cohort_member)
-                                .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort, "mentor")
+                                .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentor")
                             }
-  scope :mentees_in_cohort, lambda { |cohort|
+  scope :mentees_in_cohort, lambda { |cohort_id|
                               joins(:cohort_member)
-                                .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort, "mentee")
+                                .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentee")
                             }
-  scope :unpaired_mentees_in_cohort, lambda { |cohort|
-                                       joins(:cohort_member)
-                                         .left_joins("LEFT JOIN matches ON matches.mentee_id = users.id AND matches.active = true")
-                                         .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort, "mentee")
-                                         .where("matches.id IS NULL")
-                                     }
+  scope :unpaired_mentees_in_cohort, lambda { |cohort_id|
+                            joins(:cohort_member)
+                              .left_joins(:matches)
+                              .where(cohort_members: { cohort_id: cohort_id, role: "mentee" })
+                              .where(matches: { id: nil })
+                          }
+  scope :mentors_with_capacity, lambda { |cohort_id|
+                                     joins(:cohort_member)
+                                       .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentor")
+                                       .select { |mentor| mentor.mentee_capacity_count(cohort_id) < mentor.capacity }
+                                   }
 
   def name
     "#{first_name.capitalize} #{last_name.capitalize}"
@@ -108,6 +113,7 @@ class User < ApplicationRecord
     matches = Match.where("mentor_id = ? AND active = ? AND cohort_id = ?", id, "true", cohort_id)
     matches.size
   end
+
   # REMOVED: currently admin only has one program and this thing broke the admin dashboard
   # def assigned_programs
   #   admins = ProgramAdmin.find_by(user_id: id)

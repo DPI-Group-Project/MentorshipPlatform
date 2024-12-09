@@ -15,7 +15,7 @@
   </div>
 
   <% if @matches.any?%>
-    <% if @cohort.unmatched_mentees.any? || @cohort.unmatched_mentors.any? %>
+    <% if @cohort.unmatched_mentees.any? || @available_mentors.any? %>
       <%= render "matches/unmatched_card" %>
     <% end %>
     <%= render "matches/table"%>

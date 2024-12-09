@@ -15,7 +15,6 @@ class Match < ApplicationRecord
   belongs_to :mentee, optional: false, class_name: "User"
   belongs_to :cohort, optional: false, class_name: "Cohort"
   has_many :meetings, class_name: "Meeting", dependent: :destroy
-  has_many :reviews, class_name: "Review", dependent: :destroy
   has_many :surveys, class_name: "Survey", dependent: :destroy
 
   after_create :send_match_created_email

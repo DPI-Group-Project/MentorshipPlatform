@@ -10,15 +10,15 @@
                     <div class="text-sm pr-2">
                         Mentee:
                         <% @cohort.unmatched_mentees.each_with_index do |mentee, index|%>
-                        <%= mentee %><%= "," unless index == @cohort.unmatched_mentees.length - 1 %>
+                        <%= mentee.name %><%= "," unless index == @cohort.unmatched_mentees.length - 1 %>
                         <% end %>
                     </div>
                 <% end %>
-                <% if @cohort.unmatched_mentors.any? %>
+                <% if @available_mentors.any? %>
                     <div class="text-sm pr-2">
-                        Mentor:
-                        <% @cohort.unmatched_mentors.each_with_index do |mentor, index|%>
-                        <%= mentor %><%= "," unless index == @cohort.unmatched_mentors.length - 1 %>
+                        Available Mentors:
+                        <% @available_mentors.each_with_index do |mentor, index|%>
+                        <%= mentor.name %> (<%= mentor.mentee_capacity_count(@cohort.id) %>/<%= mentor.capacity %>)<%= "," unless index == @available_mentors.length - 1 %>
                         <% end %>
                     </div>
                 <% end %>
