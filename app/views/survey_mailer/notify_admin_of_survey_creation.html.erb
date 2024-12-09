@@ -1,5 +1,3 @@
-<h1>Hey Admin</h1>
-
-<p>Survey have been created for <%= @survey.match.mentor.first_name %> and <%= @survey.match.mentee.first_name %></p>
-
-<p>MentE</p>
+<% title = "New Survey Submitted!" %>
+<% message = "#{@survey.match.mentee.first_name} #{@survey.match.mentee.last_name} submitted their survey about #{@survey.match.mentor.first_name} #{@survey.match.mentor.last_name}! Click through to see what they had to say!" %>
+<%= render "email_templates/general_email_template", user: @user, title:, message: %>

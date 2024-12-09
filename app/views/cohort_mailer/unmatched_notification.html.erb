@@ -1,5 +1,3 @@
-<h1>Hi <%= @user.first_name %></h1>
-
-<p>Pick new shortlist for <%= @cohort.cohort_name %>!</p>
-
-<p>MentE</p>
+<% title = "New Shortlist Required" %>
+<% message = "Unfortunately, all of the mentors on your shortlist are taken. Please log in to your MentE account and create a new shortlist for #{@cohort.cohort_name}!" %>
+<%= render "email_templates/general_email_template", user: @user, title:, message: %>

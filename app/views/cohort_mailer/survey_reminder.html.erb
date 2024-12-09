@@ -1,5 +1,3 @@
-<h1>Hi Guys</h1>
-
-<p>Remember to do survey for <%= @cohort.cohort_name %></p>
-
-<p>MentE</p>
+<% title = "Survey Due Soon" %>
+<% message = "Please complete your survey for #{@cohort.cohort_name}. Click below to go to the MentE app." %>
+<%= render "email_templates/general_email_template", user: @user, title:, message: %>
