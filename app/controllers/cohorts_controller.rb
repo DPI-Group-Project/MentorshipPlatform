@@ -1,32 +1,11 @@
 class CohortsController < ApplicationController
-  before_action :set_cohort, only: %i[show edit update destroy]
+  before_action :set_cohort, only: %i[update destroy]
 
-  # GET /cohorts or /cohorts.json
   def index
-    if params[:program_id].present?
-      @program = Program.find(params[:program_id])
-      @cohorts = @program.cohorts
-    else
-      @cohorts = Cohort.all
-    end
-  end
-  
-
-  # GET /cohorts/1 or /cohorts/1.json
-  def show; end
-
-  # GET /cohorts/new
-  def new
-    @cohort = Cohort.new
+    @program = Program.find(current_user.program_admin.program_id)
+    @cohorts = @program.cohorts
   end
 
-  # GET /cohorts/1/edit
-  def edit
-    @current_program = @cohort.program 
-    render partial: "form", locals: { cohort: @cohort }
-  end
-
-  # POST /cohorts or /cohorts.json
   def create
     @cohort = Cohort.new(cohort_params)
 
@@ -41,7 +20,6 @@ class CohortsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /cohorts/1 or /cohorts/1.json
   def update
     respond_to do |format|
       if @cohort.update(cohort_params)
@@ -54,7 +32,6 @@ class CohortsController < ApplicationController
     end
   end
 
-  # DELETE /cohorts/1 or /cohorts/1.json
   def destroy
     @cohort.destroy!
 
@@ -77,4 +54,3 @@ class CohortsController < ApplicationController
                                    :contact_id, :required_meetings, :shortlist_start_time, :shortlist_end_time)
   end
 end
-

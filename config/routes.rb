@@ -12,14 +12,10 @@ Rails.application.routes.draw do
       post "create_with_cohort/:cohort_id", to: "matches#create", as: "create_with_cohort"
     end
   end
-  resources :cohorts do
+  resources :cohorts, only: %i[index create update destroy] do
     resources :cohort_members, only: [:index]
   end
-  
-  resources :programs do
-    resources :cohorts, only: [:index]
-  end
-  
+
   devise_for :users, controllers: { registrations: "users/registrations" }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
