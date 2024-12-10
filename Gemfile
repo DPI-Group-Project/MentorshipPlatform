@@ -18,6 +18,7 @@ gem "stimulus-rails"
 gem "tailwindcss-rails", "~> 2.7"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[windows jruby]
+
 group :development, :test do
   gem "debug", platforms: %i[mri windows]
 end
