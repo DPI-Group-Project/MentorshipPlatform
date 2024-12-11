@@ -149,5 +149,4 @@ class DashboardController < ApplicationController
   def program_admin_params
     params.require(:program_admin).permit(:email, :program_id)
   end
-	# trying to fix the indents 
 end
