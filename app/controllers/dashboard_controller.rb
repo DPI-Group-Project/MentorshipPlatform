@@ -36,12 +36,15 @@ class DashboardController < ApplicationController
       @program_admin = ProgramAdmin.new
 
       if params[:program_id].present?
-        @current_program = Program.find_by(id: params[:program_id])
-        @cohorts = Cohort.where(program_id: params[:program_id])
+				@current_program = Program.find_by(id: params[:program_id])
+				@cohorts = Cohort.where(program_id: params[:program_id])
       else
         @current_program = Program.find_by(contact_id: current_user.id)
         @cohorts = Cohort.where(program_id: @current_program.id)
       end
+
+			# set @program_admins for the current program
+  		@program_admins = ProgramAdmin.where(program_id: @current_program&.id)
     else
       redirect_to root_path, alert: "Invalid role specified."
     end
@@ -104,13 +107,15 @@ class DashboardController < ApplicationController
     @current_program = if params[:program_id].present?
                          Program.find_by(id: params[:program_id])
                        else
-                         Program.find_by(creator_id: current_user.id)
+												Program.find_by(contact_id: current_user.id)
                        end
     @admin_user = User.create(email: program_admin_params[:email], password: "password")
-    @program_admin = ProgramAdmin.create(user_id: @admin_user.id, program_id: @current_program.id)
+    @program_admin = ProgramAdmin.create(user_id: @admin_user.id, program_id: @current_program.id, created_by_admin_id: current_user.id)
 
     respond_to do |format|
       if @program_admin.save
+				# send mail after adding admin 
+				ProgramAdminMailer.admin_created_email(@program_admin.admin&.email, @current_program.name).deliver_later
         format.html { redirect_to dashboard_path(role: "admin"), notice: "Program admin was successfully created." }
       else
         format.html { render :show, alert: "Failed to create program admin." }
@@ -119,6 +124,21 @@ class DashboardController < ApplicationController
     end
   end
 
+	def delete_program_admin
+		program_admin = ProgramAdmin.find(params[:id])
+		user = program_admin.admin
+
+		ActiveRecord::Base.transaction do
+			program_admin.destroy!
+			user.delete
+		end
+
+		respond_to do |format|
+			format.html { redirect_to dashboard_path(role: "admin"), notice: "Admin deleted successfully." }
+			format.json { head :no_content }
+		end
+	end
+	
   private
 
   # Only allow a list of trusted parameters through.
