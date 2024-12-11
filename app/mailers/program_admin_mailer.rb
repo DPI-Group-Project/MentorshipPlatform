@@ -1,0 +1,2 @@
+class ProgramAdminMailer < ApplicationMailer
+end
