@@ -5,7 +5,14 @@
     <p class="text-gray-500">Welcome back to the Mentorship dashboard</p>
      <button id="openModalBtn" class="text-gray-500 flex items-center float-right hover:text-gray-700" onclick="openModal('new-admin-modal')">
       <i class="fa-solid fa-plus pr-2"></i>New Admin
-  </button>
+    </button>
+
+    <!-- temporary view admin program -->
+    <button id="viewAdminsBtn" class="text-gray-500 flex items-center float-right mr-4 hover:text-gray-700" onclick="openModal('program-admin-modal')">
+      <i class="fa-solid fa-users pr-2"></i>View Admins
+    </button>
+
+
     <!-- Program Stats -->
     <div class="grid grid-cols-3 gap-4 mt-6">
      
@@ -117,6 +124,9 @@
     </div>
   </div>
 </div>
+
+<!-- View Admins Modal -->
+<%= render partial: "program_admin_modal" %>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
