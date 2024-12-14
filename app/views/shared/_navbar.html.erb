@@ -7,9 +7,7 @@
   <div>
     <ul class="flex space-x-14 text-[#202020] font-normal">
       <% if current_user.present? %>
-        <li><%= link_to 'Home', dashboard_path(role: current_user.role ), class: 'hover:text-[#898989]' %></li>
-      <% else %>
-        <li><%= link_to "Home", new_user_session_path, class: "hover:text-gray-600" %></li>
+        <li><%= link_to 'Dashboard', dashboard_path(role: current_user.role ), class: 'hover:text-[#898989]' %></li>
       <% end %>
       <li><%= link_to 'Meetings', meetings_path, class: 'hover:text-[#898989]' %></li>
       <li class="text-[#898989] inactive">Survey</li>

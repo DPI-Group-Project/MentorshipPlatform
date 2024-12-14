@@ -2,9 +2,8 @@
   <a href="/">
     <img src="<%= asset_path("icon/Logo.svg") %>" alt="DPI Logo" class="h-[2.5rem]">
   </a>
-  <div class="bg-white opacity-70 flex items-center	justify-around border-slate-300 rounded-2xl w-[26rem] h-[3.2rem]">
+  <div class="bg-white opacity-70 flex items-center	justify-around border-slate-300 rounded-2xl w-[20rem] h-[3.2rem]">
     <ul class="flex gap-10 text-s font-normal text-black max-w-[26]">
-      <li><a href="/" class="hover:text-gray-600 font-semibold">Home</a></li>
       <li><a href="/" class="hover:text-gray-600">Demo</a></li>
       <% if user_signed_in? %>
         <%= link_to "Dashboard", dashboard_path(role: current_user.role), class: "hover:text-gray-600" %>
