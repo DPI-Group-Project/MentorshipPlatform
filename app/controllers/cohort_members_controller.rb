@@ -115,9 +115,7 @@ class CohortMembersController < ApplicationController
     cm = CohortMember.find_or_initialize_by(email:)
     cm.cohort_id = cohort_id
     cm.role = role
-
     cm.save!
-
     CohortMemberMailer.welcome_mail(cm).deliver_later!
   end
 
