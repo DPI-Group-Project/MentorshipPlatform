@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get "/dashboard/:role", to: "dashboard#show", as: :dashboard
   get "/profile/:id", to: "profile#show", as: :profile
   post "/dashboard/create_program_admin", to: "dashboard#create_program_admin", as: :create_program_admin
+  post "/dashboard/delete_program_admin/:id", to: "dashboard#delete_program_admin", as: :delete_program_admin
 
   post "/profile/:id/create_request", to: "profile#create", as: "create_request_profile"
 

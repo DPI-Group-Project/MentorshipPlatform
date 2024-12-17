@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_05_225311) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_11_022223) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,6 +77,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_225311) do
     t.bigint "program_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "created_by_admin_id"
     t.index ["program_id"], name: "index_program_admins_on_program_id"
     t.index ["user_id"], name: "index_program_admins_on_user_id"
   end
@@ -146,6 +147,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_225311) do
   add_foreign_key "meetings", "matches"
   add_foreign_key "program_admins", "programs"
   add_foreign_key "program_admins", "users"
+  add_foreign_key "program_admins", "users", column: "created_by_admin_id"
   add_foreign_key "programs", "users", column: "contact_id"
   add_foreign_key "short_lists", "cohorts"
   add_foreign_key "short_lists", "users", column: "mentee_id"
