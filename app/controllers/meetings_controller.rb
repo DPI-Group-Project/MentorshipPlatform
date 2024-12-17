@@ -30,7 +30,12 @@
 
     # GET /meetings/new
     def new
-      @meeting = Meeting.new
+      @match = Match.find_by(id: params[:match_id])
+      if @match.nil?
+        redirect_to dashboard_path, alert: "Match not found. Please check your selection."
+        return
+      end
+      @meeting = Meeting.new(match: @match)
     end
 
     # GET /meetings/1/edit
