@@ -1,6 +1,7 @@
   class MeetingsController < ApplicationController
     before_action :set_meeting, only: %i[show edit update destroy]
     before_action :find_match, only: %i[index show edit update destroy]
+    # before_action :meeting_variables, only: %i[index show]
 
     # GET /meetings or /meetings.json
     def index
@@ -9,24 +10,12 @@
       @required_meetings_count = @match.cohort.required_meetings
       @remaining_meetings = @required_meetings_count - @meetings.count
 
-      # Fetch all mentees associated with the mentor
       @mentees = Match.where(mentor_id: current_user.id).map(&:mentee)
-
-      # Aggregate meetings data for mentees
       @mentee_meetings = mentee_meeting_data(@mentees)
     end
 
     # GET /meetings/1 or /meetings/1.json
-    def show
-      @meetings = @match.meetings.order(:date)
-      @mentor = @match.mentor
-      @required_meetings_count = @match.cohort.required_meetings
-      @remaining_meetings = @required_meetings_count - @meetings.count
-
-      @mentees = Match.where(mentor_id: current_user.id).map(&:mentee)
-
-      @mentee_meetings = mentee_meeting_data(@mentees)
-    end
+    def show; end
 
     # GET /meetings/new
     def new
@@ -75,6 +64,16 @@
     end
 
     private
+
+    def meeting_variables
+      @meetings = @match.meetings.order(:date)
+      @mentor = @match.mentor
+      @required_meetings_count = @match.cohort.required_meetings
+      @remaining_meetings = @required_meetings_count - @meetings.count
+
+      @mentees = Match.where(mentor_id: current_user.id).map(&:mentee)
+      @mentee_meetings = mentee_meeting_data(@mentees)
+    end
 
     def find_match
       @match = if current_user.mentor?

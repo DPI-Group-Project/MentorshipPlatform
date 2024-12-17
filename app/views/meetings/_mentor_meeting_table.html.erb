@@ -7,16 +7,14 @@
     <p class="text-xs text-[#676666]">Back To the Dashboard</p>
   </a>
 </div>
-
 <p class="text-sm text-[#898989] mb-5">
   Where conversations spark growth. Schedule your next meeting with your mentor today!
 </p>
-
 <% @mentees.each_with_index do |mentee, i| %>
   <% match = Match.find_by(mentor_id: current_user.id, mentee_id: mentee.id) %>
 
   <h2 class="text-xl font-semibold text-[#202020] mt-6">
-    <%= i +1 %>. <%= mentee.name %>
+    <%= i + 1 %>. <%= mentee.name %>
   </h2>
 
   <table class="w-full text-[0.8rem] text-center rtl:text-right text-[#898989] mt-4">
@@ -44,9 +42,7 @@
         </td>        <td class="px-6 py-2"><%= meeting.date.strftime('%a, %b %d, %Y') %></td>
         <td class="px-6 py-2"><%= meeting.time.strftime('%I:%M %p') %></td>
         <td class="px-6 py-2">
-          <a href="<%= meeting.location %>" class="text-[#202020] hover:text-[#F9837C]">
-            Online
-          </a>
+          <%= meeting.location %>
         </td>
         <td class="px-6 py-2">
           <a href="#" data-modal-target="viewNoteModal" data-meeting-id="<%= meeting.id %>" class="text-[#898989] hover:underline">
