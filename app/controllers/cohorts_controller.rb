@@ -43,12 +43,10 @@ class CohortsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_cohort
     @cohort = Cohort.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def cohort_params
     params.require(:cohort).permit(:program_id, :cohort_name, :description, :start_date, :end_date, :creator_id,
                                    :contact_id, :required_meetings, :shortlist_start_time, :shortlist_end_time)
