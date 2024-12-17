@@ -67,7 +67,7 @@ class Cohort < ApplicationRecord
 
   # Background Scheduler (Email Notifications and Matching)
   def schedule_matching_tasks
-    CohortSchedulerJob.perform_later(id)
+    CohortSchedulerJob.perform_now(id)
   end
 
   private
