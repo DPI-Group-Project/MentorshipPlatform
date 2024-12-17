@@ -92,15 +92,3 @@ class Cohort < ApplicationRecord
     { mentees: unmatched_mentees, mentors: unmatched_mentors }
   end
 end
-
-cohort = Cohort.create!(
-  program_id: 1,
-  cohort_name: "Test Cohort",
-  start_date: 1.week.from_now,
-  end_date: 4.weeks.from_now,
-  shortlist_start_time: 2.weeks.from_now,
-  shortlist_end_time: 3.weeks.from_now,
-  creator_id: User.first.id,
-  contact_id: User.first.id,
-  required_meetings: 6
-)

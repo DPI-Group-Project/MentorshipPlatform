@@ -18,7 +18,7 @@ Rails.application.config.to_prepare do
 
       # Enqueue the CohortSchedulerJob
       scheduler.in "1s" do
-        CohortSchedulerJob.perform_later(cohort.id)
+        CohortSchedulerJob.perform_now(cohort.id)
         Rails.logger.debug "CohortSchedulerJob enqueued for cohort ##{cohort.id}"
       end
     end
