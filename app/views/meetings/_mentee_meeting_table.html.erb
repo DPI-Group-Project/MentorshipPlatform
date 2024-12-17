@@ -67,7 +67,7 @@
       <td class="px-6 py-2"></td>
       <td class="px-6 py-2"></td>
       <td class="px-6 py-2 font-medium text-[#898989]">
-        <%= link_to "Add Meeting", new_meeting_path, data: { turbo_frame: 'modal' } %>
+        <%= link_to "Add Meeting", new_meeting_path(match_id: @match.id), class: "text-[#202020] hover:underline" %>
       </td>
     </tr>
   <% end %>
