@@ -7,9 +7,11 @@
     <p class="text-xs text-[#676666]">Back To the Dashboard</p>
   </a>
 </div>
+
 <p class="text-sm text-[#898989] mb-5">
   Where conversations spark growth. Schedule your next meeting with your mentor today!
 </p>
+
 <% @mentees.each_with_index do |mentee, i| %>
   <% match = Match.find_by(mentor_id: current_user.id, mentee_id: mentee.id) %>
 
