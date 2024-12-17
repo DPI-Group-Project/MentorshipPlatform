@@ -21,7 +21,6 @@ class CohortMembersController < ApplicationController
   def new
     @cohort_member = CohortMember.new
     @cohort = Cohort.find(params[:cohort_id])
-    @current_program = Program.find_by(creator_id: current_user.id)
   end
 
   # GET /cohort_members/1/edit
@@ -115,10 +114,9 @@ class CohortMembersController < ApplicationController
     cm = CohortMember.find_or_initialize_by(email:)
     cm.cohort_id = cohort_id
     cm.role = role
-
     cm.save!
-
-    CohortMemberMailer.welcome_mail(cm).deliver_later!
+    # TODO: Fix welcome mailer for cohort members says:"Unable to serialize CohortMember without an id"
+    # CohortMemberMailer.welcome_mail(cm).deliver_later!
   end
 
   # Helper method to split, clean, and format email strings

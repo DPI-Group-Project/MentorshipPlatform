@@ -40,7 +40,7 @@
     function addEmails(input, list) {
       const emails = input.value.split(',').map(email => email.trim()).filter(email => email);
       emails.forEach(email => createEmailElement(email, list)); // Render emails immediately in the list
-      input.value = ''; // Clear input field after adding emails
+      input.value = '';
     }
 
     // Add emails on Enter keypress
