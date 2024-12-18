@@ -26,7 +26,7 @@ class CohortSchedulerJob < ApplicationJob
     return unless cohort.shortlist_start_time
 
     Rails.logger.info "Scheduling shortlist start notification for cohort ##{cohort.id}"
-    Scheduler.at(cohort.shortlist_start_time.in_time_zone) do
+    Scheduler.at(cohort.shortlist_start_time) do
       cohort.members.each do |member|
         CohortMailer.shortlist_start_notification(member.user, cohort).deliver_later
       end
@@ -39,7 +39,7 @@ class CohortSchedulerJob < ApplicationJob
     return unless cohort.shortlist_end_time
 
     Rails.logger.info "Scheduling matching for cohort ##{cohort.id}"
-    Scheduler.at(cohort.shortlist_end_time.in_time_zone) do
+    Scheduler.at(cohort.shortlist_end_time) do
       CohortMatchingService.new(cohort).call
       cohort.send_matching_results_emails
       Rails.logger.info "Matches created and results emailed for cohort ##{cohort.id}"
@@ -53,7 +53,7 @@ class CohortSchedulerJob < ApplicationJob
     warning_time = cohort.end_date - 14.days
     Rails.logger.info "Scheduling two-week warning for cohort ##{cohort.id} at #{warning_time}"
 
-    Scheduler.at(warning_time.in_time_zone) do
+    Scheduler.at(warning_time) do
       # Notify cohort creator (admin)
       CohortMailer.two_week_warning(cohort.creator.email, cohort).deliver_later
 

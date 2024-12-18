@@ -20,7 +20,6 @@ class ShortList < ApplicationRecord
   validates :mentor_id, presence: true
   validates :mentee_id, presence: true
   validates :ranking, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
-
   validates :mentor_id, uniqueness: { scope: %i[mentee_id cohort_id], message: "Pairing already exists in this cohort" }
 
   scope :for_cohort, ->(cohort_id) { where(cohort_id: cohort_id) }
