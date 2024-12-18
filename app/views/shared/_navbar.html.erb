@@ -2,20 +2,21 @@
   <a href="/" class="flex-shrink-0">
     <img src="<%= asset_path('icon/Logo.svg') %>" alt="DPI Logo" class="h-[2.5rem]">
   </a>
-
   <div class="flex-1 flex justify-end">
     <% if user_signed_in? %>
-      <div class="bg-white/90 flex items-center justify-center border-slate-300 rounded-3xl w-[35rem] h-[3.2rem]">
+      <div class="bg-white/90 flex items-center justify-center border-slate-300 rounded-3xl w-[30rem] h-[3.2rem]">
         <ul class="flex items-center justify-center gap-10 text-sm font-normal text-black">
           <li>
             <%= link_to "Dashboard", dashboard_path(role: current_user.role), class: "hover:text-gray-600" %>
           </li>
-          <li>
-            <%= link_to "Meetings", meetings_path, class: "hover:text-gray-600" %>
-          </li>
+          <% if current_user.role != "admin" %>
+            <li>
+              <%= link_to "Meetings", meetings_path, class: "hover:text-gray-600" %>
+            </li>
+          <% end %>
           <li class="text-black hover:text-gray-600">
             <!-- If Survey is not yet enabled, you could make this an inactive item or 
-                 link it when it becomes available -->
+         link it when it becomes available -->
             Survey
           </li>
           <li class="text-black hover:text-gray-600">
@@ -23,9 +24,9 @@
           </li>
           <li>
             <%= button_to "Sign Out", destroy_user_session_path, 
-                method: :delete, 
-                data: { turbo: false },
-                class: "text-sm font-medium z-3 bg-black text-white border border-transparent rounded-md py-2 px-5 hover:bg-gray-600" %>
+        method: :delete, 
+        data: { turbo: false },
+        class: "text-sm font-medium z-3 bg-black text-white border border-transparent rounded-md py-2 px-5 hover:bg-gray-600" %>
           </li>
         </ul>
       </div>
@@ -35,27 +36,26 @@
     <% end %>
   </div>
 </div>
+<% if user_signed_in? %>
+  <%= render partial: "shared/user_modal" %>
+<% end %>
+<script>
+  function toggleDropdown() {
+    const dropdown = document.getElementById('user-dropdown');
+    dropdown.classList.toggle('hidden');
+  }
 
-  <% if user_signed_in? %>
-    <%= render partial: "shared/user_modal" %>
-  <% end %>
-  <script>
-    function toggleDropdown() {
-      const dropdown = document.getElementById('user-dropdown');
-      dropdown.classList.toggle('hidden');
+  function showUserModal() {
+    toggleDropdown();
+    toggleModal();
+  }
+
+  window.addEventListener('click', function(e) {
+    const userImage = document.getElementById('user-image');
+    const dropdown = document.getElementById('user-dropdown');
+
+    if (!userImage.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.add('hidden');
     }
-
-    function showUserModal() {
-      toggleDropdown();
-      toggleModal(); 
-    }
-
-    window.addEventListener('click', function(e) {
-      const userImage = document.getElementById('user-image');
-      const dropdown = document.getElementById('user-dropdown');
-
-      if (!userImage.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.classList.add('hidden');
-      }
-    });
-  </script>
+  });
+</script>
