@@ -2,7 +2,6 @@
   <div class="w-full max-w-3xl lg:max-w-5xl">
     <!-- Form Titles -->
     <h1 class="text-3xl font-semibold text-left text-gray-800 mb-2"><%= @cohort.cohort_name %></h1>
-    <h2 class="text-xl font-medium text-left text-gray-600 mb-6"><%= @current_program.name %></h2>
     
     <!-- Main Form -->
     <%= form_with model: @cohort_member, url: cohort_members_path, method: :post, html: { class: "space-y-6" } do |form| %>
