@@ -11,11 +11,6 @@ class MatchesController < ApplicationController
     @match = Match.new
   end
 
-  def new
-    @match = Match.new
-    @cohort = Cohort.find(params[:cohort_id])
-  end
-
   def create
     @match = Match.new(match_params)
 

@@ -23,7 +23,7 @@ class CohortsController < ApplicationController
   def update
     respond_to do |format|
       if @cohort.update(cohort_params)
-        format.html { redirect_to program_cohorts_path(@cohort.program), notice: "Cohort was successfully updated." }
+        format.html { redirect_to cohorts_path, notice: "Cohort was successfully updated." }
         format.json { render :show, status: :ok, location: @cohort }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -36,7 +36,7 @@ class CohortsController < ApplicationController
     @cohort.destroy!
 
     respond_to do |format|
-      format.html { redirect_to program_cohorts_path(@cohort.program), notice: "Cohort was successfully destroyed." }
+      format.html { redirect_to cohorts_path, notice: "Cohort was successfully destroyed." }
       format.json { head :no_content }
     end
   end
