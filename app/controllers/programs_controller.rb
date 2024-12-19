@@ -1,11 +1,9 @@
 class ProgramsController < ApplicationController
   before_action :set_program, only: %i[show edit update destroy]
-  # GET /programs/new
   def new
     @program = Program.new
   end
 
-  # POST /programs or /programs.json
   def create
     @program = Program.new(program_params)
 
@@ -20,7 +18,6 @@ class ProgramsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /programs/1 or /programs/1.json
   def update
     respond_to do |format|
       if @program.update(program_params)
@@ -33,7 +30,6 @@ class ProgramsController < ApplicationController
     end
   end
 
-  # DELETE /programs/1 or /programs/1.json
   def destroy
     @program.destroy!
 
