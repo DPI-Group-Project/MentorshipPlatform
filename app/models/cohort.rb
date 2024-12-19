@@ -22,17 +22,13 @@ class Cohort < ApplicationRecord
   has_many :members, class_name: "CohortMember", dependent: :destroy
   has_many :matches, class_name: "Match", dependent: :destroy
 
-  # Validations
   validates :start_date, presence: { message: "Start Date cannot be blank" }
   validates :end_date, presence: { message: "End Date cannot be blank" }
   validates :shortlist_start_time, presence: { message: "Shortlist start time cannot be blank" }
   validates :shortlist_end_time, presence: { message: "Shortlist end time cannot be blank" }
   validates :required_meetings, presence: { message: "Required meetings cannot be blank" }
 
-  # Callbacks
   after_commit :schedule_matching_tasks, on: %i[create update destroy]
-
-  # Instance Methods
 
   def running?
     end_date > Time.zone.today
@@ -60,19 +56,16 @@ class Cohort < ApplicationRecord
     unmatched_users[:mentors]
   end
 
-  # Match Handling
   def create_matches
     CohortMatchingService.new(self).call
   end
 
-  # Background Scheduler (Email Notifications and Matching)
   def schedule_matching_tasks
     CohortSchedulerJob.perform_now(id)
   end
 
   private
 
-  # Find unmatched users for this cohort
   def unmatched_users
     emails_of_cohort_members = CohortMember.where(cohort_id: id).pluck(:email)
     unmatched_mentees = []
