@@ -1,21 +1,9 @@
 class ProgramsController < ApplicationController
   before_action :set_program, only: %i[show edit update destroy]
-
-  # GET /programs or /programs.json
-  def index
-    @programs = Program.all
-  end
-
-  # GET /programs/1 or /programs/1.json
-  def show; end
-
   # GET /programs/new
   def new
     @program = Program.new
   end
-
-  # GET /programs/1/edit
-  def edit; end
 
   # POST /programs or /programs.json
   def create
