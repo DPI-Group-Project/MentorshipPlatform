@@ -28,7 +28,6 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
   belongs_to :cohort_member, primary_key: "email", foreign_key: "email", optional: true, dependent: :destroy
   has_one :program_admins, primary_key: "id", dependent: :destroy
   has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
@@ -37,12 +36,11 @@ class User < ApplicationRecord
   has_many :mentee_submissions, class_name: "MatchSubmission", foreign_key: "mentee_id", dependent: :destroy
   has_many :owned_cohorts, class_name: "Cohort", foreign_key: "creator_id", dependent: :destroy
   has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
-  has_many :matches, foreign_key: :mentor_id, class_name: 'Match'
+  has_many :matches, foreign_key: :mentor_id, class_name: "Match"
   has_many :meetings, through: :matches
 
   validates :email, uniqueness: true
 
-  # Returns list of mentees that are in the same cohort as the provided mentor
   scope :mentors_in_cohort, lambda { |cohort_id|
                               joins(:cohort_member)
                                 .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentor")
@@ -108,22 +106,8 @@ class User < ApplicationRecord
     CohortMember.where(email:).pick(:capacity)
   end
 
-  # Return how many mentees a mentor currently has
   def mentee_capacity_count(cohort_id)
     matches = Match.where("mentor_id = ? AND active = ? AND cohort_id = ?", id, "true", cohort_id)
     matches.size
   end
-
-  # REMOVED: currently admin only has one program and this thing broke the admin dashboard
-  # def assigned_programs
-  #   admins = ProgramAdmin.find_by(user_id: id)
-  #   programs = []
-
-  #   admins.each do |admin|
-  #     program_id = admin.program_id
-  #     programs << Program.find_by(id: program_id)
-  #   end
-
-  #   programs
-  # end
 end

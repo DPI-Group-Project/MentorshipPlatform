@@ -6,8 +6,6 @@ module Users
     after_action :set_csrf_headers, only: :create
     before_action :configure_account_update_params, only: [:update]
 
-    # GET /resource/sign_up
-
     # POST /resource
     def create
       super do |resource|
@@ -36,7 +34,6 @@ module Users
       # Clear the user's previous shortlist before updating
       ShortList.where(mentee_id: user.id).delete_all
 
-      # Iterate over the array and create entries with rankings based on index
       shortlist_data.each_with_index do |mentor_id, index|
         ShortList.create!(
           mentor: User.find(mentor_id),
@@ -53,45 +50,14 @@ module Users
       render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
     end
 
-    # GET /resource/edit
-    # def edit
-    #   super
-    # end
-
-    # PUT /resource
-    # def update
-    #   super
-    # end
-
-    # DELETE /resource
-    # def destroy
-    #   super
-    # end
-
-    # GET /resource/cancel
-    # Forces the session data which is usually expired after sign
-    # in to be expired now. This is useful if the user wants to
-    # cancel oauth signing in/up in the middle of the process,
-    # removing all OAuth session data.
-    # def cancel
-    #   super
-    # end
-
     protected
 
-    # If you have extra params to permit, append them to the sanitizer.
     def configure_sign_up_params
-      devise_parameter_sanitizer.permit(:sign_up,
-                                        keys: [:first_name, :last_name, :status, :inactive_reason, :phone_number,
-                                               :bio, :timezone, :title, :linkedin_link, :profile_picture,
-                                               { skills_array: [] },
-                                               { cohort_members_attributes: %i[role capacity cohort_id] }])
+      devise_parameter_sanitizer.permit(:sign_up, keys: sign_up_keys)
     end
 
     def configure_account_update_params
-      devise_parameter_sanitizer.permit(:account_update,
-                                        keys: %i[first_name last_name status inactive_reason phone_number bio timezone title linkedin_link profile_picture
-                                                 skills_array])
+      devise_parameter_sanitizer.permit(:account_update, keys: account_update_keys)
     end
 
     def set_csrf_headers
@@ -101,19 +67,18 @@ module Users
       response.headers["X-CSRF-Param"] = request_forgery_protection_token.to_s
     end
 
-    # If you have extra params to permit, append them to the sanitizer.
-    # def configure_account_update_params
-    #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-    # end
+    private
 
-    # The path used after sign up.
-    # def after_sign_up_path_for(resource)
-    #   super(resource)
-    # end
+    def sign_up_keys
+      [
+        :first_name, :last_name, :status, :inactive_reason, :phone_number, :bio,
+        :timezone, :title, :linkedin_link, :profile_picture, { skills_array: [] },
+        { cohort_members_attributes: %i[role capacity cohort_id] }
+      ]
+    end
 
-    # The path used after sign up for inactive accounts.
-    # def after_inactive_sign_up_path_for(resource)
-    #   super(resource)
-    # end
+    def account_update_keys
+      %i[first_name last_name status inactive_reason phone_number bio timezone title linkedin_link profile_picture skills_array]
+    end
   end
 end
