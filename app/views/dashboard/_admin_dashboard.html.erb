@@ -1,122 +1,46 @@
 <div class="flex justify-center p-8">
-    <%= render partial: "admin_sidebar" %>
+  <%= render partial: "admin_sidebar" %>
   <main class="w-[calc(100%-22rem)] p-6">
-    <h1 class="text-2xl font-bold">Hi <%= current_user.first_name %>!</h1>
-    <p class="text-gray-500">Welcome back to the Mentorship dashboard</p>
-     <button id="openModalBtn" class="text-gray-500 flex items-center float-right hover:text-gray-700" onclick="openModal('new-admin-modal')">
-      <i class="fa-solid fa-plus pr-2"></i>New Admin
-    </button>
+    <h1 class="text-2xl font-bold mb-2">Hi <%= current_user.first_name %>!</h1>
+    <p class="text-gray-500 mb-6">Welcome back to the Mentorship dashboard</p>
 
-    <!-- temporary view admin program -->
-    <button id="viewAdminsBtn" class="text-gray-500 flex items-center float-right mr-4 hover:text-gray-700" onclick="openModal('program-admin-modal')">
-      <i class="fa-solid fa-users pr-2"></i>View Admins
-    </button>
+    <!-- Buttons Section -->
+    <div class="flex justify-end space-x-4 mb-6">
+      <button id="viewAdminsBtn" class="text-gray-500 flex items-center hover:text-gray-700" onclick="openModal('program-admin-modal')">
+        <i class="fa-solid fa-users pr-2"></i>View Admins
+      </button>
+      <button id="openModalBtn" class="text-gray-500 flex items-center hover:text-gray-700" onclick="openModal('new-admin-modal')">
+        <i class="fa-solid fa-plus pr-2"></i>New Admin
+      </button>
+    </div>
 
-
-    <!-- Program Stats -->
-    <div class="grid grid-cols-3 gap-4 mt-6">
-     
+    <!-- Program Stats Section -->
+    <div class="grid grid-cols-3 gap-4">
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Cohort Name</p>
-         <h3 id="cohort_name" class="text-lg font-semibold">
+        <h3 id="cohort_name" class="text-lg font-semibold">
           <%= @cohorts.first&.cohort_name || 'No Cohorts' %>
         </h3>
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Number of Pairing</p>
-        <h3 id="nunber_of_pairings" class="text-lg font-semibold"> <%= @cohorts.first&.pairing_number || '0' %> Pairs</h3>
+        <h3 id="nunber_of_pairings" class="text-lg font-semibold">
+          <%= @cohorts.first&.pairing_number || '0' %> Pairs
+        </h3>
       </div>
       <div class="p-6 bg-white shadow rounded-lg">
         <p class="text-sm text-gray-500">Scheduled Meetings</p>
         <h3 id="scheduled_meetings" class="text-lg font-semibold">N/A</h3>
       </div>
     </div>
-    <!-- Survey Ratings & Latest Surveys -->
-    <div class="grid grid-cols-[288px,1fr] gap-x-4 gap-y-6 mt-6">
-      <!-- Survey Ratings -->
-      <div class="flex flex-col p-6 bg-white shadow rounded-lg text-center items-center">
-        <h4 class="text-lg font-semibold mb-4">Survey Ratings</h4>
-        <img src="<%= asset_path("sample_img/sample_chart.png") %>" alt="sample admin chart" class="w-[220px] h-[250px]">
-      </div>
-      <!-- Latest Surveys -->
-      <div class="p-6 bg-white shadow rounded-lg">
-        <h4 class="text-lg font-semibold mb-1">Latest Surveys</h4>
-        <p class="text-sm text-gray-500 mb-4">Last 2 Weeks</p>
-        <div class="grid grid-cols-5 text-gray-500 font-medium text-sm mb-2">
-          <div class="col-span-2">Mentee</div>
-          <div class="col-span-1 text-center">Mentor</div>
-          <div class="col-span-1 text-center">Date</div>
-          <div class="col-span-1 text-center">Rate</div>
-        </div>
-        <ul class="space-y-4">
-          <li class="grid grid-cols-5 items-center">
-            <div class="flex items-center col-span-2">
-              <span class="text-lg font-semibold">1.</span>
-              <img src="<%= asset_path("sample_img/survey_image_1.png") %>" alt="Mentee Avatar" class="w-10 h-10 rounded-full ml-4">
-              <div class="ml-3">
-                <h5 class="font-semibold">Mathilda Bell</h5>
-                <p class="text-sm text-gray-500">DPI Cohort 5</p>
-              </div>
-            </div>
-            <div class="text-center col-span-1">
-              <p class="text-sm font-semibold">David Roberts</p>
-            </div>
-            <div class="text-center col-span-1">
-              <p class="text-sm">09/12/24</p>
-            </div>
-            <div class="text-right col-span-1">
-              <img src="<%= asset_path("icon/five_stars.svg") %>" alt="Five Star Rating" class="w-24">
-            </div>
-          </li>
-          <li class="grid grid-cols-5 items-center">
-            <div class="flex items-center col-span-2">
-              <span class="text-lg font-semibold">2.</span>
-              <img src="<%= asset_path("sample_img/survey_image_2.png") %>" alt="Mentee Avatar" class="w-10 h-10 rounded-full ml-4">
-              <div class="ml-3">
-                <h5 class="font-semibold">Marion Figueroa</h5>
-                <p class="text-sm text-gray-500">DPI Cohort 5</p>
-              </div>
-            </div>
-            <div class="text-center col-span-1">
-              <p class="text-sm font-semibold">David Roberts</p>
-            </div>
-            <div class="text-center col-span-1">
-              <p class="text-sm">09/12/24</p>
-            </div>
-            <div class="text-right col-span-1">
-              <img src="<%= asset_path("icon/five_stars.svg") %>" alt="Five Star Rating" class="w-24">
-            </div>
-          </li>
-          <li class="grid grid-cols-5 items-center">
-            <div class="flex items-center col-span-2">
-              <span class="text-lg font-semibold">3.</span>
-              <img src="<%= asset_path("sample_img/survey_image_3.png") %>" alt="Mentee Avatar" class="w-10 h-10 rounded-full ml-4">
-              <div class="ml-3">
-                <h5 class="font-semibold">Lee Barrett</h5>
-                <p class="text-sm text-gray-500">DPI Cohort 5</p>
-              </div>
-            </div>
-            <div class="text-center col-span-1">
-              <p class="text-sm font-semibold">David Roberts</p>
-            </div>
-            <div class="text-center col-span-1">
-              <p class="text-sm">09/12/24</p>
-            </div>
-            <div class="text-right col-span-1">
-              <img src="<%= asset_path("icon/five_stars.svg") %>" alt="Five Star Rating" class="w-24">
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
   </main>
 </div>
 
-<!-- Add admin to cohort Modal -->
+<!-- Add Admin Modal -->
 <div id="new-admin-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
   <div class="bg-gray-50 p-6 rounded-2xl shadow-lg space-y-4 w-[30rem] relative">
     <button class="absolute top-5 right-5 text-gray-500 hover:text-gray-700" onclick="closeModal('new-admin-modal')">
-    <i class="fas fa-times"></i>
+      <i class="fas fa-times"></i>
     </button>
     <h3 class="text-lg font-bold ml-4 text-gray-80">Add New Admin</h3>
     <div>
