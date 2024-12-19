@@ -4,7 +4,7 @@
   </a>
   <div class="flex-1 flex justify-end">
     <% if user_signed_in? %>
-      <div class="bg-white/90 flex items-center justify-center border-slate-300 rounded-3xl w-[25rem] h-[3.2rem]">
+      <div class="bg-white/90 flex items-center justify-center border-slate-300 rounded-3xl w-[30rem] h-[3.2rem]">
         <ul class="flex items-center justify-center gap-10 text-sm font-normal text-black">
           <li>
             <%= link_to "Dashboard", dashboard_path(role: current_user.role), class: "hover:text-gray-600" %>

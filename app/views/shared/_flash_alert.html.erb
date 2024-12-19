@@ -1,30 +1,28 @@
-<div id="notice" class="transition-opacity duration-500 ease-in-out opacity-100 flex justify-start px-8 sm:px-24 fixed top-4 left-4 z-50">
-  <div class="bg-[#FFFFFF] flex justify-between border-slate-300 rounded-lg min-w-[100%] mt-3 p-4 items-center">
-    <div class="flex gap-3 items-center">
-      <img src=<%= asset_path('icon/alert.svg') %> alt="alert" class="size-5">
-      <div class="flex flex-col">
-        <div class="text-sm font-bold">
-          Alert
-        </div>
-        <div class="text-sm text-[#898989]">
-          <%= message %>
-        </div>
-      </div>
+<div id="alert-notice" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-500 opacity-100">
+  <div class="flex items-center bg-red-50 border border-red-200 text-red-700 rounded-lg shadow-md px-4 py-3 w-[95%] sm:w-[400px]">
+    <img src="<%= asset_path('icon/alert.svg') %>" alt="Alert icon" class="w-6 h-6">
+    <div class="ml-3">
+      <p class="text-sm font-medium">Alert</p>
+      <p class="text-xs text-gray-600"><%= message %></p>
     </div>
-    <img src="<%= asset_path('icon/close.svg') %>" alt="Close notice" class="w-4 h-4 cursor-pointer"
-         onclick="fadeOut(this.closest('#notice'));">
+    <button class="ml-auto text-gray-600 hover:text-red-700" onclick="fadeOut(this.closest('#alert-notice'))">
+      &times;
+    </button>
   </div>
 </div>
 
 <script>
-    function fadeOut(element) {
-        element.style.opacity = 0;
-        setTimeout(function() {
-            element.style.display = 'none';
-        }, 3500);
+  function fadeOut(element) {
+    if (element) {
+      element.style.transition = 'opacity 0.5s ease';
+      element.style.opacity = '0';
+      setTimeout(() => {
+        element.style.display = 'none';
+      }, 500); 
     }
+  }
 
-    setTimeout(function() {
-        fadeOut(document.getElementById('notice'));
-    }, 3500);
+  setTimeout(() => {
+    fadeOut(document.getElementById('alert-notice'));
+  }, 4000);
 </script>
