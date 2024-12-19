@@ -1,6 +1,18 @@
-<div class="mt-[7rem] mx-[5rem]">
+<div class="mt-[5rem] mx-[5rem]">
+<div class="flex items-center space-x-4 mb-4">
+  <%= link_to dashboard_path(role: "admin"), class: "flex items-center space-x-2 group" do %>
+    <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+      <svg class="w-4 h-4 text-white" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </div>
+    <span class="text-black font-semibold group-hover:underline">Back to dashboard</span>
+  <% end %>
+</div>
+
   <div class="flex justify-between">
     <div>
+      
       <h1 class="text-2xl font-bold text-black mb-6 text-left">
         Matches for <%= @cohort.cohort_name %>
       </h1>
@@ -13,7 +25,6 @@
       </button>
     </div>
   </div>
-
   <% if @matches.any?%>
     <% if @cohort.unmatched_mentees.any? || @available_mentors.any? %>
       <%= render "matches/unmatched_card" %>
@@ -27,9 +38,7 @@
     </div>
   <% end %>
 </div>
-
 <%= render "matches/new_match_modal" %>
-
 <script>
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
