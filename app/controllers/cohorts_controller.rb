@@ -1,5 +1,6 @@
 class CohortsController < ApplicationController
   before_action :set_cohort, only: %i[show edit update destroy]
+  before_action :set_program, only: %i[index new create edit]
 
   # GET /cohorts or /cohorts.json
   def index
@@ -9,11 +10,8 @@ class CohortsController < ApplicationController
     else
       @cohorts = Cohort.all
     end
+    @cohort = Cohort.new
   end
-  
-
-  # GET /cohorts/1 or /cohorts/1.json
-  def show; end
 
   # GET /cohorts/new
   def new
@@ -22,13 +20,13 @@ class CohortsController < ApplicationController
 
   # GET /cohorts/1/edit
   def edit
-    @current_program = @cohort.program 
-    render partial: "form", locals: { cohort: @cohort }
+    @current_program = @cohort.program
   end
 
   # POST /cohorts or /cohorts.json
   def create
     @cohort = Cohort.new(cohort_params)
+    @current_program = Program.find(@cohort.program_id)
 
     respond_to do |format|
       if @cohort.save
@@ -64,17 +62,20 @@ class CohortsController < ApplicationController
     end
   end
 
+  
+
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  def set_program
+    @current_program = Program.find_by(id: params[:program_id])
+  end
+
   def set_cohort
     @cohort = Cohort.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def cohort_params
     params.require(:cohort).permit(:program_id, :cohort_name, :description, :start_date, :end_date, :creator_id,
                                    :contact_id, :required_meetings, :shortlist_start_time, :shortlist_end_time)
   end
 end
-

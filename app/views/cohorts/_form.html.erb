@@ -12,7 +12,8 @@
     </div>
   <% end %>
 
-  <%= form.hidden_field :program_id, value: @current_program.id %>
+  <%= form.hidden_field :program_id, value: @current_program&.id || cohort.program_id %>
+
   <%= form.hidden_field :creator_id, value: current_user.id %>
   <%= form.hidden_field :contact_id, value: current_user.id %>
 
@@ -60,6 +61,6 @@
 
   <div class="flex justify-end">
     <%= form.submit "Save Cohort",
-                    class: "bg-gray-800 hover:bg-black text-white font-semibold px-4 py-2 rounded-lg transition duration-300" %>
+                    class: "bg-gray-800 hover:bg-black text-white font-semibold px-4 py-2 rounded-lg transition duration-300 mt-2" %>
   </div>
 <% end %>

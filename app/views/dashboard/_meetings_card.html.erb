@@ -1,25 +1,20 @@
-<div class="bg-[#FFFFFF] flex flex-col gap-2 border-slate-300 rounded-lg p-5">
+<div class="bg-white flex flex-col gap-2 border-slate-300 rounded-lg p-5">
   <div class="flex justify-between">
-    <h1 class="text-2xl font-semibold text-[#202020] mb-2"> Meetings </h1>
+    <h1 class="text-2xl font-semibold text-gray-800 mb-2">Meetings</h1>
     <div class="flex items-center gap-1">
-      <p class="text-sm font-medium text-[#202020] bg-[#EEF6F8] rounded-sm py-0.5 px-1 h-[1.5rem]"><%= @progress %>
-        %</p>
-      <p class="text-[0.8rem] font-regular">Achieved</p>
+      <p class="text-sm font-medium text-gray-800 bg-blue-100 rounded-sm py-0.5 px-1 h-6"><%= h(@progress) %>%</p>
+      <p class="text-xs font-regular">Achieved</p>
     </div>
   </div>
   <div class="flex flex-col gap-3 items-center">
-    <p class="text-[#202020] font-medium text-[0.9rem]"><%= progress_message(@progress) %></p>
+    <p class="text-gray-800 font-medium text-sm"><%= h(progress_message(@progress)) %></p>
     <div class="flex items-center">
       <% @required_meetings_count.times do |index| %>
-        <div class="w-[3rem] h-[3rem] rounded-[2rem]
-        <%= 'bg-[#B3B3B3] text-white' if index < @past_meeting_count %>
-        <%= 'bg-[#E1E1E1] text-[#202020]' if index >= @past_meeting_count %>
-        font-medium flex items-center justify-center
-        hover:scale-105 hover:bg-[#B3B3B3] hover:text-[#fff]">
+        <div class="w-8 h-8 rounded-full font-medium text-xs flex items-center justify-center hover:scale-105 <%= index < @past_meeting_count ? 'bg-gray-500 text-white' : 'bg-gray-300 text-gray-800' %>">
           <%= index + 1 %>
         </div>
         <% if index < @required_meetings_count - 1 %>
-          <div class="w-[1rem] border-t border-[#DCDCDC]"></div>
+          <div class="w-2 border-t border-gray-300"></div>
         <% end %>
       <% end %>
     </div>
@@ -28,36 +23,35 @@
     <div class="flex flex-col">
       <div class="flex justify-between items-center">
         <div class="flex gap-2 items-center">
-          <div class="w-[2rem] h-[2rem] rounded-[2rem] bg-[#F7F5F4] flex items-center justify-center">
-            <img src="<%= asset_path("icon/calendar_outline.svg") %>" alt="calender" class="h-[1rem] w-[1rem]">
+          <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <img src="<%= asset_path('icon/calendar_outline.svg') %>" alt="Calendar" class="h-4 w-4">
           </div>
-          <p class="text-[#202020] font-medium text-[0.9rem]">
-            <span class="font-semibold"><%= @required_meetings_count - @meetings.count %></span> meetings are not
-            scheduled yet</p>
+          <p class="text-gray-800 font-medium text-sm">
+            <span class="font-semibold"><%= @required_meetings_count - @meetings.count %></span> meetings are not scheduled yet
+          </p>
         </div>
-        <%= link_to 'Take Action',  meetings_path, class:"text-[#898989] font-regular text-[0.85rem] underline"%>
+        <%= link_to 'Take Action', meetings_path, class: 'text-gray-500 font-regular text-xs underline' %>
       </div>
     </div>
     <div class="flex flex-col">
       <div class="flex justify-between items-center">
         <div class="flex gap-2 items-center">
-          <div class="w-[2rem] h-[2rem] rounded-[2rem] bg-[#F7F5F4] flex items-center justify-center">
-            <img src="<%= asset_path("icon/2_user.svg") %>" alt="2_user" class="h-[1rem] w-[1rem]">
+          <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <img src="<%= asset_path('icon/2_user.svg') %>" alt="Users" class="h-4 w-4">
           </div>
-          <% if @upcoming_meeting.present? %>
-            <% if (@upcoming_meeting.date - Date.today).to_i == 0 %>
-              <p class="text-[#202020] font-medium text-[0.9rem]"> You have a meeting today!
+          <% if @upcoming_meeting.present? && @upcoming_meeting.date.present? %>
+            <% days_away = (@upcoming_meeting.date - Date.today).to_i %>
+            <% if days_away == 0 %>
+              <p class="text-gray-800 font-medium text-sm">You have a meeting today!</p>
             <% else %>
-              <p class="text-[#202020] font-medium text-[0.9rem]">Upcoming meeting is
-              <span class="font-semibold"> <%= (@upcoming_meeting.date - Date.today).to_i %> </span> days away</p>
+              <p class="text-gray-800 font-medium text-sm">Upcoming meeting is <span class="font-semibold"><%= days_away %></span> days away</p>
             <% end %>
           <% else %>
-            <p class="text-[#202020] font-medium text-[0.9rem]"> Let's schedule first meeting!
-        <% end %>
+            <p class="text-gray-800 font-medium text-sm">Let's schedule the first meeting!</p>
+          <% end %>
         </div>
-        <%= link_to 'Take Action',  meetings_path, class:"text-[#898989] font-regular text-[0.85rem] underline"%>
+        <%= link_to 'Take Action', meetings_path, class: 'text-gray-500 font-regular text-xs underline' %>
       </div>
     </div>
   </div>
 </div>
-
