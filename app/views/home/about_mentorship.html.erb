@@ -1,83 +1,131 @@
-<div class="container mt-32 mx-auto px-auto w-auto">
-    <div class="my-36 justify-center flex flex-col items-center">
-        <p>A little bit</p>
-        <h3 class="font-extrabold text-6xl">About DPI</h3>
-        <p class="font-bold text-2xl italic">Discovery Partners Institute</p>
-        <p class="text-2xl">empowers people to jumpstart</p>
-        <p class="text-2xl">their tech careers or companies</p>
-        <p class="text-2xl mb-5">in Chicago.</p>
-        <%= render 'shared/mentorship_btn', text: "Learn More", link: "https://dpi.uillinois.edu/" %>
+<div class="relative container mx-auto px-4 w-full">
+  <!-- Gradient circles placed behind content -->
+  <div class="gradient gradient-left"></div>
+  <div class="gradient gradient-right"></div>
+
+  <!-- Top Section -->
+  <div class="mt-32 mb-16 flex flex-col items-center text-center">
+    <p class="text-base mb-1">A little bit</p>
+    <h3 class="font-extrabold text-5xl mb-2">About DPI</h3>
+    <p class="font-bold text-xl italic">Discovery Partners Institute</p>
+    <p class="text-xl">empowers people to jumpstart</p>
+    <p class="text-xl">their tech careers or companies</p>
+    <p class="text-xl mb-5">in Chicago.</p>
+    <%= render 'shared/mentorship_btn', text: "Learn More", link: "https://dpi.uillinois.edu/" %>
+  </div>
+  
+  <!-- Mentor Section Intro -->
+  <div class="mb-8 text-center">
+    <h4 class="text-base font-semibold">Give Back By</h4>
+    <h2 class="sm:text-2xl md:text-5xl text-black-500 font-bold">
+      Becoming A DPI Mentor
+    </h2>
+  </div>
+  <div class="my-10 max-w-3xl mx-auto text-lg">
+    <p>
+      <span class="font-bold">Discovery Partners Institute</span> (DPI) is training 
+      the next generation of Illinois's tech talent, and we'd love to have your help. 
+      Our enthusiastic trainees are eager for positions where they can grow into 
+      valuable leaders and community members, and they need someone like you 
+      to guide them on their journeys.
+    </p>
+  </div>
+
+  <!-- Grid of Gray Boxes -->
+  <div class="grid grid-cols-8 gap-6 max-w-7xl w-full mx-auto p-4 rounded-md my-12 grid-flow-dense">
+    <div class="rounded-md border bg-slate-400 col-span-2 row-span-4 min-h-[300px]"></div>
+    <div class="rounded-md border bg-slate-400 col-span-3 row-span-1 min-h-[120px]"></div>
+    <div class="rounded-md border bg-slate-400 col-span-2 row-span-1 min-h-[120px]"></div>
+    <div class="rounded-md border bg-slate-400 col-span-2 row-span-1 min-h-[120px]"></div>
+    <div class="rounded-md border bg-slate-400 col-span-3 row-span-1 min-h-[120px]"></div>
+  </div>
+
+  <!-- Looking for Leaders -->
+  <div class="max-w-3xl mx-auto my-10 text-2xl">
+    <span class="font-bold italic block mb-4">We're looking for leaders with:</span>
+    <ul class="list-disc list-inside">
+      <li>At least four years of experience in their field</li>
+      <li>Preferably a background in tech, design, or business</li>
+      <li>The ability to meet at least once every two weeks</li>
+      <li>The ability to attend at least six 30-minute meetings</li>
+    </ul>
+  </div>
+
+  <!-- Mentorship Benefit Text (floated right) -->
+  <div class="flex justify-end my-16">
+    <p class="w-full md:w-2/5 text-lg leading-relaxed">
+      <span class="font-bold">DPI mentorship is a great way to connect with our
+      diverse talent from all walks of life.</span> You'll be guiding one or more
+      Chicagoans through the unspoken rules of the business world and helping them
+      find their footing in an ever-changing job market.
+    </p>
+  </div>
+
+  <!-- Companies & Fields -->
+  <div class="mb-10 max-w-5xl mx-auto">
+    <h2 class="font-bold text-3xl mb-3">We place our trainees in various fields</h2>
+    <p class="mb-5 text-xl">
+      Sales, Customer Success, Software Development, Project Management, and more 
+      at companies including:
+    </p>
+    <div class="flex flex-wrap gap-8 justify-center items-center">
+      <%= image_tag 'companies/ULS.svg', class: 'h-12' %>
+      <%= image_tag 'companies/SAP.svg', class: 'h-12' %>
+      <%= image_tag 'companies/CIBC.svg', class: 'h-12' %>
+      <%= image_tag 'companies/United.svg', class: 'h-12' %>
+      <%= image_tag 'companies/HCSC.svg', class: 'h-12' %>
     </div>
-    <div class="gradient gradient-left"></div>
-    <div class="gradient gradient-right"></div>
-    <div class="mt-15">
-        <h4 class="text-base font-semibold mt-5">Give Back By</h4>
-        <h2 class="sm:text-2xl md:text-5xl text-black-500/100 font-bold">Becoming A DPI Mentor</h2>
-    </div>
-    <div class="my-10 text-lg">
-        <p>
-            <span class="font-bold">Discovery Partners Institute</span> (DPI) is training the next generation of Illinois's tech talent, and we'd love to have your help.
-                Our enthusiastic trainees are eager for positions where they can grow into valuable leaders and community members, 
-                and they need someone like you to guide them on their journeys.
+  </div>
+
+  <!-- Riverside Chat Invite -->
+  <div class="my-20 max-w-3xl mx-auto text-center">
+    <p class="text-2xl mb-6">
+      If you're unable to commit to a long-term mentorship, then 
+      <span class="font-bold">join us for a Riverside Chat!</span>
+    </p>
+  </div>
+
+  <!-- What is a Riverside? -->
+  <div class="mb-10 max-w-3xl mx-auto">
+    <p class="text-2xl">What is a</p>
+    <h3 class="text-6xl font-bold mb-5">Riverside</h3>
+    <p class="text-xl my-5">
+      <span class="font-bold italic">Get to know the DPI team</span> and hear 
+      from our talent network by joining us for a Riverside Chat! This is a 
+      casual question-and-answer session where our staff will explore your 
+      background and the "whys" behind your success.
+    </p>
+    <p class="text-xl my-5">
+      <span class="font-bold italic">Riverside Chats</span> present a unique opportunity 
+      to meet our trainees and answer their insightful questions about your field 
+      of work. We've had cutting-edge leaders from companies like Salesforce, 
+      Capital One, ShipBob, and Bank of America join us for Riversides.
+    </p>
+    <p class="text-xl my-5">
+      Along with the trainees, we'll discuss how DPI can 
+      <span class="font-bold italic">boost your business</span> through our Tech Accelerator.
+    </p>
+  </div>
+
+  <!-- Final CTA -->
+  <div class="mb-80 mt-64 max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-8 items-center">
+      <!-- More gradient circles if desired -->
+      <div class="md:col-span-3 text-5xl font-black">
+        Make an Impact Today!
+      </div>
+      <div class="md:col-span-3 text-xl">
+        <p class="mb-5">
+          Whether it's through mentorship or just a few hours at a Riverside Chat, 
+          you can permanently change the future of technology in Illinois. This small 
+          commitment can make a difference in someone's life and career trajectory.
         </p>
+        <p class="mb-5">
+          We appreciate your interest in spending time with DPI. If you'd like to 
+          learn more, please send an email and we'll be in touch soon.
+        </p>
+        <%= render 'shared/mentorship_btn', text: "Contact DPI", link: "mailto:info@dpi.dev" %>
+      </div>
     </div>
-    <div class="grid grid-cols-8 gap-6 max-w-7xl w-full mx-20 p-4 rounded-md my-12 grid-flow-dense">
-        <div class="rounded-md border relative min-h-36 grid-flow-dense col-span-2 row-span-4 bg-slate-400"></div>
-        <div class="rounded-md border relative min-h-36 grid-flow-dense col-span-3 row-span-1 bg-slate-400"></div>
-        <div class="rounded-md border relative min-h-36 grid-flow-dense col-span-2 row-span-1 bg-slate-400"></div>
-        <div class="rounded-md border relative min-h-36 grid-flow-dense col-span-2 row-span-1 bg-slate-400"></div>
-        <div class="rounded-md border relative min-h-36 grid-flow-dense col-span-3 row-span-1 bg-slate-400"></div>
-    </div>
-   <div class="block align-middle justify-start my-10 text-2xl">
-         <span class="font-bold italic">We're looking for leaders with:</span>
-            <ul>
-                <li>• At least four years of experience in their field</li>
-                <li>• Preferably a background in tech, design, or business</li>
-                <li>• The ability to meet at least once every two weeks</li>
-                <li>• The ability to attend at least six 30-minute meetings</li>
-            </ul>
-   </div>
-   <div class="block align-middle justify-end text-start my-10 min-h-64">
-         <p class="float-end w-96 text-lg">
-            <span class="font-bold">DPI mentorship is a great way to connect with our diverse talent from all walks of life.</span>You'll be guiding one or more Chicagoans through the unspoken rules of the business world and helping them find their footing in an ever-changing job market.
-         </p>
-   </div>
-   <div class="mb-10">
-        <h2 class="font-bold text-3xl">We place our trainees in various fields</h2>
-        <p class="mb-5 text-xl">Sales, Customer Success, Software Development, Project Management, and more at companies including:</p>
-        <div class="flex row justify-between">
-            <%= image_tag 'companies/ULS.svg', class: 'xs:h-4 sm:h-12 lg:h-20'  %>
-            <%= image_tag 'companies/SAP.svg', class: 'xs:h-4 sm:h-12 lg:h-20'  %>
-            <%= image_tag 'companies/CIBC.svg', class: 'xs:h-4 sm:h-12 lg:h-20' %>
-            <%= image_tag 'companies/United.svg', class: 'xs:h-4 sm:h-12 lg:h-20' %>
-            <%= image_tag 'companies/HCSC.svg', class: 'xs:h-4 sm:h-12 lg:h-20'  %>
-        </div>
-   </div>
-   <div class="my-32 w-80">
-        <p class="text-2xl">If you're unable to commit to a long-term mentorship, then <span class="font-bold">join us for a Riverside Chat!</span></p>
-   </div>
-   <div class="mb-10">
-        <p class="text-2xl">What is a</p>
-        <h3 class="text-6xl font-bold mb-5">Riverside</h3>
-        <div>
-            <p class="text-xl my-5"><span class="font-bold italic">Get to know the DPI team</span> and hear from our talent network by joining us for a Riverside Chat! This is a casual question-and-answer session where our staff will explore your background and the "whys" behind your success.</p>
-            <div></div>
-        </div>
-        <p class="text-xl my-5"><span class="font-bold italic">Riverside Chats</span> present a unique opportunity to meet our trainees and answer their insightful questions about your field of work. We've had cutting-edge leaders from companies like Salesforce, Capital One, ShipBob, and Bank of America join us for Riversides.</p>
-        <p class="text-xl my-5">Along with the trainees, we'll discuss how DPI can <span class="font-bold italic">boost your business</span> through our Tech Accelerator.</p>
-   </div>
-   <div class="mb-80 mt-64">
-        <div>
-            <div class="grid grid-cols-6">
-                <div class="gradient gradient-left"></div>
-                <div class="gradient gradient-right"></div>
-                <div class="text-5xl font-black col-span-3">Make an Impact Today!</div>
-                <div class="text-xl col-span-3 flex flex-col items-center justify-center">
-                    <p class="mb-5">Whether it's through mentorship or just a few hours at a Riverside Chat, you can permanently change the future of technology in Illinois. This small commitment can make a difference in someone's life and career trajectory.</p>
-                    <p class="mb-5">We appreciate your interest in spending time with DPI. If you'd like to learn more, please send an email and we'll be in touch soon.</p>
-                    <%= render 'shared/mentorship_btn', text: "Contact DPI", link: "email-to:info@dpi.dev" %>
-                </div>
-            </div>
-        </div>
-   </div>
+  </div>
 </div>
