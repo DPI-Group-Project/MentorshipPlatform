@@ -1,29 +1,22 @@
-<%# app/views/pages/about.html.erb %>
-
-<div class="relative container mx-auto px-4 w-full">
-
-  
+<div class="relative w-full px-4 sm:px-6 lg:px-8">
   <div class="relative">
     <div class="gradient gradient-left"></div>
     <div class="gradient gradient-right"></div>
   </div>
 
-  <%# Top Section %>
   <div class="mt-32 mb-16 flex flex-col items-center text-center">
-    <p class="text-s text-black">A little bit</p>
-    <p class="text-5xl text-black font-bold">About DPI</p>
-    <h1 class="text-l font-bold mb-4">Discovery Partners Institute</h1>
-    <p class="text-xl mb-2">empowers people to jumpstart</p>
-    <p class="text-xl">their tech careers or companies</p>
-    <p class="text-xl mb-6">in Chicago.</p>
+    <p class="text-sm text-black font-medium">A little bit</p>
+    <h1 class="text-4xl font-bold mb-4">About DPI</h1>
+    <h1 class="text-3xl font-bold italic mb-2">Discovery Partners Institute</h1>
+    <p class="text-xl font-thin italic">empowers people to jumpstart their tech careers or companies</p>
+    <p class="text-xl font-thin italic mb-5">in Chicago.</p>
     <%= link_to "Learn More", "https://dpi.uillinois.edu/", class: "inline-block bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-colors" %>
   </div>
 
-  <%# Mentor Section %>
   <div class="mb-12">
-    <p class="text-base font-medium text-center">Give Back By</p>
-    <h2 class="text-4xl font-bold text-center mb-8">Becoming A DPI Mentor</h2>
-    <div class="max-w-3xl mx-auto">
+    <p class="text-base font-medium text-left">Give Back By</p>
+    <h2 class="text-4xl font-bold text-left mb-8">Becoming A DPI Mentor</h2>
+    <div class="max-w-5xl mx-auto">
       <p class="text-lg leading-relaxed">
         <span class="font-bold">Discovery Partners Institute</span> (DPI) is training the next generation of Illinois's tech talent, 
         and we'd love to have your help. Our enthusiastic trainees are eager for positions where they can grow into 
@@ -32,9 +25,7 @@
     </div>
   </div>
 
-  <%# Image Grid %>
-  <div class="grid grid-cols-8 gap-4 max-w-4xl mx-auto mb-16">
-    <%# Replace these divs with actual images when available %>
+  <div class="grid grid-cols-8 gap-4 max-w-6xl mx-auto mb-16">
     <div class="col-span-3 row-span-2 bg-gray-300 rounded-md min-h-[320px]">
       <%= image_tag "sample_img/about_dpi_1.jpg", class: "w-full h-full object-cover rounded-md", alt: "DPI Mentor" %>
     </div>
@@ -49,10 +40,9 @@
     </div>
   </div>
 
-  <%# Requirements Section %>
-  <div class="max-w-4xl mx-auto mb-16">
+  <div class="max-w-6xl mx-auto mb-16 px-4">
     <h3 class="text-xl font-bold mb-4">We're looking for leaders with:</h3>
-    <ul class="space-y-2 text-lg">
+    <ul class="space-y-1 text-lg italic">
       <li>At Least Four Years of Experience in Their Field</li>
       <li>Previous Background in Tech, Design, Or Business</li>
       <li>The Ability To Meet At Least Once Every Two Weeks</li>
@@ -60,9 +50,8 @@
     </ul>
   </div>
 
-  <%# Mentorship Benefits %>
-  <div class="max-w-4xl mx-auto mb-20">
-    <div class="ml-auto w-1/2">
+  <div class="max-w-6xl mx-auto mb-20 px-4">
+    <div class="ml-auto w-2/3">
       <p class="text-lg leading-relaxed">
         <span class="font-bold">DPI mentorship is a great way to connect with our diverse talent from all walks of life.</span>
         You'll be guiding one or more Chicagoans through the unspoken rules of the business world and helping them
@@ -71,9 +60,8 @@
     </div>
   </div>
 
-  <%# Companies Section %>
-  <div class="max-w-4xl mx-auto mb-20">
-    <h2 class="text-2xl font-bold mb-4">We place our trainees in various fields</h2>
+  <div class="max-w-4xl mx-auto mb-20 px-4">
+    <h2 class="text-2xl font-bold mb-2">We place our trainees in various fields</h2>
     <p class="text-lg mb-8">Sales, Customer Success, Software Development, Project Management</p>
     <div class="flex flex-wrap gap-8 justify-center items-center">
       <%= image_tag "companies/uls.svg", class: "h-10", alt: "ULS" %>
@@ -84,16 +72,14 @@
     </div>
   </div>
 
-  <%# Riverside Chat Section %>
-  <div class="max-w-4xl mx-auto text-center mb-16">
+  <div class="max-w-6xl mx-auto text-center mb-16 px-4">
     <p class="text-xl">
       Would you like to explore an alternative way to contribute?
       <span class="font-bold">Join us for a Riverside Chat!</span>
     </p>
   </div>
 
-  <%# Riverside Details %>
-  <div class="max-w-4xl mx-auto mb-20">
+  <div class="max-w-6xl mx-auto mb-20 px-4">
     <h2 class="text-5xl font-bold mb-6">Riverside</h2>
     <div class="space-y-6 text-lg">
       <p>
@@ -113,8 +99,7 @@
     </div>
   </div>
 
-  <%# Final CTA Section %>
-  <div class="max-w-4xl mx-auto mb-32">
+  <div class="max-w-6xl mx-auto mb-32 px-4">
     <div class="grid grid-cols-2 gap-12 items-center">
       <div>
         <h2 class="text-5xl font-black">Make An Impact Today!</h2>

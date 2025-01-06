@@ -49,6 +49,7 @@ body {
     justify-content: center;
    
 }
+
 .gradient {
     position: absolute;
     border-radius: 50%;
@@ -56,12 +57,11 @@ body {
     z-index: -1;
   }
   
-  /* Smaller left gradient */
   .gradient-left {
     width: 300px;
     height: 300px;
-    top: 50%;   
-    left: 47%;  
+    top: 40%;   
+    left: 50%;  
     transform: translate(-50%, -50%) rotate(-10deg);
     background: linear-gradient(
       270deg,
@@ -72,12 +72,11 @@ body {
     );
   }
   
-  /* Smaller right gradient */
   .gradient-right {
     width: 300px;
     height: 300px;
-    top: -50%;
-    left: 53%;  
+    top: 20%;
+    left: 50%;  
     transform: translate(-50%, -50%) rotate(8deg);
     background: linear-gradient(
       90deg,
