@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get "/dashboard/:role/:program_id", to: "dashboard#show"
   get "/dashboard/:role", to: "dashboard#show", as: :dashboard
   get "/profile/:id", to: "profile#show", as: :profile
+  get "/home/mentorship", to: "home#mentorship", as: :mentorship
   post "/dashboard/create_program_admin", to: "dashboard#create_program_admin", as: :create_program_admin
   post "/dashboard/delete_program_admin/:id", to: "dashboard#delete_program_admin", as: :delete_program_admin
 

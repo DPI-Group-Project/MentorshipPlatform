@@ -10,7 +10,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
 class ShortList < ApplicationRecord
   belongs_to :mentor, optional: false, class_name: "User"
   belongs_to :mentee, optional: false, class_name: "User"

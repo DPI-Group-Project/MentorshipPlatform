@@ -8,6 +8,7 @@ class CohortsController < ApplicationController
 
   def create
     @cohort = Cohort.new(cohort_params)
+    @current_program = Program.find(@cohort.program_id)
 
     respond_to do |format|
       if @cohort.save
@@ -40,6 +41,8 @@ class CohortsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  
 
   private
 
