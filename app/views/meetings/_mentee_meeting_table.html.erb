@@ -39,7 +39,7 @@
         <td class="px-6 py-2">
           <span class="text-[#202020] hover:text-[#F9837C]">
             <% if meeting.location_type == 'On' %>
-              <a href="<%= meeting.location %>">Meeting Link</a>
+              <a href="<%= meeting.location %>" target="_blank">Meeting Link</a>
             <% else %>
               <a href="https://www.google.com/maps/search/<%= CGI.escape(meeting.location) %>" target="_blank"><%= meeting.location %></a>
             <% end %>
