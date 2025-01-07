@@ -1,29 +1,11 @@
 class CohortsController < ApplicationController
-  before_action :set_cohort, only: %i[show edit update destroy]
-  before_action :set_program, only: %i[index new create edit]
+  before_action :set_cohort, only: %i[update destroy]
 
-  # GET /cohorts or /cohorts.json
   def index
-    if params[:program_id].present?
-      @program = Program.find(params[:program_id])
-      @cohorts = @program.cohorts
-    else
-      @cohorts = Cohort.all
-    end
-    @cohort = Cohort.new
+    @program = Program.find(current_user.program_admin.program_id)
+    @cohorts = @program.cohorts
   end
 
-  # GET /cohorts/new
-  def new
-    @cohort = Cohort.new
-  end
-
-  # GET /cohorts/1/edit
-  def edit
-    @current_program = @cohort.program
-  end
-
-  # POST /cohorts or /cohorts.json
   def create
     @cohort = Cohort.new(cohort_params)
     @current_program = Program.find(@cohort.program_id)
@@ -39,11 +21,10 @@ class CohortsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /cohorts/1 or /cohorts/1.json
   def update
     respond_to do |format|
       if @cohort.update(cohort_params)
-        format.html { redirect_to program_cohorts_path(@cohort.program), notice: "Cohort was successfully updated." }
+        format.html { redirect_to cohorts_path, notice: "Cohort was successfully updated." }
         format.json { render :show, status: :ok, location: @cohort }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,12 +33,11 @@ class CohortsController < ApplicationController
     end
   end
 
-  # DELETE /cohorts/1 or /cohorts/1.json
   def destroy
     @cohort.destroy!
 
     respond_to do |format|
-      format.html { redirect_to program_cohorts_path(@cohort.program), notice: "Cohort was successfully destroyed." }
+      format.html { redirect_to cohorts_path, notice: "Cohort was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -65,10 +45,6 @@ class CohortsController < ApplicationController
   
 
   private
-
-  def set_program
-    @current_program = Program.find_by(id: params[:program_id])
-  end
 
   def set_cohort
     @cohort = Cohort.find(params[:id])

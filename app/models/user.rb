@@ -29,7 +29,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :cohort_member, primary_key: "email", foreign_key: "email", optional: true, dependent: :destroy
-  has_one :program_admins, primary_key: "id", dependent: :destroy
+  has_one :program_admin, primary_key: "id", dependent: :destroy
   has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
   has_many :mentees, class_name: "Match", foreign_key: "mentee_id", dependent: :destroy
   has_many :mentor_submissions, class_name: "MatchSubmission", foreign_key: "mentor_id", dependent: :destroy
@@ -50,16 +50,16 @@ class User < ApplicationRecord
                                 .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentee")
                             }
   scope :unpaired_mentees_in_cohort, lambda { |cohort_id|
-                            joins(:cohort_member)
-                              .left_joins(:matches)
-                              .where(cohort_members: { cohort_id: cohort_id, role: "mentee" })
-                              .where(matches: { id: nil })
-                          }
+    joins(:cohort_member)
+      .left_joins(:matches)
+      .where(cohort_members: { cohort_id: cohort_id, role: "mentee" })
+      .where(matches: { id: nil })
+  }
   scope :mentors_with_capacity, lambda { |cohort_id|
-                                     joins(:cohort_member)
-                                       .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentor")
-                                       .select { |mentor| mentor.mentee_capacity_count(cohort_id) < mentor.capacity }
-                                   }
+    joins(:cohort_member)
+      .where("cohort_members.cohort_id = ? AND cohort_members.role = ?", cohort_id, "mentor")
+      .select { |mentor| mentor.mentee_capacity_count(cohort_id) < mentor.capacity }
+  }
 
   def name
     "#{first_name.capitalize} #{last_name.capitalize}"
