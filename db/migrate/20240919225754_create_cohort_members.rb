@@ -8,8 +8,8 @@ class CreateCohortMembers < ActiveRecord::Migration[7.1]
       t.enum :role, enum_type: :role
       t.integer :capacity
       t.timestamps
-
     end
+
     add_index :cohort_members, :email, unique: true
   end
 end
