@@ -117,7 +117,7 @@ class CohortMembersController < ApplicationController
     cm.role = role
     cm.save!
     # TODO: Fix welcome mailer for cohort members says:"Unable to serialize CohortMember without an id"
-    # CohortMemberMailer.welcome_mail(cm).deliver_later!
+    CohortMemberMailer.with(cohort_member: cm).welcome_mail.deliver_later!
   end
 
   # Helper method to split, clean, and format email strings
