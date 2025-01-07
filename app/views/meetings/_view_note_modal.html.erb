@@ -44,7 +44,7 @@
             link.addEventListener("click", function(event) {
                 event.preventDefault();
 
-                // Get the meeting notes from the data attribute
+                // Get the meeting notes
                 const meetingNotes = link.getAttribute("data-meeting-notes");
                 const modalId = link.getAttribute("data-modal-target");
                 const notesContentElement = document.getElementById("meeting-notes-content-" + modalId.split("-")[1]);
