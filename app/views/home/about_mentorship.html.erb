@@ -1,17 +1,60 @@
-<div class="relative w-full px-4 sm:px-6 lg:px-8">
-  <div class="relative">
-    <div class="gradient gradient-left"></div>
-    <div class="gradient gradient-right"></div>
+<div class="relative w-full px-4 sm:px-6 lg:px-8 mt-20">
+
+  <div class="relative max-w-6xl mx-auto">
+
+    <nav class="flex mb-8" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li>
+          <a class="class: hover:text-gray-900" href="/">Home</a>
+        </li>
+        <li class="flex items-center">
+          <svg class="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+          <span class="font-medium text-gray-900">Get Involved</span>
+        </li>
+      </ol>
+    </nav>
+
+    <div class="text-center mb-16">
+      <p class="text-2xl font-light">Ready to make a difference? Choose your path!</p>
+      <p class="text-lg text-gray-600 mt-2">We have two amazing ways for you to get involved with DPI</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+      <div 
+    class="relative h-[400px] rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+    onclick="scrollToSection('mentor-section')"
+  >
+        <%= image_tag "sample_img/about_dpi_1.jpg", 
+        class: "w-full h-full object-cover transition-transform duration-500 hover:scale-110", 
+        alt: "DPI Mentor" %>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 transition-opacity duration-300">
+          <div class="absolute bottom-0 left-0 p-8 w-full">
+            <p class="text-white text-xs uppercase tracking-wider mb-2">Get involved by</p>
+            <h3 class="text-white text-3xl font-bold mb-3">Becoming a DPI Mentor</h3>
+            <p class="text-gray-200 text-sm">Guide the next generation of tech talent</p>
+          </div>
+        </div>
+      </div>
+      <div 
+    class="relative h-[400px] rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+    onclick="scrollToSection('riverside-section')"
+  >
+        <%= image_tag "sample_img/about_dpi_2.jpg", 
+        class: "w-full h-full object-cover transition-transform duration-500 hover:scale-110", 
+        alt: "Riverside Chat" %>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 transition-opacity duration-300">
+          <div class="absolute bottom-0 left-0 p-8 w-full">
+            <p class="text-white text-xs uppercase tracking-wider mb-2">Get involved by</p>
+            <h3 class="text-white text-3xl font-bold mb-3">Joining our Riverside Chat</h3>
+            <p class="text-gray-200 text-sm">Share your journey and inspire others</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="mt-32 mb-16 flex flex-col items-center text-center">
-    <p class="text-sm text-black font-medium">A little bit</p>
-    <h1 class="text-4xl font-bold mb-4">About DPI</h1>
-    <h1 class="text-3xl font-bold italic mb-2">Discovery Partners Institute</h1>
-    <p class="text-xl font-thin italic">empowers people to jumpstart their tech careers or companies</p>
-    <p class="text-xl font-thin italic mb-5">in Chicago.</p>
-    <%= link_to "Learn More", "https://dpi.uillinois.edu/", class: "inline-block bg-black text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-colors" %>
-  </div>
-  <div class="mb-12">
+  <div id="mentor-section" class="mb-24">
     <div class="max-w-6xl mx-auto">
       <p class="text-base font-medium text-left">Give Back By</p>
       <h2 class="text-4xl font-bold text-left mb-8">Becoming A DPI Mentor</h2>
@@ -22,7 +65,7 @@
       </p>
     </div>
   </div>
-  <div class="grid grid-cols-8 gap-4 max-w-6xl mx-auto mb-16">
+  <div class="grid grid-cols-8 gap-4 max-w-6xl mx-auto mb-24">
     <div class="col-span-3 row-span-2 bg-gray-300 rounded-md min-h-[320px]">
       <%= image_tag "sample_img/about_dpi_1.jpg", class: "w-full h-full object-cover rounded-md", alt: "DPI Mentor" %>
     </div>
@@ -36,7 +79,7 @@
       <%= image_tag "sample_img/about_dpi_4.jpg", class: "w-full h-full object-cover rounded-md", alt: "DPI Community" %>
     </div>
   </div>
-  <div class="max-w-6xl mx-auto mb-16 px-4">
+  <div class="max-w-6xl mx-auto mb-24 px-4">
     <h3 class="text-2xl font-bold italic mb-6">We're looking for leaders with</h3>
     <div class="text-lg font-light">
       <p>At Least Four Years Of Experience In Their Field</p>
@@ -45,7 +88,7 @@
       <p>The Ability To Attend At Least Six 30-Minute Meetings</p>
     </div>
   </div>
-  <div class="max-w-6xl mx-auto mb-20 px-4">
+  <div class="max-w-6xl mx-auto mb-32 px-4">
     <div class="ml-auto w-1/2">
       <p class="text-lg leading-relaxed">
         <span class="font-bold">DPI mentorship is a great way to connect with our diverse talent from all walks of life.</span>
@@ -53,10 +96,10 @@
       </p>
     </div>
   </div>
-  <div class="max-w-6xl mx-auto mb-20 px-4">
-    <h2 class="text-2xl font-bold mb-2">We place our trainees in various fields</h2>
-    <p class="text-xl text-gray-700 mb-12">Sales, Customer Success, Software Development, Project Management</p>
-    <div class="flex flex-wrap gap-12 justify-center items-center">
+  <div class="max-w-6xl mx-auto mb-32 px-4">
+    <h2 class="text-2xl font-bold mb-4">We place our trainees in various fields</h2>
+    <p class="text-xl text-gray-700 mb-16">Sales, Customer Success, Software Development, Project Management</p>
+    <div class="flex flex-wrap gap-16 justify-center items-center">
       <%= image_tag "companies/uls.svg", class: "h-12 grayscale opacity-70", alt: "UL Solutions" %>
       <%= image_tag "companies/sap.svg", class: "h-12 grayscale opacity-70", alt: "SAP" %>
       <%= image_tag "companies/cibc.svg", class: "h-12 grayscale opacity-70", alt: "CIBC" %>
@@ -64,36 +107,46 @@
       <%= image_tag "companies/hcsc.svg", class: "h-12 grayscale opacity-70", alt: "HCSC" %>
     </div>
   </div>
-  <div class="max-w-6xl mx-auto text-left mb-16 px-4 mt-32">
+  <div id="riverside-section" class="max-w-6xl mx-auto text-left mb-24 px-4 mt-32">
     <div class="flex flex-col items-start max-w-6xl mx-auto">
       <div class="text-xl font-light leading-normal">
         Would you like to explore an
-        alternative way to contribute?
-        <span class="font-bold">Join us for a Riverside chat!</span>
+        alternative way to contribute? <br>
+        <span class="font-bold underline">Join us for a Riverside chat!</span>
       </div>
     </div>
   </div>
-  <div class="max-w-6xl mx-auto mb-20 px-4">
-    <h2 class="text-4xl font-bold mb-6">Riverside</h2>
-    <div class="space-y-6 text-lg">
-      <p>
-        <span class="font-bold">Get to know the DPI team</span> and hear from our
-        talent network by joining us for a Riverside Chat! This is a casual question-and-answer
-        session where our staff will explore your background and the "whys" behind your success.
-      </p>
-      <p>
-        <span class="font-bold">Riverside Chats</span> present a unique opportunity to meet our
-        trainees and answer their insightful questions about your field of work. We've had
-        cutting-edge leaders from companies like Salesforce, Capital One, and ShipBob join us for Riversides.
-      </p>
-      <p>
-        Along with the trainees, we'll discuss how DPI can
-        <span class="font-bold">boost your business</span> through our Tech Accelerator.
-      </p>
+  <div class="max-w-6xl mx-auto mb-24 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <div>
+        <h2 class="text-5xl font-black mb-8">What is a<br>
+          Riverside</h2>
+        <div class="space-y-6">
+          <p class="text-lg">
+            <span class="italic">Get to know the DPI team</span> and hear from our
+            talent network by joining us for a Riverside Chat! This is a casual question-and-answer
+            session where our staff will explore your background and the "whys" behind your success.
+          </p>
+          <p class="text-lg">
+            <span class="italic">Riverside Chats</span> present a unique opportunity to meet our
+            trainees and answer their insightful questions about your field of work. We've had
+            cutting-edge leaders from companies like Salesforce, Capital One, and ShipBob join us for Riversides.
+          </p>
+          <p class="text-lg">
+            Along with the trainees, we'll discuss how DPI can
+            <span class="italic">boost your business</span> through our Tech Accelerator.
+          </p>
+        </div>
+      </div>
+      <div class="h-full">
+        <%= image_tag "sample_img/riverside_chat.jpeg", 
+            class: "w-full h-full object-cover rounded-lg", 
+            alt: "Riverside Chat Session" %>
+      </div>
     </div>
   </div>
   <div class="max-w-6xl mx-auto mb-32 px-4">
-    <div class="grid grid-cols-2 gap-12 items-center">
+    <div class="grid grid-cols-2 gap-11 items-center">
       <div>
         <h2 class="text-5xl font-black">Make An Impact Today!</h2>
       </div>
@@ -112,3 +165,12 @@
     </div>
   </div>
 </div>
+
+<script>
+  function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+</script>
