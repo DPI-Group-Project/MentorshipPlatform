@@ -1,13 +1,19 @@
-<div class="container mx-auto mt-[5rem] px-5 flex justify-center">
-  <div class="relative w-full max-w-5xl h-auto">
-    <%= render "hero" %>
-    <div class="mt-32">
-      <!-- Brand Section -->
-      <%= render "brand" %>
-      <!-- Reviews Section -->
-      <%= render "reviews" %>
+<div class="relative w-full overflow-hidden min-h-screen">
+  <%= image_tag "bg/gradient_background.svg", class: "absolute w-screen h-[1/2rem] transform object-center object-cover opacity-90  fixed" %>
+
+  <div class="container mx-auto mt-[5rem] px-5 flex justify-center relative z-10">
+    <div class="relative w-full max-w-5xl h-auto">
+      <%= render "hero" %>
+      <div class="mt-32">
+        <!-- Brand Section -->
+        <%= render "brand" %>
+        <!-- Reviews Section -->
+        <%= render "reviews" %>
+      </div>
     </div>
   </div>
+  <!-- FAQ Section -->
+  <div class="relative z-10">
+    <%= render "faq" %>
+  </div>
 </div>
-<!-- FAQ Section -->
-<%= render "faq" %>
