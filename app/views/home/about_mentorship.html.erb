@@ -2,7 +2,6 @@
   <%= image_tag "bg/gradient_background_2.svg", class: "absolute w-screen h-[1/2rem] transform object-center object-cover fixed" %>
 
   <div class="relative max-w-6xl mx-auto">
-
     <nav class="flex mb-8" aria-label="Breadcrumb">
       <ol class="flex items-center space-x-2 text-sm text-gray-600">
         <li>
@@ -10,7 +9,7 @@
         </li>
         <li class="flex items-center">
           <svg class="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
           </svg>
           <span class="font-medium text-gray-900">Get Involved</span>
         </li>
@@ -21,15 +20,15 @@
       <p class="text-5xl font-bold">Ready to make a difference?</p>
       <p class="text-lg text-gray-600 mt-2">We have two amazing ways for you to get involved with DPI</p>
     </div>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
-      <div 
-    class="relative h-[400px] rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-    onclick="scrollToSection('mentor-section')"
-  >
-        <%= image_tag "sample_img/about_dpi_1.jpg", 
-        class: "w-full h-full object-cover transition-transform duration-500 hover:scale-110", 
-        alt: "DPI Mentor" %>
+      <div
+        class="relative h-[400px] rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+        onclick="scrollToSection('mentor-section')"
+      >
+        <%= image_tag "sample_img/about_dpi_1.jpeg",
+                      class: "w-full h-full object-cover transition-transform duration-500 hover:scale-110",
+                      alt: "DPI Mentor" %>
         <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 transition-opacity duration-300">
           <div class="absolute bottom-0 left-0 p-8 w-full">
             <p class="text-white text-xs uppercase tracking-wider mb-2">Get involved by</p>
@@ -38,13 +37,13 @@
           </div>
         </div>
       </div>
-      <div 
-    class="relative h-[400px] rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-    onclick="scrollToSection('riverside-section')"
-  >
-        <%= image_tag "sample_img/about_dpi_2.jpg", 
-        class: "w-full h-full object-cover transition-transform duration-500 hover:scale-110", 
-        alt: "Riverside Chat" %>
+      <div
+        class="relative h-[400px] rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+        onclick="scrollToSection('riverside-section')"
+      >
+        <%= image_tag "sample_img/about_dpi_2.jpeg",
+                      class: "w-full h-full object-cover transition-transform duration-500 hover:scale-110",
+                      alt: "Riverside Chat" %>
         <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 transition-opacity duration-300">
           <div class="absolute bottom-0 left-0 p-8 w-full">
             <p class="text-white text-xs uppercase tracking-wider mb-2">Get involved by</p>
@@ -55,29 +54,31 @@
       </div>
     </div>
   </div>
+
   <div id="mentor-section" class="mb-24">
     <div class="max-w-6xl mx-auto">
       <p class="text-base font-medium text-left">Give Back By</p>
       <h2 class="text-4xl font-bold text-left mb-8">Becoming A DPI Mentor</h2>
       <p class="text-lg leading-relaxed max-w-4xl">
-        <span class="font-bold">Discovery Partners Institute</span> (DPI) is training the next generation of Illinois's tech talent, 
-        and we'd love to have your help. Our enthusiastic trainees are eager for positions where they can grow into 
+        <span class="font-bold">Discovery Partners Institute</span> (DPI) is training the next generation of Illinois's
+        tech talent,
+        and we'd love to have your help. Our enthusiastic trainees are eager for positions where they can grow into
         valuable leaders and community members, and they need someone like you to guide them on their journeys.
       </p>
     </div>
   </div>
   <div class="grid grid-cols-8 gap-4 max-w-6xl mx-auto mb-24">
     <div class="col-span-3 row-span-2 bg-gray-300 rounded-md min-h-[320px]">
-      <%= image_tag "sample_img/about_dpi_1.jpg", class: "w-full h-full object-cover rounded-md", alt: "DPI Mentor" %>
+      <%= image_tag "sample_img/about_dpi_1.jpeg", class: "w-full h-full object-cover rounded-md", alt: "DPI Mentor" %>
     </div>
     <div class="col-span-5 bg-gray-300 rounded-md min-h-[150px]">
-      <%= image_tag "sample_img/about_dpi_2.jpg", class: "w-full h-full object-cover rounded-md", alt: "DPI Program" %>
+      <%= image_tag "sample_img/about_dpi_2.jpeg", class: "w-full h-full object-cover rounded-md", alt: "DPI Program" %>
     </div>
     <div class="col-span-2 bg-gray-300 rounded-md min-h-[150px]">
-      <%= image_tag "sample_img/about_dpi_3.jpg", class: "w-full h-full object-cover rounded-md", alt: "DPI Initiative" %>
+      <%= image_tag "sample_img/about_dpi_3.jpeg", class: "w-full h-full object-cover rounded-md", alt: "DPI Initiative" %>
     </div>
     <div class="col-span-3 bg-gray-300 rounded-md min-h-[150px]">
-      <%= image_tag "sample_img/about_dpi_4.jpg", class: "w-full h-full object-cover rounded-md", alt: "DPI Community" %>
+      <%= image_tag "sample_img/about_dpi_4.jpeg", class: "w-full h-full object-cover rounded-md", alt: "DPI Community" %>
     </div>
   </div>
   <div class="max-w-6xl mx-auto mb-24 px-4">
@@ -109,7 +110,8 @@
     <div class="ml-auto w-1/2">
       <p class="text-lg leading-relaxed">
         <span class="font-bold">DPI mentorship is a great way to connect with our diverse talent from all walks of life.</span>
-        You'll be guiding one or more Chicagoans through the unspoken rules of the business world and helping them find their footing in an ever-changing job market.
+        You'll be guiding one or more Chicagoans through the unspoken rules of the business world and helping them find
+        their footing in an ever-changing job market.
       </p>
     </div>
   </div>
@@ -117,11 +119,11 @@
     <h2 class="text-2xl font-bold mb-4">We place our trainees in various fields</h2>
     <p class="text-xl text-gray-700 mb-16">Sales, Customer Success, Software Development, Project Management</p>
     <div class="flex flex-wrap gap-16 justify-center items-center">
-      <%= image_tag "companies/uls.svg", class: "h-12 grayscale opacity-70", alt: "UL Solutions" %>
-      <%= image_tag "companies/sap.svg", class: "h-12 grayscale opacity-70", alt: "SAP" %>
-      <%= image_tag "companies/cibc.svg", class: "h-12 grayscale opacity-70", alt: "CIBC" %>
-      <%= image_tag "companies/united.svg", class: "h-12 grayscale opacity-70", alt: "United" %>
-      <%= image_tag "companies/hcsc.svg", class: "h-12 grayscale opacity-70", alt: "HCSC" %>
+      <%= image_tag "companies/ULS.svg", class: "h-12 grayscale opacity-70", alt: "UL Solutions" %>
+      <%= image_tag "companies/SAP.svg", class: "h-12 grayscale opacity-70", alt: "SAP" %>
+      <%= image_tag "companies/CIBC.svg", class: "h-12 grayscale opacity-70", alt: "CIBC" %>
+      <%= image_tag "companies/United.svg", class: "h-12 grayscale opacity-70", alt: "United" %>
+      <%= image_tag "companies/HCSC.svg", class: "h-12 grayscale opacity-70", alt: "HCSC" %>
     </div>
   </div>
   <div id="riverside-section" class="max-w-6xl mx-auto text-left mb-24 px-4 mt-32">
@@ -156,9 +158,9 @@
         </div>
       </div>
       <div class="h-full">
-        <%= image_tag "sample_img/riverside_chat.jpeg", 
-            class: "w-full h-full object-cover rounded-lg", 
-            alt: "Riverside Chat Session" %>
+        <%= image_tag "sample_img/riverside_chat.jpeg",
+                      class: "w-full h-full object-cover rounded-lg",
+                      alt: "Riverside Chat Session" %>
       </div>
     </div>
   </div>
@@ -184,10 +186,10 @@
 </div>
 
 <script>
-  function scrollToSection(sectionId) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    function scrollToSection(sectionId) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({behavior: 'smooth'});
+        }
     }
-  }
 </script>
