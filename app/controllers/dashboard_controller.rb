@@ -23,7 +23,7 @@ class DashboardController < ApplicationController
 
   def create_program_admin
     @current_program = Program.find(current_user.program_admin.program_id)
-    
+
     @admin_user = User.create(email: program_admin_params[:email], password: "password")
     @program_admin = ProgramAdmin.new(user_id: @admin_user.id, program_id: @current_program.id, created_by_admin_id: current_user.id)
 
@@ -78,7 +78,7 @@ class DashboardController < ApplicationController
   def load_admin_data
     @admin_data = ProgramAdmin.find_by(user_id: current_user.id)
     @program_admin = ProgramAdmin.new
-    @current_program = current_program
+    @current_program = Program.find(current_user.program_admin.program_id)
     @cohorts = Cohort.where(program_id: @current_program.id)
     @program_admins = ProgramAdmin.where(program_id: @current_program&.id)
   end
