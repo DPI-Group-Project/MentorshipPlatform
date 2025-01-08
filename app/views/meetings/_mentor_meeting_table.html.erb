@@ -42,19 +42,33 @@
           <div class="ps-3">
             <div class="font-medium"><%= mentee.name %></div>
           </div>
-        </td>        <td class="px-6 py-2"><%= meeting.date.strftime('%a, %b %d, %Y') %></td>
+        </td>
+        <td class="px-6 py-2"><%= meeting.date.strftime('%a, %b %d, %Y') %></td>
         <td class="px-6 py-2"><%= meeting.time.strftime('%I:%M %p') %></td>
         <td class="px-6 py-2">
-          <%= meeting.location %>
+          <span class="text-[#202020] hover:text-[#F9837C]">
+            <% if meeting.location_type == 'On' %>
+              <a href="<%= meeting.location %>" target="_blank">Meeting Link</a>
+            <% else %>
+              <a href="https://www.google.com/maps/search/<%= CGI.escape(meeting.location) %>" target="_blank"><%= meeting.location %></a>
+            <% end %>
+          </span>
         </td>
         <td class="px-6 py-2">
-          <a href="#" data-modal-target="viewNoteModal" data-meeting-id="<%= meeting.id %>" class="text-[#898989] hover:underline">
-            Note
+          <a href="#" type="button"
+             data-modal-target="viewNoteModal-<%= meeting.id %>"
+             data-modal-show="viewNoteModal-<%= meeting.id %>"
+             data-meeting-notes="<%= meeting.notes %>"
+             class="font-medium text-[#898989] hover:underline">
+            <img src="<%= asset_path('icon/note.svg') %>" alt="note" class="h-4">
           </a>
         </td>
-        <td class="px-6 py-2">
-          <%= link_to "Edit", edit_meeting_path(meeting.id), class: "text-[#202020] hover:underline" %>
+        <td class="px-6 py-2 font-medium text-[#898989]">
+          <%= link_to "Edit", edit_meeting_path(meeting.id) %> |
+          <!--TODO: DELETE Method not working-->
+          <%= link_to "Delete", meeting_path(meeting.id), data: { "turbo-method": :delete } %>
         </td>
+        <%= render "meetings/view_note_modal", meeting: meeting %>
       </tr>
     <% end %>
 
@@ -79,5 +93,3 @@
   </table>
 </div>
 <% end %>
-
-<%= render "meetings/view_note_modal" %>
