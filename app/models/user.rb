@@ -19,7 +19,6 @@
 #  timezone               :string
 #  title                  :string
 #  linkedin_link          :string
-#  profile_picture        :string
 #  skills_array           :text             default([]), is an Array
 #  shortlist              :jsonb            is an Array
 #
@@ -28,6 +27,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_one_attached :profile_picture
+
   belongs_to :cohort_member, primary_key: "email", foreign_key: "email", optional: true, dependent: :destroy
   has_one :program_admin, primary_key: "id", dependent: :destroy
   has_one :mentor, class_name: "Match", foreign_key: "mentor_id", dependent: :destroy
