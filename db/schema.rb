@@ -19,8 +19,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_18_020554) do
   create_enum "role", ["mentor", "mentee"]
   create_enum "status", ["active", "inactive", "archived"]
 
-  create_table "cohort_members", primary_key: "email", id: :string, force: :cascade do |t|
+  create_table "cohort_members", id: false, force: :cascade do |t|
     t.bigint "cohort_id", null: false
+    t.string "email", null: false
     t.enum "role", enum_type: "role"
     t.integer "capacity"
     t.datetime "created_at", null: false
