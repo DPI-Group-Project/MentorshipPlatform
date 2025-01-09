@@ -18,6 +18,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_09_160439) do
     t.string "email", null: false
     t.bigint "cohort_id", null: false
     t.string "role"
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "role", ["mentor", "mentee"]
+  create_enum "status", ["active", "inactive", "archived"]
+
+  create_table "cohort_members", primary_key: "email", id: :string, force: :cascade do |t|
+    t.bigint "cohort_id", null: false
+    t.enum "role", enum_type: "role"
+    t.integer "capacity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "capacity"

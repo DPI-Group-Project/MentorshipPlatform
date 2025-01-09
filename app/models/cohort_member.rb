@@ -10,6 +10,8 @@
 #  updated_at :datetime         not null
 #
 class CohortMember < ApplicationRecord
+  self.primary_key = "email"
+  
   enum role: { mentor: "mentor", mentee: "mentee" }
 
   has_one :user, primary_key: "email", foreign_key: "email"

@@ -1,21 +1,21 @@
 source "https://rubygems.org"
 
-ruby "3.3.6"
+ruby "3.4.1"
 
 gem "bootsnap", require: false
 gem "devise"
 gem "importmap-rails"
 gem "jbuilder"
-gem "pg", "~> 1.5"
+gem "pg"
 gem "puma", ">= 5.0"
-gem "rails", "~> 7.2.2"
+gem "rails"
 gem "resend"
 gem "rubocop-rails", require: false
 gem "rufus-scheduler"
 gem "simple_form"
 gem "sprockets-rails"
 gem "stimulus-rails"
-gem "tailwindcss-rails", "~> 2.7"
+gem "tailwindcss-rails"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[windows jruby]
 
