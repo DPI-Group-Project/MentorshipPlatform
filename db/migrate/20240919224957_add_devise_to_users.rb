@@ -42,7 +42,6 @@ class AddDeviseToUsers < ActiveRecord::Migration[7.1]
       t.string :timezone
       t.string :title
       t.string :linkedin_link
-      t.string :profile_picture
       t.text :skills_array, array: true, default: []
       t.jsonb :shortlist, array: true, default: []
 
