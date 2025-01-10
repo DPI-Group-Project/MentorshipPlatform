@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_09_002034) do
   create_enum "role", ["mentor", "mentee"]
   create_enum "status", ["active", "inactive", "archived"]
 
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -49,6 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_09_002034) do
 
   create_table "cohort_members", primary_key: "email", id: :string, force: :cascade do |t|
     t.bigint "cohort_id", null: false
+    t.string "email", null: false
     t.enum "role", enum_type: "role"
     t.integer "capacity"
     t.datetime "created_at", null: false
