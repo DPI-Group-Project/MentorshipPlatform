@@ -1,17 +1,33 @@
 class CohortMembersController < ApplicationController
   before_action :set_cohort_member, only: %i[show edit update destroy]
+  before_action :set_cohorts, only: %i[index new edit show] 
 
   # GET /cohort_members or /cohort_members.json
   def index
     if params[:cohort_id]
       @cohort = Cohort.find(params[:cohort_id])
       @cohort_members = @cohort.members.includes(:user)
+      @cohorts = Cohort.all
     else
       @cohort_members = CohortMember.includes(:user).all
     end
 
     @mentors = @cohort_members.select { |member| member.role == "mentor" }
     @mentees = @cohort_members.select { |member| member.role == "mentee" }
+  end
+
+  def set_cohorts
+    @cohorts = Cohort.all
+    @program = Program.find(current_user.program_admin.program_id)
+    @cohorts = @program.cohorts
+    @current_program = @program
+    
+    @sidebar_data = {
+      program_name: @program.name,
+      admin_name: current_user.first_name,
+      cohorts: @program.cohorts
+  
+    }
   end
 
   # GET /cohort_members/1 or /cohort_members/1.json

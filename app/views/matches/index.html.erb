@@ -1,42 +1,47 @@
-<div class="mt-[5rem] mx-[5rem]">
-<div class="flex items-center space-x-4 mb-4">
-  <%= link_to dashboard_path(role: "admin"), class: "flex items-center space-x-2 group" do %>
-    <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-      <svg class="w-4 h-4 text-white" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-      </svg>
+<div class="flex mt-[5rem] mx-[5rem]">
+  <!-- Sidebar Section -->
+  <aside class="w-1/4 pr-4">
+    <%= render 'dashboard/admin_sidebar' %>
+  </aside>
+  <!-- Main Content Section -->
+  <main class="w-3/4">
+    <div class="flex items-center space-x-4 mb-4">
+      <%= link_to dashboard_path(role: "admin"), class: "flex items-center space-x-2 group" do %>
+        <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </div>
+        <span class="text-black font-semibold group-hover:underline">Back to dashboard</span>
+      <% end %>
     </div>
-    <span class="text-black font-semibold group-hover:underline">Back to dashboard</span>
-  <% end %>
-</div>
-
-  <div class="flex justify-between">
-    <div>
-      
-      <h1 class="text-2xl font-bold text-black mb-6 text-left">
-        Matches for <%= @cohort.cohort_name %>
-      </h1>
+    <div class="flex justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-black mb-6 text-left">
+          Matches for <%= @cohort.cohort_name %>
+        </h1>
+      </div>
+      <div>
+        <button class="text-xs w-[8rem] h-[2rem] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:scale-105"
+          onclick="openModal('create_match_modal')">
+          <span class="icon transition duration-500">+</span>
+          Add New
+        </button>
+      </div>
     </div>
-    <div>
-      <button class="text-xs w-[8rem] h-[2rem] bg-[#202020] text-[#FFFFFF] border border-transparent rounded-md hover:scale-105"
-        onclick="openModal('create_match_modal')">
-        <span class="icon transition duration-500">+</span>
-        Add New
-      </button>
-    </div>
-  </div>
-  <% if @matches.any?%>
-    <% if @cohort.unmatched_mentees.any? || @available_mentors.any? %>
-      <%= render "matches/unmatched_card" %>
+    <% if @matches.any? %>
+      <% if @cohort.unmatched_mentees.any? || @available_mentors.any? %>
+        <%= render "matches/unmatched_card" %>
+      <% end %>
+      <%= render "matches/table" %>
+    <% else %>
+      <div class="overflow-x-auto rounded-lg">
+        <h1 class="py-3 px-6 text-left text-md font-semibold tracking-wider text-center">
+          No Matches for <%= @cohort.cohort_name %> yet!
+        </h1>
+      </div>
     <% end %>
-    <%= render "matches/table"%>
-  <% else %>
-    <div class="overflow-x-auto rounded-lg">
-      <h1 class="py-3 px-6 text-left text-md font-semibold tracking-wider text-center">
-        No Matches for <%= @cohort.cohort_name %> yet!
-      </h1>
-    </div>
-  <% end %>
+  </main>
 </div>
 <%= render "matches/new_match_modal" %>
 <script>
@@ -50,4 +55,21 @@
     modal.classList.add('hidden');
     modal.classList.remove('flex');
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+     const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      const menu = dropdown.querySelector('.dropdown-menu');
+      const chevron = dropdown.querySelector('.chevron');
+
+      toggle.addEventListener('click', function () {
+        menu.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180');
+      });
+    });
+
+
+  });
 </script>

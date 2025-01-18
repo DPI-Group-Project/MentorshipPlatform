@@ -1,6 +1,6 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[update destroy]
-  before_action :set_cohort, only: %i[index create update]
+  before_action :set_cohort, :set_cohorts, only: %i[index create update]
 
   def index
     @cohort = Cohort.find_by(id: @cohort_id)
@@ -9,6 +9,7 @@ class MatchesController < ApplicationController
     current_time = Time.current.utc
     @current_time_in_user_zone = current_time.strftime("%Y-%m-%d %H:%M:%S UTC")
     @match = Match.new
+
   end
 
   def create
@@ -61,6 +62,21 @@ class MatchesController < ApplicationController
 
   def set_cohort
     @cohort_id = params[:cohort_id]
+    
+  end
+
+  def set_cohorts
+    @cohorts = Cohort.all
+    @program = Program.find(current_user.program_admin.program_id)
+    @cohorts = @program.cohorts
+    @current_program = @program
+    
+    @sidebar_data = {
+      program_name: @program.name,
+      admin_name: current_user.first_name,
+      cohorts: @program.cohorts
+  
+    }
   end
 
   def match_params

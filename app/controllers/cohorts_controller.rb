@@ -4,6 +4,14 @@ class CohortsController < ApplicationController
   def index
     @program = Program.find(current_user.program_admin.program_id)
     @cohorts = @program.cohorts
+    @current_program = @program
+
+    @sidebar_data = {
+    program_name: @program.name,
+    admin_name: current_user.first_name,
+    cohorts: @program.cohorts
+
+  }
   end
 
   def create

@@ -1,5 +1,12 @@
 class ProgramsController < ApplicationController
   before_action :set_program, only: %i[show edit update destroy]
+
+  def index
+    @program = Program.find(current_user.program_admin.program_id)
+    @current_program = @program # Add this line
+    @cohorts = @program.cohorts
+  end
+  
   def new
     @program = Program.new
   end
