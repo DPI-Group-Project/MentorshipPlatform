@@ -1,0 +1,51 @@
+<%= form_with(model: @survey, local: true) do |form| %>
+  <% if @survey.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@survey.errors.count, "error") %> prohibited this survey from being saved:</h2>
+      <ul>
+        <% @survey.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="hidden field">
+    <%= form.label :match_id %>
+    <%= form.number_field :match_id, :value => current_user.match_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :responsive %>
+    <%= form.number_field :responsive %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rating %>
+    <%= form.number_field :rating %>
+  </div>
+
+  <div class="field">
+    <%= form.label :experience %>
+    <%= form.number_field :experience %>
+  </div>
+
+  <div class="field">
+    <%= form.label :responsive_reason %>
+    <%= form.text_area :responsive_reason %>
+  </div>
+
+  <div class="field">
+    <%= form.label :experience_reason %>
+    <%= form.text_area :experience_reason %>
+  </div>
+
+  <div class="field">
+    <%= form.label :additional_note %>
+    <%= form.text_area :additional_note %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
