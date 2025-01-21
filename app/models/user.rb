@@ -85,6 +85,11 @@ class User < ApplicationRecord
     current_user_mentees.size
   end
 
+  def match_id
+    match = Match.find_by(mentee_id: id)
+    match.id
+  end
+
   def cohort
     cohort_id = CohortMember.where(email:).pick(:cohort_id)
     Cohort.find_by(id: cohort_id)
