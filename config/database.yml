@@ -14,5 +14,5 @@ test:
 production:
   <<: *default
   database: mentee_production
-  username: <%= ENV["MENTEE_DATABASE_USER"] %>
-  password: <%= ENV["MENTEE_DATABASE_PASSWORD"] %>
+  username: <%= Rails.application.credentials[:mentee_database_user]  %>
+  password: <%= Rails.application.credentials[:mentee_database_password] %>
