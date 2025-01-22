@@ -70,7 +70,7 @@ task({ sample_data: :environment }) do
                role == "mentor" ? mentor_title : nil
              end,
       linkedin_link: "https://www.linkedin.com/in/#{(person[:first_name]).downcase}-#{(person[:last_name]).downcase}-#{Faker::Number.number(digits: 5)}/",
-      profile_picture: image_link,
+      # profile_picture: image_link,
       status:,
       inactive_reason: status == "Inactive" ? inactive_reason : nil,
       skills_array: [skills.sample, skills.sample]
@@ -176,42 +176,66 @@ task({ sample_data: :environment }) do
     )
   end
 
-  # Creating Matches
-  mentees.each do |mentee|
-    cohort_member_mentee = mentee.cohort_member
-    if cohort_member_mentee.nil?
-      puts "No cohort member found for mentee with email: #{mentee.email}"
-      next # Skip to the next mentee
+  # Creating Shortlist
+  cohort_ids = Cohort.pluck(:id)
+  p cohort_ids
+  cohort_ids.each do |cohort_id|
+    mentee_ids = CohortMember.mentee_user_ids_in_cohort(cohort_id)
+    p "#{cohort_id} mentees: #{mentee_ids}"
+    mentor_ids = CohortMember.mentor_user_ids_in_cohort(cohort_id)
+    p "#{cohort_id} mentors: #{mentor_ids}"
+    mentee_ids.each do |mentee|
+      3.times do |i|
+        ShortList.create(
+          mentor_id: mentor_ids.sample,
+          mentee_id: mentee,
+          cohort_id: cohort_id,
+          ranking:  i + 1
+        )
+      end
     end
-    mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: "mentor").sample
-    next unless mentor_cohort_member_object
-
-    shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
-    this_mentor = User.find_by(email: mentor_cohort_member_object.email)
-    m = Match.create(
-      mentor_id: this_mentor.id,
-      mentee_id: mentee.id,
-      cohort_id: cohort_member_mentee.cohort_id,
-      active: shared_cohort.running?
-    )
-
-    matches.push(m)
   end
 
-  #Creating surveys
-  matches.each do |match|
-    responsive = [true, false].sample
-    rating = [1, 2, 3, 4, 5].sample
-    match_id = match.id
-    body = Faker::TvShows::Simpsons.quote
+  # Creating Matches
+  
 
-    Survey.create!(
-      match_id:,
-      responsive:,
-      rating:,
-      body:
-    )
-  end
+
+  
+  # mentees.each do |mentee|
+  #   cohort_member_mentee = mentee.cohort_member
+  #   if cohort_member_mentee.nil?
+  #     puts "No cohort member found for mentee with email: #{mentee.email}"
+  #     next # Skip to the next mentee
+  #   end
+  #   mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: "mentor").sample
+  #   next unless mentor_cohort_member_object
+
+  #   shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
+  #   this_mentor = User.find_by(email: mentor_cohort_member_object.email)
+  #   m = Match.create(
+  #     mentor_id: this_mentor.id,
+  #     mentee_id: mentee.id,
+  #     cohort_id: cohort_member_mentee.cohort_id,
+  #     active: shared_cohort.running?
+  #   )
+
+  #   matches.push(m)
+  # end
+
+  # #Creating surveys
+  # matches.each do |match|
+  #   responsive = [true, false].sample
+  #   rating = [1, 2, 3, 4, 5].sample
+  #   match_id = match.id
+  #   body = Faker::TvShows::Simpsons.quote
+
+  #   Survey.create!(
+  #     match_id:,
+  #     responsive:,
+  #     rating:,
+  #     body:
+  #   )
+  # end
 
   ending = Time.zone.now
   p "There are now #{User.count} users."
@@ -219,6 +243,7 @@ task({ sample_data: :environment }) do
   p "There are now #{Cohort.count} cohorts."
   p "There are now #{ProgramAdmin.count} program admins."
   p "There are now #{CohortMember.count} cohort members."
+  p "There are now #{ShortList.count} shortlists."
   p "There are now #{Match.count} matches."
   p "There are now #{Survey.count} surveys."
   p "Done! It took #{(ending - starting).to_i} seconds to create sample data."
