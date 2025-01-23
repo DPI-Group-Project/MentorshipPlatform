@@ -88,11 +88,11 @@ task({ sample_data: :environment }) do
 
     role_hash.store(user, role)
 
-    profile_pic = ["pic_1.jpg", "pic_2.jpg", "pic_3.jpg"].sample
+    profile_pic = ["pic_1.png", "pic_2.png", "pic_3.png"].sample
     user.profile_picture.attach(
       io: File.open(Rails.root.join("db", "sample_files", profile_pic)),
       filename: profile_pic,
-      content_type: "image/jpg"
+      content_type: "image/png"
     )
   end
 
