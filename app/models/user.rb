@@ -40,6 +40,7 @@ class User < ApplicationRecord
   has_many :owned_programs, class_name: "Program", foreign_key: "creator_id", dependent: :destroy
   has_many :matches, foreign_key: :mentor_id, class_name: "Match"
   has_many :meetings, through: :matches
+  has_many :surveys, through: :matches, source: :surveys
 
   validates :email, uniqueness: true
 

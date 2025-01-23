@@ -22,4 +22,8 @@ class Survey < ApplicationRecord
   def send_creation_notification
     SurveyMailer.notify_admin_of_survey_creation(self).deliver_later
   end
+
+  def self.count_by_user(user)
+    where(match_id: user.match_id).count
+  end
 end

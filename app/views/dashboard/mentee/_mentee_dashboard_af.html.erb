@@ -43,6 +43,10 @@
     <div class="md:my-5">
       <%= render 'calendar' %>
     </div>
-    <%= render 'dashboard/mentee/survey_notification' %>
+    <% if @past_meeting_count >= 1 && @survey_count == 0 %>
+      <%= render 'dashboard/mentee/first_survey_notification' %>
+    <% elsif @past_meeting_count == @required_meetings_count && @survey_count < 2 %>
+      <%= render 'dashboard/mentee/final_survey_notification' %>
+    <% end %>
   </div>
 </div>
