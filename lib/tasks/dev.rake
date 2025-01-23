@@ -178,49 +178,26 @@ task({ sample_data: :environment }) do
 
   # Creating Shortlist
   cohort_ids = Cohort.pluck(:id)
-  p cohort_ids
   cohort_ids.each do |cohort_id|
     mentee_ids = CohortMember.mentee_user_ids_in_cohort(cohort_id)
-    p "#{cohort_id} mentees: #{mentee_ids}"
     mentor_ids = CohortMember.mentor_user_ids_in_cohort(cohort_id)
-    p "#{cohort_id} mentors: #{mentor_ids}"
     mentee_ids.each do |mentee|
       3.times do |i|
         ShortList.create(
           mentor_id: mentor_ids.sample,
           mentee_id: mentee,
           cohort_id: cohort_id,
-          ranking:  i + 1
+          ranking: i + 1
         )
       end
     end
   end
 
   # Creating Matches
-  
-
-
-  
-  # mentees.each do |mentee|
-  #   cohort_member_mentee = mentee.cohort_member
-  #   if cohort_member_mentee.nil?
-  #     puts "No cohort member found for mentee with email: #{mentee.email}"
-  #     next # Skip to the next mentee
-  #   end
-  #   mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: "mentor").sample
-  #   next unless mentor_cohort_member_object
-
-  #   shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
-  #   this_mentor = User.find_by(email: mentor_cohort_member_object.email)
-  #   m = Match.create(
-  #     mentor_id: this_mentor.id,
-  #     mentee_id: mentee.id,
-  #     cohort_id: cohort_member_mentee.cohort_id,
-  #     active: shared_cohort.running?
-  #   )
-
-  #   matches.push(m)
-  # end
+  cohorts = Cohort.all
+  cohorts.each do |cohort|
+    CohortMatchingService.new(cohort).call
+  end
 
   # #Creating surveys
   # matches.each do |match|
