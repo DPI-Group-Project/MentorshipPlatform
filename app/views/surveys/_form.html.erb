@@ -72,22 +72,48 @@
             </div>
           </div>
 
-  <div class="field">
-    <%= form.label :responsive_reason %>
-    <%= form.text_area :responsive_reason %>
+          <!-- experience -->
+          <div class="field">
+            <%= form.label :additional_note, "Is there anything else you'd like to share about your mentoring experience?", class: "block mb-2 text-s font-medium text-gray-900" %>
+            <%= form.text_area :additional_note, rows: 4, class: "block p-2.5 w-full text-sm text-[#202020] bg-gray-50 rounded-lg border border-[#D9D9D9] focus:ring-[#898989] focus:border-[#898989]", placeholder: "Feel free to share your thoughts!" %>
+          </div>
+        </div>
+        <div class="flex col-span-2 justify-center">
+          <%= form.submit "Submit", class: "text-white inline-flex items-center bg-[#202020] border border-transparent hover:bg-white hover:text-[#202020] hover:border-[#202020] cursor-pointer focus:ring-4 focus:outline-none focus:ring-[#D9D9D9] font-medium rounded-lg text-sm px-5 py-2.5 text-center" %>
+        </div>
+      </div>
+    <% end %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :experience_reason %>
-    <%= form.text_area :experience_reason %>
-  </div>
+<script>
+    function updateResponsiveField(value) {
+        const numberField = document.getElementById('responsive-number-field');
+        const reasonField = document.getElementById('responsive-reason-field');
 
-  <div class="field">
-    <%= form.label :additional_note %>
-    <%= form.text_area :additional_note %>
-  </div>
+        if (numberField) {
+            numberField.value = value;
+        }
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+        if (value < 3) {
+            reasonField.classList.remove('hidden');
+        } else {
+            reasonField.classList.add('hidden');
+        }
+    }
+
+    function updateExperienceField(value) {
+        const numberField = document.getElementById('experience-number-field');
+        const experienceField = document.getElementById('experience-reason-field');
+
+        if (numberField) {
+            numberField.value = value;
+        }
+
+        if (value < 3) {
+            experienceField.classList.remove('hidden');
+        } else {
+            experienceField.classList.add('hidden');
+        }
+    }
+</script>
