@@ -32,7 +32,7 @@ class CohortMatchingService
       create_match(shortlist_entry, mentor, mentee)
     end
 
-    send_emails
+    # send_emails
     log_summary
   end
 
@@ -69,9 +69,9 @@ class CohortMatchingService
     mentor.mentee_capacity_count(@cohort.id) >= capacity
   end
 
-  def send_emails
-    @cohort.send_matching_results_emails
-  end
+  # def send_emails
+  #   @cohort.send_matching_results_emails
+  # end
 
   def log_summary
     Rails.logger.info "Match creation completed for cohort ##{@cohort.id}"
