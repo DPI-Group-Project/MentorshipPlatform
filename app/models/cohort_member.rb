@@ -17,4 +17,16 @@ class CohortMember < ApplicationRecord
   has_one :user, primary_key: "email", foreign_key: "email"
   belongs_to :cohort, optional: false, class_name: "Cohort"
   validates :email, uniqueness: true
+
+  scope :mentee_user_ids_in_cohort, ->(cohort_id) {
+                                        joins(:user)
+                                          .where(cohort_id: cohort_id, role: "mentee")
+                                          .pluck("users.id") 
+                                      }
+  scope :mentor_user_ids_in_cohort, ->(cohort_id) {
+                                        joins(:user)
+                                          .where(cohort_id: cohort_id, role: "mentor")
+                                          .pluck("users.id") 
+                                      }
+    
 end

@@ -49,7 +49,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_09_160439) do
 
   create_table "cohort_members", id: false, force: :cascade do |t|
     t.bigint "cohort_id", null: false
-    t.string "email", null: false
     t.enum "role", enum_type: "role"
     t.integer "capacity"
     t.datetime "created_at", null: false
@@ -161,7 +160,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_09_160439) do
     t.string "timezone"
     t.string "title"
     t.string "linkedin_link"
-    t.string "profile_picture"
     t.text "skills_array", default: [], array: true
     t.jsonb "shortlist", default: [], array: true
     t.index ["email"], name: "index_users_on_email", unique: true

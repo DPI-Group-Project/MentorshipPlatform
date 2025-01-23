@@ -11,7 +11,6 @@ task({ sample_data: :environment }) do
   Cohort.delete_all
   Program.delete_all
   User.delete_all
-  
 
   people = Array.new(38) do
     {
@@ -50,7 +49,6 @@ task({ sample_data: :environment }) do
                   variant14,variant15,variant16,variant17,variant18,variant19,variant20,variant21,variant22,variant23,variant24,variant25,
                   variant26,variant27,variant29,variant30"
     skills = %w[Java Ruby Python Communication Networking Organization Leadership Writing]
-
     user = User.create(
       email: "#{(person[:first_name]).downcase}@example.com",
       password: "password",
@@ -70,7 +68,6 @@ task({ sample_data: :environment }) do
                role == "mentor" ? mentor_title : nil
              end,
       linkedin_link: "https://www.linkedin.com/in/#{(person[:first_name]).downcase}-#{(person[:last_name]).downcase}-#{Faker::Number.number(digits: 5)}/",
-      profile_picture: image_link,
       status:,
       inactive_reason: status == "Inactive" ? inactive_reason : nil,
       skills_array: [skills.sample, skills.sample]
@@ -90,6 +87,13 @@ task({ sample_data: :environment }) do
     end
 
     role_hash.store(user, role)
+
+    profile_pic = ["pic_1.png", "pic_2.png", "pic_3.png"].sample
+    user.profile_picture.attach(
+      io: File.open(Rails.root.join("db", "sample_files", profile_pic)),
+      filename: profile_pic,
+      content_type: "image/png"
+    )
   end
 
   # Creating Programs
@@ -176,40 +180,52 @@ task({ sample_data: :environment }) do
     )
   end
 
-  # Creating Matches
-  mentees.each do |mentee|
-    cohort_member_mentee = mentee.cohort_member
-    if cohort_member_mentee.nil?
-      puts "No cohort member found for mentee with email: #{mentee.email}"
-      next # Skip to the next mentee
+  # Creating Shortlist
+  cohort_ids = Cohort.pluck(:id)
+  cohort_ids.each do |cohort_id|
+    mentee_ids = CohortMember.mentee_user_ids_in_cohort(cohort_id)
+    mentor_ids = CohortMember.mentor_user_ids_in_cohort(cohort_id)
+    mentee_ids.each do |mentee|
+      3.times do |i|
+        ShortList.create(
+          mentor_id: mentor_ids.sample,
+          mentee_id: mentee,
+          cohort_id: cohort_id,
+          ranking: i + 1
+        )
+      end
     end
-    mentor_cohort_member_object = CohortMember.where(cohort_id: cohort_member_mentee.cohort_id, role: "mentor").sample
-    next unless mentor_cohort_member_object
-
-    shared_cohort = Cohort.find_by(id: cohort_member_mentee.cohort_id)
-    this_mentor = User.find_by(email: mentor_cohort_member_object.email)
-    m = Match.create(
-      mentor_id: this_mentor.id,
-      mentee_id: mentee.id,
-      cohort_id: cohort_member_mentee.cohort_id,
-      active: shared_cohort.running?
-    )
-
-    matches.push(m)
   end
 
-  #Creating surveys
-  matches.each do |match|
-    responsive = [true, false].sample
-    rating = [1, 2, 3, 4, 5].sample
-    match_id = match.id
-    body = Faker::TvShows::Simpsons.quote
+  # Creating Matches
+  cohorts = Cohort.all
+  cohorts.each do |cohort|
+    CohortMatchingService.new(cohort).call
+  end
 
-    Survey.create!(
+  # Creating Surveys
+  matches = Match.all
+  matches.each do |match|
+    match_id = match.id
+    responsive = [1, 2, 3, 4, 5].sample
+    responsive_reason = Faker::Quote.famous_last_words
+    experience = [1, 2, 3, 4, 5].sample
+    experience_reason = Faker::Quote.famous_last_words
+    rating = if responsive <= 2 || experience <= 2
+               [1, 2, 3].sample
+             else
+               [4, 5].sample
+             end
+    additional_note = Faker::TvShows::Simpsons.quote
+
+    Survey.create(
       match_id:,
       responsive:,
+      responsive_reason:,
+      experience:,
+      experience_reason:,
       rating:,
-      body:
+      additional_note:
     )
   end
 
@@ -219,6 +235,7 @@ task({ sample_data: :environment }) do
   p "There are now #{Cohort.count} cohorts."
   p "There are now #{ProgramAdmin.count} program admins."
   p "There are now #{CohortMember.count} cohort members."
+  p "There are now #{ShortList.count} shortlists."
   p "There are now #{Match.count} matches."
   p "There are now #{Survey.count} surveys."
   p "Done! It took #{(ending - starting).to_i} seconds to create sample data."
