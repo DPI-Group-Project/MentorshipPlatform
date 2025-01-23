@@ -11,7 +11,6 @@ task({ sample_data: :environment }) do
   Cohort.delete_all
   Program.delete_all
   User.delete_all
-  
 
   people = Array.new(38) do
     {
@@ -199,20 +198,31 @@ task({ sample_data: :environment }) do
     CohortMatchingService.new(cohort).call
   end
 
-  # #Creating surveys
-  # matches.each do |match|
-  #   responsive = [true, false].sample
-  #   rating = [1, 2, 3, 4, 5].sample
-  #   match_id = match.id
-  #   body = Faker::TvShows::Simpsons.quote
+  # Creating Surveys
+  matches = Match.all
+  matches.each do |match|
+    match_id = match.id
+    responsive = [1, 2, 3, 4, 5].sample
+    responsive_reason = Faker::Quote.famous_last_words
+    experience = [1, 2, 3, 4, 5].sample
+    experience_reason = Faker::Quote.famous_last_words
+    rating = if responsive <= 2 || experience <= 2
+               [1, 2, 3].sample
+             else
+               [4, 5].sample
+             end
+    additional_note = Faker::TvShows::Simpsons.quote
 
-  #   Survey.create!(
-  #     match_id:,
-  #     responsive:,
-  #     rating:,
-  #     body:
-  #   )
-  # end
+    Survey.create(
+      match_id:,
+      responsive:,
+      responsive_reason:,
+      experience:,
+      experience_reason:,
+      rating:,
+      additional_note:
+    )
+  end
 
   ending = Time.zone.now
   p "There are now #{User.count} users."
