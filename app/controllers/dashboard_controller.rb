@@ -74,6 +74,7 @@ class DashboardController < ApplicationController
     @progress = calculate_progress(@past_meeting_count, @required_meetings_count)
     @remaining_meetings = @required_meetings_count - @meetings.count
     load_mentee_meeting_counts if @role == "mentor"
+    @survey_count = Survey.count_by_user(current_user)
   end
 
   def load_admin_data
