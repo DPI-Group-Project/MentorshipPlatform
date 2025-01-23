@@ -49,7 +49,6 @@ task({ sample_data: :environment }) do
                   variant14,variant15,variant16,variant17,variant18,variant19,variant20,variant21,variant22,variant23,variant24,variant25,
                   variant26,variant27,variant29,variant30"
     skills = %w[Java Ruby Python Communication Networking Organization Leadership Writing]
-
     user = User.create(
       email: "#{(person[:first_name]).downcase}@example.com",
       password: "password",
@@ -69,7 +68,6 @@ task({ sample_data: :environment }) do
                role == "mentor" ? mentor_title : nil
              end,
       linkedin_link: "https://www.linkedin.com/in/#{(person[:first_name]).downcase}-#{(person[:last_name]).downcase}-#{Faker::Number.number(digits: 5)}/",
-      # profile_picture: image_link,
       status:,
       inactive_reason: status == "Inactive" ? inactive_reason : nil,
       skills_array: [skills.sample, skills.sample]
@@ -89,6 +87,13 @@ task({ sample_data: :environment }) do
     end
 
     role_hash.store(user, role)
+
+    profile_pic = ["pic_1.jpg", "pic_2.jpg", "pic_3.jpg"].sample
+    user.profile_picture.attach(
+      io: File.open(Rails.root.join("db", "sample_files", profile_pic)),
+      filename: profile_pic,
+      content_type: "image/jpg"
+    )
   end
 
   # Creating Programs
