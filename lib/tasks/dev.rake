@@ -20,16 +20,12 @@ task({ sample_data: :environment }) do
   end
   people << { first_name: "Alice", last_name: "Smith" }
   people << { first_name: "Bob", last_name: "James" }
-
-  image_name = %w[Buddy Mimi Abby Jack Lily Lucy Jasmine Bear Loki Dusty Maggie Milo Lucky
-                  Pepper Baby Boo Sammy Coco Mittens Socks]
   admins = []
   observers = []
   mentors = []
   mentees = []
   mentors_and_mentees = []
   role_hash = {}
-  matches = []
 
   # Creating Users
   people.each do |person|
@@ -43,11 +39,6 @@ task({ sample_data: :environment }) do
     role = { "admin" => 5, "observer" => 7, "mentor" => 25, "mentee" => 100 }.find do |_key, value|
       rand * 100 <= value
     end.first
-    image_link = "https://api.dicebear.com/9.x/notionists/svg?seed=#{image_name.sample}&radius=50&backgroundColor=D2042D&bodyIcon=galaxy,
-                  saturn,electric&bodyIconProbability=10&gesture=hand,handPhone,ok,okLongArm,point,pointLongArm,waveLongArm&gestureProbability=20&
-                  lips=variant01,variant02,variant03,variant04,variant05,variant06,variant07,variant08,variant10,variant11,variant13,
-                  variant14,variant15,variant16,variant17,variant18,variant19,variant20,variant21,variant22,variant23,variant24,variant25,
-                  variant26,variant27,variant29,variant30"
     skills = %w[Java Ruby Python Communication Networking Organization Leadership Writing]
     user = User.create(
       email: "#{(person[:first_name]).downcase}@example.com",
@@ -148,10 +139,15 @@ task({ sample_data: :environment }) do
 
     id = program.id
 
+    super_user = false
+
     ProgramAdmin.create!(
       program_id: id,
-      user_id: admin.id
+      user_id: admin.id,
+      super_user: super_user
     )
+
+    ProgramAdmin.first.update(super_user: true)
   end
 
   # Creating Cohort Members
