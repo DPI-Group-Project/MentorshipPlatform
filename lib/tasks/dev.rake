@@ -137,9 +137,9 @@ task({ sample_data: :environment }) do
 
     program = Program.all.sample
 
-    id = program.
+    id = program.id
 
-         super_user = false
+    super_user = false
 
     ProgramAdmin.create!(
       program_id: id,
