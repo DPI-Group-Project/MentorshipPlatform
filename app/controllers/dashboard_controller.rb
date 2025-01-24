@@ -37,9 +37,13 @@ class DashboardController < ApplicationController
   end
 
   def delete_program_admin
+    return unless program_admin.super_user?
+
     ActiveRecord::Base.transaction do
       program_admin = ProgramAdmin.find(params[:id])
       user = program_admin.admin
+      return unless program_admin.super_user? == false
+      
       program_admin.destroy!
       user.delete
     end
