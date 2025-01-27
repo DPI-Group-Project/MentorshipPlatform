@@ -3,7 +3,7 @@
     <% if current_user.profile_picture.attached? %>
       <%= image_tag current_user.profile_picture, class: "w-12 h-12 rounded-full object-cover" %>
     <% else %>
-      <%= image_tag asset_path("sample_img/admin_user.png"), class: "w-12 h-12 rounded-full object-cover", alt: "Default Avatar" %>
+      <%= image_tag asset_path("sample_img/default_user.png"), class: "w-12 h-12 rounded-full object-cover", alt: "Default Avatar" %>
     <% end %>    
     <div class="ml-4">
       <h3 class="text-lg font-semibold"><%= current_user.name %></h3>

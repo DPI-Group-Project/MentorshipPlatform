@@ -1,5 +1,5 @@
 <div class="pt-6 px-6 bg-white rounded-[0.75rem] shadow-sm">
-    <h1 class="text-[2rem] font-semibold text-[#202020]"> Hi <%= current_user.first_name %>,</h1>
+    <h1 class="text-[2rem] font-semibold text-[#202020]">Hi <%= current_user.first_name %>,</h1>
     <p class="text-sm text-[#898989] mt-2">
       <% if current_user.role === 'mentee' %>
         What would you like to learn today?
@@ -8,7 +8,15 @@
       <% end %>
     </p>
     <div class="flex items-center mt-5">
-        <img src="<%= asset_path("sample_img/admin_user.png") %>" alt="User picture" class="w-12 h-12 rounded-full">
+        <% if current_user.profile_picture.attached? %>
+          <%= image_tag current_user.profile_picture, 
+              class: "w-12 h-12 rounded-full object-cover",
+              alt: "#{current_user.name}'s profile picture" %>
+        <% else %>
+          <%= image_tag asset_path("sample_img/default_user.png"), 
+              class: "w-12 h-12 rounded-full object-cover",
+              alt: "Default profile picture" %>
+        <% end %>
         <div class="ml-4">
             <h3 class="text-base font-normal text-[#202020]"><%= current_user.name %></h3>
             <p class="text-sm text-[#898989] mt-1"><%= current_user.title %></p>

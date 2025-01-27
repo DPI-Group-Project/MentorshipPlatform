@@ -11,10 +11,15 @@
 
   <!--top profile card-->
   <div class="bg-[#FFFFFF] flex gap-5 py-5 border-slate-300 rounded-lg px-5 w-895px h-171px mb-3">
-    <div>
-      <!--    <img src=<%#= user.profile_picture %> alt="user_profile_picture" class="w-24 h-24 object-cover rounded-lg border">-->
-      <img src=<%= asset_path('sample_img/mentor_sample.png') %> alt="user_profile_picture" class="w-24 h-24 object-cover rounded-lg border">
-    </div>
+     <% if current_user.profile_picture.attached? %>
+          <%= image_tag current_user.profile_picture, 
+              class: "w-24 h-24 rounded-lg object-cover",
+              alt: "#{current_user.name}'s profile picture" %>
+        <% else %>
+          <%= image_tag asset_path("sample_img/default_user.png"), 
+              class: "w-24 h-24 rounded-lg object-cover",
+              alt: "Default profile picture" %>
+        <% end %>
     <div>
       <b class="text-lg text-[#202020] font-bold"><%= user.name %></b>
       <p class="text-sm	text-[#202020] mb-2.5"><%= user.title %></p>

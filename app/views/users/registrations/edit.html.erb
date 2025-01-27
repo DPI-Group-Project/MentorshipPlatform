@@ -64,28 +64,44 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- First Name Field -->
-          <div class="relative">
-            <%= f.text_field :first_name, required: true, class: "block w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-gray-900", placeholder: "First name" %>
-            <label for="user_first_name" class="absolute -top-2 left-2 bg-gray-50 px-2 text-xs font-medium text-gray-600">First Name</label>
+          <div class="relative z-0 group">
+            <%= f.text_field :first_name, required: true, 
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              First Name
+            </label>
           </div>
 
           <!-- Last Name Field -->
-          <div class="relative">
-            <%= f.text_field :last_name, required: true, class: "block w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-gray-900", placeholder: "Last name" %>
-            <label for="user_last_name" class="absolute -top-2 left-2 bg-gray-50 px-2 text-xs font-medium text-gray-600">Last Name</label>
+          <div class="relative z-0 group">
+            <%= f.text_field :last_name, required: true,
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Last Name
+            </label>
           </div>
         </div>
 
         <!-- Email Field -->
-        <div class="relative">
-          <%= f.email_field :email, required: true, class: "block w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-gray-900", placeholder: "Email address" %>
-          <label for="user_email" class="absolute -top-2 left-2 bg-gray-50 px-2 text-xs font-medium text-gray-600">Email Address</label>
+        <div class="relative z-0 group">
+          <%= f.email_field :email, required: true,
+              class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+              placeholder: " " %>
+          <label for="user_email" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            Email Address
+          </label>
         </div>
 
         <!-- Phone Number Field -->
-        <div class="relative">
-          <%= f.telephone_field :phone_number, class: "block w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-gray-900", placeholder: "Phone number" %>
-          <label for="user_phone_number" class="absolute -top-2 left-2 bg-gray-50 px-2 text-xs font-medium text-gray-600">Phone Number (Optional)</label>
+        <div class="relative z-0 group">
+          <%= f.telephone_field :phone_number,
+              class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+              placeholder: " " %>
+          <label for="user_phone_number" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            Phone Number (Optional)
+          </label>
         </div>
       </div>
 
@@ -95,21 +111,33 @@
         
         <div class="space-y-4">
           <!-- New Password Field -->
-          <div class="relative">
-            <%= f.password_field :password, class: "block w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-gray-900", placeholder: "New password" %>
-            <label for="user_password" class="absolute -top-2 left-2 bg-gray-50 px-2 text-xs font-medium text-gray-600">New Password (Optional)</label>
+          <div class="relative z-0 group">
+            <%= f.password_field :password,
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              New Password (Optional)
+            </label>
           </div>
 
           <!-- Password Confirmation Field -->
-          <div class="relative">
-            <%= f.password_field :password_confirmation, class: "block w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-gray-900", placeholder: "Confirm new password" %>
-            <label for="user_password_confirmation" class="absolute -top-2 left-2 bg-gray-50 px-2 text-xs font-medium text-gray-600">Confirm New Password</label>
+          <div class="relative z-0 group">
+            <%= f.password_field :password_confirmation,
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_password_confirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Confirm New Password
+            </label>
           </div>
 
           <!-- Current Password Field -->
-          <div class="relative">
-            <%= f.password_field :current_password, required: true, class: "block w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-gray-900", placeholder: "Current password" %>
-            <label for="user_current_password" class="absolute -top-2 left-2 bg-gray-50 px-2 text-xs font-medium text-gray-600">Current Password (Required)</label>
+          <div class="relative z-0 group">
+            <%= f.password_field :current_password, required: true,
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_current_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Current Password (Required for updates)
+            </label>
           </div>
         </div>
       </div>
