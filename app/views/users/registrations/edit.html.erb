@@ -1,68 +1,170 @@
-<div class="min-h-screen flex items-center justify-center pt-20">
-  <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-2xl">
-    <h2 class="text-2xl font-semibold text-center mb-6">Edit <%= resource_name.to_s.humanize %></h2>
-    <%= form_for(resource, url: registration_path(resource_name), html: { method: :put, id: "update-form" }) do |f| %>
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-3xl">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-gray-900">Edit Profile</h2>
+      <p class="mt-2 text-sm text-gray-600">Update your personal information and account settings</p>
+    </div>
+
+    <%= form_for(resource, url: registration_path(resource_name), html: { method: :put, id: "update-form", class: "space-y-8" }) do |f| %>
+      <!-- Error Messages -->
       <% if resource.errors.any? %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
-          <strong class="font-bold">Oops!</strong> There were some problems with your submission:
-          <ul class="mt-3 list-disc list-inside text-sm text-red-600">
-            <% resource.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
+        <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6" role="alert">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800">There were problems with your submission</h3>
+              <div class="mt-2 text-sm text-red-700">
+                <ul class="list-disc list-inside">
+                  <% resource.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       <% end %>
-      <div class="form-inputs space-y-4">
+
+      <!-- Profile Picture Section -->
+      <div class="bg-gray-50 p-6 rounded-lg">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Profile Picture</h3>
+        <div class="flex items-center space-x-6">
+          <div class="flex-shrink-0">
+            <% if resource.profile_picture.attached? %>
+              <%= image_tag resource.profile_picture, class: "w-24 h-24 rounded-full object-cover border-4 border-white shadow" %>
+            <% else %>
+              <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+              </div>
+            <% end %>
+          </div>
+          <div class="flex-1">
+            <%= f.file_field :profile_picture, 
+                accept: 'image/*',
+                class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                data: {
+                  max_file_size: 5.megabytes,
+                  accepted_types: ['image/jpeg', 'image/png', 'image/gif']
+                } %>
+            <p class="mt-2 text-xs text-gray-500">Upload a new profile picture (PNG, JPG, or GIF, max. 5MB)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personal Information Section -->
+      <div class="bg-gray-50 p-6 rounded-lg space-y-6">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Personal Information</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- First Name Field -->
+          <div class="relative z-0 group">
+            <%= f.text_field :first_name, required: true, 
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              First Name
+            </label>
+          </div>
+
+          <!-- Last Name Field -->
+          <div class="relative z-0 group">
+            <%= f.text_field :last_name, required: true,
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Last Name
+            </label>
+          </div>
+        </div>
+
         <!-- Email Field -->
-        <div class="relative z-0 w-full mb-5 group">
-          <%= f.email_field :email, required: true, autofocus: true, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
-          <label for="user_email" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+        <div class="relative z-0 group">
+          <%= f.email_field :email, required: true,
+              class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+              placeholder: " " %>
+          <label for="user_email" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            Email Address
+          </label>
         </div>
-        <!-- First Name Field -->
-        <div class="relative z-0 w-full mb-5 group">
-          <%= f.text_field :first_name, required: true, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
-          <label for="user_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
-        </div>
-        <!-- Last Name Field -->
-        <div class="relative z-0 w-full mb-5 group">
-          <%= f.text_field :last_name, required: true, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
-          <label for="user_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
-        </div>
+
         <!-- Phone Number Field -->
-        <div class="relative z-0 w-full mb-5 group">
-          <%= f.telephone_field :phone_number, required: false, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
-          <label for="user_phone_number" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number</label>
-        </div>
-        <!-- Password Field -->
-        <div class="relative z-0 w-full mb-5 group">
-          <%= f.password_field :password, required: false, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
-          <label for="user_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
-        </div>
-        <!-- Password Confirmation Field -->
-        <div class="relative z-0 w-full mb-5 group">
-          <%= f.password_field :password_confirmation, required: false, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
-          <label for="user_password_confirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
-        </div>
-        <!-- Current Password Field -->
-        <div class="relative z-0 w-full mb-5 group">
-          <%= f.password_field :current_password, required: true, class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer", placeholder: " " %>
-          <label for="user_current_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Enter current password for updates</label>
+        <div class="relative z-0 group">
+          <%= f.telephone_field :phone_number,
+              class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+              placeholder: " " %>
+          <label for="user_phone_number" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            Phone Number (Optional)
+          </label>
         </div>
       </div>
-      <div class="form-actions mt-6 flex justify-between items-center">
-        <!-- Update Button -->
-        <%= f.submit "Update", class: "text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center", id: "update-button" %>
+
+      <!-- Password Section -->
+      <div class="bg-gray-50 p-6 rounded-lg space-y-6">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Password Update</h3>
+        
+        <div class="space-y-4">
+          <!-- New Password Field -->
+          <div class="relative z-0 group">
+            <%= f.password_field :password,
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              New Password (Optional)
+            </label>
+          </div>
+
+          <!-- Password Confirmation Field -->
+          <div class="relative z-0 group">
+            <%= f.password_field :password_confirmation,
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_password_confirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Confirm New Password
+            </label>
+          </div>
+
+          <!-- Current Password Field -->
+          <div class="relative z-0 group">
+            <%= f.password_field :current_password, required: true,
+                class: "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer",
+                placeholder: " " %>
+            <label for="user_current_password" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Current Password (Required for updates)
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex flex-col space-y-4">
+        <div class="flex justify-between items-center">
+          <%= f.submit "Save Changes", class: "px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
+          <%= link_to "Cancel", :back, class: "px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors" %>
+        </div>
       </div>
     <% end %>
-    <!-- Cancel My Account Form -->
-    <%= form_for(resource, url: registration_path(resource_name), html: { method: :delete, id: "cancel-account-form" }) do |f| %>
-      <div class="form-actions mt-6 flex justify-end">
-        <%= f.submit "Cancel my account", class: "text-white bg-red-700 hover:bg-red-600 font-medium rounded-lg text-sm w-auto px-5 py-2.5 text-center ml-4", data: { confirm: "Are you sure you want to cancel your account?" } %>
+
+    <!-- Delete Account Section -->
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <div class="bg-red-50 p-6 rounded-lg">
+        <h3 class="text-lg font-medium text-red-900 mb-2">Delete Account</h3>
+        <p class="text-sm text-red-700 mb-4">Once you delete your account, there is no going back. Please be certain.</p>
+        <%= form_for(resource, url: registration_path(resource_name), html: { method: :delete, id: "cancel-account-form" }) do |f| %>
+          <%= f.submit "Delete Account", 
+              class: "px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors",
+              data: { 
+                confirm: "Are you sure you want to delete your account? This action cannot be undone.",
+                turbo_confirm: "Are you sure you want to delete your account? This action cannot be undone."
+              } %>
+        <% end %>
       </div>
-    <% end %>
-    <!-- Back Button -->
-    <div class="text-left mt-8">
-      <%= link_to "Back", :back, class: "w-full p-3 rounded-md text-white bg-black hover:bg-gray-700 transition duration-200" %>
     </div>
   </div>
 </div>

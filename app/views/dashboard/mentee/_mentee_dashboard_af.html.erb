@@ -15,7 +15,15 @@
       <div id="mentor-card-<%= current_user.current_user_mentor.id %>" class="bg-[#FFFFFF] flex-col border-slate-300 rounded-lg min-x[438px] max-w-[438px]">
         <div class="flex justify-between pt-6 px-6 items-center">
           <div class="flex gap-5">
-            <img src=<%= asset_path('sample_img/mentor_sample.png') %> alt="mentor_profile_picture" class="size-14 object-cover rounded-lg border">
+           <% if current_user.current_user_mentor.profile_picture.attached? %>
+              <%= image_tag current_user.current_user_mentor.profile_picture,
+                  class: "size-14 object-cover rounded-lg border",
+                  alt: "#{current_user.current_user_mentor.name}'s profile picture" %>
+            <% else %>
+              <%= image_tag asset_path('sample_img/default_user.png'),
+                  class: "size-14 object-cover rounded-lg border",
+                  alt: "Default mentor profile picture" %>
+            <% end %>
             <div class="flex flex-col justify-center">
               <b class="text-lg text-[#202020] font-bold"><%= current_user.current_user_mentor.name %></b>
               <p class="text-xs text-[#202020] mb-2.5"><%= current_user.current_user_mentor.title %></p>
