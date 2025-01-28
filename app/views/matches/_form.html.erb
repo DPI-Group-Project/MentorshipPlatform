@@ -12,24 +12,43 @@
     </div>
   <% end %>
 
-  <%= form.hidden_field :match_id, value: match.id %>
   <%= form.hidden_field :cohort_id, value: cohort.id %>
-  <%= form.hidden_field :updated_at, value: @current_time_in_user_zone %>
+
+  <% if match.new_record? %>
+    <%= form.hidden_field :active, value: "true" %>
+  <% end %>
+
+  <% mentor_collection = User.mentors_with_capacity(cohort.id) %>
 
   <div class="flex flex-col mb-4">
-    <%= form.label :mentor_id, class: "font-medium mb-1"%>
-    <%= form.collection_select :mentor_id, User.mentors_in_cohort(cohort.id), :id, :name, { prompt: "Select a user" }, 
-    { class: "form-select border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"  } %>
+    <%= form.label :mentor_id, "Mentor", class: "font-medium mb-1" %>
+    <%= form.collection_select :mentor_id, mentor_collection, :id, :name,
+          { prompt: "Select a Mentor" },
+          class: "form-select border border-gray-300 rounded-lg p-2 " \
+                 "focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
 
+  <% if match.persisted? %>
+    <% mentee_collection = [match.mentee] %>
+  <% else %>
+    <% mentee_collection = @cohort.unmatched_mentees %>
+  <% end %>
+
   <div class="flex flex-col mb-4">
-    <%= form.label :mentee_id, class: "font-medium mb-1" %>
-    <%= form.collection_select :mentee_id, User.mentees_in_cohort(cohort.id), :id, :name, { prompt: "Select a user" }, 
-    { class: "form-select border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
+    <%= form.label :mentee_id, "Mentee", class: "font-medium mb-1" %>
+    <%= form.collection_select :mentee_id, mentee_collection, :id, :name,
+          { prompt: "Select a Mentee" },
+          class: "form-select border border-gray-300 rounded-lg p-2 " \
+                 "focus:outline-none focus:ring-2 focus:ring-blue-500" %>
   </div>
+
+  <% if match.persisted? %>
+    <%= form.hidden_field :updated_at, value: Time.current %>
+  <% end %>
 
   <div class="flex justify-end">
-    <%= form.submit "Save Match",
-                    class: "bg-gray-800 hover:bg-black text-white font-semibold px-4 py-2 rounded-lg transition duration-300" %>
+    <%= form.submit (match.new_record? ? "Create Match" : "Update Match"),
+          class: "bg-gray-800 hover:bg-black text-white font-semibold " \
+                 "px-4 py-2 rounded-lg transition duration-300" %>
   </div>
 <% end %>
