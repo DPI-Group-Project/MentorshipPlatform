@@ -7,89 +7,102 @@
     <p class="text-xs text-[#676666]">Back To the Dashboard</p>
   </a>
 </div>
-
 <p class="text-sm text-[#898989] mb-5">
   Where conversations spark growth. Schedule your next meeting with your mentor today!
 </p>
-
 <% @mentees.each_with_index do |mentee, i| %>
   <% match = Match.find_by(mentor_id: current_user.id, mentee_id: mentee.id) %>
-
   <h2 class="text-xl font-semibold text-[#202020] mt-6">
     <%= i + 1 %>. <%= mentee.name %>
   </h2>
-
-<div class="overflow-y-auto max-h-[28rem] ">
-  <table class="w-full text-[0.8rem] text-center rtl:text-right text-[#898989] mt-4">
-    <thead class="text-xs text-white bg-[#202020] rounded-t-lg">
-    <tr>
-      <th scope="col" class="px-6 py-2 rounded-tl-lg">No.</th>
-      <th scope="col" class="px-6 py-2">Mentee</th>
-      <th scope="col" class="px-6 py-2">Date</th>
-      <th scope="col" class="px-6 py-2">Time</th>
-      <th scope="col" class="px-6 py-2">Location</th>
-      <th scope="col" class="px-6 py-2">Note</th>
-      <th scope="col" class="px-6 py-2 rounded-tr-lg">Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% meetings_data = @mentee_meetings[mentee.id] %>
-    <% meetings_data[:meetings].each_with_index do |meeting, i| %>
-      <tr class="text-[#202020] font-medium bg-white border-b hover:bg-gray-50">
-        <td class="px-6 py-2"><%= i + 1 %></td>
-        <td class="flex items-center px-6 py-4 text-[#202020] whitespace-nowrap dark:text-white">
-          <img src="<%= asset_path("sample_img/mentor_sample.png") %>" alt="User picture" class="w-8 h-8 rounded-full">
-          <div class="ps-3">
-            <div class="font-medium"><%= mentee.name %></div>
-          </div>
-        </td>
-        <td class="px-6 py-2"><%= meeting.date.strftime('%a, %b %d, %Y') %></td>
-        <td class="px-6 py-2"><%= meeting.time.strftime('%I:%M %p') %></td>
-        <td class="px-6 py-2">
-          <span class="text-[#202020] hover:text-[#F9837C]">
-            <% if meeting.location_type == 'Online' %>
-              <a href="<%= meeting.location %>" target="_blank">Meeting Link</a>
-            <% else %>
-              <a href="https://www.google.com/maps/search/<%= CGI.escape(meeting.location) %>" target="_blank"><%= meeting.location %></a>
-            <% end %>
-          </span>
-        </td>
-        <td class="px-6 py-2">
-          <a href="#" type="button"
+  <div class="overflow-y-auto max-h-[28rem] ">
+    <table class="w-full text-[0.8rem] text-center rtl:text-right text-[#898989] mt-4">
+      <thead class="text-xs text-white bg-[#202020] rounded-t-lg">
+        <tr>
+          <th scope="col" class="px-6 py-2 rounded-tl-lg">No.</th>
+          <th scope="col" class="px-6 py-2">Mentee</th>
+          <th scope="col" class="px-6 py-2">Date</th>
+          <th scope="col" class="px-6 py-2">Time</th>
+          <th scope="col" class="px-6 py-2">Location</th>
+          <th scope="col" class="px-6 py-2">Note</th>
+          <th scope="col" class="px-6 py-2 rounded-tr-lg">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% meetings_data = @mentee_meetings[mentee.id] %>
+        <% meetings_data[:meetings].each_with_index do |meeting, i| %>
+          <tr class="text-[#202020] font-medium bg-white border-b hover:bg-gray-50">
+            <td class="px-6 py-2"><%= i + 1 %></td>
+            <td class="flex items-center px-6 py-4 text-[#202020] whitespace-nowrap dark:text-white">
+              <% if current_user.profile_picture.attached? %>
+                <%= image_tag current_user.profile_picture, 
+              class: "w-8 h-8 rounded-full object-cover",
+              alt: "#{current_user.name}'s profile picture" %>
+              <% else %>
+                <%= image_tag asset_path("sample_img/default_user.png"), 
+              class: "w-8 h-8 rounded-full object-cover",
+              alt: "Default profile picture" %>
+              <% end %>
+              <div class="ps-3">
+                <div class="font-medium"><%= mentee.name %></div>
+              </div>
+            </td>
+            <td class="px-6 py-2"><%= meeting.date.strftime('%a, %b %d, %Y') %></td>
+            <td class="px-6 py-2"><%= meeting.time.strftime('%I:%M %p') %></td>
+            <td class="px-6 py-2">
+              <span class="text-[#202020] hover:text-[#F9837C]">
+                <% if meeting.location_type == 'Online' %>
+                  <a href="<%= meeting.location %>" target="_blank">Meeting Link</a>
+                <% else %>
+                  <a href="https://www.google.com/maps/search/<%= CGI.escape(meeting.location) %>" target="_blank"><%= meeting.location %></a>
+                <% end %>
+              </span>
+            </td>
+            <td class="px-6 py-2">
+              <a href="#" type="button"
              data-modal-target="viewNoteModal-<%= meeting.id %>"
              data-modal-show="viewNoteModal-<%= meeting.id %>"
              data-meeting-notes="<%= meeting.notes %>"
              class="font-medium text-[#898989] hover:underline">
-            <img src="<%= asset_path('icon/note.svg') %>" alt="note" class="h-4">
-          </a>
-        </td>
-        <td class="px-6 py-2 font-medium text-[#898989]">
-          <%= link_to "Edit", edit_meeting_path(meeting.id) %> |
-          <!--TODO: DELETE Method not working-->
-          <%= link_to "Delete", meeting_path(meeting.id), data: { "turbo-method": :delete } %>
-        </td>
-        <%= render "meetings/view_note_modal", meeting: meeting %>
-      </tr>
-    <% end %>
-
-    <% meetings_data[:remaining_meetings].times do |i| %>
-      <tr class="text-[#898989] font-medium bg-white border-b hover:bg-gray-50">
-        <td class="px-6 py-2"><%= meetings_data[:meetings].count + i + 1 %></td>
-        <td class="flex items-center px-6 py-4 text-[#898989] whitespace-nowrap dark:text-white">
-          <img src="<%= asset_path("sample_img/mentor_sample.png") %>" alt="User picture" class="w-8 h-8 rounded-full">
-          <div class="ps-3">
-            <div class="font-medium"><%= mentee.name %></div>
-          </div>
-        </td>        <td class="px-6 py-2"></td>
-        <td class="px-6 py-2">Not Scheduled Yet</td>
-        <td class="px-6 py-2"></td>
-        <td class="px-6 py-2"></td>
-        <td class="px-6 py-2">
-          <%= link_to "Add Meeting", new_meeting_path(match_id: match.id), class: "text-[#202020] hover:underline" %>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-</div>
+                <img src="<%= asset_path('icon/note.svg') %>" alt="note" class="h-4">
+              </a>
+            </td>
+            <td class="px-6 py-2 font-medium text-[#898989]">
+              <%= link_to "Edit", edit_meeting_path(meeting.id) %> |
+              <!--TODO: DELETE Method not working-->
+              <%= link_to "Delete", meeting_path(meeting.id), data: { "turbo-method": :delete } %>
+            </td>
+            <%= render "meetings/view_note_modal", meeting: meeting %>
+          </tr>
+        <% end %>
+        <% meetings_data[:remaining_meetings].times do |i| %>
+          <tr class="text-[#898989] font-medium bg-white border-b hover:bg-gray-50">
+            <td class="px-6 py-2"><%= meetings_data[:meetings].count + i + 1 %></td>
+            <td class="flex items-center px-6 py-4 text-[#898989] whitespace-nowrap dark:text-white">
+              <% if current_user.profile_picture.attached? %>
+                <%= image_tag current_user.profile_picture, 
+              class: "w-8 h-8 rounded-full",
+              alt: "#{current_user.name}'s profile picture" %>
+              <% else %>
+                <%= image_tag asset_path("sample_img/default_user.png"), 
+              class: "w-8 h-8 rounded-full",
+              alt: "Default profile picture" %>
+              <% end %>
+              <div class="ps-3">
+                <div class="font-medium"><%= mentee.name %></div>
+              </div>
+            </td>
+        
+            <td class="px-6 py-2"></td>
+            <td class="px-6 py-2">Not Scheduled Yet</td>
+            <td class="px-6 py-2"></td>
+            <td class="px-6 py-2"></td>
+            <td class="px-6 py-2">
+              <%= link_to "Add Meeting", new_meeting_path(match_id: match.id), class: "text-[#202020] hover:underline" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
