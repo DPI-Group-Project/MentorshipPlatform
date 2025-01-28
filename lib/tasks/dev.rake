@@ -4,6 +4,7 @@ task({ sample_data: :environment }) do
   p "Creating sample data..."
 
   Survey.delete_all
+  Meeting.delete_all
   Match.delete_all
   ShortList.delete_all
   CohortMember.delete_all
@@ -86,6 +87,7 @@ task({ sample_data: :environment }) do
       content_type: "image/png"
     )
   end
+  p "There are now #{User.count} users. [1/9]"
 
   # Creating Programs
   program_names = ["Full-Stack Software Development", "High School Coding Training", "Apprenticeship",
@@ -102,6 +104,7 @@ task({ sample_data: :environment }) do
     end
     program_index += 1
   end
+  p "There are now #{Program.count} programs. [2/9]"
 
   # Creating Cohorts
   Program.all.find_each do |program|
@@ -128,6 +131,7 @@ task({ sample_data: :environment }) do
       count += 1
     end
   end
+  p "There are now #{Cohort.count} cohorts. [3/9]"
 
   next unless admins.length
 
@@ -149,6 +153,7 @@ task({ sample_data: :environment }) do
 
     ProgramAdmin.first.update(super_user: true)
   end
+  p "There are now #{ProgramAdmin.count} program admins. [4/9]"
 
   # Creating Cohort Members
   mentors_and_mentees.each do |user|
@@ -175,6 +180,7 @@ task({ sample_data: :environment }) do
       capacity:
     )
   end
+  p "There are now #{CohortMember.count} cohort members. [5/9]"
 
   # Creating Shortlist
   cohort_ids = Cohort.pluck(:id)
@@ -192,12 +198,44 @@ task({ sample_data: :environment }) do
       end
     end
   end
+  p "There are now #{ShortList.count} shortlists. [6/9]"
 
   # Creating Matches
   cohorts = Cohort.all
   cohorts.each do |cohort|
     CohortMatchingService.new(cohort).call
   end
+  p "There are now #{Match.count} matches. [7/9]"
+
+  # Creating Meetings
+  matches = Match.all
+  matches.each do |match|
+    date = Faker::Date.between(from: "2025-01-1", to: "2026-12-30")
+    time = ["2000-01-01 06:26:00 -0600","2000-01-01 15:04:00 -0600","2000-01-01 20:56:00 -0600","2000-01-01 1:27:00 -0600"].sample
+    notes = Faker::TvShows::Simpsons.quote
+    location_type = [ "Online", "In-person"].sample
+    location = if location_type == "Online"
+                platform = ["google-meet","zoom","microsoft-teams"].sample
+                meeting_code = Faker::Number.number(digits: 10)
+                "https://#{platform}/#{meeting_code}"
+              else
+                street_number = Faker::Number.number(digits: 4)
+                directional_prefix = ["N","E","S","W"].sample
+                street_name = ["Street","Stony Island","Moon","Burger","Sheriff","Woodland"].sample
+                street_prefix = ["St.","Ave.","Rd."].sample
+                "#{street_number} #{directional_prefix} #{street_name} #{street_prefix}"
+              end
+
+    Meeting.create(
+      match_id: match.id,
+      date:,
+      time:,
+      notes:,
+      location:,
+      location_type:
+    )
+  end
+  p "There are now #{Meeting.count} meetings. [8/9]"
 
   # Creating Surveys
   matches = Match.all
@@ -224,15 +262,8 @@ task({ sample_data: :environment }) do
       additional_note:
     )
   end
+  p "There are now #{Survey.count} surveys. [9/9]"
 
   ending = Time.zone.now
-  p "There are now #{User.count} users."
-  p "There are now #{Program.count} programs."
-  p "There are now #{Cohort.count} cohorts."
-  p "There are now #{ProgramAdmin.count} program admins."
-  p "There are now #{CohortMember.count} cohort members."
-  p "There are now #{ShortList.count} shortlists."
-  p "There are now #{Match.count} matches."
-  p "There are now #{Survey.count} surveys."
   p "Done! It took #{(ending - starting).to_i} seconds to create sample data."
 end
