@@ -24,14 +24,14 @@ class DashboardController < ApplicationController
   def create_program_admin
     @current_program = Program.find(current_user.program_admin.program_id)
 
-    password = SecureRandom.base64(12)
+    @password = SecureRandom.base64(12)
 
     @admin_user = User.create(email: program_admin_params[:email], first_name: program_admin_params[:first_name],
-                              last_name: program_admin_params[:last_name], password: password)
+                              last_name: program_admin_params[:last_name], password: @password)
     @program_admin = ProgramAdmin.new(user_id: @admin_user.id, program_id: @current_program.id, created_by_admin_id: current_user.id)
 
     if @program_admin.save
-      ProgramAdminMailer.admin_created_email(@program_admin.admin&.email, @program_admin.admin&.first_name, @program_admin.admin&.last_name, @current_program.name).deliver_later
+      ProgramAdminMailer.with(current_program: @current_program, program_admin: @program_admin, user: @admin_user, password: @password).admin_created_email.deliver_later
       redirect_to dashboard_path(role: "admin"), notice: "Program admin was successfully created."
     else
       render :show, alert: "Failed to create program admin."
