@@ -33,9 +33,9 @@ git clone https://github.com/DPI-Group-Project/MentorshipPlatform.git
 bundle
 ```
 #### Database Setup and Seeding
-3. Ensure you have an active PostgreSQL connection, then create your database and migrate the database from Rails. We've also added a consistent first user and program to make admin testing easier, you can implement them with the `db:seed` command:
+3. Ensure you have an active PostgreSQL connection, then create your database and run your Rails migrations. We've also seeded a consistent first user and program to simplify admin testing. You can create, migrate, and seed the database with one command:
 ```bash
-rails db:prepare db:seed
+rails db:prepare
 ```
 
 4. Run the sample data task to populate your new local database:
@@ -77,3 +77,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 1. The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 2. Any commercial use of derivative works based on this Software requires prior written approval from the the MentE team (those credited above).
+
+![Static Badge](https://img.shields.io/badge/Ruby_3.4.1-black?style=for-the-badge&logo=ruby&logoColor=%23CC342D&logoSize=auto)
+![Static Badge](https://img.shields.io/badge/Rails_7.2.2.1-black?style=for-the-badge&logo=rubyonrails&logoColor=%23CC342D&logoSize=auto)
+![Static Badge](https://img.shields.io/badge/PostgreSQL-black?style=for-the-badge&logo=postgresql&logoColor=%234169E1&logoSize=auto)
+![Static Badge](https://img.shields.io/badge/JavaScript-black?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E&logoSize=auto)
+![Static Badge](https://img.shields.io/badge/Tailwind_CSS-black?style=for-the-badge&logo=tailwindcss&logoColor=%2306B6D4&logoSize=auto)
+![Static Badge](https://img.shields.io/badge/Docker-black?style=for-the-badge&logo=docker&logoColor=%232496ED&logoSize=auto)
