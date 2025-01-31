@@ -63,7 +63,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   config.action_mailer.delivery_method = :resend
-
+  
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

@@ -1,3 +1,3 @@
 <% title = "You're now an admin for #{@current_program.name}" %>
-<% message = "#{@program_admin.first_name} #{@program_admin.last_name}, an admin has invited you to serve as an admin for #{@current_program.name}. Sign into your account on MentE with this email and your temporary password: #{@password}." %>
+<% message = "#{@user.first_name} #{@user.last_name}, an admin has invited you to serve as an admin for #{@current_program.name}. Sign into your account on MentE with this email and your temporary password: #{@password}." %>
 <%= render "email_templates/general_email_template", user: @user, title:, message: %>
