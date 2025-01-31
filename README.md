@@ -1,6 +1,6 @@
 # MentE
 
-MentE is an app built for educational organizations with mentorship programs. Mentees sign up for the app, choose from a list of pre-approved mentors, and get matched with one by our proprietary algorithm. Mentors sign up for the app to give back without busy work and red tape. The app tracks the meetings between pairings, allowing administrators to quickly notice high-quality mentors for repeat involvement and trim low-quality mentors.
+MentE is an app built for educational organizations with mentorship programs. Mentees sign up for the app, choose from a list of pre-approved mentors, and get matched with one by our algorithm. Mentors sign up for the app to give back without busy work and red tape. The app tracks the meetings between pairings, allowing administrators to quickly notice high-quality mentors for repeat involvement and trim low-quality mentors.
 
 ## Table of Contents
 1. Getting Started
