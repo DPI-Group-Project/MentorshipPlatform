@@ -33,9 +33,9 @@ git clone https://github.com/DPI-Group-Project/MentorshipPlatform.git
 bundle
 ```
 #### Database Setup and Seeding
-3. Ensure you have an active PostgreSQL connection, then create your database and migrate the database from Rails:
+3. Ensure you have an active PostgreSQL connection, then create your database and migrate the database from Rails. We've also added a consistent first user and program to make admin testing easier, you can implement them with the `db:seed` command:
 ```bash
-rails db:create db:migrate
+rails db:prepare db:seed
 ```
 
 4. Run the sample data task to populate your new local database:
@@ -61,7 +61,7 @@ This is a Ruby on Rails project with a PostgreSQL backend. The MentE team chose 
 ## Credits
 This app has been a labor of love from 10 dedicated software developers, project managers, designers and more. These contributors are listed in no particular order. Learn more about our team here:
 - [Aizat Ibraimova](https://github.com/aizatibraimova) ([LinkedIn](https://www.linkedin.com/in/aizatibraimova/)) — Project Manager
-- [Natalie Demyanenko](https://github.com/SaraDawner2000) ([LinkedIn](https://www.linkedin.com/in/natalie-demyanenko/)) — Scrum Manager, DevOps, Back-End Developer
+- [Natalie Demyanenko](https://github.com/SaraDawner2000) ([LinkedIn](https://www.linkedin.com/in/natalie-demyanenko/)) — Scrum Master, DevOps, Back-End Developer
 - [Young Song](https://github.com/YoungSong99) ([LinkedIn](https://www.linkedin.com/in/youngsong-us/)) — UI/UX Designer, Front-End Developer, Back-End Developer
 - [Jennifer Rahman](https://github.com/jb520) ([LinkedIn](https://www.linkedin.com/in/rahman-jennifer/)) — UI/UX Designer, Front-End Developer
 - [Arpan Patel](https://github.com/APatel-AI) ([LinkedIn](https://www.linkedin.com/in/arpan-p/)) — UI/UX Designer, Front-End Developer, Back-End Developer
