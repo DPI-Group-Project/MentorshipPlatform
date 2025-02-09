@@ -1,7 +1,6 @@
-<div class="bg-gray-50 mt-20">
-  <div class="flex justify-center p-8">
-    <!-- Sidebar Section -->
-    <%= render partial: "dashboard/admin_sidebar", locals: { sidebar_data: @sidebar_data } %>
+<div class="flex justify-center p-6 lg:px-24 lg:py-10 gap-[1rem] h-[80vh]">
+<!-- Sidebar Section -->
+    <%= render partial: "dashboard/admin/admin_sidebar", locals: { sidebar_data: @sidebar_data } %>
     <div class="w-full max-w-3xl lg:max-w-5xl">
       <!-- Form Titles -->
       <h1 class="text-3xl font-semibold text-left text-gray-800 mb-2"><%= @cohort.cohort_name %></h1>
