@@ -87,6 +87,8 @@ class DashboardController < ApplicationController
     @current_program = Program.find(current_user.program_admin.program_id)
     @cohorts = Cohort.where(program_id: @current_program.id)
     @program_admins = ProgramAdmin.where(program_id: @current_program&.id)
+    @total_matches = @cohorts.sum { |cohort| cohort.matches.count }
+    @days_since_creation = (@current_program.created_at.to_date..Date.today).count
   end
 
   def user_meetings
