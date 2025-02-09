@@ -64,6 +64,16 @@ class Cohort < ApplicationRecord
     CohortSchedulerJob.perform_now(id)
   end
 
+  def cohorts_with_experience_rating
+    surveys = Survey.joins(match: :cohort).where(matches: { cohort_id: id })
+    surveys.average(:experience).to_f.round(1) || 0.0
+  end
+
+  def cohorts_with_response_rating
+    surveys = Survey.joins(match: :cohort).where(matches: { cohort_id: id })
+    surveys.average(:responsive).to_f.round(1) || 0.0
+  end
+
   private
 
   def unmatched_users
