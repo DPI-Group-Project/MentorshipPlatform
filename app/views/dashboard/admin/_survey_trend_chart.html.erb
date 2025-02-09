@@ -1,0 +1,129 @@
+<div class="w-full bg-white rounded-[0.75rem] shadow-sm mt-9 p-4 md:p-10">
+  <div class="flex justify-between">
+    <div>
+      <h5 class="leading-none text-3xl font-bold text-[#202020] pb-2">Mentorship Satisfaction Trend</h5>
+      <p class="text-base font-normal text-[#898989]">Explore each cohort's satisfaction at a glance
+        through survey.</p>
+    </div>
+  </div>
+  <div id="labels-chart" class="py-4"></div>
+  <div class="flex justify-end mt-5 px-4 md:px-6">
+    <a
+      href="#"
+      class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-[#898989] hover:text-[#202020] hover:bg-[#F7F7F7] px-3 py-2">
+      Survey Result
+      <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<script>
+    const cohortsData = <%= @cohorts.map { |cohort|
+        {
+            name: cohort.cohort_name,
+            experience_rating: cohort.cohorts_with_experience_rating,
+            response_rating: cohort.cohorts_with_response_rating
+        }
+    }.to_json.html_safe %>;
+
+    const categories = [""].concat(cohortsData.map(cohort => cohort.name));
+    const experienceData = [0].concat(cohortsData.map(cohort => cohort.experience_rating));
+    const responseData = [0].concat(cohortsData.map(cohort => cohort.response_rating));
+
+
+    const options = {
+        xaxis: {
+            show: true,
+            categories: categories,
+            labels: {
+                show: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                }
+            },
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+        },
+        yaxis: {
+            show: true,
+            min: 1,
+            max: 5,
+            tickAmount: 4,
+            labels: {
+                show: true,
+                style: {
+                    cssClass: 'text-xs font-normal fill-gray-500'
+                },
+                formatter: function (value) {
+                    return value;
+                }
+            }
+        },
+        series: [
+            {
+                name: "Experience Rating",
+                data: experienceData,
+                color: "#F9837C",
+            },
+            {
+                name: "Response Rating",
+                data: responseData,
+                color: "#AAA8A7",
+            },
+        ],
+        chart: {
+            sparkline: {
+                enabled: false
+            },
+            height: "100%",
+            width: "100%",
+            type: "area",
+            dropShadow: {
+                enabled: false,
+            },
+            toolbar: {
+                show: false,
+            },
+        },
+        tooltip: {
+            enabled: true,
+            x: {
+                show: false,
+            },
+        },
+        fill: {
+            type: "gradient",
+            gradient: {
+                opacityFrom: 0.3,
+                opacityTo: 0,
+                shade: "#F9837C",
+                gradientToColors: ["#FFF"],
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        stroke: {
+            width: 3,
+        },
+        legend: {
+            show: true
+        },
+        grid: {
+            show: false,
+        },
+    }
+
+    if (document.getElementById("labels-chart") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("labels-chart"), options);
+        chart.render();
+    }
+
+</script>
