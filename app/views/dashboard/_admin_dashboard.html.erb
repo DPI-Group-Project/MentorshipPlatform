@@ -1,66 +1,49 @@
-<div class="flex justify-center p-8">
-  <%= render partial: "admin_sidebar" %>
-  <main class="w-[calc(100%-22rem)] p-6">
-    <h1 class="text-2xl font-bold mb-2">Hi <%= current_user.first_name %>!</h1>
-    <p class="text-gray-500 mb-6">Welcome back to the Mentorship dashboard</p>
-
-    <div class="flex justify-end space-x-4 mb-6">
-      <button id="viewAdminsBtn" class="text-gray-500 flex items-center hover:text-gray-700" onclick="openModal('program-admin-modal')">
-        <i class="fa-solid fa-users pr-2"></i>View Admins
-      </button>
-      <button id="openModalBtn" class="text-gray-500 flex items-center hover:text-gray-700" onclick="openModal('new-admin-modal')">
-        <i class="fa-solid fa-plus pr-2"></i>New Admin
-      </button>
-    </div>
-
-    <div class="grid grid-cols-3 gap-4">
-      <div class="p-6 bg-white shadow rounded-lg">
-        <p class="text-sm text-gray-500">Cohort Name</p>
-        <h3 id="cohort_name" class="text-lg font-semibold">
-          <%= @cohorts.first&.cohort_name || 'No Cohorts' %>
-        </h3>
-      </div>
-      <div class="p-6 bg-white shadow rounded-lg">
-        <p class="text-sm text-gray-500">Number of Pairing</p>
-        <h3 id="nunber_of_pairings" class="text-lg font-semibold">
-          <%= @cohorts.first&.pairing_number || '0' %> Pairs
-        </h3>
-      </div>
-      <div class="p-6 bg-white shadow rounded-lg">
-        <p class="text-sm text-gray-500">Scheduled Meetings</p>
-        <h3 id="scheduled_meetings" class="text-lg font-semibold">N/A</h3>
+<div class="flex justify-center p-6 lg:px-24 lg:py-10 gap-[1rem] h-[80vh]">
+  <%= render partial: "dashboard/admin/admin_sidebar" %>
+  <main class="w-[calc(100%-22rem)] max-w-[80rem] h-[100%] pr-10 overflow-auto">
+    <h1 class="text-2xl text-[#202020] font-bold mb-2">Hi <%= current_user.first_name %>!</h1>
+    <div class="flex justify-between text-[#898989] text-sm mb-5">
+      <p>Welcome back to the Mentorship dashboard</p>
+      <div class="flex justify-end space-x-4 text-sm">
+        <button id="viewAdminsBtn" class="flex items-center hover:text-gray-700" onclick="openModal('program-admin-modal')">
+          <i class="fa-solid fa-users pr-2"></i>View Admins
+        </button>
+        <button id="openModalBtn" class="flex items-center hover:text-gray-700" onclick="openModal('new-admin-modal')">
+          <i class="fa-solid fa-plus pr-2"></i>New Admin
+        </button>
       </div>
     </div>
+
+    <%= render 'dashboard/admin/program_cards' %>
+    <%= render 'dashboard/admin/survey_trend_chart' %>
+
+    <div id="new-admin-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-gray-50 p-6 rounded-2xl shadow-lg space-y-4 w-[30rem] relative">
+        <button class="absolute top-5 right-5 text-gray-500 hover:text-gray-700" onclick="closeModal('new-admin-modal')">
+          <i class="fas fa-times"></i>
+        </button>
+        <h3 class="text-lg font-bold ml-4 text-gray-80">Add New Admin</h3>
+        <div>
+          <%= render "program_admins/form", program_admin: @program_admin %>
+        </div>
+      </div>
+    </div>
+    <%= render partial: "program_admin_modal" %>
   </main>
 </div>
-
-<div id="new-admin-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-  <div class="bg-gray-50 p-6 rounded-2xl shadow-lg space-y-4 w-[30rem] relative">
-    <button class="absolute top-5 right-5 text-gray-500 hover:text-gray-700" onclick="closeModal('new-admin-modal')">
-      <i class="fas fa-times"></i>
-    </button>
-    <h3 class="text-lg font-bold ml-4 text-gray-80">Add New Admin</h3>
-    <div>
-      <%= render "program_admins/form", program_admin: @program_admin %>
-    </div>
-  </div>
-</div>
-
-<%= render partial: "program_admin_modal" %>
-
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const dropdowns = document.querySelectorAll('.dropdown');
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropdowns = document.querySelectorAll('.dropdown');
 
-    dropdowns.forEach(dropdown => {
-      const toggle = dropdown.querySelector('.dropdown-toggle');
-      const menu = dropdown.querySelector('.dropdown-menu');
-      const chevron = dropdown.querySelector('.chevron');
+        dropdowns.forEach(dropdown => {
+            const toggle = dropdown.querySelector('.dropdown-toggle');
+            const menu = dropdown.querySelector('.dropdown-menu');
+            const chevron = dropdown.querySelector('.chevron');
 
-      toggle.addEventListener('click', function () {
-        menu.classList.toggle('hidden');
-        chevron.classList.toggle('rotate-180');
-      });
+            toggle.addEventListener('click', function () {
+                menu.classList.toggle('hidden');
+                chevron.classList.toggle('rotate-180');
+            });
+        });
     });
-  });
 </script>
