@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :matches, except: %i[new edit show]
   resources :surveys, only: [:new, :create]
 
-  resources :cohorts, only: %i[index create update destroy] do
+  resources :cohorts, only: %i[index show create update destroy] do
     resources :cohort_members, only: [:index]
   end
 
