@@ -72,9 +72,7 @@
             <ul class="dropdown-menu pl-4 p-2 space-y-1 text-[0.9rem] hidden">
               <div class="border-t border-[#DCDCDC]"></div>
               <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">
-                <button onclick="cohortInfo('<%= cohort.cohort_name %>', '<%= cohort.pairing_number %>')">
-                  View dashboard
-                </button>
+                <%= button_to "View dashboard", cohort_path(cohort), method: :get%>
               </li>
               <li class="hover:bg-gray-100 p-2 rounded transition-colors duration-200">
                 <%= link_to "Add Members", new_cohort_member_path(cohort_id: cohort.id), class: "text-[#202020]" %>
