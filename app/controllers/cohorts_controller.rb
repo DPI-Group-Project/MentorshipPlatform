@@ -1,5 +1,5 @@
 class CohortsController < ApplicationController
-  before_action :set_cohort, only: %i[update destroy]
+  before_action :set_cohort, only: %i[ update destroy]
 
   def index
     @program = Program.find(current_user.program_admin.program_id)
@@ -13,6 +13,32 @@ class CohortsController < ApplicationController
 
   }
   end
+
+  def show
+    @admin_data = ProgramAdmin.find_by(user_id: current_user.id)
+    @cohort = Cohort.find(params[:id])
+    @program_admin = ProgramAdmin.new
+    @current_program = Program.find(current_user.program_admin.program_id)
+    @cohorts = Cohort.where(program_id: @current_program.id)
+    @program_admins = ProgramAdmin.where(program_id: @current_program&.id)
+    @total_matches = @cohorts.sum { |cohort| cohort.matches.count }
+    @days_since_creation = (@current_program.created_at.to_date..Date.today).count
+  end
+
+
+  def show_detailed_exceptions?
+    super
+  end
+
+  class CohortsController < ApplicationController
+    def show
+      @cohort = Cohort.find(params[:id])
+      render json: @cohort
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "Cohort not found" }, status: :not_found
+    end
+  end
+
 
   def create
     @cohort = Cohort.new(cohort_params)
