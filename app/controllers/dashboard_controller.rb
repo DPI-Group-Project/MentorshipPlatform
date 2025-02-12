@@ -89,6 +89,11 @@ class DashboardController < ApplicationController
     @program_admins = ProgramAdmin.where(program_id: @current_program&.id)
     @total_matches = @cohorts.sum { |cohort| cohort.matches.count }
     @days_since_creation = (@current_program.created_at.to_date..Date.today).count
+
+    @low_rated_surveys = Survey.joins(match: { cohort: :program })
+                            .where(matches: { cohorts: { program_id: @current_program.id } })
+                            .where('surveys.rating < ?', 2)
+                            .order(created_at: :desc)
   end
 
   def user_meetings

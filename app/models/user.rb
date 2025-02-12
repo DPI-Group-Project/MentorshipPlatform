@@ -88,7 +88,7 @@ class User < ApplicationRecord
 
   def match_id
     match = Match.find_by(mentee_id: id)
-    match.id
+    match&.id
   end
 
   def cohort

@@ -26,4 +26,8 @@ class Survey < ApplicationRecord
   def self.count_by_user(user)
     where(match_id: user.match_id).count
   end
+
+  def self.low_rated
+    includes(:match).where('rating < ?', 2).order(created_at: :desc)
+  end
 end

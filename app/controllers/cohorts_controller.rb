@@ -58,6 +58,14 @@ class CohortsController < ApplicationController
     @cohort = Cohort.find(params[:id])
   end
 
+  def dashboard
+    @cohort = Cohort.find(params[:id])
+    @low_rated_surveys = Survey.joins(:match)
+                              .where(matches: { cohort_id: @cohort.id })
+                              .where('surveys.rating < ?', 2)
+                              .order(created_at: :desc)
+  end
+
   def cohort_params
     params.require(:cohort).permit(:program_id, :cohort_name, :description, :start_date, :end_date, :creator_id,
                                    :contact_id, :required_meetings, :shortlist_start_time, :shortlist_end_time)
