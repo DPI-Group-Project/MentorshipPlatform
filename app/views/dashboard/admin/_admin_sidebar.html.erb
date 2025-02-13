@@ -63,7 +63,7 @@
         <% @cohorts.each do |cohort| %>
           <div class="dropdown">
             <button class="dropdown-toggle flex items-center justify-between w-full text-left text-sm font-[550] tracking-wide hover:bg-gray-100 pl-4 p-2 rounded transition-colors duration-200">
-              <div class="flex gap-4">
+              <div class="flex gap-4 capitalize">
                 <img src="<%= asset_path("icon/folder.svg") %>" class="w-[1rem] fill-current">
                 <%= cohort.cohort_name %>
               </div>
