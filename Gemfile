@@ -18,6 +18,8 @@ gem "stimulus-rails"
 gem "tailwindcss-rails"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[windows jruby]
+gem 'chartkick'
+gem 'groupdate'
 
 group :development, :test do
   gem "debug", platforms: %i[mri windows]

@@ -1,5 +1,5 @@
 class CohortsController < ApplicationController
-  before_action :set_cohort, only: %i[ update destroy]
+  before_action :set_cohort, only: %i[ update destroy ]
 
   def index
     @program = Program.find(current_user.program_admin.program_id)
@@ -7,11 +7,11 @@ class CohortsController < ApplicationController
     @current_program = @program
 
     @sidebar_data = {
-    program_name: @program.name,
-    admin_name: current_user.first_name,
-    cohorts: @program.cohorts
+      program_name: @program.name,
+      admin_name: current_user.first_name,
+      cohorts: @program.cohorts,
 
-  }
+    }
   end
 
   def show
@@ -23,8 +23,23 @@ class CohortsController < ApplicationController
     @program_admins = ProgramAdmin.where(program_id: @current_program&.id)
     @total_matches = @cohorts.sum { |cohort| cohort.matches.count }
     @days_since_creation = (@current_program.created_at.to_date..Date.today).count
-  end
+    @low_rated_surveys = Survey.includes(:match)
+      .where(matches: { cohort_id: @cohort.id })
+      .where("surveys.rating <= ?", 2)
+      .order(created_at: :desc)
 
+    @surveys_by_rating = Survey.joins(:match)
+      .where(matches: { cohort_id: @cohort.id })
+      .group(:rating)
+      .count
+      .transform_keys(&:to_i)
+      .sort.to_h
+
+    # Initialize missing ratings with 0 and ensure proper order
+    @surveys_by_rating = (1..5).each_with_object({}) do |rating, hash|
+      hash[rating] = @surveys_by_rating[rating] || 0
+    end
+  end
 
   def show_detailed_exceptions?
     super
@@ -38,7 +53,6 @@ class CohortsController < ApplicationController
       render json: { error: "Cohort not found" }, status: :not_found
     end
   end
-
 
   def create
     @cohort = Cohort.new(cohort_params)
@@ -76,8 +90,6 @@ class CohortsController < ApplicationController
     end
   end
 
-  
-
   private
 
   def set_cohort
@@ -87,9 +99,9 @@ class CohortsController < ApplicationController
   def dashboard
     @cohort = Cohort.find(params[:id])
     @low_rated_surveys = Survey.joins(:match)
-                              .where(matches: { cohort_id: @cohort.id })
-                              .where('surveys.rating < ?', 2)
-                              .order(created_at: :desc)
+      .where(matches: { cohort_id: @cohort.id })
+      .where("surveys.rating < ?", 2)
+      .order(created_at: :desc)
   end
 
   def cohort_params
