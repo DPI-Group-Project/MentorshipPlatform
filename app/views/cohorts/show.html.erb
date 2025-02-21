@@ -14,10 +14,9 @@
       </div>
     </div>
     <%= render 'dashboard/admin/cohort_cards' %>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <%= render partial: "dashboard/admin/survey_pie_chart" %>
-        <%= render partial: "dashboard/admin/low_rated_surveys" %>
+    <div class="flex gap-6 mt-6">
+      <%= render partial: "dashboard/admin/survey_pie_chart" %>
+      <%= render partial: "dashboard/admin/low_rated_surveys" %>
     </div>
     <div id="new-admin-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
       <div class="bg-gray-50 p-6 rounded-2xl shadow-lg space-y-4 w-[30rem] relative">
