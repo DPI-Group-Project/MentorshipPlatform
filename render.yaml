@@ -5,9 +5,8 @@ services:
     plan: free
     buildcommand: "./bin/render-build.sh"
     startcommand: "./bin/render-start.sh"
-    envvars:
+    envVars:
       - key: RAILS_MASTER_KEY
-        sync: false 
       - key: WEB_CONCURRENCY
         value: 2 
       - key: RAILS_SERVE_STATIC_FILES
