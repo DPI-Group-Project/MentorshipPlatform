@@ -1,15 +1,17 @@
 services:
   - type: web
-    name: mente
-    runtime: ruby
+    name: MentE
+    env: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
     startCommand: "./bin/render-start.sh"
     envVars:
-      - key: RAILS_MASTER_KEY
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
       - key: WEB_CONCURRENCY
-        value: 2 
-      - key: RAILS_SERVE_STATIC_FILES
-        value: "true"
+        value: 2
+
 
 # NOTE: need to add background worker for scheduled jobs (ex: CohortSchedulerJob)
