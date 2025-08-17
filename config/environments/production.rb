@@ -53,7 +53,7 @@ Rails.application.configure do
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new($stdout)
-                                       .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+                                       .tap { |logger| logger.formatter = ::Logger::Formatter.new }
                                        .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
@@ -91,7 +91,10 @@ Rails.application.configure do
   config.hosts = [
     "mentedpi.duckdns.org",
     "127.0.0.1",
-    "localhost"
+    "localhost",
   ]
-  
+
+  if ENV["RENDER_EXTERNAL_HOSTNAME"]
+    config.hosts << ENV["RENDER_EXTERNAL_HOSTNAME"]
+  end
 end
